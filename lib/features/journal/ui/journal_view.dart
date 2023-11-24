@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

@@ -1,7 +1,7 @@
-import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 
 void main() {
   configureDependencies();
