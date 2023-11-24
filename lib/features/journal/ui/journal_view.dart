@@ -1,9 +1,12 @@
-import 'dart:convert';
-
+import 'package:auto_route/auto_route.dart';
+import 'package:journal_app/app/app_router.dart';
+import 'package:journal_app/app/app_router.gr.dart';
+import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:diary_app/app/theme/colors.dart';
+import 'package:journal_app/app/theme/colors.dart';
 
 final entriesJSON = [
   <String, dynamic>{
@@ -47,70 +50,67 @@ final entries = entriesJSON
     )
     .toList();
 
-class DiaryView extends StatelessWidget {
-  const DiaryView({super.key});
+@RoutePage()
+class JournalView extends StatelessWidget {
+  const JournalView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("MyDiary"),
-          centerTitle: true,
-          leading: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SvgPicture.asset("assets/images/menu_icon.svg"),
+    return BaseScaffold(
+      title: "MyJournel",
+      leading: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SvgPicture.asset("assets/images/menu_icon.svg"),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.blue0,
+              AppColors.blueGrey0,
+            ],
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SvgPicture.asset("assets/images/setings_icon.svg"),
-            ),
-          ],
         ),
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.blue0,
-                AppColors.blueGrey0,
-              ],
+        child: Container(
+          margin: const EdgeInsets.only(
+            left: 24,
+            top: 32,
+            right: 24,
+            bottom: 32,
+          ),
+          // padding: EdgeInsets.only(bottom: 24),
+          decoration: BoxDecoration(
+            color: AppColors.journalBackground.withOpacity(0.25),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16),
             ),
           ),
-          child: Container(
-            margin: const EdgeInsets.only(
-              left: 24,
-              top: 32,
-              right: 24,
-              bottom: 48,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.diaryBackground.withOpacity(0.25),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(16),
-              ),
-            ),
-            child: ListView.builder(
-              itemCount: entries.length,
-              itemBuilder: (BuildContext context, int i) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 42.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Text(entries[i].createdDate),
+          child: ListView.builder(
+            itemCount: entries.length,
+            itemBuilder: (BuildContext context, int i) {
+              return Padding(
+                padding: EdgeInsets.only(top: i == 0 ? 32 : 0, bottom: 42),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Text(entries[i].createdDate),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    GestureDetector(
+                      // TODO: replace with navigation to entry view
+                      onTap: () => appRouter.push(
+                        EntryRoute(entry: entries[i]),
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Container(
+                      child: Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.only(left: 24, right: 16),
-                        margin: const EdgeInsets.symmetric(horizontal: 12),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
                         height: 52,
                         width: double.infinity,
                         decoration: const BoxDecoration(
@@ -123,16 +123,16 @@ class DiaryView extends StatelessWidget {
                           entries[i].entry,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
           ),
         ),
-        floatingActionButton: AddButton(onTap: () {}),
       ),
+      floatingActionButton: AddButton(onTap: () {}),
     );
   }
 }
@@ -179,40 +179,3 @@ class AddButton extends StatelessWidget {
 }
 
 // ENTRY MODEL
-
-class Entry {
-  final String createdDate;
-  final String entry;
-  const Entry({required this.createdDate, required this.entry});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'createdDate': createdDate,
-      'entry': entry,
-    };
-  }
-
-  factory Entry.fromMap(Map<String, dynamic> map) {
-    return Entry(
-      createdDate: map['createdDate'] ?? '',
-      entry: map['entry'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Entry.fromJson(String source) => Entry.fromMap(json.decode(source));
-
-  @override
-  String toString() => 'Entry(createdDate: $createdDate, entry: $entry)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Entry && other.createdDate == createdDate && other.entry == entry;
-  }
-
-  @override
-  int get hashCode => createdDate.hashCode ^ entry.hashCode;
-}

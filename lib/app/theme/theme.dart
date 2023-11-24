@@ -1,4 +1,4 @@
-import 'package:diary_app/app/theme/colors.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {

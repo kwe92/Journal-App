@@ -1,7 +1,7 @@
 import "package:auto_route/annotations.dart";
-import "package:diary_app/app/theme/colors.dart";
-import "package:diary_app/features/shared/models/entry.dart";
-import "package:diary_app/features/shared/ui/base_scaffold.dart";
+import "package:journal_app/app/theme/colors.dart";
+import "package:journal_app/features/shared/models/entry.dart";
+import "package:journal_app/features/shared/ui/base_scaffold.dart";
 import "package:flutter/material.dart";
 
 @RoutePage()

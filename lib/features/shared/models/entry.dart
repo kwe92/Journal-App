@@ -3,7 +3,10 @@ import 'dart:convert';
 class Entry {
   final String createdDate;
   final String entry;
-  const Entry({required this.createdDate, required this.entry});
+  const Entry({
+    required this.createdDate,
+    required this.entry,
+  });
 
   Map<String, dynamic> toMap() {
     return {

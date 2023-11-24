@@ -1,4 +1,4 @@
-# diary_app
+# journal_app
 
 A new Flutter project.
 

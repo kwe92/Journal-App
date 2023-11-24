@@ -6,6 +6,6 @@ class AppColors {
   static const offWhite = Color(0xffF5F5F5);
   static const blue0 = Color(0xff1e91ff);
   static const blueGrey0 = Color(0xff545F68);
-  // static const diaryBackground = Color(0xff00d2ff);
-  static const diaryBackground = Color(0xffffffff);
+  // static const journalBackground = Color(0xff00d2ff);
+  static const journalBackground = Color(0xffffffff);
 }
