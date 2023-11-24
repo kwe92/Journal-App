@@ -2,14 +2,11 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-// TODO: use GetIt locator instead of a private variable
-
-final _client = http.Client();
+import 'package:journal_app/features/shared/services/services.dart';
 
 /// HttpService abstracts away commonly repeated API call details.
-
 mixin HttpService {
   static final _httpSocketError =
       http.Response('{"socket_exception":"Unable to communicate with server. Check your internet connection."}', 550);
@@ -19,27 +16,25 @@ mixin HttpService {
   Map<String, String> get headers;
 
   /// get Sends an HTTP GET request with the given headers to the given URL endpoint.
-
   Future<http.Response> get(
     String endpoint, {
     String? tempHost,
     Map<String, String>? extraHeaders,
   }) async {
     try {
-      final http.Response response = await _client.get(
+      final http.Response response = await client.get(
         Uri.parse(tempHost ?? host + endpoint),
         headers: headers..addAll(extraHeaders ?? {}),
       );
 
       return parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
-      print('Error:\n\n${error.toString()}');
+      debugPrint('Error:\n\n${error.toString()}');
       return _httpSocketError;
     }
   }
 
   /// post Sends an HTTP POST request with the given headers and body to the given URL.
-
   Future<http.Response> post(
     String endpoint, {
     required dynamic body,
@@ -48,14 +43,14 @@ mixin HttpService {
     Map<String, String>? extraHeaders,
   }) async {
     try {
-      final http.Response response = await _client.post(
+      final http.Response response = await client.post(
         Uri.parse(tempHost ?? host + endpoint),
         headers: headers..addAll(extraHeaders ?? {}),
         body: body,
       );
       return parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
-      print("Error:\n\n${error.toString()}");
+      debugPrint("Error:\n\n${error.toString()}");
       return _httpSocketError;
     }
   }
@@ -69,14 +64,14 @@ mixin HttpService {
     Map<String, String>? extraHeaders,
   }) async {
     try {
-      final http.Response response = await _client.put(
+      final http.Response response = await client.put(
         Uri.parse(tempHost ?? host + endpoint),
         body: body,
         headers: headers..addAll(extraHeaders ?? {}),
       );
       return parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
-      print("Error:\n\n${error.toString()}");
+      debugPrint("Error:\n\n${error.toString()}");
       return _httpSocketError;
     }
   }
@@ -85,13 +80,13 @@ mixin HttpService {
 
   Future<http.Response> delete(String endpoint) async {
     try {
-      final response = await _client.delete(
+      final response = await client.delete(
         Uri.parse(host + endpoint),
       );
 
       return parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
-      print("Error:\n\n${error.toString()}");
+      debugPrint("Error:\n\n${error.toString()}");
       return _httpSocketError;
     }
   }
@@ -100,9 +95,9 @@ mixin HttpService {
 ///  parseStatusCode logs endpoint, response status code and the server response.
 
 http.Response parseStatusCode(http.Response response, String endpoint) {
-  print('\nEndpoint: \n\n${endpoint}');
-  print('\nStatus Code:\n\n${response.statusCode}');
-  print('\nResponse Body:\n\n${utf8.decode(response.bodyBytes)}');
+  debugPrint('\nEndpoint: \n\n${endpoint}');
+  debugPrint('\nStatus Code:\n\n${response.statusCode}');
+  debugPrint('\nResponse Body:\n\n${utf8.decode(response.bodyBytes)}');
 
   return response;
 }
