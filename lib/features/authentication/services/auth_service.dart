@@ -14,4 +14,13 @@ class AuthService extends ApiService with ChangeNotifier {
 
     return response;
   }
+
+  Future<http.Response> login({required String email, required String password}) async {
+    http.Response response = await post(
+      Endpoint.login.path,
+      body: jsonEncode({"email": email, "password": password}),
+    );
+
+    return response;
+  }
 }
