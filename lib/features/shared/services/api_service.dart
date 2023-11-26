@@ -19,7 +19,8 @@ abstract class ApiService with HttpService {
 
 // TODO: add all endpoints with enhanced enum
 enum Endpoint {
-  register("/auth/register");
+  register("/auth/register"),
+  login("/auth/login");
 
   final String path;
 
