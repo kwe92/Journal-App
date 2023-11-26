@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
@@ -247,7 +249,10 @@ class MemberInfoView extends StatelessWidget {
                                 // toastService.unfocusAll(context);
                                 // TODO: check to make sure all fields are not empty
                                 if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                                  await model.signupWithEmail(user: userService.tempUser as User);
+                                  final Response response = await model.signupWithEmail(user: userService.tempUser as User);
+                                  if (response.statusCode == 200 || response.statusCode == 201) {
+                                    appRouter.replace(const JournalRoute());
+                                  }
                                 }
                               },
                               child: const Padding(
