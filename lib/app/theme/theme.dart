@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Add Comments
+
 class AppTheme {
   const AppTheme._();
 
