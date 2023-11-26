@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/email_input.dart';
@@ -25,7 +26,7 @@ class SignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => SignInViewModel(),
-      builder: (context, viewModel, _) {
+      builder: (context, model, _) {
         return SafeArea(
           child: Scaffold(
             body: SizedBox(
@@ -69,11 +70,15 @@ class SignInView extends StatelessWidget {
                             child: OutlinedButton(
                               onPressed: () async {
                                 // TODO: add login invocation
-                                viewModel.email == null || viewModel.email!.isEmpty ? emailFocus.requestFocus() : null;
+                                model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
                                 // TODO: add toast service
                                 // toastService.unfocusAll(context);
-                                if ((formKey.currentState?.validate() ?? false) && viewModel.email != null && viewModel.password != null) {
-                                  await viewModel.signInWithEmail(context);
+                                if ((formKey.currentState?.validate() ?? false) && model.email != null && model.password != null) {
+                                  final Response response = await model.signInWithEmail(context);
+                                  // TODO: create isLoggedIn variable in model instead of using the response
+                                  if (response.statusCode == 200) {
+                                    appRouter.push(const JournalRoute());
+                                  }
                                 }
                               },
                               child: const Padding(

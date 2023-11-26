@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
 class SignInViewModel extends BaseViewModel {
@@ -24,9 +26,15 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> signInWithEmail(BuildContext context) async {
+  // TODO: toast service should be handled here
+  Future<Response> signInWithEmail(BuildContext context) async {
     setBusy(true);
-    // TODO: call auth service login
+    final Response response = await authService.login(email: email!, password: password!);
     setBusy(false);
+    // TODO: add case for error in response with switch statement
+    if (response.statusCode == 200) {
+      await tokenService.saveTokenData(response.body);
+    }
+    return response;
   }
 }
