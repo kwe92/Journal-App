@@ -1,27 +1,31 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:journal_app/app/general/constants.dart';
+import 'package:journal_app/features/authentication/models/token_response.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
-/// TokenService: handles saving access token to storage and removing from storage
+/// TokenService: handles managing access token within encypted persistent storage.
 class TokenService {
-  Future<void> saveTokenData(String responseBody) async {
-    _TokenResponse tokenResponse = _TokenResponse.fromJson(responseBody);
+  Future<void> saveTokenData(Map<String, dynamic> responseBody) async {
+    // deserialize login response body into TokenResponse
+    final TokenResponse tokenResponse = TokenResponse.fromJSON(responseBody);
 
-    debugPrint("\njwt access token: ${tokenResponse.accessToken}\n");
+    debugPrint("\njwt access token: ${tokenResponse.accessToken}");
 
     await saveAccessTokenToStorage(tokenResponse.accessToken);
   }
 
+  /// saveAccessTokenToStorage: save access token to persisent storage with encrypted shared preferences.
   Future<void> saveAccessTokenToStorage(String token) async {
-    await storage.write(key: _PrefKeys.accessToken, value: token);
+    await storage.write(key: PrefKeys.accessToken, value: token);
+    debugPrint("\njwt access token saved successfully!");
   }
 
+  /// getAccessTokenFromStorage: retrieve access token from storage.
   Future<String?> getAccessTokenFromStorage() async {
     try {
-      String? token = await storage.read(key: _PrefKeys.accessToken);
-      debugPrint("\n\saved jwt access token: $token\n");
+      String? token = await storage.read(key: PrefKeys.accessToken);
+      debugPrint("\nsaved jwt access token: $token");
       return token;
     } on PlatformException {
       await storage.deleteAll();
@@ -30,27 +34,20 @@ class TokenService {
     return null;
   }
 
-  /// Remove the current access token stored in secure storage
+  /// removeAccessTokenFromStorage: remove  current access token from storage.
   Future<void> removeAccessTokenFromStorage() async {
-    await storage.delete(key: _PrefKeys.accessToken);
+    await storage.delete(key: PrefKeys.accessToken);
+    debugPrint("\njwt access token deleted successfully!");
   }
 }
 
-class _TokenResponse {
-  final String accessToken;
-  const _TokenResponse({required this.accessToken});
+// Shared Preferences && UserDefaults
 
-  factory _TokenResponse.fromMap(Map<String, dynamic> map) {
-    return _TokenResponse(
-      accessToken: map['jwt'] ?? '',
-    );
-  }
+//   - Shared preferences `Android` and UserDefaults `IOS`
+//     are used to save key / values pairs to persistent storage on a users device
+//   - saved values should not be large amounts of data
 
-  factory _TokenResponse.fromJson(String source) => _TokenResponse.fromMap(json.decode(source));
-}
+// shared preferences flutter package
 
-class _PrefKeys {
-  const _PrefKeys();
-
-  static const accessToken = "jwt";
-}
+//   - wraps platform-specific presistent storage for simple data
+//     SharedPreferences for Android and NSUserDefaults for IOS
