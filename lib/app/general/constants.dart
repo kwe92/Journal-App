@@ -4,3 +4,8 @@ class PrefKeys {
 
   static const accessToken = "jwt";
 }
+
+class MediaType {
+  const MediaType._();
+  static const json = "application/json";
+}
