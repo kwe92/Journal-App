@@ -1,17 +1,21 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
+import "package:journal_app/app/theme/colors.dart";
 
+// ! may have issues when using a base scaffold and accessing Scaffold.of(context)
 class BaseScaffold extends StatelessWidget {
   final String title;
   final Widget? leading;
   final Widget? body;
   final Widget? floatingActionButton;
+  final Drawer? drawer;
 
   const BaseScaffold({
     required this.title,
-    required this.leading,
+    this.leading,
     required this.body,
     this.floatingActionButton,
+    this.drawer,
     super.key,
   });
 
@@ -21,6 +25,10 @@ class BaseScaffold extends StatelessWidget {
           appBar: AppBar(
             title: Text(title),
             centerTitle: true,
+            iconTheme: const IconThemeData(
+              color: AppColors.offWhite,
+              size: 30,
+            ),
             leading: leading,
             actions: [
               Padding(
@@ -31,6 +39,8 @@ class BaseScaffold extends StatelessWidget {
           ),
           body: body,
           floatingActionButton: floatingActionButton,
+          // drawer automaticall displays hamburger icon
+          drawer: drawer,
         ),
       );
 }
