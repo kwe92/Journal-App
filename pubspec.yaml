@@ -43,6 +43,9 @@ dependencies:
   flutter_hooks: 0.18.6
   stacked_hooks: 0.2.3
   json_annotation: ^4.8.1
+  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.0.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
