@@ -9,4 +9,5 @@ class AppColors {
   static const blueGrey0 = Color(0xff545F68);
   // static const journalBackground = Color(0xff00d2ff);
   static const journalBackground = Color(0xffffffff);
+  static final splashColor = blue1.withOpacity(0.25);
 }

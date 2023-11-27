@@ -49,7 +49,7 @@ final TextButtonThemeData textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
     overlayColor: MaterialStateProperty.resolveWith(
       // button splash color
-      (states) => AppColors.blue1.withOpacity(0.25),
+      (states) => AppColors.splashColor,
     ),
     textStyle: MaterialStateProperty.resolveWith(
       (states) => TextStyle(foreground: Paint()..color = AppColors.blue1),

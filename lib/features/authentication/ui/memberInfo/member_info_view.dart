@@ -257,6 +257,7 @@ class MemberInfoView extends StatelessWidget {
                                     // upon successful registration retrieve jwt token from response
                                     await tokenService.saveTokenData(jsonDecode(response.body));
 
+                                    // remove member info view and navigate to journal view
                                     appRouter.replace(const JournalRoute());
                                   } else {
                                     // TODO: call toast service to display error message
