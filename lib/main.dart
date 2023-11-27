@@ -3,8 +3,14 @@ import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
-void main() {
-  configureDependencies();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //
+  await configureDependencies();
+
+  // ensure token is removed from user device on app startup
+  await tokenService.removeAccessTokenFromStorage();
 
   runApp(const MyApp());
 }
