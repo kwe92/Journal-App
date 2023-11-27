@@ -1,41 +1,39 @@
-import 'dart:convert';
+import 'package:journal_app/features/shared/utilities/json_utilities.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'entry.g.dart';
+
+@JsonSerializable()
 class Entry {
-  final String createdDate;
-  final String entry;
+  @JsonKey(name: "user_id")
+  final int uid;
+
+  final String content;
+
+  @JsonKey(name: "created_at")
+  final DateTime createdAt;
+
+  @JsonKey(name: "updated_at")
+  final DateTime updatedAt;
+
+  String get dateString {
+    return getStringFromDate(updatedAt);
+  }
+
+  /// Entry: model representing expected json input for an entry.
   const Entry({
-    required this.createdDate,
-    required this.entry,
+    required this.uid,
+    required this.content,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'createdDate': createdDate,
-      'entry': entry,
-    };
-  }
+  factory Entry.fromJSON(Map<String, dynamic> json) => _$EntryFromJson(json);
 
-  factory Entry.fromMap(Map<String, dynamic> map) {
-    return Entry(
-      createdDate: map['createdDate'] ?? '',
-      entry: map['entry'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Entry.fromJson(String source) => Entry.fromMap(json.decode(source));
+  Map<String, dynamic> toJSON() => _$EntryToJson(this);
 
   @override
-  String toString() => 'Entry(createdDate: $createdDate, entry: $entry)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Entry && other.createdDate == createdDate && other.entry == entry;
+  String toString() {
+    return 'Entry(uid: $uid, content: $content, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
-
-  @override
-  int get hashCode => createdDate.hashCode ^ entry.hashCode;
 }
