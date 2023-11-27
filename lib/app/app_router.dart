@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'app_router.gr.dart';
 
-/// refresh generated router 'dart run build_runner build'
+/// refresh generated router 'dart run build_runner build --delete-conflicting-outputs'
 
 @AutoRouterConfig(replaceInRouteName: "Page|Screen|View,Route")
 class AppRouter extends $AppRouter {
