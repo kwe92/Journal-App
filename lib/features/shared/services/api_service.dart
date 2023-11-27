@@ -1,15 +1,15 @@
 import 'dart:io';
 
+import 'package:journal_app/app/general/constants.dart';
+
 import 'http_service.dart';
 
 // Todo: host should be hidden in .env | DotEnv dotenv | package:flutter_dotenv/src/dotenv.dart
 
-// TODO: continue adding endpoints
-
 abstract class ApiService with HttpService {
   @override
   Map<String, String> get headers => {
-        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.contentTypeHeader: MediaType.json,
       };
 
 //! In real app hide behind environment variable
@@ -17,10 +17,14 @@ abstract class ApiService with HttpService {
   String get host => "http://127.0.0.1:8080";
 }
 
-// TODO: add all endpoints with enhanced enum
+/// Endpoint: enum of endpoint paths.
 enum Endpoint {
+  // Authentication Endpoints
   register("/auth/register"),
-  login("/auth/login");
+  login("/auth/login"),
+
+  // Journal Entry Endpoints
+  entries("/api/entry");
 
   final String path;
 

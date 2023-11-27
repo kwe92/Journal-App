@@ -5,11 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:journal_app/features/authentication/services/auth_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
+import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// service locator global variable
 final locator = GetIt.instance;
 
-/// configureDependencies initalizes and registers all GetIt singletons.
+/// configureDependencies: initalize and register all GetIt singleton services.
 Future<void> configureDependencies() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -18,6 +20,21 @@ Future<void> configureDependencies() async {
   locator.registerSingleton<UserService>(UserService());
   locator.registerSingleton<AuthService>(AuthService());
   locator.registerSingleton<TokenService>(TokenService());
+  locator.registerSingleton<JournalEntryService>(JournalEntryService());
+
   locator.registerSingleton<SharedPreferences>(prefs);
   locator.registerFactory<FlutterSecureStorage>(() => const FlutterSecureStorage());
 }
+
+// GetIt
+
+//   - a singleton that acts as a service locator
+//   - allows the registration and retrieval of singletons
+//     with the added benifit of being easy to test
+//   - traditional singletons are hard to test and require
+//     alot of boiler plate code as you need to create
+//     a singleton object for each service you only want to have one instace of
+
+// FlutterSecureStorage 
+
+//   - encypted Shared Preferences and NSUserDefaults

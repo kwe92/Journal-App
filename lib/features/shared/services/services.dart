@@ -4,6 +4,7 @@ import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/features/authentication/services/auth_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
+import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,10 @@ UserService get userService {
 
 AuthService get authService {
   return locator.get<AuthService>();
+}
+
+JournalEntryService get journalEntryService {
+  return locator.get<JournalEntryService>();
 }
 
 TokenService get tokenService {
