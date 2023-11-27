@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -27,14 +29,14 @@ class SignInViewModel extends BaseViewModel {
   }
 
   // TODO: toast service should be handled here
-  Future<Response> signInWithEmail(BuildContext context) async {
+  Future<void> signInWithEmail(BuildContext context) async {
     setBusy(true);
     final Response response = await authService.login(email: email!, password: password!);
     setBusy(false);
     // TODO: add case for error in response with switch statement
     if (response.statusCode == 200) {
-      await tokenService.saveTokenData(response.body);
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      await tokenService.saveTokenData(responseBody);
     }
-    return response;
   }
 }

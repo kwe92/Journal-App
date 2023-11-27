@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -46,6 +48,7 @@ class MemberInfoView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => MemberInfoViewModel(),
       onViewModelReady: (model) async {
+        // create temp user for registration
         await userService.createTempUser();
 
         // if value is null assign empty string
@@ -247,11 +250,16 @@ class MemberInfoView extends StatelessWidget {
                               onPressed: () async {
                                 // TODO: add toast service
                                 // toastService.unfocusAll(context);
-                                // TODO: check to make sure all fields are not empty
                                 if ((formKey.currentState?.validate() ?? false) && model.ready) {
                                   final Response response = await model.signupWithEmail(user: userService.tempUser as User);
-                                  if (response.statusCode == 200 || response.statusCode == 201) {
+
+                                  if (authService.isLoggedIn) {
+                                    // upon successful registration retrieve jwt token from response
+                                    await tokenService.saveTokenData(jsonDecode(response.body));
+
                                     appRouter.replace(const JournalRoute());
+                                  } else {
+                                    // TODO: call toast service to display error message
                                   }
                                 }
                               },

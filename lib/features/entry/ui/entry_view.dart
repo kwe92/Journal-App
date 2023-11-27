@@ -11,37 +11,31 @@ class EntryView extends StatelessWidget {
   const EntryView({required this.entry, super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BaseScaffold(
-      title: entry.createdDate,
-      leading:
-          // TODO: replace with image from figma
-          IconButton(
-        onPressed: () => Navigator.of(context).pop(),
-        icon: const Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-          size: 32,
-        ),
-      ),
-      body: Container(
-        margin: const EdgeInsets.only(
-          left: 24,
-          top: 32,
-          right: 24,
-          bottom: 32,
-        ),
-        // padding: EdgeInsets.only(bottom: 24),
-        decoration: const BoxDecoration(
-          color: AppColors.offWhite,
-          borderRadius: BorderRadius.all(
-            Radius.circular(16),
+  Widget build(BuildContext context) => BaseScaffold(
+        title: entry.dateString,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 32,
           ),
         ),
-        child:
-            // TODO: Replace with entry
-            Text(entry.entry),
-      ),
-    );
-  }
+        body: Container(
+          margin: const EdgeInsets.only(
+            left: 24,
+            top: 32,
+            right: 24,
+            bottom: 32,
+          ),
+          // padding: EdgeInsets.only(bottom: 24),
+          decoration: const BoxDecoration(
+            color: AppColors.offWhite,
+            borderRadius: BorderRadius.all(
+              Radius.circular(16),
+            ),
+          ),
+          child: Text(entry.content),
+        ),
+      );
 }

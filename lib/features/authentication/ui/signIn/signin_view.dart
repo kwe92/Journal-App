@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/email_input.dart';
@@ -74,10 +73,11 @@ class SignInView extends StatelessWidget {
                                 // TODO: add toast service
                                 // toastService.unfocusAll(context);
                                 if ((formKey.currentState?.validate() ?? false) && model.email != null && model.password != null) {
-                                  final Response response = await model.signInWithEmail(context);
-                                  // TODO: create isLoggedIn variable in model instead of using the response
-                                  if (response.statusCode == 200) {
+                                  await model.signInWithEmail(context);
+                                  if (authService.isLoggedIn) {
                                     appRouter.push(const JournalRoute());
+                                  } else {
+                                    // TODO: add toast service with error message
                                   }
                                 }
                               },

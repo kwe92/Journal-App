@@ -23,7 +23,7 @@ class JournalEntryService extends ApiService with ChangeNotifier {
       HttpHeaders.authorizationHeader: "Bearer $accessToken",
     });
 
-    // deserialize response body into List or hashMap depends on how backend sends response
+    // deserialize response body `string representation of json` into List or hashMap depends on how backend sends response
     final Map<String, dynamic> reponseBody = jsonDecode(response.body);
 
     final List<dynamic> responseData = reponseBody["data"];
