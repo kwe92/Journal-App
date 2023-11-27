@@ -21,14 +21,10 @@ class EntryView extends StatelessWidget {
             size: 32,
           ),
         ),
-        body: Container(
-          margin: const EdgeInsets.only(
-            left: 24,
-            top: 32,
-            right: 24,
-            bottom: 32,
-          ),
-          // padding: EdgeInsets.only(bottom: 24),
+        body:
+            // TODO: refactor, same container in add entry view
+            Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
           decoration: const BoxDecoration(
             color: AppColors.offWhite,
             borderRadius: BorderRadius.all(

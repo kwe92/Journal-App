@@ -76,6 +76,7 @@ class JournalView extends StatelessWidget {
               },
             ),
           ),
+          // Open menu to the side
           drawer: Drawer(
               // ?INFO: required to use CustomScrollView to have Spacer / Expanded Widgets within a ListView
               child: CustomScrollView(
@@ -113,7 +114,7 @@ class JournalView extends StatelessWidget {
             ],
           )),
           floatingActionButton: AddButton(onTap: () {
-            // TODO: implement adding entry
+            appRouter.push(const AddEntryRoute());
           }),
         );
       },

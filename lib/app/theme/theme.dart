@@ -68,7 +68,9 @@ final InputDecorationTheme inputTheme = () {
     // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
+        // color: AppColors.blue1,
         color: AppColors.blue1,
+
         width: borderWidth,
       ),
     ),
@@ -84,9 +86,25 @@ final InputDecorationTheme inputTheme = () {
   );
 }();
 
+const InputDecoration borderlessInput = InputDecoration(
+  // hintStyle: appTextStyle,
+  //! contentPadding: moves cursor,label text and hint text | find a way to only move the cursor
+  // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
+  enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
+  focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
+  floatingLabelStyle: TextStyle(
+    color: AppColors.blue1,
+  ),
+);
+
 final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
 
+final offGreyButtonTheme = OutlinedButtonThemeData(style: offGreyButtonStyle);
+
 final blueButtonStyle = ButtonStyle(
+  shape: MaterialStateProperty.resolveWith(
+    (states) => const StadiumBorder(side: BorderSide.none),
+  ),
   backgroundColor: MaterialStateProperty.resolveWith(
     (states) => AppColors.blue1,
   ),
@@ -97,4 +115,8 @@ final blueButtonStyle = ButtonStyle(
       fontWeight: FontWeight.w600,
     ),
   ),
+);
+
+final offGreyButtonStyle = blueButtonStyle.copyWith(
+  backgroundColor: MaterialStateProperty.resolveWith((states) => AppColors.offGrey),
 );
