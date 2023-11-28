@@ -7,7 +7,7 @@ import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
-import 'package:journal_app/features/shared/ui/widgets/text_field_container.dart';
+import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -28,23 +28,21 @@ class AddEntryView extends StatelessWidget {
         ),
         body: Column(
           children: [
-            TextFieldContainer(
-              height: MediaQuery.of(context).size.height / 1.5,
+            FormContainer(
               child: Form(
                 key: formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                  child: TextFormField(
-                    // focus text field upon inital render
-                    autofocus: true,
-                    expands: true,
-                    maxLines: null,
-                    controller: newEntryController,
-                    decoration: borderlessInput,
-                    onChanged: (value) => model.setContent(value),
-                    // TODO: implemente validation
-                    // validator: (value) {},
-                  ),
+                child: TextFormField(
+                  // focus text field upon inital render
+                  autofocus: true,
+                  expands: true,
+                  maxLines: null,
+                  // automatically capitalize sentences for user
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: newEntryController,
+                  decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
+                  onChanged: (value) => model.setContent(value),
+                  // TODO: implemente validation
+                  // validator: (value) {},
                 ),
               ),
             ),
@@ -57,7 +55,7 @@ class AddEntryView extends StatelessWidget {
                   data: ThemeData(outlinedButtonTheme: offGreyButtonTheme),
                   child: OutlinedButton(
                     onPressed: () async {
-                      if (formKey.currentState!.validate() && model.ready) {
+                      if ((formKey.currentState?.validate() ?? false) && model.ready) {
                         await model.addEntry(NewEntry(content: model.content));
                         model.clearContent();
                         appRouter.replace(const JournalRoute());

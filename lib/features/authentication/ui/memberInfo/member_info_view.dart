@@ -4,15 +4,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
-import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:stacked/stacked.dart';
-
-// TODO: add comments
-// TODO: review what is going on with TextEditingController
-// TODO: make more modular
 
 @RoutePage()
 class MemberInfoView extends StatelessWidget {
@@ -91,13 +87,8 @@ class MemberInfoView extends StatelessWidget {
                       SizedBox(
                         width: 75,
                         height: 75,
-                        child: IconButton(
+                        child: CustomBackButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: AppColors.offWhite,
-                            size: 32,
-                          ),
                         ),
                       )
                     ],
@@ -129,7 +120,7 @@ class MemberInfoView extends StatelessWidget {
                             textCapitalization: TextCapitalization.words,
                             autofillHints: const [AutofillHints.givenName],
                             onChanged: model.setFirstName,
-                            // when editing commplete request focus for the next node in the focus tree (the focus node should belong to the text form field bellow)
+                            // when editing commplete request focus for next node in focus tree (the focus node should belong to the text form field bellow)
                             onEditingComplete: () => lastNameFocus.requestFocus(),
                             // TODO add validation
                             // validator: stringService.customStringValidator(
@@ -150,13 +141,13 @@ class MemberInfoView extends StatelessWidget {
                             textInputAction: TextInputAction.next,
                             textCapitalization: TextCapitalization.words,
                             controller: lastNameController,
+                            onChanged: model.setLastName,
                             onEditingComplete: () => phoneFocus.requestFocus(),
                             // TODO add validation
                             // validator: stringService.customStringValidator(
                             //   lastNameController.text,
                             //   configuration: const StringValidatorConfiguration(notEmpty: true),
                             // ) as String? Function(String?),
-                            onChanged: model.setLastName,
                             autofillHints: const [AutofillHints.familyName],
                             decoration: const InputDecoration(
                               labelText: 'Legal Last Name',
@@ -173,16 +164,15 @@ class MemberInfoView extends StatelessWidget {
                             focusNode: phoneFocus,
                             textInputAction: TextInputAction.next,
                             controller: phoneNumberController,
+                            onChanged: model.setPhoneNumber,
                             onEditingComplete: () => emailFocus.requestFocus(),
                             // TODO add validation
                             // validator: stringService.customStringValidator(
                             //   phoneNumberController.text,
                             //   configuration: const StringValidatorConfiguration(notEmpty: true),
                             // ) as String? Function(String?),
-                            onChanged: model.setPhoneNumber,
                             autofillHints: const [AutofillHints.telephoneNumberNational],
                             autovalidateMode: AutovalidateMode.disabled,
-                            // ? review
                             // change keyboard type automatically for the user | default to old-school 0 - 9 keyboard | signed = true for modern keyboard
                             keyboardType: const TextInputType.numberWithOptions(signed: true),
                             // TODO add inputFormatters
@@ -202,8 +192,7 @@ class MemberInfoView extends StatelessWidget {
                           TextFormField(
                             key: emailKey,
                             focusNode: emailFocus,
-                            // call TextInputAction.done on  final text form field
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             controller: emailController,
                             // TODO add validation
                             // validator: stringService.customStringValidator(
@@ -212,9 +201,9 @@ class MemberInfoView extends StatelessWidget {
                             // ) as String? Function(String?),
                             autofillHints: const [AutofillHints.email],
                             onChanged: model.setEmail,
+                            onEditingComplete: () => passwordFocus.requestFocus(),
                             decoration: const InputDecoration(
                               labelText: 'Email Address',
-                              // hintText appears when the user selects the text form field
                               hintText: 'Enter Email Address',
                               // TODO: add suffix icon
                               // suffixIcon: ConditionalClearIcon(
@@ -223,6 +212,7 @@ class MemberInfoView extends StatelessWidget {
                             ),
                           ),
                           TextFormField(
+                            // call TextInputAction.done on final text form field
                             textInputAction: TextInputAction.done,
                             controller: passwordController,
                             focusNode: passwordFocus,
@@ -232,6 +222,7 @@ class MemberInfoView extends StatelessWidget {
                             // },
                             obscureText: model.obscurePassword,
                             onChanged: model.setPassword,
+                            // unfocus the final text field in the focus tree
                             onEditingComplete: () => passwordFocus.unfocus(),
                             decoration: InputDecoration(
                               labelText: "Password",
@@ -257,7 +248,7 @@ class MemberInfoView extends StatelessWidget {
                                     // upon successful registration retrieve jwt token from response
                                     await tokenService.saveTokenData(jsonDecode(response.body));
 
-                                    // remove member info view and navigate to journal view
+                                    // remove member info view and navigate to journal view | there maybe a better way to refresh widget
                                     appRouter.replace(const JournalRoute());
                                   } else {
                                     // TODO: call toast service to display error message
@@ -266,9 +257,7 @@ class MemberInfoView extends StatelessWidget {
                               },
                               child: const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 12.0),
-                                child: Text(
-                                  "Sign-up",
-                                ),
+                                child: Text("Sign-up"),
                               ),
                             ),
                           ),
