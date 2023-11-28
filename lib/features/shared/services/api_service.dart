@@ -24,7 +24,8 @@ enum Endpoint {
   login("/auth/login"),
 
   // Journal Entry Endpoints
-  entries("/api/entry");
+  entries("/api/entry"),
+  updateEntry("/api/update-entry/");
 
   final String path;
 
