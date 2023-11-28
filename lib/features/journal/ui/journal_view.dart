@@ -36,45 +36,61 @@ class JournalView extends StatelessWidget {
                 ],
               ),
             ),
-            child: ListView.builder(
-              itemCount: model.journalEntries.length,
-              itemBuilder: (BuildContext context, int i) {
-                return Padding(
-                  padding: EdgeInsets.only(top: i == 0 ? 32 : 0, bottom: 42),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Text(model.journalEntries[i].dateString),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      GestureDetector(
-                        onTap: () => appRouter.pushAndPopUntil(EntryRoute(entry: model.journalEntries[i]), predicate: (route) => false),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.only(left: 24, right: 16),
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          height: 52,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: AppColors.offWhite,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(52 / 2),
+            child: Center(
+              child: ListView.builder(
+                // used to cented Text widget when there are no entries
+                shrinkWrap: model.journalEntries.isEmpty ? true : false,
+                itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
+                itemBuilder: (BuildContext context, int i) {
+                  return model.journalEntries.isEmpty
+                      ? const Center(
+                          child: Text(
+                            "No entries, whats on your mind...",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 32,
                             ),
                           ),
-                          child: Text(
-                            model.journalEntries[i].content,
-                            overflow: TextOverflow.ellipsis,
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(top: i == 0 ? 32 : 0, bottom: 42),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Text(model.journalEntries[i].dateString),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              GestureDetector(
+                                onTap: () =>
+                                    appRouter.pushAndPopUntil(EntryRoute(entry: model.journalEntries[i]), predicate: (route) => false),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.only(left: 24, right: 16),
+                                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                                  height: 52,
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.offWhite,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(52 / 2),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    model.journalEntries[i].content,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
+                        );
+                },
+              ),
             ),
           ),
           // Open menu to the side
