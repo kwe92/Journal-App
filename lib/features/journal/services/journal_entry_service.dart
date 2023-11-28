@@ -67,4 +67,14 @@ class JournalEntryService extends ApiService with ChangeNotifier {
 
     return response;
   }
+
+  Future<http.Response> deleteEntry(int entryId) async {
+    final accessToken = await tokenService.getAccessTokenFromStorage();
+
+    final http.Response response = await delete("${Endpoint.deleteEntry.path}$entryId", extraHeaders: {
+      HttpHeaders.authorizationHeader: "$_bearer $accessToken",
+    });
+
+    return response;
+  }
 }
