@@ -25,7 +25,8 @@ enum Endpoint {
 
   // Journal Entry Endpoints
   entries("/api/entry"),
-  updateEntry("/api/update-entry/");
+  updateEntry("/api/update-entry/"),
+  deleteEntry("/api/delete-entry/");
 
   final String path;
 
