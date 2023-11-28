@@ -13,13 +13,9 @@ import "package:journal_app/features/shared/ui/button/selectable_button.dart";
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import "package:stacked/stacked.dart";
 
-// TODO: Implement edit capabilities
-// TODO: Implement EntryViewModel to update entry
-// TODO: add update API call to journalEntryService
-// TODO: add Form, FormContainer and TextFormField instead of a text widget
-// TODO: lock and unlock editing with mutable boolean variable that is in EntryViewModel
-// TODO: Implement an update button | unlocks text form field and focuses on it
-// TODO: add entry content to TextEditingController text on initial render
+// TODO: Implement deleting an entry
+// TODO: add toast service / modal to ask user are then sure they want to delete an entry
+// TODO: maybe add an potion to turn the modal off and add an option to toggle modal in settings
 
 @RoutePage()
 class EntryView extends StatelessWidget {
@@ -85,7 +81,7 @@ class EntryView extends StatelessWidget {
 
                       appRouter.replace(const JournalRoute());
 
-                      debugPrint("response status code from EntryView: ${response.statusCode}");
+                      debugPrint("response status code from EntryView update: ${response.statusCode}");
                       // TODO: context.read<JournalViewModel>.refresh ?? | try to implement the method and see if the journal view is refreshed
                     }
                   },
@@ -99,6 +95,9 @@ class EntryView extends StatelessWidget {
                   mainTheme: offGreyButtonTheme,
                   onPressed: () async {
                     // TODO: implement delete entry and add toast service to confirm
+                    final Response response = await model.deleteEntry(entry.entryId);
+                    debugPrint("response status code from EntryView delete: ${response.statusCode}");
+                    appRouter.replace(const JournalRoute());
                   },
                   label: "Delete Entry",
                 ),
