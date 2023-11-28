@@ -8,6 +8,7 @@ import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
+import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -234,17 +235,15 @@ class MemberInfoView extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 36),
-                          SizedBox(
-                            width: double.maxFinite,
-                            // TODO: Add InkWell
-                            child: OutlinedButton(
+                          SelectableButton(
                               onPressed: () async {
                                 // TODO: add toast service
                                 // toastService.unfocusAll(context);
                                 if ((formKey.currentState?.validate() ?? false) && model.ready) {
+                                  // upon successful validation sign the user up.
                                   final Response response = await model.signupWithEmail(user: userService.tempUser as User);
 
-                                  if (authService.isLoggedIn) {
+                                  if (response.statusCode == 200 && authService.isLoggedIn) {
                                     // upon successful registration retrieve jwt token from response
                                     await tokenService.saveTokenData(jsonDecode(response.body));
 
@@ -255,12 +254,7 @@ class MemberInfoView extends StatelessWidget {
                                   }
                                 }
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 12.0),
-                                child: Text("Sign-up"),
-                              ),
-                            ),
-                          ),
+                              label: "Sign-up")
                         ],
                       ),
                     ),

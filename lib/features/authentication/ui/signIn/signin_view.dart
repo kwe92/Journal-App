@@ -5,6 +5,7 @@ import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.
 import 'package:journal_app/features/authentication/ui/signIn/widgets/email_input.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/password_input.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:stacked/stacked.dart';
 
 // TODO: add comments to section off part of the UI
@@ -63,12 +64,8 @@ class SignInView extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          SizedBox(
-                            width: double.maxFinite,
-                            // TODO: Add InkWell
-                            child: OutlinedButton(
+                          SelectableButton(
                               onPressed: () async {
-                                // TODO: add login invocation
                                 model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
                                 // TODO: add toast service
                                 // toastService.unfocusAll(context);
@@ -81,14 +78,7 @@ class SignInView extends StatelessWidget {
                                   }
                                 }
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 12.0),
-                                child: Text(
-                                  "Login",
-                                ),
-                              ),
-                            ),
-                          ),
+                              label: "Login"),
                           const SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

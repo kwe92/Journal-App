@@ -7,6 +7,7 @@ import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
+import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import 'package:stacked/stacked.dart';
 
@@ -48,28 +49,18 @@ class AddEntryView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: SizedBox(
-                width: double.maxFinite,
-                // TODO: Add InkWell
-                child: Theme(
-                  data: ThemeData(outlinedButtonTheme: offGreyButtonTheme),
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                        await model.addEntry(NewEntry(content: model.content));
-                        model.clearContent();
-                        appRouter.replace(const JournalRoute());
-                      } else {
-                        // TODO: inform the user that the textfield can not be empty
-                      }
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text("Add Entry"),
-                    ),
-                  ),
-                ),
-              ),
+              child: SelectableButton(
+                  mainTheme: offGreyButtonTheme,
+                  onPressed: () async {
+                    if ((formKey.currentState?.validate() ?? false) && model.ready) {
+                      await model.addEntry(NewEntry(content: model.content));
+                      model.clearContent();
+                      appRouter.replace(const JournalRoute());
+                    } else {
+                      // TODO: inform the user that the textfield can not be empty
+                    }
+                  },
+                  label: "Add Entry"),
             ),
           ],
         ),
