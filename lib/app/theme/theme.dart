@@ -2,30 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-// TODO: Add Comments
-
 class AppTheme {
   const AppTheme._();
 
-  static ThemeData getTheme() {
-    return ThemeData(
-      useMaterial3: true,
-      appBarTheme: appBarTheme,
-      textTheme: textTheme,
-      inputDecorationTheme: inputTheme,
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: AppColors.blue1,
-        // selectionColor: text highlight color
-        selectionColor: AppColors.blue1.withOpacity(0.15),
-      ),
-      // change selectionHandleColor on IOS
-      cupertinoOverrideTheme: const CupertinoThemeData(
-        primaryColor: AppColors.blue1,
-      ),
-      textButtonTheme: textButtonTheme,
-      outlinedButtonTheme: mainButtonTheme,
-    );
-  }
+  static ThemeData getTheme() => ThemeData(
+        useMaterial3: true,
+        appBarTheme: appBarTheme,
+        textTheme: textTheme,
+        inputDecorationTheme: inputTheme,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.blue1,
+          // selectionColor: text highlight color
+          selectionColor: AppColors.blue1.withOpacity(0.15),
+        ),
+        // change selectionHandleColor on IOS
+        cupertinoOverrideTheme: const CupertinoThemeData(
+          primaryColor: AppColors.blue1,
+        ),
+        textButtonTheme: textButtonTheme,
+        outlinedButtonTheme: mainButtonTheme,
+      );
 }
 
 const AppBarTheme appBarTheme = AppBarTheme(
@@ -39,7 +35,6 @@ final TextTheme textTheme = TextTheme(
     fontWeight: FontWeight.w700,
   ),
   bodyMedium: const TextStyle(
-    // foreground: Paint()..color = AppColors.offWhite,
     fontSize: 18,
     fontWeight: FontWeight.w500,
   ),
@@ -47,16 +42,13 @@ final TextTheme textTheme = TextTheme(
 
 final TextButtonThemeData textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
-    overlayColor: MaterialStateProperty.resolveWith(
-      // button splash color
-      (states) => AppColors.splashColor,
-    ),
-    textStyle: MaterialStateProperty.resolveWith(
-      (states) => TextStyle(foreground: Paint()..color = AppColors.blue1),
-    ),
+    // button splash color
+    overlayColor: resolver((states) => AppColors.splashColor),
+    textStyle: resolver((states) => TextStyle(foreground: Paint()..color = AppColors.blue1)),
   ),
 );
 
+// TextField and TextFormField decoration
 final InputDecorationTheme inputTheme = () {
   const borderWidth = 2.5;
 
@@ -68,9 +60,7 @@ final InputDecorationTheme inputTheme = () {
     // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        // color: AppColors.blue1,
         color: AppColors.blue1,
-
         width: borderWidth,
       ),
     ),
@@ -80,21 +70,15 @@ final InputDecorationTheme inputTheme = () {
         width: borderWidth,
       ),
     ),
-    floatingLabelStyle: TextStyle(
-      color: AppColors.blue1,
-    ),
+    floatingLabelStyle: TextStyle(color: AppColors.blue1),
   );
 }();
 
+/// borderlessInput: borderless TextField and TextFormField.
 const InputDecoration borderlessInput = InputDecoration(
-  // hintStyle: appTextStyle,
-  //! contentPadding: moves cursor,label text and hint text | find a way to only move the cursor
-  // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
   enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
   focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-  floatingLabelStyle: TextStyle(
-    color: AppColors.blue1,
-  ),
+  floatingLabelStyle: TextStyle(color: AppColors.blue1),
 );
 
 final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
@@ -102,13 +86,9 @@ final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
 final offGreyButtonTheme = OutlinedButtonThemeData(style: offGreyButtonStyle);
 
 final blueButtonStyle = ButtonStyle(
-  shape: MaterialStateProperty.resolveWith(
-    (states) => const StadiumBorder(side: BorderSide.none),
-  ),
-  backgroundColor: MaterialStateProperty.resolveWith(
-    (states) => AppColors.blue1,
-  ),
-  textStyle: MaterialStateProperty.resolveWith(
+  shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
+  backgroundColor: resolver((states) => AppColors.blue1),
+  textStyle: resolver(
     (states) => TextStyle(
       foreground: Paint()..color = AppColors.offWhite,
       fontSize: 20,
@@ -118,5 +98,10 @@ final blueButtonStyle = ButtonStyle(
 );
 
 final offGreyButtonStyle = blueButtonStyle.copyWith(
-  backgroundColor: MaterialStateProperty.resolveWith((states) => AppColors.offGrey),
+  backgroundColor: resolver((states) => AppColors.offGrey),
 );
+
+/// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
+MaterialStateProperty<T> resolver<T>(T Function(Set<MaterialState>) statesCallback) {
+  return MaterialStateProperty.resolveWith(statesCallback);
+}
