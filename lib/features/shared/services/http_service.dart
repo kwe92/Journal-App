@@ -78,10 +78,16 @@ mixin HttpService {
 
   /// delete sends an HTTP DELETE request with the passed in headers to the specified URI.
 
-  Future<http.Response> delete(String endpoint) async {
+  Future<http.Response> delete(
+    String endpoint, {
+    dynamic body,
+    String? tempHost,
+    Map<String, String>? extraHeaders,
+  }) async {
     try {
       final response = await client.delete(
         Uri.parse(host + endpoint),
+        headers: headers..addAll(extraHeaders ?? {}),
       );
 
       return parseStatusCode(response, host + endpoint);
