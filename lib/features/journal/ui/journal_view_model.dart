@@ -12,4 +12,10 @@ class JournalViewModel extends BaseViewModel {
     await journalEntryService.getAllEntries();
     setBusy(false);
   }
+
+  Future<void> refresh() async {
+    setBusy(true);
+    await journalEntryService.getAllEntries();
+    setBusy(false);
+  }
 }

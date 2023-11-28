@@ -52,9 +52,7 @@ class JournalView extends StatelessWidget {
                         height: 12,
                       ),
                       GestureDetector(
-                        onTap: () => appRouter.push(
-                          EntryRoute(entry: model.journalEntries[i]),
-                        ),
+                        onTap: () => appRouter.pushAndPopUntil(EntryRoute(entry: model.journalEntries[i]), predicate: (route) => false),
                         child: Container(
                           alignment: Alignment.center,
                           padding: const EdgeInsets.only(left: 24, right: 16),
