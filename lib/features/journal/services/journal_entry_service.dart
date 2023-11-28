@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/shared/models/entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
@@ -47,6 +48,21 @@ class JournalEntryService extends ApiService with ChangeNotifier {
       body:
           // serialize object into JSON string
           jsonEncode(newEntry.toJSON()),
+    );
+
+    return response;
+  }
+
+  Future<http.Response> updateEntry(UpdatedEntry updatedEntry) async {
+    final accessToken = await tokenService.getAccessTokenFromStorage();
+    final http.Response response = await post(
+      "${Endpoint.updateEntry.path}${updatedEntry.entryId}",
+      extraHeaders: {
+        HttpHeaders.authorizationHeader: "$_bearer $accessToken",
+      },
+      body:
+          // serialize object into JSON string
+          jsonEncode(updatedEntry.toJSON()),
     );
 
     return response;
