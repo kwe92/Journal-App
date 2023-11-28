@@ -7,6 +7,7 @@ part of 'entry.dart';
 // **************************************************************************
 
 Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
+      entryId: json['id'] as int,
       uid: json['user_id'] as int,
       content: json['content'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -15,6 +16,7 @@ Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
 
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
       'user_id': instance.uid,
+      'id': instance.entryId,
       'content': instance.content,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
