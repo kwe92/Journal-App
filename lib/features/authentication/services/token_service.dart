@@ -25,7 +25,7 @@ class TokenService {
   Future<String?> getAccessTokenFromStorage() async {
     try {
       String? token = await storage.read(key: PrefKeys.accessToken);
-      debugPrint("\nsaved jwt access token: $token");
+      debugPrint("\n retrieved saved jwt access token: $token");
       return token;
     } on PlatformException {
       await storage.deleteAll();
