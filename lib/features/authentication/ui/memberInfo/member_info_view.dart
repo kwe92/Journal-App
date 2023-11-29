@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
+import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
@@ -237,14 +238,25 @@ class MemberInfoView extends StatelessWidget {
                                         // upon successful validation sign the user up.
                                         final Response response = await model.signupWithEmail(user: userService.tempUser as User);
 
-                                        if (response.statusCode == 200 && authService.isLoggedIn) {
-                                          // upon successful registration retrieve jwt token from response
-                                          await tokenService.saveTokenData(jsonDecode(response.body));
+                                        switch (response.statusCode) {
+                                          // failed status codes
+                                          case 209 || 400 || 401 || 403 || 550:
+                                            toastService.showSnackBar(
+                                              message: getErrorMsg(response.body),
+                                            );
+                                          // success status codes
+                                          case 200 || 201:
+                                            if (authService.isLoggedIn) {
+                                              // upon successful registration retrieve jwt token from response
+                                              await tokenService.saveTokenData(
+                                                jsonDecode(response.body),
+                                              );
 
-                                          // remove member info view and navigate to journal view | there maybe a better way to refresh widget
-                                          appRouter.replace(const JournalRoute());
-                                        } else {
-                                          // TODO: call toast service to display error message
+                                              // remove member info view and navigate to journal view | there maybe a better way to refresh widget
+                                              appRouter.replace(const JournalRoute());
+                                            } else {
+                                              toastService.showSnackBar();
+                                            }
                                         }
                                       }
                                     },

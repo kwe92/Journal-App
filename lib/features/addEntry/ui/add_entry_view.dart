@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/addEntry/ui/add_entry_view_model.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
+import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
@@ -42,8 +45,10 @@ class AddEntryView extends StatelessWidget {
                   controller: newEntryController,
                   decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
                   onChanged: (value) => model.setContent(value),
-                  // TODO: implemente validation
-                  // validator: (value) {},
+                  validator: stringService.customStringValidator(
+                    newEntryController.text,
+                    configuration: const StringValidatorConfiguration(notEmpty: true),
+                  ),
                 ),
               ),
             ),
@@ -53,11 +58,15 @@ class AddEntryView extends StatelessWidget {
                   mainTheme: offGreyButtonTheme,
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                      await model.addEntry(NewEntry(content: model.content));
-                      model.clearContent();
-                      appRouter.replace(const JournalRoute());
-                    } else {
-                      // TODO: inform the user that the textfield can not be empty
+                      final Response response = await model.addEntry(NewEntry(content: model.content));
+
+                      if (response.statusCode == 200 || response.statusCode == 201) {
+                        model.clearContent();
+                        toastService.showSnackBar(message: "New journal entry added.");
+                        appRouter.replace(const JournalRoute());
+                      } else {
+                        toastService.showSnackBar(message: getErrorMsg(response.body));
+                      }
                     }
                   },
                   label: "Add Entry"),
