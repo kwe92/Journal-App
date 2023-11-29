@@ -98,14 +98,18 @@ mixin HttpService {
   }
 }
 
-///  parseStatusCode logs endpoint, response status code and the server response.
-
+///  parseStatusCode: logs endpoint, response status code and the server response.
 http.Response parseStatusCode(http.Response response, String endpoint) {
-  debugPrint('\nEndpoint: \n\n${endpoint}');
-  debugPrint('\nStatus Code:\n\n${response.statusCode}');
-  debugPrint('\nResponse Body:\n\n${utf8.decode(response.bodyBytes)}');
+  debugPrint('\nEndpoint: \n$endpoint');
+  debugPrint('\nStatus Code:\n${response.statusCode}');
+  debugPrint('\nResponse Body:\n${utf8.decode(response.bodyBytes)}');
 
   return response;
+}
+
+String getErrorMsg(String jsonString) {
+  final Map<String, dynamic> parsedJson = jsonDecode(jsonString);
+  return parsedJson.values.toList()[0];
 }
 
 // What is a Service?

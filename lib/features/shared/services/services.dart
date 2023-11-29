@@ -7,6 +7,7 @@ import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
+import 'package:journal_app/features/shared/services/toast_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 AppRouter get appRouter {
@@ -31,6 +32,10 @@ JournalEntryService get journalEntryService {
 
 StringService get stringService {
   return locator.get<StringService>();
+}
+
+ToastService get toastService {
+  return locator.get<ToastService>();
 }
 
 TokenService get tokenService {

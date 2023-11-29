@@ -7,6 +7,7 @@ import 'package:journal_app/features/authentication/services/token_service.dart'
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
+import 'package:journal_app/features/shared/services/toast_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // service locator global variable
@@ -23,6 +24,7 @@ Future<void> configureDependencies() async {
   locator.registerSingleton<TokenService>(TokenService());
   locator.registerSingleton<JournalEntryService>(JournalEntryService());
   locator.registerSingleton<StringService>(StringService());
+  locator.registerSingleton<ToastService>(ToastService());
 
   locator.registerSingleton<SharedPreferences>(prefs);
   locator.registerFactory<FlutterSecureStorage>(() => const FlutterSecureStorage());
