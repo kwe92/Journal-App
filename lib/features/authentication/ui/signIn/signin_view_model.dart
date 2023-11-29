@@ -13,7 +13,7 @@ class SignInViewModel extends BaseViewModel {
   bool obscurePassword = true;
 
   void setEmail(String text) {
-    email = text;
+    email = text.trim().toLowerCase();
     notifyListeners();
   }
 
