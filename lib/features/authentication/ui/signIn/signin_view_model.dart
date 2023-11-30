@@ -10,6 +10,10 @@ class SignInViewModel extends BaseViewModel {
   String? email;
   String? password;
 
+  bool get ready {
+    return email != null && email!.isNotEmpty && password != null && password!.isNotEmpty;
+  }
+
   // controls password obscurity
   bool obscurePassword = true;
 

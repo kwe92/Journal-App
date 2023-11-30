@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-import 'package:journal_app/features/shared/services/string_service.dart';
+import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
 // TODO: add comments | StackedHookView | flutter hooks
@@ -30,13 +30,13 @@ class EmailInput extends StackedHookView<SignInViewModel> {
       focusNode: focus,
       // commonly used hints
       autofillHints: const [AutofillHints.email],
-      validator:
-          stringService.customStringValidator(emailController.text, configuration: const StringValidatorConfiguration(notEmpty: true)),
+      validator: stringService.emailIsValid,
       onChanged: model.setEmail,
       onEditingComplete: () => (nextFocus != null) ? nextFocus!.requestFocus() : focus.unfocus(),
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Email",
         hintText: "Enter Email Address",
+        suffixIcon: emailController.text.isNotEmpty ? ConditionalClearIcon(controller: emailController) : null,
       ),
     );
   }

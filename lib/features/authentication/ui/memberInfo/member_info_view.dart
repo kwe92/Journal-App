@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
@@ -11,6 +12,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
+import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:stacked/stacked.dart';
 
 // TODO: Refactor widget, far too big
@@ -134,11 +136,12 @@ class MemberInfoView extends StatelessWidget {
                                     onEditingComplete: () => lastNameFocus.requestFocus(),
                                     validator: stringService.customStringValidator(firstNameController.text,
                                         configuration: const StringValidatorConfiguration(notEmpty: true)),
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                       labelText: 'Legal First Name',
                                       hintText: 'Enter Legal First Name',
-                                      // TODO: add suffix icon
-                                      // suffixIcon: ConditionalClearIcon(controller: firstNameController),
+                                      suffixIcon: firstNameController.text.isNotEmpty
+                                          ? ConditionalClearIcon(controller: firstNameController)
+                                          : null,
                                     ),
                                   ),
                                   const SizedBox(height: 12),
@@ -153,13 +156,11 @@ class MemberInfoView extends StatelessWidget {
                                     validator: stringService.customStringValidator(lastNameController.text,
                                         configuration: const StringValidatorConfiguration(notEmpty: true)),
                                     autofillHints: const [AutofillHints.familyName],
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                       labelText: 'Legal Last Name',
                                       hintText: 'Enter Legal Last Name',
-                                      // TODO: add suffix icon
-                                      // suffixIcon: ConditionalClearIcon(
-                                      //   controller: lastNameController,
-                                      // ),
+                                      suffixIcon:
+                                          lastNameController.text.isNotEmpty ? ConditionalClearIcon(controller: lastNameController) : null,
                                     ),
                                   ),
                                   const SizedBox(height: 12),
@@ -178,16 +179,17 @@ class MemberInfoView extends StatelessWidget {
                                     autovalidateMode: AutovalidateMode.disabled,
                                     keyboardType: const TextInputType.numberWithOptions(signed: true),
                                     // TODO add inputFormatters
-                                    // inputFormatters: [
-                                    //   MaskedInputFormatter('###-###-####'),
-                                    // ],
-                                    decoration: const InputDecoration(
+                                    inputFormatters: [
+                                      MaskedInputFormatter('###-###-####'),
+                                    ],
+                                    decoration: InputDecoration(
                                       labelText: 'Phone Number',
                                       hintText: 'Enter Phone Number',
                                       // text prefixing user input
                                       prefixText: '(+1) ',
-                                      // TODO: add suffix icon
-                                      // suffixIcon: ConditionalClearIcon(controller: phoneNumberController),
+                                      suffixIcon: phoneNumberController.text.isNotEmpty
+                                          ? ConditionalClearIcon(controller: phoneNumberController)
+                                          : null,
                                     ),
                                   ),
                                   const SizedBox(height: 12),
@@ -200,13 +202,11 @@ class MemberInfoView extends StatelessWidget {
                                     autofillHints: const [AutofillHints.email],
                                     onChanged: model.setEmail,
                                     onEditingComplete: () => passwordFocus.requestFocus(),
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                       labelText: 'Email Address',
                                       hintText: 'Enter Email Address',
-                                      // TODO: add suffix icon
-                                      // suffixIcon: ConditionalClearIcon(
-                                      //   controller: emailController,
-                                      // ),
+                                      suffixIcon:
+                                          emailController.text.isNotEmpty ? ConditionalClearIcon(controller: emailController) : null,
                                     ),
                                   ),
                                   TextFormField(
@@ -232,8 +232,7 @@ class MemberInfoView extends StatelessWidget {
                                   const SizedBox(height: 36),
                                   SelectableButton(
                                     onPressed: () async {
-                                      // TODO: add toast service
-                                      // toastService.unfocusAll(context);
+                                      toastService.unfocusAll(context);
                                       if ((formKey.currentState?.validate() ?? false) && model.ready) {
                                         // upon successful validation sign the user up.
                                         final Response response = await model.signupWithEmail(user: userService.tempUser as User);

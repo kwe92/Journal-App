@@ -1,5 +1,3 @@
-// TODO: Create a generic popup menu parameter utility class
-
 class PopupMenuParameters<T> {
   /// the title of a popup menu.
   final String title;

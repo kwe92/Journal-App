@@ -67,14 +67,14 @@ class SignInView extends StatelessWidget {
                           SelectableButton(
                               onPressed: () async {
                                 model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
-                                // TODO: add toast service
-                                // toastService.unfocusAll(context);
-                                if ((formKey.currentState?.validate() ?? false) && model.email != null && model.password != null) {
+                                toastService.unfocusAll(context);
+                                if ((formKey.currentState?.validate() ?? false) && model.ready) {
                                   await model.signInWithEmail(context);
                                   if (authService.isLoggedIn) {
                                     appRouter.push(const JournalRoute());
                                   } else {
-                                    // TODO: add toast service with error message
+                                    // TODO: add a better error message
+                                    toastService.showSnackBar();
                                   }
                                 }
                               },
