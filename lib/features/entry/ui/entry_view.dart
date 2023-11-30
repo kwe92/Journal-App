@@ -13,9 +13,9 @@ import "package:flutter/material.dart";
 import "package:journal_app/features/shared/ui/button/custom_back_button.dart";
 import "package:journal_app/features/shared/ui/button/selectable_button.dart";
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
+import "package:journal_app/features/shared/utilities/popup_parameters.dart";
 import "package:stacked/stacked.dart";
 
-// TODO: add toast service / modal to ask user are then sure they want to delete an entry
 // TODO: maybe add an option to turn the modal off and add an option to toggle modal in settings
 
 @RoutePage()
@@ -99,13 +99,30 @@ class EntryView extends StatelessWidget {
                 child: SelectableButton(
                   mainTheme: offGreyButtonTheme,
                   onPressed: () async {
-                    final Response response = await model.deleteEntry(entry.entryId);
+                    final bool deleteContinued = await toastService.popupMenu<bool>(
+                      context,
+                      parameters: const PopupMenuParameters(
+                        title: "Delete Entry",
+                        content: "Are you sure you want to delete this entry?",
+                        defaultResult: false,
+                        options: {
+                          "Delete Entry": true,
+                          "Cancel": false,
+                        },
+                      ),
+                    );
 
-                    if (response.statusCode == 200 || response.statusCode == 201) {
-                      toastService.showSnackBar(message: "Deleted journal entry successfully.");
-                      appRouter.replace(const JournalRoute());
-                    } else {
-                      toastService.showSnackBar(message: getErrorMsg(response.body));
+                    debugPrint('Should delete entry: $deleteContinued');
+
+                    if (deleteContinued) {
+                      final Response response = await model.deleteEntry(entry.entryId);
+
+                      if (response.statusCode == 200 || response.statusCode == 201) {
+                        toastService.showSnackBar(message: "Deleted journal entry successfully.");
+                        appRouter.replace(const JournalRoute());
+                      } else {
+                        toastService.showSnackBar(message: getErrorMsg(response.body));
+                      }
                     }
                   },
                   label: "Delete Entry",
