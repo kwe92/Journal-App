@@ -8,10 +8,6 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: add comments to section off part of the UI
-// TODO: Make Reusable button
-// TODO: decouple widgets into their own classes
-
 @RoutePage()
 class SignInView extends StatelessWidget {
   SignInView({super.key});
@@ -67,14 +63,14 @@ class SignInView extends StatelessWidget {
                           SelectableButton(
                               onPressed: () async {
                                 model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
-                                // TODO: add toast service
-                                // toastService.unfocusAll(context);
-                                if ((formKey.currentState?.validate() ?? false) && model.email != null && model.password != null) {
+                                toastService.unfocusAll(context);
+                                if ((formKey.currentState?.validate() ?? false) && model.ready) {
                                   await model.signInWithEmail(context);
                                   if (authService.isLoggedIn) {
                                     appRouter.push(const JournalRoute());
                                   } else {
-                                    // TODO: add toast service with error message
+                                    // TODO: add a better error message
+                                    toastService.showSnackBar();
                                   }
                                 }
                               },

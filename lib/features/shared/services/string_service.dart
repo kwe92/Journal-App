@@ -1,8 +1,14 @@
 import 'package:email_validator/email_validator.dart';
 // import 'package:injectable/injectable.dart';
 
-// TODO: Review
-
+/// StringValidatorConfiguration: a helper class to specify custom string validation configureation.
+/// Used in conjunction with the [StringService] customStringValidator method.
+///
+/// Example: TextField or TextFormField requiring controller.text not to be empty
+/// ```dart
+/// const stringService = StringService()
+/// stringService.customStringValidator(textValue, configuration: const StringValidatorConfiguration(notEmpty: true))
+/// ```
 class StringValidatorConfiguration {
   final bool notEmpty;
   final bool includesUppercase;
@@ -18,6 +24,7 @@ class StringValidatorConfiguration {
   });
 }
 
+/// StringService: provides methods for string vaidation, mainly used to validate TextField's and TextFormField's.
 // @injectable
 class StringService {
   /// Custom validator that looks for specific features in a string
@@ -27,8 +34,6 @@ class StringService {
     String label = 'Value',
     StringValidatorConfiguration configuration = const StringValidatorConfiguration(),
   }) {
-    // debugPrint("contains uppercase: ${containsUppercase(value)}");
-    // TODO: use switch statement?
     return (value) {
       if (configuration.notEmpty && (value == null || value.trim() == '')) {
         return '$label cannot be empty';
@@ -48,8 +53,6 @@ class StringService {
 
   String? passwordIsValid(String? password) {
     if (isEmpty(password)) {
-      // TODO: use switch statement?
-
       return 'Value cannot be empty';
     } else if (!containsUppercase(password)) {
       return 'Password must contain a capital letter';
@@ -100,6 +103,7 @@ class StringService {
   }
 
   // TODO: Review
+
   /// Verify that the password does not contain the username or any
   /// 3+ length strings from the username
   bool noOverlaps({required String password, required String username}) {

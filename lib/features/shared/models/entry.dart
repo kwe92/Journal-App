@@ -1,6 +1,5 @@
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'package:journal_app/features/shared/utilities/json_utilities.dart';
 
 part 'entry.g.dart';
 
@@ -21,7 +20,7 @@ class Entry {
   final DateTime updatedAt;
 
   String get dateString {
-    return getStringFromDate(updatedAt);
+    return timeService.getStringFromDate(updatedAt);
   }
 
   /// Entry: model representing expected json input for an entry.

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 
 class FormContainer extends StatelessWidget {
   final Widget child;
@@ -22,7 +24,19 @@ class FormContainer extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: child,
+          child: Column(
+            children: [
+              gap8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(timeService.dayOfWeekByName()),
+                  Text(timeService.timeOfDay()),
+                ],
+              ),
+              Expanded(child: child)
+            ],
+          ),
         ),
       );
 }

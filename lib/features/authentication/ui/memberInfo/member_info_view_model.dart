@@ -1,4 +1,5 @@
 import 'package:journal_app/features/authentication/models/user.dart';
+import 'package:journal_app/features/journal/extensions/string_extensions.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:http/http.dart';
 import 'package:stacked/stacked.dart';
@@ -31,19 +32,19 @@ class MemberInfoViewModel extends BaseViewModel {
   }
 
   void setFirstName(String text) {
-    firstName = text;
+    firstName = text != '' ? text.capitalize().trim() : '';
     userService.tempUser?.firstName = firstName;
     notifyListeners();
   }
 
   void setLastName(String text) {
-    lastName = text;
+    lastName = text != '' ? text.capitalize().trim() : '';
     userService.tempUser?.lastName = lastName;
     notifyListeners();
   }
 
   void setEmail(String text) {
-    email = text.trim();
+    email = text.trim().toLowerCase();
     userService.tempUser?.email = email;
     notifyListeners();
   }
@@ -61,7 +62,7 @@ class MemberInfoViewModel extends BaseViewModel {
   }
 
   void setPhoneNumber(String text) {
-    String phoneNumberWithCountryCode = '+1${(text.replaceAll('-', '').replaceAll(' ', '')).replaceAll('(', '').replaceAll(')', '')}';
+    String phoneNumberWithCountryCode = _formatPhoneNumberE164Standard(text);
     phoneNumber = phoneNumberWithCountryCode;
     userService.tempUser?.phoneNumber = phoneNumberWithCountryCode;
     notifyListeners();
@@ -73,4 +74,9 @@ class MemberInfoViewModel extends BaseViewModel {
     setBusy(false);
     return response;
   }
+}
+
+/// _formatPhoneNumberE164Standard: returns a string representation of a phone number in e164 format.
+String _formatPhoneNumberE164Standard(String phoneNumber) {
+  return '+1${(phoneNumber.replaceAll('-', '').replaceAll(' ', '')).replaceAll('(', '').replaceAll(')', '')}';
 }
