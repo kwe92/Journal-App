@@ -8,10 +8,6 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: add comments to section off part of the UI
-// TODO: Make Reusable button
-// TODO: decouple widgets into their own classes
-
 @RoutePage()
 class SignInView extends StatelessWidget {
   SignInView({super.key});

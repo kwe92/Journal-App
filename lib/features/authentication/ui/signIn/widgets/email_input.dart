@@ -5,9 +5,6 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
-// TODO: add comments | StackedHookView | flutter hooks
-// TODO: add leading icon to clear text
-
 class EmailInput extends StackedHookView<SignInViewModel> {
   final FocusNode focus;
   final FocusNode? nextFocus;

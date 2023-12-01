@@ -22,7 +22,6 @@ class AddEntryViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // TODO: add toast service here?
   Future<Response> addEntry(NewEntry newEntry) async {
     setBusy(true);
     final Response response = await journalEntryService.addEntry(newEntry);

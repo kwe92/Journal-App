@@ -7,6 +7,7 @@ import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
+import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,6 +37,10 @@ StringService get stringService {
 
 ToastService get toastService {
   return locator.get<ToastService>();
+}
+
+TimeService get timeService {
+  return locator.get<TimeService>();
 }
 
 TokenService get tokenService {

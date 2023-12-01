@@ -5,8 +5,6 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
-// TODO: add leading icon to clear text
-
 class PasswordInput extends StackedHookView<SignInViewModel> {
   final FocusNode focus;
   final FocusNode? nextFocus;
