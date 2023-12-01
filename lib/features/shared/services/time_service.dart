@@ -2,12 +2,12 @@ import 'package:intl/intl.dart';
 
 /// TimeService: A utility service for Durations and DateTimes that parses and formats timestamps.
 class TimeService {
-  /// dayOfWeekByName: returns day of week as String for DateTime object, if DateTime omitted returns current day
+  /// dayOfWeekByName: returns day of week as String for DateTime object, if DateTime omitted returns current day.
   String dayOfWeekByName([DateTime? dateTime]) {
     return DateFormat.EEEE().format(dateTime ?? DateTime.now());
   }
 
-  /// timeOfDay: returns hour:minutes as String for DateTime object, if DateTime omitted returns current hour:minutes
+  /// timeOfDay: returns hh:mm as String for DateTime object, if DateTime omitted returns current hh:mm.
   String timeOfDay([DateTime? dateTime]) {
     return DateFormat.jm().format(dateTime ?? DateTime.now()).replaceAll("PM", "pm").replaceAll("AM", "am");
   }
