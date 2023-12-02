@@ -15,7 +15,7 @@ import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: Refactor widget, far too big
+// TODO: Refactor widget
 // TODO: Refactor comments
 // TODO: Review scrollable form and CustomScrollView
 // TODO: Review Expanded with CustomScrollView, slivers, SliverToBoxAdapter
@@ -178,7 +178,6 @@ class MemberInfoView extends StatelessWidget {
                                     autofillHints: const [AutofillHints.telephoneNumberNational],
                                     autovalidateMode: AutovalidateMode.disabled,
                                     keyboardType: const TextInputType.numberWithOptions(signed: true),
-                                    // TODO add inputFormatters
                                     inputFormatters: [
                                       MaskedInputFormatter('###-###-####'),
                                     ],

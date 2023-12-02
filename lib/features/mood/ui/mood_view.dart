@@ -13,7 +13,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: Review what can be refactored | add comments
+// TODO: Review  | add comments
 
 @RoutePage()
 class MoodView extends StatelessWidget {
@@ -60,8 +60,6 @@ class MoodView extends StatelessWidget {
                           ),
                         ),
                         gap36,
-
-                        //TODO Review: GridView.builder | why Flexible wrapping is required with in Flex, Row or Column Widgets for GridView.builder | what SliverGridDelegateWithFixedCrossAxisCount is
                         Flexible(
                             child: GridView.builder(
                           itemCount: moodsMaps.length,
@@ -72,7 +70,6 @@ class MoodView extends StatelessWidget {
                             childAspectRatio: (100 / 160),
                           ),
                           itemBuilder: (context, i) {
-                            // TODO: continue implementing selectable mood card | maybe add is selected property | implement MoodView and add isSelected member variable
                             return GestureDetector(
                               onTap: () {
                                 model.setIndex(i);
@@ -88,19 +85,7 @@ class MoodView extends StatelessWidget {
                               ),
                             );
                           },
-                        )
-                            //TODO END======================================================================
-                            //! dont delete until mood card is selectable============
-                            //  GridView.count(
-                            //   crossAxisCount: 3,
-                            //   crossAxisSpacing: 12,
-                            //   mainAxisSpacing: 12,
-                            //   // set the width and hight of your children with childAspectRatio: (width / height)
-                            //   childAspectRatio: (100 / 160),
-                            // children: [...moodCards],
-                            // ),
-                            //! end of dont delete====================================
-                            ),
+                        )),
                         SelectableButton(
                             mainTheme: lightGreenButtonTheme,
                             labelPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -127,16 +112,21 @@ class MoodView extends StatelessWidget {
 final Map<String, List<dynamic>> moodsData = {
   MoodType.awesome: [const Color(0xfffcb39c), "assets/images/very_happy_face.svg", 40.0],
   MoodType.happy: [const Color(0xfffbe29c), "assets/images/happy_face.svg", 50.0],
-  MoodType.okay: [const Color(0xffc5edd3), "assets/images/meh_face.svg", 50.0],
+  MoodType.okay: [Color.fromARGB(255, 103, 110, 106), "assets/images/meh_face.svg", 50.0],
   MoodType.bad: [const Color(0xffa9efe1), "assets/images/sad_face.svg", 50.0],
   MoodType.terible: [const Color(0xffaed9e0), "assets/images/aweful_face.svg", 70.0]
 };
 
 List<MapEntry<String, List>> moodsMaps = moodsData.entries.toList();
 
-List<Mood> moods = moodsData.entries
-    .map((moodEntry) =>
-        Mood(moodColor: moodEntry.value[0], moodImagePath: moodEntry.value[1], imageSize: moodEntry.value[2], moodText: moodEntry.key))
-    .toList();
 
-// List<MoodCard> moodCards = moods.map((moodModel) => MoodCard(mood: moodModel)).toList();
+
+
+// TODO: add comments
+
+
+// GridView.builder
+
+//  SliverGridDelegateWithFixedCrossAxisCount
+
+// Flexible wapping in Flex, Row or Column Widgets for GridView.builder
