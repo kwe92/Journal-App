@@ -28,7 +28,7 @@ class AddEntryView extends StatelessWidget {
       builder: (context, model, _) => BaseScaffold(
         title: "Add Entry",
         leading: CustomBackButton(
-          onPressed: () => appRouter.replace(const JournalRoute()),
+          onPressed: () => appRouter.pop(),
         ),
         body: Column(
           children: [
