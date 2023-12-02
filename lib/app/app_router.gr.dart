@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/material.dart' as _i8;
 import 'package:journal_app/features/addEntry/ui/add_entry_view.dart' as _i1;
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view.dart'
     as _i4;
@@ -18,7 +18,7 @@ import 'package:journal_app/features/authentication/ui/signIn/signin_view.dart'
 import 'package:journal_app/features/entry/ui/entry_view.dart' as _i2;
 import 'package:journal_app/features/journal/ui/journal_view.dart' as _i3;
 import 'package:journal_app/features/mood/ui/mood_view.dart' as _i5;
-import 'package:journal_app/features/shared/models/entry.dart' as _i8;
+import 'package:journal_app/features/shared/models/entry.dart' as _i9;
 
 abstract class $AppRouter extends _i7.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -26,9 +26,13 @@ abstract class $AppRouter extends _i7.RootStackRouter {
   @override
   final Map<String, _i7.PageFactory> pagesMap = {
     AddEntryRoute.name: (routeData) {
+      final args = routeData.argsAs<AddEntryRouteArgs>();
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.AddEntryView(),
+        child: _i1.AddEntryView(
+          moodType: args.moodType,
+          key: args.key,
+        ),
       );
     },
     EntryRoute.name: (routeData) {
@@ -74,24 +78,48 @@ abstract class $AppRouter extends _i7.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddEntryView]
-class AddEntryRoute extends _i7.PageRouteInfo<void> {
-  const AddEntryRoute({List<_i7.PageRouteInfo>? children})
-      : super(
+class AddEntryRoute extends _i7.PageRouteInfo<AddEntryRouteArgs> {
+  AddEntryRoute({
+    required String moodType,
+    _i8.Key? key,
+    List<_i7.PageRouteInfo>? children,
+  }) : super(
           AddEntryRoute.name,
+          args: AddEntryRouteArgs(
+            moodType: moodType,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'AddEntryRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static const _i7.PageInfo<AddEntryRouteArgs> page =
+      _i7.PageInfo<AddEntryRouteArgs>(name);
+}
+
+class AddEntryRouteArgs {
+  const AddEntryRouteArgs({
+    required this.moodType,
+    this.key,
+  });
+
+  final String moodType;
+
+  final _i8.Key? key;
+
+  @override
+  String toString() {
+    return 'AddEntryRouteArgs{moodType: $moodType, key: $key}';
+  }
 }
 
 /// generated route for
 /// [_i2.EntryView]
 class EntryRoute extends _i7.PageRouteInfo<EntryRouteArgs> {
   EntryRoute({
-    required _i8.Entry entry,
-    _i9.Key? key,
+    required _i9.Entry entry,
+    _i8.Key? key,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           EntryRoute.name,
@@ -114,9 +142,9 @@ class EntryRouteArgs {
     this.key,
   });
 
-  final _i8.Entry entry;
+  final _i9.Entry entry;
 
-  final _i9.Key? key;
+  final _i8.Key? key;
 
   @override
   String toString() {
@@ -142,7 +170,7 @@ class JournalRoute extends _i7.PageRouteInfo<void> {
 /// [_i4.MemberInfoView]
 class MemberInfoRoute extends _i7.PageRouteInfo<MemberInfoRouteArgs> {
   MemberInfoRoute({
-    _i9.Key? key,
+    _i8.Key? key,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           MemberInfoRoute.name,
@@ -159,7 +187,7 @@ class MemberInfoRoute extends _i7.PageRouteInfo<MemberInfoRouteArgs> {
 class MemberInfoRouteArgs {
   const MemberInfoRouteArgs({this.key});
 
-  final _i9.Key? key;
+  final _i8.Key? key;
 
   @override
   String toString() {
@@ -185,7 +213,7 @@ class MoodRoute extends _i7.PageRouteInfo<void> {
 /// [_i6.SignInView]
 class SignInRoute extends _i7.PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
-    _i9.Key? key,
+    _i8.Key? key,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           SignInRoute.name,
@@ -202,7 +230,7 @@ class SignInRoute extends _i7.PageRouteInfo<SignInRouteArgs> {
 class SignInRouteArgs {
   const SignInRouteArgs({this.key});
 
-  final _i9.Key? key;
+  final _i8.Key? key;
 
   @override
   String toString() {

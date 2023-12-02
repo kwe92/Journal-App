@@ -3,9 +3,15 @@ part 'new_entry.g.dart';
 
 @JsonSerializable()
 class NewEntry {
-  String? content;
+  final String content;
 
-  NewEntry({required this.content});
+  @JsonKey(name: "mood_type")
+  final String moodType;
+
+  NewEntry({
+    required this.content,
+    required this.moodType,
+  });
 
   factory NewEntry.fromJSON(Map<String, dynamic> json) => _$NewEntryFromJson(json);
 

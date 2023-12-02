@@ -19,6 +19,9 @@ class Entry {
   @JsonKey(name: "updated_at")
   final DateTime updatedAt;
 
+  @JsonKey(name: "mood_type")
+  final String moodType;
+
   String get dateString {
     return timeService.getStringFromDate(updatedAt);
   }
@@ -28,6 +31,7 @@ class Entry {
     required this.entryId,
     required this.uid,
     required this.content,
+    required this.moodType,
     required this.createdAt,
     required this.updatedAt,
   });

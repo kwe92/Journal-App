@@ -4,12 +4,12 @@ import 'package:journal_app/features/mood/models/mood.dart';
 
 class MoodCard extends StatelessWidget {
   final Mood mood;
-  // final bool isSelected;
+  final bool isSelected;
   final double? width;
   final double? height;
   const MoodCard({
     required this.mood,
-    // required this.isSelected,
+    required this.isSelected,
     this.width,
     this.height,
     super.key,
@@ -21,6 +21,8 @@ class MoodCard extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
+        border: isSelected ? Border.all(color: mood.moodColor) : null,
+
         color: Colors.white,
         // color: const Color(0xFFF5D7AA),
         boxShadow: [
@@ -33,28 +35,34 @@ class MoodCard extends StatelessWidget {
         ],
         borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isSelected ? mood.moodColor.withOpacity(0.15) : Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
+        ),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
 
-        children: [
-          SizedBox(
-            height: 70,
-            // color: Colors.orange,
-            child: SvgPicture.asset(
-              mood.moodImagePath,
-              width: mood.imageSize,
-              color: mood.moodColor,
+          children: [
+            SizedBox(
+              height: 70,
+              // color: Colors.orange,
+              child: SvgPicture.asset(
+                mood.moodImagePath,
+                width: mood.imageSize,
+                color: mood.moodColor,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: Text(
-              mood.moodText,
-              style: TextStyle(color: mood.moodColor),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: Text(
+                mood.moodText,
+                style: TextStyle(color: mood.moodColor),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
