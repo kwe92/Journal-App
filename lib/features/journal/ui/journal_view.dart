@@ -134,7 +134,10 @@ class JournalView extends StatelessWidget {
           // BUTTON TO ADD NEW ENTRY
           floatingActionButton: AddButton(onTap: () {
             // push add entry route and pop all routes to trigger createNewViewModelOnInsert
-            appRouter.pushAndPopUntil(const AddEntryRoute(), predicate: (route) => false);
+
+            appRouter.push(const MoodRoute());
+
+            // appRouter.pushAndPopUntil(const AddEntryRoute(), predicate: (route) => false);
           }),
         );
       },

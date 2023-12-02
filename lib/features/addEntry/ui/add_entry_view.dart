@@ -16,7 +16,9 @@ import 'package:stacked/stacked.dart';
 
 @RoutePage()
 class AddEntryView extends StatelessWidget {
-  const AddEntryView({super.key});
+  final String moodType;
+
+  const AddEntryView({required this.moodType, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class AddEntryView extends StatelessWidget {
       builder: (context, model, _) => BaseScaffold(
         title: "Add Entry",
         leading: CustomBackButton(
-          onPressed: () => appRouter.replace(const JournalRoute()),
+          onPressed: () => appRouter.pop(),
         ),
         body: Column(
           children: [
@@ -58,7 +60,7 @@ class AddEntryView extends StatelessWidget {
                   mainTheme: offGreyButtonTheme,
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                      final Response response = await model.addEntry(NewEntry(content: model.content));
+                      final Response response = await model.addEntry(NewEntry(moodType: moodType, content: model.content!));
 
                       if (response.statusCode == 200 || response.statusCode == 201) {
                         model.clearContent();

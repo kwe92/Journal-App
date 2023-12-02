@@ -22,7 +22,6 @@ class EntryviewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // TODO: check response here maybe
   Future<Response> updateEntry(UpdatedEntry updatedEntry) async {
     setBusy(true);
     final Response response = await journalEntryService.updateEntry(updatedEntry);
@@ -30,7 +29,6 @@ class EntryviewModel extends BaseViewModel {
     return response;
   }
 
-  // TODO: check response here maybe
   Future<Response> deleteEntry(int entryId) async {
     setBusy(true);
     final Response response = await journalEntryService.deleteEntry(entryId);

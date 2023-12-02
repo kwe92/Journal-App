@@ -85,6 +85,8 @@ final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
 
 final offGreyButtonTheme = OutlinedButtonThemeData(style: offGreyButtonStyle);
 
+final lightGreenButtonTheme = OutlinedButtonThemeData(style: lightGreenButtonStyle);
+
 final blueButtonStyle = ButtonStyle(
   shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
   backgroundColor: resolver((states) => AppColors.blue1),
@@ -98,10 +100,15 @@ final blueButtonStyle = ButtonStyle(
 );
 
 final offGreyButtonStyle = blueButtonStyle.copyWith(
-  backgroundColor: resolver((states) => AppColors.offGrey),
+  backgroundColor: resolver((state) => AppColors.offGrey),
+);
+
+final lightGreenButtonStyle = blueButtonStyle.copyWith(
+  side: resolver((state) => BorderSide.none),
+  backgroundColor: resolver((state) => const Color(0xff91ce7f)),
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
-MaterialStateProperty<T> resolver<T>(T Function(Set<MaterialState>) statesCallback) {
+MaterialStateProperty<T> resolver<T>(T Function(Set<MaterialState> state) statesCallback) {
   return MaterialStateProperty.resolveWith(statesCallback);
 }
