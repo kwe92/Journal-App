@@ -37,17 +37,14 @@ class MoodCard extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? mood.moodColor.withOpacity(0.15) : Colors.white,
+          color: isSelected ? mood.moodColorBackground : Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
             SizedBox(
               height: 70,
-              // color: Colors.orange,
               child: SvgPicture.asset(
                 mood.moodImagePath,
                 width: mood.imageSize,
