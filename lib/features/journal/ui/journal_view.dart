@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
+import 'package:journal_app/features/journal/ui/widget/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -25,77 +26,28 @@ class JournalView extends StatelessWidget {
       builder: (context, model, child) {
         return BaseScaffold(
           title: "My Journel",
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.blue0.withOpacity(0.25),
-                  AppColors.blueGrey0,
-                ],
-              ),
-            ),
-            child: Center(
-              child: ListView.builder(
-                // used to cented Text widget when there are no entries
-                shrinkWrap: model.journalEntries.isEmpty ? true : false,
-                itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
-                itemBuilder: (BuildContext context, int i) {
-                  return model.journalEntries.isEmpty
-                      ? const Center(
-                          child: Text(
-                            "No entries, whats on your mind...",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                            ),
-                          ),
-                        )
-                      : Padding(
-                          padding: EdgeInsets.only(top: i == 0 ? 32 : 0, bottom: 42),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Text(model.journalEntries[i].dateString),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              GestureDetector(
-                                onTap: () =>
-                                    appRouter.pushAndPopUntil(EntryRoute(entry: model.journalEntries[i]), predicate: (route) => false),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.only(left: 24, right: 16),
-                                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                                  height: 52,
-                                  width: double.infinity,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.offWhite,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(52 / 2),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    model.journalEntries[i].content,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                },
-              ),
-            ),
+          body: ListView.builder(
+            // used to cented Text widget when there are no entries
+            shrinkWrap: model.journalEntries.isEmpty ? true : false,
+            itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
+            itemBuilder: (BuildContext context, int i) {
+              return model.journalEntries.isEmpty
+                  ? const Center(
+                      child: Text(
+                        "No entries, whats on your mind...",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 32,
+                        ),
+                      ),
+                    )
+                  : JournalEntry(index: i, journalEntry: model.journalEntries[i]);
+            },
           ),
           // Open menu to the side
           drawer: Drawer(
-            // ?INFO: required to use CustomScrollView to have Spacer / Expanded Widgets within a ListView
+            //CustomScrollView required to have Spacer / Expanded Widgets within a ListView
             child: CustomScrollView(
               slivers: [
                 SliverFillRemaining(
@@ -109,21 +61,22 @@ class JournalView extends StatelessWidget {
                             // Use InkWell combined with Ink to respond to
                             // user touch events and provide visual fedback
                             InkWell(
-                                onTap: () async {
-                                  // remove access token upon user logout
-                                  await tokenService.removeAccessTokenFromStorage();
+                          onTap: () async {
+                            // remove access token upon user logout
+                            await tokenService.removeAccessTokenFromStorage();
 
-                                  // remove all routes and return to the signin page
-                                  appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
-                                },
-                                splashColor: AppColors.splashColor,
-                                highlightColor: AppColors.splashColor,
-                                child: Ink(
-                                  child: const ListTile(
-                                    leading: Icon(Icons.logout),
-                                    title: Text("Logout"),
-                                  ),
-                                )),
+                            // remove all routes and return to the signin page
+                            appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
+                          },
+                          splashColor: AppColors.splashColor,
+                          highlightColor: AppColors.splashColor,
+                          child: Ink(
+                            child: const ListTile(
+                              leading: Icon(Icons.logout),
+                              title: Text("Logout"),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -144,3 +97,11 @@ class JournalView extends StatelessWidget {
     );
   }
 }
+
+// Create RenderBox That Starts at Min Height Grows to Max Height
+
+//   - most RenderBox's have a default infinite with and height
+//   - in order to have a growable RenderBox you must use a DecoratedBox widget
+//   - DecoratedBox widget has a default height and width of 0
+//   - wrapping DecoratedBox with a ContrainedBox and adding minimum and maximum contraints
+//     allows the chidren of a DecoratedBox to be growable from the minimum size to the maximum size
