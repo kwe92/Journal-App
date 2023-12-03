@@ -7,6 +7,11 @@ class TimeService {
     return DateFormat.EEEE().format(dateTime ?? DateTime.now());
   }
 
+  /// customDateString: returns formatted DateTime string with the given pattern, if DateTime omitted returns current date formatted with pattern.
+  String customDateString(String pattern, [DateTime? dateTime]) {
+    return DateFormat(pattern).format(dateTime ?? DateTime.now());
+  }
+
   /// timeOfDay: returns hh:mm as String for DateTime object, if DateTime omitted returns current hh:mm.
   String timeOfDay([DateTime? dateTime]) {
     return DateFormat.jm().format(dateTime ?? DateTime.now()).replaceAll("PM", "pm").replaceAll("AM", "am");

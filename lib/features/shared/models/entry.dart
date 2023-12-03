@@ -1,5 +1,6 @@
-import 'package:journal_app/features/shared/services/services.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'package:journal_app/features/shared/services/services.dart';
 
 part 'entry.g.dart';
 
@@ -42,6 +43,6 @@ class Entry {
 
   @override
   String toString() {
-    return 'Entry(uid: $uid, entryId: $entryId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Entry(uid: $uid, entryId: $entryId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
   }
 }
