@@ -31,7 +31,15 @@ class SignInView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset('assets/images/journal_photo.avif'),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 3.125,
+                    width: double.maxFinite,
+                    child: Image.asset(
+                      // TODO: replace with imageService and random image
+                      "assets/images/mindful04.avif",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   const SizedBox(height: 24),
                   const Padding(
                     padding: EdgeInsets.only(left: 16.0),

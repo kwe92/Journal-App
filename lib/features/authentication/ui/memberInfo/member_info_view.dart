@@ -86,7 +86,10 @@ class MemberInfoView extends StatelessWidget {
                         height: 210,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/images/journal_photo.avif"),
+                            image: AssetImage(
+                              // TODO: replace with imageService and random image
+                              "assets/images/mindful04.avif",
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -95,6 +98,7 @@ class MemberInfoView extends StatelessWidget {
                         width: 75,
                         height: 75,
                         child: CustomBackButton(
+                          color: Colors.white,
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                       )

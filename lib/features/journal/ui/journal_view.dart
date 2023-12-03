@@ -25,7 +25,10 @@ class JournalView extends StatelessWidget {
       createNewViewModelOnInsert: true,
       builder: (context, model, child) {
         return BaseScaffold(
-          title: "My Journel",
+          // title: "My Journel",
+
+          // Thoughts in french
+          title: "Pensées",
           body: Center(
             child: ListView.builder(
               // used to cented Text widget when there are no entries
@@ -53,7 +56,9 @@ class JournalView extends StatelessWidget {
                 SliverFillRemaining(
                   child: Column(
                     children: [
-                      Image.asset('assets/images/journal_photo.avif'),
+                      Image.asset(
+                          // TODO: replace with imageService and random image
+                          "assets/images/mindful04.avif"),
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),

@@ -18,7 +18,7 @@ class AppColors {
 
   static const journalBackground = Color(0xffffffff);
 
-  static final splashColor = blue1.withOpacity(0.25);
+  static final splashColor = lightGreen.withOpacity(0.25);
 
   static const lightGreen = Color(0xff91ce7f);
 
@@ -35,4 +35,8 @@ class AppColors {
   static const appBar = lightGreen;
 
   static final shadowColor = Colors.black.withOpacity(0.15);
+
+  static final dateTileBackgroundColor = const Color(0xff807c7c).withOpacity(0.10);
+
+  static const dateTileColor = Color(0xff807c7c);
 }

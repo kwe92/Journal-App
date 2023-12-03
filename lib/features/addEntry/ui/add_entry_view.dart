@@ -28,7 +28,10 @@ class AddEntryView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => AddEntryViewModel(),
       builder: (context, model, _) => BaseScaffold(
-        title: "Add Entry",
+        // title: "Add Entry",
+
+        // Manifested in french
+        title: "Manifesté",
         leading: CustomBackButton(
           onPressed: () => appRouter.pop(),
         ),
@@ -70,6 +73,7 @@ class AddEntryView extends StatelessWidget {
                       }
                     }
                   },
+                  // label: "Add Entry"
                   label: "Add Entry"),
             ),
           ],

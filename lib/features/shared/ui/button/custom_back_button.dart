@@ -4,10 +4,12 @@ import 'package:journal_app/app/theme/colors.dart';
 class CustomBackButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double size;
+  final Color? color;
 
   const CustomBackButton({
     required this.onPressed,
     this.size = 32,
+    this.color,
     super.key,
   });
 
@@ -16,7 +18,7 @@ class CustomBackButton extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(
           Icons.arrow_back_ios,
-          color: AppColors.appBar,
+          color: color ?? AppColors.appBar,
           size: size,
         ),
       );

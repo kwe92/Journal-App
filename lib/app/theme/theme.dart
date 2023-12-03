@@ -13,15 +13,15 @@ class AppTheme {
         textTheme: textTheme,
         inputDecorationTheme: inputTheme,
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: AppColors.blue1,
+          cursorColor: AppColors.lightGreen,
 
           // selectionColor: text highlight color
-          selectionColor: AppColors.blue1.withOpacity(0.15),
+          selectionColor: AppColors.lightGreen.withOpacity(0.15),
         ),
 
         // change selectionHandleColor on IOS
         cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: AppColors.blue1,
+          primaryColor: AppColors.lightGreen,
         ),
         textButtonTheme: textButtonTheme,
         outlinedButtonTheme: mainButtonTheme,
@@ -53,7 +53,7 @@ final TextButtonThemeData textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
     // button splash color
     overlayColor: resolver((states) => AppColors.splashColor),
-    textStyle: resolver((states) => TextStyle(foreground: Paint()..color = AppColors.blue1)),
+    textStyle: resolver((states) => TextStyle(foreground: Paint()..color = AppColors.lightGreen)),
   ),
 );
 
@@ -69,17 +69,17 @@ final InputDecorationTheme inputTheme = () {
     // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.blue1,
+        color: AppColors.lightGreen,
         width: borderWidth,
       ),
     ),
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.blue1,
+        color: AppColors.lightGreen,
         width: borderWidth,
       ),
     ),
-    floatingLabelStyle: TextStyle(color: AppColors.blue1),
+    floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
   );
 }();
 
@@ -87,7 +87,7 @@ final InputDecorationTheme inputTheme = () {
 const InputDecoration borderlessInput = InputDecoration(
   enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
   focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-  floatingLabelStyle: TextStyle(color: AppColors.blue1),
+  floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
 );
 
 final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
@@ -99,7 +99,7 @@ final lightGreenButtonTheme = OutlinedButtonThemeData(style: lightGreenButtonSty
 final blueButtonStyle = ButtonStyle(
   shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
   side: resolver((state) => BorderSide.none),
-  backgroundColor: resolver((states) => AppColors.blue1),
+  backgroundColor: resolver((states) => AppColors.lightGreen),
   textStyle: resolver(
     (states) => TextStyle(
       foreground: Paint()..color = AppColors.offWhite,

@@ -63,8 +63,8 @@ class MoodView extends StatelessWidget {
                           itemCount: MoodsData.moodsMaps.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
                             // represents the width / height respectively
                             childAspectRatio: (100 / 160),
                           ),

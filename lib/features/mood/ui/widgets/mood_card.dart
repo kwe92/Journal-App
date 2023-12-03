@@ -23,9 +23,7 @@ class MoodCard extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         border: isSelected ? Border.all(color: mood.moodColor) : null,
-
         color: Colors.white,
-        // color: const Color(0xFFF5D7AA),
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, 2),
