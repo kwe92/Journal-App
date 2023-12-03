@@ -105,7 +105,7 @@ final offGreyButtonStyle = blueButtonStyle.copyWith(
 
 final lightGreenButtonStyle = blueButtonStyle.copyWith(
   side: resolver((state) => BorderSide.none),
-  backgroundColor: resolver((state) => const Color(0xff91ce7f)),
+  backgroundColor: resolver((state) => AppColors.lightGreen),
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
