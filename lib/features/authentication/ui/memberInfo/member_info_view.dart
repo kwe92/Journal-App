@@ -15,16 +15,13 @@ import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: Refactor widget
-// TODO: Refactor comments
-// TODO: Review scrollable form and CustomScrollView
-// TODO: Review Expanded with CustomScrollView, slivers, SliverToBoxAdapter
-
 @RoutePage()
 class MemberInfoView extends StatelessWidget {
   MemberInfoView({super.key});
 
+  // required to track form and validate the forms text fields
   final formKey = GlobalKey<FormState>();
+
   final AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
   /// Text fields
@@ -129,7 +126,7 @@ class MemberInfoView extends StatelessWidget {
                                     focusNode: firstNameFocus,
                                     textInputAction: TextInputAction.next,
                                     controller: firstNameController,
-                                    // capitalize work in text form field
+                                    // capitalize word in text form field
                                     textCapitalization: TextCapitalization.words,
                                     autofillHints: const [AutofillHints.givenName],
                                     onChanged: model.setFirstName,
@@ -279,14 +276,46 @@ class MemberInfoView extends StatelessWidget {
   }
 }
 
+
 // Keyboard Type | property TextFormField
 
-//   - change keyboard type automatically for the user | default to old-school 0 - 9 keyboard | signed = true for modern keyboard
+//   - change keyboard type automatically for the user
+//   - defaults to old-school 0 - 9 keyboard
+//   -  signed = true for modern keyboard
 
 
-// Focus on Next Input Field in Focus Tree
+// Focus on Next Input Field in Focus Tree | textInputAction | onEditingComplete
 
 //   - tell input controller to jump to next field in focus node tree
-//   - e.g. textInputAction: TextInputAction.next
-//   - when editing commplete request focus for next node in focus tree (the focus node should belong to the text form field bellow)
-//   - e.g. onEditingComplete: () => lastNameFocus.requestFocus(),
+//   - when editing commplete request focus for next focus node in focus tree 
+//     the next focus node should belong to the text form field above the requester 
+
+// CustomScrollView
+
+//   - sub-type of ScrollView that allows custom scroll effects with slivers
+//   - analogous to ListView with scrolling effects
+//   - the children of a CustomScrollView are RenderSliver's (SliverToBoxAdapter, SliverList, et)
+//   - where as ListView's children are RenderBox's (Container, Row, Column etc)
+
+// Slivers
+
+//   - portion of a scrollable area that can be configured in diffrent ways
+//   - slivers can be combined to create custom scroll effects
+//   - Sliver objects begin with a sliver prefix
+
+// Sliver Memory Footprint
+
+//   - slivers are lazily built by their parent only being created
+//     once visible in the view port
+
+// Catigories of Scrolling
+
+//   - Scrolling without effects (ListView)
+
+//       - children are Renderbox's: basic two demmentional objects on the cartesian plane
+
+//   - Scrolling with effects (CustomScrollView)
+
+//       - children are RenderSliver's (slivers for brevity): advanced constraints and geometry
+
+
