@@ -46,13 +46,11 @@ class JournalEntry extends StatelessWidget {
               ),
               gap12,
               MoodTile(mood: mood),
-              // TODO: add date and mood tiles
             ],
           ),
           const SizedBox(
             height: 12,
           ),
-          // TODO: replace with JournalContent
           JournalContent(
             onPressed: () => appRouter.pushAndPopUntil(EntryRoute(entry: journalEntry), predicate: (route) => false),
             moodBackgroundColor: mood.moodColorBackground,

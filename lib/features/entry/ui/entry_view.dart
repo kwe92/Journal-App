@@ -69,7 +69,6 @@ class EntryView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: SelectableButton(
-                  mainTheme: offGreyButtonTheme,
                   onPressed: () async {
                     if (model.readOnly) {
                       model.setReadOnly(false);
@@ -97,7 +96,6 @@ class EntryView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: SelectableButton(
-                  mainTheme: offGreyButtonTheme,
                   onPressed: () async {
                     final bool deleteContinued = await toastService.popupMenu<bool>(
                       context,

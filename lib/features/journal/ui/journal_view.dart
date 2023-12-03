@@ -26,24 +26,24 @@ class JournalView extends StatelessWidget {
       builder: (context, model, child) {
         return BaseScaffold(
           title: "My Journel",
-          body: ListView.builder(
-            // used to cented Text widget when there are no entries
-            shrinkWrap: model.journalEntries.isEmpty ? true : false,
-            itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
-            itemBuilder: (BuildContext context, int i) {
-              return model.journalEntries.isEmpty
-                  ? const Center(
-                      child: Text(
+          body: Center(
+            child: ListView.builder(
+              // used to cented Text widget when there are no entries
+              shrinkWrap: model.journalEntries.isEmpty ? true : false,
+              itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
+              itemBuilder: (BuildContext context, int i) {
+                return model.journalEntries.isEmpty
+                    ? const Text(
                         "No entries, whats on your mind...",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.lightGreen,
                           fontSize: 32,
                         ),
-                      ),
-                    )
-                  : JournalEntry(index: i, journalEntry: model.journalEntries[i]);
-            },
+                      )
+                    : JournalEntry(index: i, journalEntry: model.journalEntries[i]);
+              },
+            ),
           ),
           // Open menu to the side
           drawer: Drawer(

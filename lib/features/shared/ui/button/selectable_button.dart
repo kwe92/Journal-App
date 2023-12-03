@@ -21,7 +21,7 @@ class SelectableButton extends StatelessWidget {
       child: InkWell(
         child: Ink(
           child: Theme(
-            data: Theme.of(context).copyWith(outlinedButtonTheme: mainTheme ?? mainButtonTheme),
+            data: Theme.of(context).copyWith(outlinedButtonTheme: mainTheme ?? lightGreenButtonTheme),
             child: OutlinedButton(
               onPressed: onPressed,
               child: Padding(

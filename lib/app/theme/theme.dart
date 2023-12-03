@@ -6,15 +6,19 @@ class AppTheme {
   const AppTheme._();
 
   static ThemeData getTheme() => ThemeData(
+        // default Scaffold color is somewhat off white
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
         appBarTheme: appBarTheme,
         textTheme: textTheme,
         inputDecorationTheme: inputTheme,
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: AppColors.blue1,
+
           // selectionColor: text highlight color
           selectionColor: AppColors.blue1.withOpacity(0.15),
         ),
+
         // change selectionHandleColor on IOS
         cupertinoOverrideTheme: const CupertinoThemeData(
           primaryColor: AppColors.blue1,
@@ -25,12 +29,17 @@ class AppTheme {
 }
 
 const AppBarTheme appBarTheme = AppBarTheme(
-  backgroundColor: AppColors.offGrey,
+  // backgroundColor: AppColors.offGrey,
+  // backgroundColor: AppColors.offWhite,
+  backgroundColor: Colors.white,
+  // shadowColor: Colors.red,
+  // elevation: 1,
 );
 
 final TextTheme textTheme = TextTheme(
+  // App Bar Title styling
   titleLarge: TextStyle(
-    foreground: Paint()..color = AppColors.offWhite,
+    foreground: Paint()..color = AppColors.appBar,
     fontSize: 28,
     fontWeight: FontWeight.w700,
   ),
@@ -89,6 +98,7 @@ final lightGreenButtonTheme = OutlinedButtonThemeData(style: lightGreenButtonSty
 
 final blueButtonStyle = ButtonStyle(
   shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
+  side: resolver((state) => BorderSide.none),
   backgroundColor: resolver((states) => AppColors.blue1),
   textStyle: resolver(
     (states) => TextStyle(
@@ -100,11 +110,10 @@ final blueButtonStyle = ButtonStyle(
 );
 
 final offGreyButtonStyle = blueButtonStyle.copyWith(
-  backgroundColor: resolver((state) => AppColors.offGrey),
+  backgroundColor: resolver((state) => AppColors.offGrey.withOpacity(0.25)),
 );
 
 final lightGreenButtonStyle = blueButtonStyle.copyWith(
-  side: resolver((state) => BorderSide.none),
   backgroundColor: resolver((state) => AppColors.lightGreen),
 );
 

@@ -57,7 +57,6 @@ class AddEntryView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: SelectableButton(
-                  mainTheme: offGreyButtonTheme,
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
                       final Response response = await model.addEntry(NewEntry(moodType: moodType, content: model.content!.trim()));

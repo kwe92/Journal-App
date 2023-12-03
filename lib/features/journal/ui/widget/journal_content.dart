@@ -24,7 +24,6 @@ class JournalContent extends StatelessWidget {
           maxHeight: 250,
           minWidth: double.infinity,
         ),
-        // TODO: review why decorated box is needed | https://stackoverflow.com/questions/48675781/flutter-correct-way-to-create-a-box-that-starts-at-minheight-grows-to-maxheig
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: DecoratedBox(
@@ -35,7 +34,9 @@ class JournalContent extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 24),
+              // padding: const EdgeInsets.only(left: 16, right: 16, top: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+
               child: Text(
                 content,
                 overflow: TextOverflow.fade,

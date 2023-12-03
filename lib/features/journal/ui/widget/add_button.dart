@@ -25,7 +25,7 @@ class AddButton extends StatelessWidget {
         width: size,
         height: size,
         decoration: const BoxDecoration(
-          color: AppColors.offGrey,
+          color: AppColors.lightGreen,
           borderRadius: BorderRadius.all(
             Radius.circular(size / 2),
           ),
