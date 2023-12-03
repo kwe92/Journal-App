@@ -95,5 +95,5 @@ class ToastService {
 
 // Collecting the Result of a Modal Event
 
-//   - pass an argument to appRouter.pop and Navigator.of(context).pop to send a result to the caller
+//   - pass an argument to appRouter.pop or Navigator.of(context).pop to send a result to the caller
 //   - typically used when you want to collect a result from the user after some modal event

@@ -1,6 +1,7 @@
 import 'package:gap/gap.dart';
 
 Gap gap4 = const Gap(4);
+Gap gap6 = const Gap(6);
 Gap gap8 = const Gap(8);
 Gap gap10 = const Gap(10);
 Gap gap12 = const Gap(12);

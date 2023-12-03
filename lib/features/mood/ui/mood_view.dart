@@ -13,8 +13,6 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: Review  | add comments
-
 @RoutePage()
 class MoodView extends StatelessWidget {
   const MoodView({super.key});
@@ -62,26 +60,31 @@ class MoodView extends StatelessWidget {
                         gap36,
                         Flexible(
                             child: GridView.builder(
-                          itemCount: moodsMaps.length,
+                          itemCount: MoodsData.moodsMaps.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
+                            // represents the width / height respectively
                             childAspectRatio: (100 / 160),
                           ),
                           itemBuilder: (context, i) {
                             return GestureDetector(
                               onTap: () {
+                                // set selected mood
                                 model.setIndex(i);
-                                model.setMoodType(moodsMaps[i].key);
+
+                                // set mood type to be sent to backend
+                                model.setMoodType(MoodsData.moodsMaps[i].key);
                               },
                               child: MoodCard(
+                                // determine if the card is currently selected or not
                                 isSelected: model.selectedIndex == i ? true : false,
                                 mood: Mood(
-                                    moodColor: moodsMaps[i].value[0],
-                                    moodImagePath: moodsMaps[i].value[1],
-                                    imageSize: moodsMaps[i].value[2],
-                                    moodText: moodsMaps[i].key),
+                                    moodColor: MoodsData.moodsMaps[i].value.color,
+                                    moodImagePath: MoodsData.moodsMaps[i].value.imagePath,
+                                    imageSize: MoodsData.moodsMaps[i].value.defaultSize,
+                                    moodText: MoodsData.moodsMaps[i].key),
                               ),
                             );
                           },
@@ -107,26 +110,15 @@ class MoodView extends StatelessWidget {
   }
 }
 
-// TODO: add Colors to app colors | color variable name should represent mood
-
-final Map<String, List<dynamic>> moodsData = {
-  MoodType.awesome: [const Color(0xfffcb39c), "assets/images/very_happy_face.svg", 40.0],
-  MoodType.happy: [const Color(0xfffbe29c), "assets/images/happy_face.svg", 50.0],
-  MoodType.okay: [Color.fromARGB(255, 103, 110, 106), "assets/images/meh_face.svg", 50.0],
-  MoodType.bad: [const Color(0xffa9efe1), "assets/images/sad_face.svg", 50.0],
-  MoodType.terible: [const Color(0xffaed9e0), "assets/images/aweful_face.svg", 70.0]
-};
-
-List<MapEntry<String, List>> moodsMaps = moodsData.entries.toList();
-
-
-
-
-// TODO: add comments
-
 
 // GridView.builder
 
+//   - build a grid based on a list of elements
+
 //  SliverGridDelegateWithFixedCrossAxisCount
 
+//    - controls the layout of the children of a GridView.builder
+
 // Flexible wapping in Flex, Row or Column Widgets for GridView.builder
+
+//   - to insure height or width is not unbound
