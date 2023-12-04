@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/shared/models/entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+
+// TODO: ensure updated time is displaying correctly from backend
 
 class FormContainer extends StatelessWidget {
   final Widget child;
   final double? height;
+  final Entry? entry;
 
-  const FormContainer({
+  FormContainer({
     required this.child,
     this.height,
+    this.entry,
     super.key,
   });
+
+  static final DateTime now = DateTime.now();
 
   @override
   Widget build(BuildContext context) => Container(
@@ -30,8 +37,16 @@ class FormContainer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(timeService.dayOfWeekByName()),
-                  Text(timeService.timeOfDay()),
+                  Text(timeService.dayOfWeekByName(entry != null ? entry!.updatedAt : now)),
+                  Row(
+                    children: [
+                      Text(timeService.timeOfDay(entry != null ? entry!.updatedAt : now)),
+                      (hour24 >= 19 || hour24 <= 6) ? gap4 : gap6,
+                      Icon(
+                        (hour24 >= 19 || hour24 <= 6) ? Icons.mode_night_outlined : Icons.wb_sunny_outlined,
+                      ),
+                    ],
+                  )
                 ],
               ),
               Expanded(child: child)
@@ -39,4 +54,8 @@ class FormContainer extends StatelessWidget {
           ),
         ),
       );
+
+  int get hour24 {
+    return int.parse(entry != null ? timeService.getHour24(entry!.updatedAt) : timeService.getHour24(now));
+  }
 }
