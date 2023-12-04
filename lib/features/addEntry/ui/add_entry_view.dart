@@ -67,7 +67,7 @@ class AddEntryView extends StatelessWidget {
                       if (response.statusCode == 200 || response.statusCode == 201) {
                         model.clearContent();
                         toastService.showSnackBar(message: "New journal entry added.");
-                        appRouter.replace(const JournalRoute());
+                        appRouter.replace(JournalRoute());
                       } else {
                         toastService.showSnackBar(message: getErrorMsg(response.body));
                       }

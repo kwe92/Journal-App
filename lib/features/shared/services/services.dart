@@ -2,6 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/features/authentication/services/auth_service.dart';
+import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
@@ -41,6 +42,10 @@ ToastService get toastService {
 
 TimeService get timeService {
   return locator.get<TimeService>();
+}
+
+ImageService get imageService {
+  return locator.get<ImageService>();
 }
 
 TokenService get tokenService {

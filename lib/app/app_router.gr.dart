@@ -46,9 +46,11 @@ abstract class $AppRouter extends _i7.RootStackRouter {
       );
     },
     JournalRoute.name: (routeData) {
+      final args = routeData.argsAs<JournalRouteArgs>(
+          orElse: () => const JournalRouteArgs());
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.JournalView(),
+        child: _i3.JournalView(key: args.key),
       );
     },
     MemberInfoRoute.name: (routeData) {
@@ -154,16 +156,31 @@ class EntryRouteArgs {
 
 /// generated route for
 /// [_i3.JournalView]
-class JournalRoute extends _i7.PageRouteInfo<void> {
-  const JournalRoute({List<_i7.PageRouteInfo>? children})
-      : super(
+class JournalRoute extends _i7.PageRouteInfo<JournalRouteArgs> {
+  JournalRoute({
+    _i8.Key? key,
+    List<_i7.PageRouteInfo>? children,
+  }) : super(
           JournalRoute.name,
+          args: JournalRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'JournalRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static const _i7.PageInfo<JournalRouteArgs> page =
+      _i7.PageInfo<JournalRouteArgs>(name);
+}
+
+class JournalRouteArgs {
+  const JournalRouteArgs({this.key});
+
+  final _i8.Key? key;
+
+  @override
+  String toString() {
+    return 'JournalRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

@@ -43,7 +43,7 @@ class EntryView extends StatelessWidget {
           leading: CustomBackButton(
             onPressed: () {
               model.setReadOnly(true);
-              appRouter.replace(const JournalRoute());
+              appRouter.replace(JournalRoute());
             },
           ),
           body: Column(
@@ -84,7 +84,7 @@ class EntryView extends StatelessWidget {
 
                       if (response.statusCode == 200 || response.statusCode == 201) {
                         toastService.showSnackBar(message: "Updated journal entry successfully.");
-                        appRouter.replace(const JournalRoute());
+                        appRouter.replace(JournalRoute());
                       } else {
                         toastService.showSnackBar(message: getErrorMsg(response.body));
                       }
@@ -118,7 +118,7 @@ class EntryView extends StatelessWidget {
 
                       if (response.statusCode == 200 || response.statusCode == 201) {
                         toastService.showSnackBar(message: "Deleted journal entry successfully.");
-                        appRouter.replace(const JournalRoute());
+                        appRouter.replace(JournalRoute());
                       } else {
                         toastService.showSnackBar(message: getErrorMsg(response.body));
                       }
