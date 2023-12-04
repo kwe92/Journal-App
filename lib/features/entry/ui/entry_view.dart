@@ -17,8 +17,6 @@ import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import "package:journal_app/features/shared/utilities/popup_parameters.dart";
 import "package:stacked/stacked.dart";
 
-// TODO: maybe add an option to turn the modal off and add an option to toggle modal in settings
-
 @RoutePage()
 class EntryView extends StatelessWidget {
   final Entry entry;

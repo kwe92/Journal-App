@@ -32,7 +32,6 @@ class MoodImagePath {
   static const String moodTerible = "assets/images/aweful_face.svg";
 }
 
-// TODO: find a better name for the class
 class MoodsData {
   const MoodsData._();
 

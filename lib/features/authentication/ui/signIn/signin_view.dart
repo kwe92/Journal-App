@@ -42,7 +42,6 @@ class SignInView extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 3.125,
                     width: double.maxFinite,
                     child: Image.asset(
-                      // TODO: replace with imageService and random image
                       image,
                       fit: BoxFit.cover,
                     ),
