@@ -25,6 +25,7 @@ class AppTheme {
         ),
         textButtonTheme: textButtonTheme,
         outlinedButtonTheme: mainButtonTheme,
+        snackBarTheme: snackBarTheme,
       );
 }
 
@@ -82,6 +83,14 @@ final InputDecorationTheme inputTheme = () {
     floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
   );
 }();
+
+const snackBarTheme = SnackBarThemeData(
+  backgroundColor: AppColors.offWhite,
+  contentTextStyle: TextStyle(
+    fontSize: 24,
+    color: AppColors.lightGreen,
+  ),
+);
 
 /// borderlessInput: borderless TextField and TextFormField.
 const InputDecoration borderlessInput = InputDecoration(

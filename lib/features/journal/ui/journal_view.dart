@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:entry/entry.dart';
 import 'package:journal_app/app/app_router.gr.dart';
+import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry.dart';
@@ -30,23 +32,34 @@ class JournalView extends StatelessWidget {
           // Thoughts in french
           title: "Pensées",
           body: Center(
-            child: ListView.builder(
-              // used to cented Text widget when there are no entries
-              shrinkWrap: model.journalEntries.isEmpty ? true : false,
-              itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
-              itemBuilder: (BuildContext context, int i) {
-                return model.journalEntries.isEmpty
-                    ? const Text(
-                        "No entries, whats on your mind...",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.lightGreen,
-                          fontSize: 32,
-                        ),
-                      )
-                    : JournalEntry(index: i, journalEntry: model.journalEntries[i]);
-              },
-            ),
+            child: model.isBusy
+                ? circleLoader
+                : ListView.builder(
+                    // used to cented Text widget when there are no entries
+                    shrinkWrap: model.journalEntries.isEmpty ? true : false,
+                    itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      return model.journalEntries.isEmpty
+                          ? const Entry.opacity(
+                              duration: Duration(milliseconds: 600),
+                              child: Text(
+                                "No entries, whats on your mind...",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: AppColors.lightGreen,
+                                  fontSize: 32,
+                                ),
+                              ),
+                            )
+                          : Entry.opacity(
+                              duration: const Duration(milliseconds: 600),
+                              child: JournalEntry(
+                                index: i,
+                                journalEntry: model.journalEntries[i],
+                              ),
+                            );
+                    },
+                  ),
           ),
           // Open menu to the side
           drawer: Drawer(

@@ -50,6 +50,8 @@ dependencies:
   gap: ^3.0.1
   collection: ^1.17.1
   flutter_multi_formatter: ^2.12.1
+  entry: ^0.0.9
+  flutter_native_splash: ^2.3.6
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import "package:auto_route/annotations.dart";
 import "package:http/http.dart";
 import "package:journal_app/app/app_router.gr.dart";
+import "package:journal_app/app/resources/reusables.dart";
 import "package:journal_app/app/theme/theme.dart";
 import "package:journal_app/features/entry/models/updated_entry.dart";
 import "package:journal_app/features/entry/ui/entry_view_model.dart";
@@ -92,7 +93,7 @@ class EntryView extends StatelessWidget {
                   label: model.readOnly ? "Edit Entry" : "Update Entry",
                 ),
               ),
-              const SizedBox(height: 16),
+              gap16,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: SelectableButton(

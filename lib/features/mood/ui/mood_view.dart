@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:journal_app/app/app_router.gr.dart';
@@ -47,12 +48,15 @@ class MoodView extends StatelessWidget {
                           width: 200,
                           child: Align(
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              "How are you feeling today?",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.w700,
+                            child: Entry.opacity(
+                              duration: Duration(milliseconds: 600),
+                              child: Text(
+                                "How are you feeling today?",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                           ),
@@ -77,25 +81,31 @@ class MoodView extends StatelessWidget {
                                 // set mood type to be sent to backend
                                 model.setMoodType(MoodsData.moodsMaps[i].key);
                               },
-                              child: MoodCard(
-                                // determine if the card is currently selected or not
-                                isSelected: model.selectedIndex == i ? true : false,
-                                mood: Mood(
-                                    moodColor: MoodsData.moodsMaps[i].value.color,
-                                    moodImagePath: MoodsData.moodsMaps[i].value.imagePath,
-                                    imageSize: MoodsData.moodsMaps[i].value.defaultSize,
-                                    moodText: MoodsData.moodsMaps[i].key),
+                              child: Entry.opacity(
+                                duration: const Duration(milliseconds: 600),
+                                child: MoodCard(
+                                  // determine if the card is currently selected or not
+                                  isSelected: model.selectedIndex == i ? true : false,
+                                  mood: Mood(
+                                      moodColor: MoodsData.moodsMaps[i].value.color,
+                                      moodImagePath: MoodsData.moodsMaps[i].value.imagePath,
+                                      imageSize: MoodsData.moodsMaps[i].value.defaultSize,
+                                      moodText: MoodsData.moodsMaps[i].key),
+                                ),
                               ),
                             );
                           },
                         )),
-                        SelectableButton(
-                            mainTheme: lightGreenButtonTheme,
-                            labelPadding: const EdgeInsets.symmetric(vertical: 16),
-                            onPressed: () {
-                              appRouter.push(AddEntryRoute(moodType: model.moodType));
-                            },
-                            label: "Continue"),
+                        Entry.opacity(
+                          duration: const Duration(milliseconds: 600),
+                          child: SelectableButton(
+                              mainTheme: lightGreenButtonTheme,
+                              labelPadding: const EdgeInsets.symmetric(vertical: 16),
+                              onPressed: () {
+                                appRouter.push(AddEntryRoute(moodType: model.moodType));
+                              },
+                              label: "Continue"),
+                        ),
                         const Gap(120)
                       ],
                     ),
