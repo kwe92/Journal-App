@@ -71,7 +71,14 @@ class JournalView extends StatelessWidget {
                 SliverFillRemaining(
                   child: Column(
                     children: [
-                      Image.asset(image),
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: MediaQuery.of(context).size.height / 3.5,
+                        child: Image.asset(
+                          image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),

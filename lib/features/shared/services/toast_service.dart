@@ -13,9 +13,10 @@ class ToastService {
   static const _genericErrorMsg = "An error has occured";
 
   /// showSnackBar: an information box appearing at the bottom of the users screen presisting on all views for the duration.
-  void showSnackBar({String? message, BuildContext? context}) {
+  void showSnackBar({String? message, BuildContext? context, Duration? duration}) {
     ScaffoldMessenger.of(context ?? appRouter.navigatorKey.currentContext!).showSnackBar(
       SnackBar(
+        duration: duration ?? const Duration(milliseconds: 750),
         content: Text(
           message ?? _genericErrorMsg,
           textAlign: TextAlign.center,

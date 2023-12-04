@@ -47,6 +47,7 @@ class EntryView extends StatelessWidget {
           body: Column(
             children: [
               FormContainer(
+                entry: entry,
                 height: MediaQuery.of(context).size.height / 1.65,
                 child: Form(
                   child: TextFormField(
