@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 
 class MoodCard extends StatelessWidget {
@@ -22,13 +23,11 @@ class MoodCard extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         border: isSelected ? Border.all(color: mood.moodColor) : null,
-
         color: Colors.white,
-        // color: const Color(0xFFF5D7AA),
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, 2),
-            color: Colors.black.withOpacity(0.15),
+            color: AppColors.shadowColor,
             blurRadius: 4,
             spreadRadius: 2,
           ),

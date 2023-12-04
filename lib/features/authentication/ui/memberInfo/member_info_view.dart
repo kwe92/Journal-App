@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
+import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
 import 'package:journal_app/features/shared/services/http_service.dart';
@@ -86,7 +87,10 @@ class MemberInfoView extends StatelessWidget {
                         height: 210,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/images/journal_photo.avif"),
+                            image: AssetImage(
+                              // TODO: replace with imageService and random image
+                              "assets/images/mindful04.avif",
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -95,12 +99,13 @@ class MemberInfoView extends StatelessWidget {
                         width: 75,
                         height: 75,
                         child: CustomBackButton(
+                          color: Colors.white,
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                       )
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  gap12,
                   const Padding(
                     padding: EdgeInsets.only(left: 16.0),
                     child: Text(
@@ -108,7 +113,7 @@ class MemberInfoView extends StatelessWidget {
                       style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  gap12,
                   Expanded(
                     child: CustomScrollView(
                       slivers: [
@@ -141,7 +146,7 @@ class MemberInfoView extends StatelessWidget {
                                           : null,
                                     ),
                                   ),
-                                  const SizedBox(height: 12),
+                                  gap12,
                                   TextFormField(
                                     key: lastNameKey,
                                     focusNode: lastNameFocus,
@@ -160,7 +165,7 @@ class MemberInfoView extends StatelessWidget {
                                           lastNameController.text.isNotEmpty ? ConditionalClearIcon(controller: lastNameController) : null,
                                     ),
                                   ),
-                                  const SizedBox(height: 12),
+                                  gap12,
                                   TextFormField(
                                     key: phoneNumberKey,
                                     focusNode: phoneFocus,
@@ -188,7 +193,7 @@ class MemberInfoView extends StatelessWidget {
                                           : null,
                                     ),
                                   ),
-                                  const SizedBox(height: 12),
+                                  gap12,
                                   TextFormField(
                                     key: emailKey,
                                     focusNode: emailFocus,
@@ -225,7 +230,7 @@ class MemberInfoView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 36),
+                                  gap36,
                                   SelectableButton(
                                     onPressed: () async {
                                       toastService.unfocusAll(context);
@@ -257,7 +262,7 @@ class MemberInfoView extends StatelessWidget {
                                     },
                                     label: "Sign-up",
                                   ),
-                                  const SizedBox(height: 24)
+                                  gap24,
                                 ],
                               ),
                             ),

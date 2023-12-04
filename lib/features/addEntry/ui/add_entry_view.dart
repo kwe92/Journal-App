@@ -28,7 +28,10 @@ class AddEntryView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => AddEntryViewModel(),
       builder: (context, model, _) => BaseScaffold(
-        title: "Add Entry",
+        // title: "Add Entry",
+
+        // Manifested in french
+        title: "Manifesté",
         leading: CustomBackButton(
           onPressed: () => appRouter.pop(),
         ),
@@ -57,7 +60,6 @@ class AddEntryView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: SelectableButton(
-                  mainTheme: offGreyButtonTheme,
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
                       final Response response = await model.addEntry(NewEntry(moodType: moodType, content: model.content!.trim()));
@@ -71,6 +73,7 @@ class AddEntryView extends StatelessWidget {
                       }
                     }
                   },
+                  // label: "Add Entry"
                   label: "Add Entry"),
             ),
           ],

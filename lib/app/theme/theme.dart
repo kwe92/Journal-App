@@ -6,31 +6,41 @@ class AppTheme {
   const AppTheme._();
 
   static ThemeData getTheme() => ThemeData(
+        // default Scaffold color is somewhat off white
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
         appBarTheme: appBarTheme,
         textTheme: textTheme,
         inputDecorationTheme: inputTheme,
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: AppColors.blue1,
+          cursorColor: AppColors.lightGreen,
+
           // selectionColor: text highlight color
-          selectionColor: AppColors.blue1.withOpacity(0.15),
+          selectionColor: AppColors.lightGreen.withOpacity(0.15),
         ),
+
         // change selectionHandleColor on IOS
         cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: AppColors.blue1,
+          primaryColor: AppColors.lightGreen,
         ),
         textButtonTheme: textButtonTheme,
         outlinedButtonTheme: mainButtonTheme,
+        snackBarTheme: snackBarTheme,
       );
 }
 
 const AppBarTheme appBarTheme = AppBarTheme(
-  backgroundColor: AppColors.offGrey,
+  // backgroundColor: AppColors.offGrey,
+  // backgroundColor: AppColors.offWhite,
+  backgroundColor: Colors.white,
+  // shadowColor: Colors.red,
+  // elevation: 1,
 );
 
 final TextTheme textTheme = TextTheme(
+  // App Bar Title styling
   titleLarge: TextStyle(
-    foreground: Paint()..color = AppColors.offWhite,
+    foreground: Paint()..color = AppColors.appBar,
     fontSize: 28,
     fontWeight: FontWeight.w700,
   ),
@@ -44,7 +54,7 @@ final TextButtonThemeData textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
     // button splash color
     overlayColor: resolver((states) => AppColors.splashColor),
-    textStyle: resolver((states) => TextStyle(foreground: Paint()..color = AppColors.blue1)),
+    textStyle: resolver((states) => TextStyle(foreground: Paint()..color = AppColors.lightGreen)),
   ),
 );
 
@@ -60,25 +70,33 @@ final InputDecorationTheme inputTheme = () {
     // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.blue1,
+        color: AppColors.lightGreen,
         width: borderWidth,
       ),
     ),
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.blue1,
+        color: AppColors.lightGreen,
         width: borderWidth,
       ),
     ),
-    floatingLabelStyle: TextStyle(color: AppColors.blue1),
+    floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
   );
 }();
+
+const snackBarTheme = SnackBarThemeData(
+  backgroundColor: AppColors.offWhite,
+  contentTextStyle: TextStyle(
+    fontSize: 24,
+    color: AppColors.lightGreen,
+  ),
+);
 
 /// borderlessInput: borderless TextField and TextFormField.
 const InputDecoration borderlessInput = InputDecoration(
   enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
   focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-  floatingLabelStyle: TextStyle(color: AppColors.blue1),
+  floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
 );
 
 final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
@@ -89,7 +107,8 @@ final lightGreenButtonTheme = OutlinedButtonThemeData(style: lightGreenButtonSty
 
 final blueButtonStyle = ButtonStyle(
   shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
-  backgroundColor: resolver((states) => AppColors.blue1),
+  side: resolver((state) => BorderSide.none),
+  backgroundColor: resolver((states) => AppColors.lightGreen),
   textStyle: resolver(
     (states) => TextStyle(
       foreground: Paint()..color = AppColors.offWhite,
@@ -100,11 +119,10 @@ final blueButtonStyle = ButtonStyle(
 );
 
 final offGreyButtonStyle = blueButtonStyle.copyWith(
-  backgroundColor: resolver((state) => AppColors.offGrey),
+  backgroundColor: resolver((state) => AppColors.offGrey.withOpacity(0.25)),
 );
 
 final lightGreenButtonStyle = blueButtonStyle.copyWith(
-  side: resolver((state) => BorderSide.none),
   backgroundColor: resolver((state) => AppColors.lightGreen),
 );
 

@@ -22,20 +22,36 @@ class BaseScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            title: Text(title),
-            centerTitle: true,
-            iconTheme: const IconThemeData(
-              color: AppColors.offWhite,
-              size: 30,
-            ),
-            leading: leading,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SvgPicture.asset("assets/images/setings_icon.svg"),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(56),
+            child: Container(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  offset: const Offset(0, 2),
+                  color: AppColors.shadowColor,
+                  blurRadius: 3,
+                  spreadRadius: 1,
+                ),
+              ]),
+              child: AppBar(
+                title: Text(title),
+                centerTitle: true,
+                iconTheme: const IconThemeData(
+                  color: AppColors.appBar,
+                  size: 30,
+                ),
+                leading: leading,
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SvgPicture.asset(
+                      "assets/images/setings_icon.svg",
+                      color: AppColors.appBar,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
           body: body,
           floatingActionButton: floatingActionButton,
@@ -44,3 +60,11 @@ class BaseScaffold extends StatelessWidget {
         ),
       );
 }
+
+// AppBar Shadow Color Without Elevation
+
+//   - adding elevation to an AppBar changes the background color of the app bar
+//     this is most noticible when the AppBar background is set to white
+
+//   - wrap the AppBar with a Container and wrap the Container in a PreferredSize widget to set
+//     a shadow color for an AppBar through the Containers decoration propery

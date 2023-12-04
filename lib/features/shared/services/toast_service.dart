@@ -65,7 +65,6 @@ class ToastService {
                                   ],
                                 )
                               : SelectableButton(
-                                  mainTheme: offGreyButtonTheme,
                                   onPressed: () {
                                     appRouter.pop(buttonOption.value);
                                   },

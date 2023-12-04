@@ -9,6 +9,10 @@ class JournalViewModel extends BaseViewModel {
 
   Future<void> initialize() async {
     setBusy(true);
+
+    // TODO: remove Future.delayed | placed here for testing loading indicator
+    await Future.delayed(const Duration(seconds: 2));
+
     await journalEntryService.getAllEntries();
     setBusy(false);
   }

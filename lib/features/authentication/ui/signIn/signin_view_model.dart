@@ -33,7 +33,7 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> signInWithEmail(BuildContext context) async {
+  Future<Response> signInWithEmail(BuildContext context) async {
     setBusy(true);
     final Response response = await authService.login(email: email!, password: password!);
     setBusy(false);
@@ -47,5 +47,7 @@ class SignInViewModel extends BaseViewModel {
         final Map<String, dynamic> responseBody = jsonDecode(response.body);
         await tokenService.saveTokenData(responseBody);
     }
+
+    return response;
   }
 }

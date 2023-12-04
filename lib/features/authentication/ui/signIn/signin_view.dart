@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
+import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/email_input.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/password_input.dart';
@@ -18,6 +20,9 @@ class SignInView extends StatelessWidget {
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
@@ -31,8 +36,16 @@ class SignInView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset('assets/images/journal_photo.avif'),
-                  const SizedBox(height: 24),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 3.125,
+                    width: double.maxFinite,
+                    child: Image.asset(
+                      // TODO: replace with imageService and random image
+                      "assets/images/mindful04.avif",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  gap24,
                   const Padding(
                     padding: EdgeInsets.only(left: 16.0),
                     child: Text(
@@ -40,7 +53,7 @@ class SignInView extends StatelessWidget {
                       style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  gap12,
                   Form(
                     key: formKey,
                     child: Padding(
@@ -48,10 +61,10 @@ class SignInView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          EmailInput(focus: emailFocus, nextFocus: passwordFocus),
-                          const SizedBox(height: 16),
-                          PasswordInput(focus: passwordFocus),
-                          const SizedBox(height: 12),
+                          EmailInput(emailController: emailController, focus: emailFocus, nextFocus: passwordFocus),
+                          gap16,
+                          PasswordInput(passwordController: passwordController, focus: passwordFocus),
+                          gap12,
                           TextButton(
                             onPressed: () {},
                             child: const Text(
@@ -59,23 +72,23 @@ class SignInView extends StatelessWidget {
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          gap16,
                           SelectableButton(
                               onPressed: () async {
                                 model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
                                 toastService.unfocusAll(context);
                                 if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                                  await model.signInWithEmail(context);
-                                  if (authService.isLoggedIn) {
+                                  final Response response = await model.signInWithEmail(context);
+
+                                  if (authService.isLoggedIn && response.statusCode == 200 || response.statusCode == 201) {
+                                    emailController.clear();
+                                    passwordController.clear();
                                     appRouter.push(const JournalRoute());
-                                  } else {
-                                    // TODO: add a better error message
-                                    toastService.showSnackBar();
                                   }
                                 }
                               },
                               label: "Login"),
-                          const SizedBox(height: 16),
+                          gap16,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

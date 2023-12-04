@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:journal_app/app/theme/colors.dart';
 
 Gap gap4 = const Gap(4);
 Gap gap6 = const Gap(6);
@@ -11,3 +13,7 @@ Gap gap24 = const Gap(24);
 Gap gap28 = const Gap(28);
 Gap gap36 = const Gap(36);
 Gap gap48 = const Gap(48);
+
+Widget circleLoader = const Center(
+  child: CircularProgressIndicator(color: AppColors.lightGreen),
+);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 class DateTile extends StatelessWidget {
@@ -9,12 +10,11 @@ class DateTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xff807c7c).withOpacity(0.10),
+        color: AppColors.dateTileBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(8),
         ),
       ),
-      // TODO: add colors to app colors
       margin: const EdgeInsets.only(left: 16.0),
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
       child: Row(
@@ -23,8 +23,7 @@ class DateTile extends StatelessWidget {
         children: [
           const Icon(
             Icons.calendar_month,
-            // TODO: add colors to app colors
-            color: Color(0xff807c7c),
+            color: AppColors.dateTileColor,
             size: 14,
           ),
           Text(
@@ -32,9 +31,7 @@ class DateTile extends StatelessWidget {
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              // TODO: maybe keep | add colors to app colors
-              // color: Color(0xff898888),
-              color: Color(0xff807c7c),
+              color: AppColors.dateTileColor,
             ),
           ),
         ],
