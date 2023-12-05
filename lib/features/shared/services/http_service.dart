@@ -107,6 +107,7 @@ http.Response parseStatusCode(http.Response response, String endpoint) {
   return response;
 }
 
+/// getErrorMsg: decodes json string and returns first error
 String getErrorMsg(String jsonString) {
   final Map<String, dynamic> parsedJson = jsonDecode(jsonString);
   return parsedJson.values.toList()[0];

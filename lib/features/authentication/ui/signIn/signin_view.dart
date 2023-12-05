@@ -23,6 +23,8 @@ class SignInView extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  final image = imageService.getRandomMindfulImage();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
@@ -40,8 +42,7 @@ class SignInView extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 3.125,
                     width: double.maxFinite,
                     child: Image.asset(
-                      // TODO: replace with imageService and random image
-                      "assets/images/mindful04.avif",
+                      image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -83,7 +84,7 @@ class SignInView extends StatelessWidget {
                                   if (authService.isLoggedIn && response.statusCode == 200 || response.statusCode == 201) {
                                     emailController.clear();
                                     passwordController.clear();
-                                    appRouter.push(const JournalRoute());
+                                    appRouter.push(JournalRoute());
                                   }
                                 }
                               },

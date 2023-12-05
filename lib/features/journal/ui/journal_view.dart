@@ -13,7 +13,9 @@ import 'package:stacked/stacked.dart';
 
 @RoutePage()
 class JournalView extends StatelessWidget {
-  const JournalView({super.key});
+  JournalView({super.key});
+
+  final image = imageService.getRandomMindfulImage();
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +71,14 @@ class JournalView extends StatelessWidget {
                 SliverFillRemaining(
                   child: Column(
                     children: [
-                      Image.asset(
-                          // TODO: replace with imageService and random image
-                          "assets/images/mindful04.avif"),
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: MediaQuery.of(context).size.height / 3.5,
+                        child: Image.asset(
+                          image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),

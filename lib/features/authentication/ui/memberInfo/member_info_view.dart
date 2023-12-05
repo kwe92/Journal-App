@@ -47,6 +47,8 @@ class MemberInfoView extends StatelessWidget {
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
+  final image = imageService.getRandomMindfulImage();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
@@ -85,12 +87,9 @@ class MemberInfoView extends StatelessWidget {
                       Container(
                         width: double.maxFinite,
                         height: 210,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(
-                              // TODO: replace with imageService and random image
-                              "assets/images/mindful04.avif",
-                            ),
+                            image: AssetImage(image),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -253,7 +252,7 @@ class MemberInfoView extends StatelessWidget {
                                               );
 
                                               // remove member info view and navigate to journal view | there maybe a better way to refresh widget
-                                              appRouter.replace(const JournalRoute());
+                                              appRouter.replace(JournalRoute());
                                             } else {
                                               toastService.showSnackBar();
                                             }

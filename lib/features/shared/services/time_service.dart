@@ -21,6 +21,11 @@ class TimeService {
   String getStringFromDate(DateTime dataTime) {
     return DateFormat("yyyy-MM-dd").format(dataTime.toUtc());
   }
+
+  /// getHour24: returns the hour from 0-23
+  String getHour24(DateTime dateTime) {
+    return DateFormat.H().format(dateTime);
+  }
 }
 
 

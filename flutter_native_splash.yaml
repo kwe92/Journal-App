@@ -1,7 +1,5 @@
 # flutter pub run flutter_native_splash:create --flavor js_qa --path=modalities/jointAndSpine/flutter_native_splash-js_qa.yaml
 
-# TODO: Review flutter_native_splash package
-
 flutter_native_splash:
   # color: "#002254"
   color: "#FFFFFF"

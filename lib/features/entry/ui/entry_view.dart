@@ -17,8 +17,6 @@ import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import "package:journal_app/features/shared/utilities/popup_parameters.dart";
 import "package:stacked/stacked.dart";
 
-// TODO: maybe add an option to turn the modal off and add an option to toggle modal in settings
-
 @RoutePage()
 class EntryView extends StatelessWidget {
   final Entry entry;
@@ -43,12 +41,13 @@ class EntryView extends StatelessWidget {
           leading: CustomBackButton(
             onPressed: () {
               model.setReadOnly(true);
-              appRouter.replace(const JournalRoute());
+              appRouter.replace(JournalRoute());
             },
           ),
           body: Column(
             children: [
               FormContainer(
+                entry: entry,
                 height: MediaQuery.of(context).size.height / 1.65,
                 child: Form(
                   child: TextFormField(
@@ -84,7 +83,7 @@ class EntryView extends StatelessWidget {
 
                       if (response.statusCode == 200 || response.statusCode == 201) {
                         toastService.showSnackBar(message: "Updated journal entry successfully.");
-                        appRouter.replace(const JournalRoute());
+                        appRouter.replace(JournalRoute());
                       } else {
                         toastService.showSnackBar(message: getErrorMsg(response.body));
                       }
@@ -118,7 +117,7 @@ class EntryView extends StatelessWidget {
 
                       if (response.statusCode == 200 || response.statusCode == 201) {
                         toastService.showSnackBar(message: "Deleted journal entry successfully.");
-                        appRouter.replace(const JournalRoute());
+                        appRouter.replace(JournalRoute());
                       } else {
                         toastService.showSnackBar(message: getErrorMsg(response.body));
                       }

@@ -102,8 +102,6 @@ class StringService {
         : 'Email is empty';
   }
 
-  // TODO: Review
-
   /// Verify that the password does not contain the username or any
   /// 3+ length strings from the username
   bool noOverlaps({required String password, required String username}) {
