@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
-import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
@@ -31,9 +26,6 @@ class MemberInfoView extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
-  // Should be moved to a diffrent screen | combined to one for brevity
-  final TextEditingController passwordController = TextEditingController();
-
   /// AutoFill keys
   final GlobalObjectKey firstNameKey = const GlobalObjectKey('first');
   final GlobalObjectKey lastNameKey = const GlobalObjectKey('last');
@@ -45,7 +37,6 @@ class MemberInfoView extends StatelessWidget {
   final FocusNode lastNameFocus = FocusNode();
   final FocusNode phoneFocus = FocusNode();
   final FocusNode emailFocus = FocusNode();
-  final FocusNode passwordFocus = FocusNode();
 
   final image = imageService.getRandomMindfulImage();
 
@@ -196,12 +187,12 @@ class MemberInfoView extends StatelessWidget {
                                   TextFormField(
                                     key: emailKey,
                                     focusNode: emailFocus,
-                                    textInputAction: TextInputAction.next,
+                                    textInputAction: TextInputAction.done,
                                     controller: emailController,
                                     validator: stringService.emailIsValid,
                                     autofillHints: const [AutofillHints.email],
                                     onChanged: model.setEmail,
-                                    onEditingComplete: () => passwordFocus.requestFocus(),
+                                    onEditingComplete: () => emailFocus.unfocus(),
                                     decoration: InputDecoration(
                                       labelText: 'Email Address',
                                       hintText: 'Enter Email Address',
@@ -209,57 +200,14 @@ class MemberInfoView extends StatelessWidget {
                                           emailController.text.isNotEmpty ? ConditionalClearIcon(controller: emailController) : null,
                                     ),
                                   ),
-                                  TextFormField(
-                                    // call TextInputAction.done on final text form field
-                                    textInputAction: TextInputAction.done,
-                                    controller: passwordController,
-                                    focusNode: passwordFocus,
-                                    autofillHints: const [AutofillHints.password],
-                                    validator: stringService.passwordIsValid,
-                                    obscureText: model.obscurePassword,
-                                    onChanged: model.setPassword,
-                                    // unfocus the final text field in the focus tree
-                                    onEditingComplete: () => passwordFocus.unfocus(),
-                                    decoration: InputDecoration(
-                                      labelText: "Password",
-                                      hintText: "Enter Password",
-                                      suffixIcon: IconButton(
-                                        onPressed: () => model.setObscure(!model.obscurePassword),
-                                        icon: Icon(model.obscurePassword ? Icons.visibility_off : Icons.visibility),
-                                      ),
-                                    ),
-                                  ),
                                   gap36,
                                   SelectableButton(
-                                    onPressed: () async {
-                                      toastService.unfocusAll(context);
-                                      if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                                        // upon successful validation sign the user up.
-                                        final Response response = await model.signupWithEmail(user: userService.tempUser as User);
-
-                                        switch (response.statusCode) {
-                                          // failed status codes
-                                          case 209 || 400 || 401 || 403 || 550:
-                                            toastService.showSnackBar(
-                                              message: getErrorMsg(response.body),
-                                            );
-                                          // success status codes
-                                          case 200 || 201:
-                                            if (authService.isLoggedIn) {
-                                              // upon successful registration retrieve jwt token from response
-                                              await tokenService.saveTokenData(
-                                                jsonDecode(response.body),
-                                              );
-
-                                              // remove member info view and navigate to journal view | there maybe a better way to refresh widget
-                                              appRouter.replace(JournalRoute());
-                                            } else {
-                                              toastService.showSnackBar();
-                                            }
-                                        }
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate() && model.ready) {
+                                        appRouter.push(SignUpRoute());
                                       }
                                     },
-                                    label: "Sign-up",
+                                    label: "Continue",
                                   ),
                                   gap24,
                                 ],

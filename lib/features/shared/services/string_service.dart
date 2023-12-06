@@ -53,7 +53,7 @@ class StringService {
 
   String? passwordIsValid(String? password) {
     if (isEmpty(password)) {
-      return 'Value cannot be empty';
+      return 'Password cannot be empty';
     } else if (!containsUppercase(password)) {
       return 'Password must contain a capital letter';
     } else if (!containsLowercase(password)) {

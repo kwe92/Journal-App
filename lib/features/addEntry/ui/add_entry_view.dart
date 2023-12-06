@@ -62,7 +62,12 @@ class AddEntryView extends StatelessWidget {
               child: SelectableButton(
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                      final Response response = await model.addEntry(NewEntry(moodType: moodType, content: model.content!.trim()));
+                      final Response response = await model.addEntry(
+                        NewEntry(
+                          moodType: moodType,
+                          content: model.content!.trim(),
+                        ),
+                      );
 
                       if (response.statusCode == 200 || response.statusCode == 201) {
                         model.clearContent();
