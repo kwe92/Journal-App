@@ -62,9 +62,16 @@ class SignInView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          EmailInput(emailController: emailController, focus: emailFocus, nextFocus: passwordFocus),
+                          EmailInput(
+                            emailController: emailController,
+                            focus: emailFocus,
+                            nextFocus: passwordFocus,
+                          ),
                           gap16,
-                          PasswordInput(passwordController: passwordController, focus: passwordFocus),
+                          PasswordInput(
+                            passwordController: passwordController,
+                            focus: passwordFocus,
+                          ),
                           gap12,
                           TextButton(
                             onPressed: () {},

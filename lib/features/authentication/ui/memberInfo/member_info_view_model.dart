@@ -13,8 +13,6 @@ class MemberInfoViewModel extends BaseViewModel {
 
   String? phoneNumber;
 
-  String? password;
-
   bool obscurePassword = true;
 
   /// Check that all required fields are filled in
@@ -26,9 +24,7 @@ class MemberInfoViewModel extends BaseViewModel {
         email != null &&
         email!.isNotEmpty &&
         phoneNumber != null &&
-        phoneNumber!.isNotEmpty &&
-        password != null &&
-        password!.isNotEmpty;
+        phoneNumber!.isNotEmpty;
   }
 
   void setFirstName(String text) {
@@ -46,12 +42,6 @@ class MemberInfoViewModel extends BaseViewModel {
   void setEmail(String text) {
     email = text.trim().toLowerCase();
     userService.tempUser?.email = email;
-    notifyListeners();
-  }
-
-  void setPassword(String text) {
-    password = text.trim();
-    userService.tempUser?.password = password;
     notifyListeners();
   }
 

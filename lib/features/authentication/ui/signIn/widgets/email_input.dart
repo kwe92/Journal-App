@@ -25,7 +25,7 @@ class EmailInput extends ViewModelWidget<SignInViewModel> {
       textInputAction: TextInputAction.next,
       controller: emailController,
       focusNode: focus,
-      // commonly used hints
+      // commonly used hints | imforms the platform `Android, IOS and Web` of the text field type
       autofillHints: const [AutofillHints.email],
       validator: stringService.emailIsValid,
       onChanged: model.setEmail,
