@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
-/// a PortalTarget with a [DismissibleBarrier] that closes the follower attached to the target if the user clicks outside of the follower.
+/// a PortalTarget with [DismissibleBarrier] to close follower attached to target if user clicks outside the follower.
+///
+/// Can also enable animations.
 class CustomPortalTarget extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isVisible;
   final Anchor anchor;
   final Widget follower;
   final Widget target;
+  final bool isAnimated;
+  final Duration animationDuration;
+  final double translationStartDistance;
+
+  /// determines animation on close.
+  final bool animateOnClose;
+
+  /// 0 to anime vertically, 1 to animate horizontally.
+  final int animationType;
 
   const CustomPortalTarget({
     required this.onPressed,
@@ -15,6 +26,11 @@ class CustomPortalTarget extends StatelessWidget {
     required this.anchor,
     required this.follower,
     required this.target,
+    this.isAnimated = false,
+    this.animationDuration = kThemeAnimationDuration,
+    this.animationType = 0,
+    this.translationStartDistance = 200,
+    this.animateOnClose = false,
     super.key,
   });
 
@@ -23,11 +39,29 @@ class CustomPortalTarget extends StatelessWidget {
         onPressed: onPressed,
         isVisible: isVisible,
         target: PortalTarget(
-          // TODO: add animation | maybe have two option one for animated and one for static via boolean selection
-          // closeDuration: kThemeAnimationDuration,
+          // add closeDuration if you want to animate out as well as in
+          closeDuration: isAnimated && animateOnClose ? animationDuration : null,
           visible: isVisible,
           anchor: anchor,
-          portalFollower: follower,
+          portalFollower: isAnimated
+              ? TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: isVisible ? 1 : 0),
+                  duration: animationDuration,
+                  // renamed value argument to progress and used placeholder underscore for child property as it will not be used
+                  builder: (context, progress, _) {
+                    return Transform(
+                      // determines the translation of a widget dynamically were the screen acts as the cartesian plane (i.e. how the widget slides on the screen)
+                      transform: animationType == 0
+                          ? Matrix4.translationValues(0, (1 - progress) * translationStartDistance, 0)
+                          : Matrix4.translationValues((1 - progress) * translationStartDistance, 0, 0),
+                      child: Opacity(
+                        opacity: progress,
+                        child: follower,
+                      ),
+                    );
+                  },
+                )
+              : follower,
           child: target,
         ),
       );
