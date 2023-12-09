@@ -45,6 +45,7 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
         ),
         gap12,
         CustomPortalTarget(
+          isAnimated: true,
           // isVisible: determines the visibility of follower Widget
           isVisible: viewModel.showRequirements,
           // onPressed: determines follower dismiss action
