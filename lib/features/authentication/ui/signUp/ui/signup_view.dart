@@ -38,6 +38,11 @@ class SignUpView extends StatelessWidget {
         // assign user email to emailController to be displayed on the signup view
         emailController.text = userService.tempUser?.email ?? "";
         model.setEmail(emailController.text);
+
+        // add listener to passwordFocus watching for state chages and triggering associated callback
+        passwordFocus.addListener(() {
+          model.setShowRequirements(passwordFocus.hasFocus);
+        });
       },
       builder: (context, model, _) {
         return SafeArea(

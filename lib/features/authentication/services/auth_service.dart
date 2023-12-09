@@ -28,13 +28,27 @@ class AuthService extends ApiService with ChangeNotifier {
   Future<http.Response> login({required String email, required String password}) async {
     http.Response response = await post(
       Endpoint.login.path,
-      body: jsonEncode({"email": email, "password": password}),
+      body: jsonEncode(
+        {"email": email, "password": password},
+      ),
     );
 
     if (response.statusCode == 200) {
       isLoggedIn = true;
       notifyListeners();
     }
+
+    return response;
+  }
+
+  /// checks backend database to ensure the email is available
+  Future<http.Response> checkAvailableEmail({required String email}) async {
+    http.Response response = await post(
+      Endpoint.checkAvailableEmail.path,
+      body: jsonEncode(
+        {"email": email},
+      ),
+    );
 
     return response;
   }

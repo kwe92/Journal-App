@@ -30,7 +30,7 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
 
   Future<Response> signupWithEmail({required User user}) async {
     setBusy(true);
-    Response response = await authService.register(user: user);
+    final Response response = await authService.register(user: user);
     setBusy(false);
     return response;
   }

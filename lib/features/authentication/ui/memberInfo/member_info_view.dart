@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
+import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
@@ -20,7 +22,7 @@ class MemberInfoView extends StatelessWidget {
 
   final AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
-  /// Text fields
+  /// Text controllers
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
@@ -126,8 +128,10 @@ class MemberInfoView extends StatelessWidget {
                                     autofillHints: const [AutofillHints.givenName],
                                     onChanged: model.setFirstName,
                                     onEditingComplete: () => lastNameFocus.requestFocus(),
-                                    validator: stringService.customStringValidator(firstNameController.text,
-                                        configuration: const StringValidatorConfiguration(notEmpty: true)),
+                                    validator: stringService.customStringValidator(
+                                      firstNameController.text,
+                                      configuration: const StringValidatorConfiguration(notEmpty: true),
+                                    ),
                                     decoration: InputDecoration(
                                       labelText: 'Legal First Name',
                                       hintText: 'Enter Legal First Name',
@@ -202,9 +206,19 @@ class MemberInfoView extends StatelessWidget {
                                   ),
                                   gap36,
                                   SelectableButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (formKey.currentState!.validate() && model.ready) {
-                                        appRouter.push(SignUpRoute());
+                                        // check if there is user registered with email already
+                                        final Response response = await model.checkAvailableEmail(email: model.email!);
+
+                                        // continue to signup view if email available else show user an error snack bar
+                                        if (response.statusCode == 200) {
+                                          appRouter.push(SignUpRoute());
+                                        } else {
+                                          toastService.showSnackBar(
+                                            message: getErrorMsg(response.body),
+                                          );
+                                        }
                                       }
                                     },
                                     label: "Continue",
