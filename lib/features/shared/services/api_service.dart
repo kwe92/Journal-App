@@ -22,6 +22,7 @@ enum Endpoint {
   // Authentication Endpoints
   register("/auth/register"),
   login("/auth/login"),
+  checkAvailableEmail("/auth/available-email"),
 
   // Journal Entry Endpoints
   entries("/api/entry"),
