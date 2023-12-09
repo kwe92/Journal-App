@@ -44,13 +44,18 @@ class CustomPortalTarget extends StatelessWidget {
           visible: isVisible,
           anchor: anchor,
           portalFollower: isAnimated
-              ? TweenAnimationBuilder<double>(
+              ?
+              // double is passed as a parameterized type to TweenAnimationBuilder to return a double as value/progress intstead of an integer
+              // the Opacity Widget expects a double and not an integer so you must pass double to TweenAnimationBuilder as a parameterized type
+              TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0, end: isVisible ? 1 : 0),
                   duration: animationDuration,
                   // renamed value argument to progress and used placeholder underscore for child property as it will not be used
                   builder: (context, progress, _) {
+                    // debugPrint("progress value: $progress");
+
                     return Transform(
-                      // determines the translation of a widget dynamically were the screen acts as the cartesian plane (i.e. how the widget slides on the screen)
+                      // determines the translation of a widget dynamically were the screen acts as the cartesian plane (i.e. how the widget slides on the screen on the x and y axis)
                       transform: animationType == 0
                           ? Matrix4.translationValues(0, (1 - progress) * translationStartDistance, 0)
                           : Matrix4.translationValues((1 - progress) * translationStartDistance, 0, 0),
@@ -67,7 +72,7 @@ class CustomPortalTarget extends StatelessWidget {
       );
 }
 
-/// invisible barrier surounding a target.
+/// Transparent barrier surounding a target.
 ///
 /// Dismisses the attached follower of the target if a user clicks outside of the follower.
 class DismissibleBarrier extends StatelessWidget {
@@ -94,3 +99,23 @@ class DismissibleBarrier extends StatelessWidget {
         child: target,
       );
 }
+
+// TweenAnimationBuilder
+
+//    - allows you to build custom animations without the need for an AnimationController
+//    - important properties:
+//        - TweenAnimationBuilder<T>: T represents the type of value you want to animate with
+//        - tween: the range of values that you want to animate between
+//        - duration: the duration of the animation
+//        - builder: the widget you wish to animate
+//        - onEnd: a callback triggered at the end of the animation | can also be use to set and new value and animate again
+//        - child: allows flutter to not rebuild the entire widget tree during animation for optimization purposes
+
+// Tween
+
+//   - stands for `between` and represents the animation valuse that you want to range over from beginning to end
+//   - represents the start and end value of the TweenAnimationBuilder builder property callback
+
+// Curve
+
+//   - modifies the way you animate between one value and another
