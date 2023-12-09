@@ -1,4 +1,3 @@
-import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/journal/extensions/string_extensions.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:http/http.dart';
@@ -40,6 +39,7 @@ class MemberInfoViewModel extends BaseViewModel {
   }
 
   void setEmail(String text) {
+    // ensure email is always lower case to match backend
     email = text.trim().toLowerCase();
     userService.tempUser?.email = email;
     notifyListeners();
@@ -47,26 +47,26 @@ class MemberInfoViewModel extends BaseViewModel {
 
   void setObscure(bool isObscured) {
     obscurePassword = isObscured;
-
     notifyListeners();
   }
 
   void setPhoneNumber(String text) {
+    // E164Standard pohne number format expected by the backend
     String phoneNumberWithCountryCode = _formatPhoneNumberE164Standard(text);
     phoneNumber = phoneNumberWithCountryCode;
     userService.tempUser?.phoneNumber = phoneNumberWithCountryCode;
     notifyListeners();
   }
 
-  Future<Response> signupWithEmail({required User user}) async {
+  Future<Response> checkAvailableEmail({required String email}) async {
     setBusy(true);
-    Response response = await authService.register(user: user);
+    final Response response = await authService.checkAvailableEmail(email: email);
     setBusy(false);
     return response;
   }
 }
 
-/// _formatPhoneNumberE164Standard: returns a string representation of a phone number in e164 format.
+/// returns a string representation of a phone number in e164 format.
 String _formatPhoneNumberE164Standard(String phoneNumber) {
   return '+1${(phoneNumber.replaceAll('-', '').replaceAll(' ', '')).replaceAll('(', '').replaceAll(')', '')}';
 }
