@@ -10,7 +10,7 @@ class FilterButtonModel extends BaseViewModel {
     MoodType.happy,
     MoodType.okay,
     MoodType.bad,
-    MoodType.terible,
+    MoodType.terrible,
   ];
 
   void setDropdownValue(String value) {

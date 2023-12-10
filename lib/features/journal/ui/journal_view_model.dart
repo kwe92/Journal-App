@@ -47,16 +47,36 @@ class JournalViewModel extends BaseViewModel {
         notifyListeners();
         break;
 
-      case MoodType.terible:
-        journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.terible).toList();
+      case MoodType.terrible:
+        journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.terrible).toList();
         notifyListeners();
         break;
     }
+  }
 
-    Future<void> refresh() async {
-      setBusy(true);
-      await journalEntryService.getAllEntries();
-      setBusy(false);
-    }
+  Future<void> refresh() async {
+    setBusy(true);
+    await journalEntryService.getAllEntries();
+    setBusy(false);
+  }
+
+  int get awesomeCount {
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.awesome).length;
+  }
+
+  int get happyCount {
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.happy).length;
+  }
+
+  int get okayCount {
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.okay).length;
+  }
+
+  int get badCount {
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.bad).length;
+  }
+
+  int get terribleCount {
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.terrible).length;
   }
 }
