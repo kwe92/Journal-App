@@ -12,7 +12,6 @@ import 'package:journal_app/features/shared/services/services.dart';
 
 class JournalEntry extends StatelessWidget {
   final int index;
-
   final Entry journalEntry;
 
   const JournalEntry({
@@ -23,7 +22,7 @@ class JournalEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MapEntry<String, MoodRecord> moodMap = MoodsData.getMoodMap(journalEntry.moodType);
+    final MapEntry<String, MoodRecord> moodMap = MoodsData.getMoodDataByType(journalEntry.moodType);
 
     final Mood mood = Mood(
       moodColor: moodMap.value.color,
@@ -33,7 +32,7 @@ class JournalEntry extends StatelessWidget {
     );
 
     return Container(
-      padding: EdgeInsets.only(top: index == 0 ? 32 : 0, bottom: 42),
+      padding: EdgeInsets.only(top: index == 0 ? 16 : 0, bottom: 42),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

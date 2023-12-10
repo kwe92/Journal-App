@@ -45,7 +45,7 @@ class MoodsData {
 
   static final List<MapEntry<String, MoodRecord>> moodsMaps = moodsData.entries.toList();
 
-  static MapEntry<String, MoodRecord> getMoodMap(String moodType) {
+  static MapEntry<String, MoodRecord> getMoodDataByType(String moodType) {
     return moodsMaps.where((moodMap) => moodMap.key == moodType).toList().first;
   }
 }
