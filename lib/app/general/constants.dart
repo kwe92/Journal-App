@@ -20,7 +20,7 @@ class MoodType {
   static const String happy = "Happy";
   static const String okay = "Okay";
   static const String bad = "Bad";
-  static const String terible = "Terible";
+  static const String terrible = "Terrible";
 }
 
 class MoodImagePath {
@@ -29,7 +29,7 @@ class MoodImagePath {
   static const String moodHappy = "assets/images/happy_face.svg";
   static const String moodOkay = "assets/images/meh_face.svg";
   static const String moodBad = "assets/images/sad_face.svg";
-  static const String moodTerible = "assets/images/aweful_face.svg";
+  static const String moodTerrible = "assets/images/aweful_face.svg";
 }
 
 class MoodsData {
@@ -40,7 +40,7 @@ class MoodsData {
     MoodType.happy: (color: AppColors.moodHappy, imagePath: MoodImagePath.moodHappy, defaultSize: 50.0),
     MoodType.okay: (color: AppColors.moodOkay, imagePath: MoodImagePath.moodOkay, defaultSize: 50.0),
     MoodType.bad: (color: AppColors.moodBad, imagePath: MoodImagePath.moodBad, defaultSize: 50.0),
-    MoodType.terible: (color: AppColors.moodTerible, imagePath: MoodImagePath.moodTerible, defaultSize: 70.0),
+    MoodType.terrible: (color: AppColors.moodTerrible, imagePath: MoodImagePath.moodTerrible, defaultSize: 70.0),
   };
 
   static final List<MapEntry<String, MoodRecord>> moodsMaps = moodsData.entries.toList();
