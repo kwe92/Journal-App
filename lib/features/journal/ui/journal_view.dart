@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:entry/entry.dart';
 import 'package:journal_app/app/app_router.gr.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/filter_button.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry.dart';
+import 'package:journal_app/features/journal/ui/widget/mood_type_counter.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
@@ -39,9 +41,25 @@ class JournalView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // TODO: disappear on scroll or make transparent somehow
-                    const Padding(
-                      padding: EdgeInsets.only(top: 16.0, right: 16),
-                      child: FilterButton(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 0, top: 8.0, right: 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                MoodTypeCounter(moodType: MoodType.awesome, moodCount: model.awesomeCount),
+                                MoodTypeCounter(moodType: MoodType.happy, moodCount: model.happyCount),
+                                MoodTypeCounter(moodType: MoodType.okay, moodCount: model.okayCount),
+                                MoodTypeCounter(moodType: MoodType.bad, moodCount: model.badCount),
+                                MoodTypeCounter(moodType: MoodType.terrible, moodCount: model.terribleCount),
+                              ],
+                            ),
+                          ),
+                          const FilterButton()
+                        ],
+                      ),
                     ),
                     Expanded(
                       child: Center(
@@ -97,3 +115,5 @@ class JournalView extends StatelessWidget {
 //   - DecoratedBox widget has a default height and width of 0
 //   - wrapping DecoratedBox with a ContrainedBox and adding minimum and maximum contraints
 //     allows the chidren of a DecoratedBox to be growable from the minimum size to the maximum size
+
+
