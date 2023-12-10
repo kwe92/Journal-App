@@ -30,7 +30,7 @@ class AppColors {
 
   static const moodBad = Color(0xffa9efe1);
 
-  static const moodTerible = Color(0xffaed9e0);
+  static const moodTerrible = Color(0xffaed9e0);
 
   static const appBar = lightGreen;
 
