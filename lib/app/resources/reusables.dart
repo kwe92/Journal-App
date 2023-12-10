@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:journal_app/app/theme/colors.dart';
 
+Gap gap2 = const Gap(2);
 Gap gap4 = const Gap(4);
 Gap gap6 = const Gap(6);
 Gap gap8 = const Gap(8);
