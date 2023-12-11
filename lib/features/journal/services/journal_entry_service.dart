@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_app/features/entry/models/updated_entry.dart';
@@ -32,7 +33,7 @@ class JournalEntryService extends ApiService with ChangeNotifier {
 
     final List<dynamic> responseData = reponseBody["data"];
 
-    journalEntries = responseData.map((entry) => Entry.fromJSON(entry)).toList();
+    journalEntries = responseData.map((entry) => Entry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
 
     notifyListeners();
   }

@@ -1,4 +1,5 @@
 import 'package:journal_app/features/journal/extensions/string_extensions.dart';
+import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:http/http.dart';
 import 'package:stacked/stacked.dart';
@@ -24,6 +25,21 @@ class MemberInfoViewModel extends BaseViewModel {
         email!.isNotEmpty &&
         phoneNumber != null &&
         phoneNumber!.isNotEmpty;
+  }
+
+  Future<void> initialize() async {
+    setBusy(true);
+
+    // create temp user for registration
+    await userService.createTempUser();
+
+    // if value is null assign empty string
+    firstName = userService.tempUser?.firstName ?? '';
+    lastName = userService.tempUser?.lastName ?? '';
+    phoneNumber = userService.tempUser?.phoneNumber ?? '';
+    email = userService.tempUser?.email ?? '';
+
+    setBusy(false);
   }
 
   void setFirstName(String text) {
@@ -58,11 +74,19 @@ class MemberInfoViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<Response> checkAvailableEmail({required String email}) async {
+  Future<bool> checkAvailableEmail({required String email}) async {
     setBusy(true);
     final Response response = await authService.checkAvailableEmail(email: email);
     setBusy(false);
-    return response;
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      toastService.showSnackBar(
+        message: getErrorMsg(response.body),
+      );
+      return false;
+    }
   }
 }
 

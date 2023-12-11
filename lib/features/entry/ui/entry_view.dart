@@ -1,12 +1,10 @@
 import "package:auto_route/annotations.dart";
-import "package:http/http.dart";
 import "package:journal_app/app/app_router.gr.dart";
 import "package:journal_app/app/resources/reusables.dart";
 import "package:journal_app/app/theme/theme.dart";
 import "package:journal_app/features/entry/models/updated_entry.dart";
 import "package:journal_app/features/entry/ui/entry_view_model.dart";
 import "package:journal_app/features/shared/models/entry.dart";
-import "package:journal_app/features/shared/services/http_service.dart";
 import "package:journal_app/features/shared/services/services.dart";
 import "package:journal_app/features/shared/services/string_service.dart";
 import "package:journal_app/features/shared/ui/base_scaffold.dart";
@@ -14,7 +12,6 @@ import "package:flutter/material.dart";
 import "package:journal_app/features/shared/ui/button/custom_back_button.dart";
 import "package:journal_app/features/shared/ui/button/selectable_button.dart";
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
-import "package:journal_app/features/shared/utilities/popup_parameters.dart";
 import "package:stacked/stacked.dart";
 
 @RoutePage()
@@ -75,18 +72,16 @@ class EntryView extends StatelessWidget {
                       entryFocus.requestFocus();
                     } else {
                       // push update to backend
-                      debugPrint("update entry");
 
-                      final Response response = await model.updateEntry(
+                      final bool ok = await model.updateEntry(
                         UpdatedEntry(entryId: entry.entryId, content: model.content),
                       );
 
-                      if (response.statusCode == 200 || response.statusCode == 201) {
-                        toastService.showSnackBar(message: "Updated journal entry successfully.");
+                      if (ok) {
                         appRouter.replace(JournalRoute());
-                      } else {
-                        toastService.showSnackBar(message: getErrorMsg(response.body));
                       }
+
+                      debugPrint("update entry");
                     }
                   },
                   label: model.readOnly ? "Edit Entry" : "Update Entry",
@@ -97,29 +92,15 @@ class EntryView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: SelectableButton(
                   onPressed: () async {
-                    final bool deleteContinued = await toastService.popupMenu<bool>(
-                      context,
-                      parameters: const PopupMenuParameters(
-                        title: "Delete Entry",
-                        content: "Are you sure you want to delete this entry?",
-                        defaultResult: false,
-                        options: {
-                          "Delete Entry": true,
-                          "Cancel": false,
-                        },
-                      ),
-                    );
+                    final bool deleteContinued = await model.continueDelete(context);
 
                     debugPrint('Should delete entry: $deleteContinued');
 
                     if (deleteContinued) {
-                      final Response response = await model.deleteEntry(entry.entryId);
+                      final bool ok = await model.deleteEntry(entry.entryId);
 
-                      if (response.statusCode == 200 || response.statusCode == 201) {
-                        toastService.showSnackBar(message: "Deleted journal entry successfully.");
+                      if (ok) {
                         appRouter.replace(JournalRoute());
-                      } else {
-                        toastService.showSnackBar(message: getErrorMsg(response.body));
                       }
                     }
                   },

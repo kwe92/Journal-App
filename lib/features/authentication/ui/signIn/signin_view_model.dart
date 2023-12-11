@@ -33,7 +33,7 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<Response> signInWithEmail(BuildContext context) async {
+  Future<bool> signInWithEmail(BuildContext context) async {
     setBusy(true);
     final Response response = await authService.login(email: email!, password: password!);
     setBusy(false);
@@ -43,11 +43,17 @@ class SignInViewModel extends BaseViewModel {
         toastService.showSnackBar(
           message: getErrorMsg(response.body),
         );
-      case 200 || 201:
-        final Map<String, dynamic> responseBody = jsonDecode(response.body);
-        await tokenService.saveTokenData(responseBody);
+        return false;
     }
 
-    return response;
+    if (response.statusCode == 200 || response.statusCode == 201 && authService.isLoggedIn) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      await tokenService.saveTokenData(responseBody);
+      return true;
+    } else {
+      return false;
+    }
   }
+
+  void unfocusAll(BuildContext context) => toastService.unfocusAll(context);
 }

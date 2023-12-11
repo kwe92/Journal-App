@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
@@ -23,6 +22,7 @@ class SignInView extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  // TODO: should this be moved?
   final image = imageService.getRandomMindfulImage();
 
   @override
@@ -84,11 +84,12 @@ class SignInView extends StatelessWidget {
                           SelectableButton(
                               onPressed: () async {
                                 model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
-                                toastService.unfocusAll(context);
                                 if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                                  final Response response = await model.signInWithEmail(context);
+                                  model.unfocusAll(context);
 
-                                  if (authService.isLoggedIn && response.statusCode == 200 || response.statusCode == 201) {
+                                  final bool ok = await model.signInWithEmail(context);
+
+                                  if (ok) {
                                     emailController.clear();
                                     passwordController.clear();
                                     appRouter.push(JournalRoute());

@@ -57,18 +57,14 @@ class ToastService {
                                   children: [
                                     SelectableButton(
                                       mainTheme: offGreyButtonTheme,
-                                      onPressed: () {
-                                        appRouter.pop(buttonOption.value);
-                                      },
+                                      onPressed: () => appRouter.pop(buttonOption.value),
                                       label: buttonOption.key,
                                     ),
                                     gap12,
                                   ],
                                 )
                               : SelectableButton(
-                                  onPressed: () {
-                                    appRouter.pop(buttonOption.value);
-                                  },
+                                  onPressed: () => appRouter.pop(buttonOption.value),
                                   label: buttonOption.key,
                                 );
                         }).toList()

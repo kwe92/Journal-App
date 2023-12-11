@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/addEntry/ui/add_entry_view_model.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
-import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
@@ -62,23 +60,15 @@ class AddEntryView extends StatelessWidget {
               child: SelectableButton(
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                      final Response response = await model.addEntry(
-                        NewEntry(
-                          moodType: moodType,
-                          content: model.content!.trim(),
-                        ),
+                      final bool ok = await model.addEntry(
+                        NewEntry(moodType: moodType, content: model.content!.trim()),
                       );
 
-                      if (response.statusCode == 200 || response.statusCode == 201) {
-                        model.clearContent();
-                        toastService.showSnackBar(message: "New journal entry added.");
+                      if (ok) {
                         appRouter.replace(JournalRoute());
-                      } else {
-                        toastService.showSnackBar(message: getErrorMsg(response.body));
                       }
                     }
                   },
-                  // label: "Add Entry"
                   label: "Add Entry"),
             ),
           ],
