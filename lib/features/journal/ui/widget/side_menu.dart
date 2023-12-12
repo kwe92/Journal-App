@@ -4,9 +4,10 @@ import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 class SideMenu extends Drawer {
-  const SideMenu({super.key});
+  SideMenu({super.key});
 
-  // final image = imageService.getRandomMindfulImage();
+  //  should this be propigated down?
+  final image = imageService.getRandomMindfulImage();
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -20,7 +21,7 @@ class SideMenu extends Drawer {
                     width: double.maxFinite,
                     height: MediaQuery.of(context).size.height / 3.5,
                     child: Image.asset(
-                      imageService.getRandomMindfulImage(),
+                      image,
                       fit: BoxFit.cover,
                     ),
                   ),

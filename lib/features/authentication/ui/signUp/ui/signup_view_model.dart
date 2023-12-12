@@ -9,6 +9,8 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUpViewModel extends BaseViewModel with PasswordMixin {
+  String? mindfulImage;
+
   bool get ready {
     return email != null &&
         email!.isNotEmpty &&
@@ -23,8 +25,12 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
   }
 
   void initialize() {
+    mindfulImage = imageService.getRandomMindfulImage();
+
     setBusy(true);
+
     email = userService.tempUser?.email ?? "";
+
     setBusy(false);
   }
 

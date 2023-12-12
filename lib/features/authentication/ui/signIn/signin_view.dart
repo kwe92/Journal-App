@@ -22,13 +22,11 @@ class SignInView extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // TODO: should this be moved?
-  final image = imageService.getRandomMindfulImage();
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => SignInViewModel(),
+      onViewModelReady: (model) => model.initialize(),
       builder: (context, model, _) {
         return SafeArea(
           child: Scaffold(
@@ -42,7 +40,7 @@ class SignInView extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 3.125,
                     width: double.maxFinite,
                     child: Image.asset(
-                      image,
+                      model.mindfulImage!,
                       fit: BoxFit.cover,
                     ),
                   ),

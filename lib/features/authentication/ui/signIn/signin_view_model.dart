@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 class SignInViewModel extends BaseViewModel {
   String? email;
   String? password;
+  String? mindfulImage;
 
   bool get ready {
     return email != null && email!.isNotEmpty && password != null && password!.isNotEmpty;
@@ -16,6 +17,10 @@ class SignInViewModel extends BaseViewModel {
 
   // controls password obscurity
   bool obscurePassword = true;
+
+  void initialize() {
+    mindfulImage = imageService.getRandomMindfulImage();
+  }
 
   void setEmail(String text) {
     email = text.trim().toLowerCase();

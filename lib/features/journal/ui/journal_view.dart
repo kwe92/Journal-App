@@ -26,7 +26,7 @@ class JournalView extends StatelessWidget {
       onViewModelReady: (model) async {
         await model.initialize();
 
-        debugPrint("\nJournal entries from JournalView: ${model.journalEntries}");
+        // debugPrint("\nJournal entries from JournalView: ${model.journalEntries}");
       },
       // ! could a refresh method be used here instead of rebuilding the widget on insert?
       createNewViewModelOnInsert: true,
@@ -94,7 +94,7 @@ class JournalView extends StatelessWidget {
                   ],
                 ),
           // Open menu to the side
-          drawer: const SideMenu(),
+          drawer: SideMenu(),
           // BUTTON TO ADD NEW ENTRY
           floatingActionButton: AddButton(onTap: () {
             appRouter.push(const MoodRoute());

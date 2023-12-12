@@ -24,8 +24,6 @@ class SignUpView extends StatelessWidget {
   final FocusNode confirmPasswordFocus = FocusNode();
   final FocusNode emailFocus = FocusNode();
 
-  final image = imageService.getRandomMindfulImage();
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
@@ -57,7 +55,7 @@ class SignUpView extends StatelessWidget {
                       height: 210,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(image),
+                          image: AssetImage(model.mindfulImage!),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -106,6 +104,9 @@ class SignUpView extends StatelessWidget {
                             final bool ok = await model.signupWithEmail(user: userService.tempUser as User);
 
                             if (ok) {
+                              passwordFocus.removeListener(() {
+                                model.setShowRequirements(passwordFocus.hasFocus);
+                              });
                               // remove member info view and navigate to journal view | there maybe a better way to refresh widget
                               appRouter.replace(JournalRoute());
                             }

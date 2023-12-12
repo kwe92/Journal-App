@@ -15,6 +15,8 @@ class MemberInfoViewModel extends BaseViewModel {
 
   bool obscurePassword = true;
 
+  String? mindfulImage;
+
   /// Check that all required fields are filled in
   bool get ready {
     return firstName != null &&
@@ -28,6 +30,8 @@ class MemberInfoViewModel extends BaseViewModel {
   }
 
   Future<void> initialize() async {
+    mindfulImage = imageService.getRandomMindfulImage();
+
     setBusy(true);
 
     // create temp user for registration

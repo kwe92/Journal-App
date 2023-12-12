@@ -38,9 +38,6 @@ class MemberInfoView extends StatelessWidget {
   final FocusNode phoneFocus = FocusNode();
   final FocusNode emailFocus = FocusNode();
 
-  // TODO: should this be moved?
-  final image = imageService.getRandomMindfulImage();
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
@@ -67,7 +64,7 @@ class MemberInfoView extends StatelessWidget {
                         height: 210,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(image),
+                            image: AssetImage(model.mindfulImage!),
                             fit: BoxFit.cover,
                           ),
                         ),

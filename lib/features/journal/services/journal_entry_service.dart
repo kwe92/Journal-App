@@ -8,6 +8,7 @@ import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/shared/models/entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
+import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 const String _bearer = "Bearer";
@@ -19,7 +20,7 @@ typedef Entries = List<Entry>;
 class JournalEntryService extends ApiService with ChangeNotifier {
   Entries journalEntries = [];
 
-  Future<void> getAllEntries() async {
+  Future<http.Response> getAllEntries() async {
     // get jwt access token saved in persistent storage
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
@@ -31,11 +32,18 @@ class JournalEntryService extends ApiService with ChangeNotifier {
     // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
     final Map<String, dynamic> reponseBody = jsonDecode(response.body);
 
-    final List<dynamic> responseData = reponseBody["data"];
+    final List<dynamic>? responseData = reponseBody["data"];
 
-    journalEntries = responseData.map((entry) => Entry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
+    if (responseData == null) {
+      journalEntries = [];
+      toastService.showSnackBar(message: getErrorMsg(response.body));
+    } else {
+      journalEntries = responseData.map((entry) => Entry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
+    }
 
     notifyListeners();
+
+    return response;
   }
 
   Future<http.Response> addEntry(NewEntry newEntry) async {
