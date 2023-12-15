@@ -262,4 +262,5 @@ class MemberInfoView extends StatelessWidget {
 
 //       - children are RenderSliver's (slivers for brevity): advanced constraints and geometry
 
+// Creating ViewModel Declaratively
 
