@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
-import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
+import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/date_tile.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_content.dart';
 import 'package:journal_app/features/journal/ui/widget/mood_tile.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/entry.dart';
-import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:stacked/stacked.dart';
 
-class JournalEntry extends StatelessWidget {
+class JournalEntry extends ViewModelWidget<JournalViewModel> {
   final int index;
   final Entry journalEntry;
 
@@ -21,15 +21,8 @@ class JournalEntry extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final MapEntry<String, MoodRecord> moodMap = MoodsData.getMoodDataByType(journalEntry.moodType);
-
-    final Mood mood = Mood(
-      moodColor: moodMap.value.color,
-      moodImagePath: moodMap.value.imagePath,
-      imageSize: 20,
-      moodText: journalEntry.moodType,
-    );
+  Widget build(BuildContext context, JournalViewModel viewModel) {
+    final Mood mood = viewModel.getMood(journalEntry);
 
     return Container(
       padding: EdgeInsets.only(top: index == 0 ? 16 : 0, bottom: 42),
