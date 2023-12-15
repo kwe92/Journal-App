@@ -27,7 +27,7 @@ class JournalEntry {
     return timeService.getStringFromDate(updatedAt);
   }
 
-  /// Entry: model representing expected json input for an entry.
+  /// Domain model and DTO for json serialization.
   const JournalEntry({
     required this.entryId,
     required this.uid,
