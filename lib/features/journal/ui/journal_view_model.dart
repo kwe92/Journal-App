@@ -1,14 +1,14 @@
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
-import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
 class JournalViewModel extends BaseViewModel {
-  List<Entry> _journalEntries = [];
+  List<JournalEntry> _journalEntries = [];
 
-  List<Entry> get journalEntries => _journalEntries;
+  List<JournalEntry> get journalEntries => _journalEntries;
 
   Future<void> initialize() async {
     setBusy(true);
@@ -59,7 +59,7 @@ class JournalViewModel extends BaseViewModel {
     }
   }
 
-  Mood getMood(Entry journalEntry) {
+  Mood getMood(JournalEntry journalEntry) {
     final MapEntry<String, MoodRecord> moodMap = MoodsData.getMoodDataByType(journalEntry.moodType);
 
     final Mood mood = Mood(

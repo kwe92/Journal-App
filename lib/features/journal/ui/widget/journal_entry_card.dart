@@ -6,15 +6,15 @@ import 'package:journal_app/features/journal/ui/widget/date_tile.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_content.dart';
 import 'package:journal_app/features/journal/ui/widget/mood_tile.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
-import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
-class JournalEntry extends ViewModelWidget<JournalViewModel> {
+class JournalEntryCard extends ViewModelWidget<JournalViewModel> {
   final int index;
-  final Entry journalEntry;
+  final JournalEntry journalEntry;
 
-  const JournalEntry({
+  const JournalEntryCard({
     required this.index,
     required this.journalEntry,
     super.key,

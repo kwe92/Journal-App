@@ -4,7 +4,7 @@ import "package:journal_app/app/resources/reusables.dart";
 import "package:journal_app/app/theme/theme.dart";
 import "package:journal_app/features/entry/models/updated_entry.dart";
 import "package:journal_app/features/entry/ui/entry_view_model.dart";
-import "package:journal_app/features/shared/models/entry.dart";
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import "package:journal_app/features/shared/services/services.dart";
 import "package:journal_app/features/shared/services/string_service.dart";
 import "package:journal_app/features/shared/ui/base_scaffold.dart";
@@ -16,7 +16,7 @@ import "package:stacked/stacked.dart";
 
 @RoutePage()
 class EntryView extends StatelessWidget {
-  final Entry entry;
+  final JournalEntry entry;
 
   EntryView({required this.entry, super.key});
 

@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_app/features/entry/models/updated_entry.dart';
-import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/http_service.dart';
@@ -14,11 +14,11 @@ import 'package:journal_app/features/shared/services/services.dart';
 const String _bearer = "Bearer";
 
 /// Entries: type alias for List of Entry.
-typedef Entries = List<Entry>;
+typedef JournalEntries = List<JournalEntry>;
 
 /// JournalEntryService: entry API calls for the currently logged in user based on their access token.
 class JournalEntryService extends ApiService with ChangeNotifier {
-  Entries journalEntries = [];
+  JournalEntries journalEntries = [];
 
   Future<http.Response> getAllEntries() async {
     // get jwt access token saved in persistent storage
@@ -38,7 +38,7 @@ class JournalEntryService extends ApiService with ChangeNotifier {
       journalEntries = [];
       toastService.showSnackBar(message: getErrorMsg(response.body));
     } else {
-      journalEntries = responseData.map((entry) => Entry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
+      journalEntries = responseData.map((entry) => JournalEntry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
     }
 
     notifyListeners();
