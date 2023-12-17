@@ -86,10 +86,12 @@ final InputDecorationTheme inputTheme = () {
 
 const snackBarTheme = SnackBarThemeData(
   backgroundColor: AppColors.offWhite,
-  contentTextStyle: TextStyle(
-    fontSize: 24,
-    color: AppColors.lightGreen,
-  ),
+  contentTextStyle: snackBarTextStyle,
+);
+
+const snackBarTextStyle = TextStyle(
+  fontSize: 24,
+  color: AppColors.lightGreen,
 );
 
 /// borderlessInput: borderless TextField and TextFormField.
