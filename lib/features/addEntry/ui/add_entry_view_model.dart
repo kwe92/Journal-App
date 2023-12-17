@@ -1,6 +1,7 @@
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class AddEntryViewModel extends BaseViewModel {
@@ -22,11 +23,15 @@ class AddEntryViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<Response> addEntry(NewEntry newEntry) async {
+  Future<bool> addEntry(NewEntry newEntry) async {
     setBusy(true);
     final Response response = await journalEntryService.addEntry(newEntry);
     setBusy(false);
 
-    return response;
+    final bool ok = ResponseHandler.checkStatusCode(response, "New journal entry added.");
+
+    if (ok) clearContent();
+
+    return ok;
   }
 }

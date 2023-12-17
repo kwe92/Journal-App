@@ -1,24 +1,26 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_app/features/entry/models/updated_entry.dart';
-import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 
 const String _bearer = "Bearer";
 
 /// Entries: type alias for List of Entry.
-typedef Entries = List<Entry>;
+typedef JournalEntries = List<JournalEntry>;
 
 /// JournalEntryService: entry API calls for the currently logged in user based on their access token.
 class JournalEntryService extends ApiService with ChangeNotifier {
-  Entries journalEntries = [];
+  JournalEntries journalEntries = [];
 
-  Future<void> getAllEntries() async {
+  Future<http.Response> getAllEntries() async {
     // get jwt access token saved in persistent storage
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
@@ -27,14 +29,28 @@ class JournalEntryService extends ApiService with ChangeNotifier {
       HttpHeaders.authorizationHeader: "$_bearer $accessToken",
     });
 
-    // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
-    final Map<String, dynamic> reponseBody = jsonDecode(response.body);
+    // TODO: refactor: move to journal view model services should only return responses not check them===========================
 
-    final List<dynamic> responseData = reponseBody["data"];
+    final bool ok = ResponseHandler.checkStatusCode(response);
 
-    journalEntries = responseData.map((entry) => Entry.fromJSON(entry)).toList();
+    if (ok) {
+      // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
+      final Map<String, dynamic> reponseBody = jsonDecode(response.body);
+
+      final List<dynamic>? responseData = reponseBody["data"];
+
+      if (responseData != null) {
+        journalEntries = responseData.map((entry) => JournalEntry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
+      } else {
+        toastService.showSnackBar(message: "An error occured retrieving your data.", textColor: Colors.red);
+      }
+    }
+
+    // TODO END===============================================================
 
     notifyListeners();
+
+    return response;
   }
 
   Future<http.Response> addEntry(NewEntry newEntry) async {

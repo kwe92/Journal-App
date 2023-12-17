@@ -2,10 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'package:journal_app/features/shared/services/services.dart';
 
-part 'entry.g.dart';
+part 'journal_entry.g.dart';
 
 @JsonSerializable()
-class Entry {
+class JournalEntry {
   @JsonKey(name: "user_id")
   final int uid;
 
@@ -27,8 +27,8 @@ class Entry {
     return timeService.getStringFromDate(updatedAt);
   }
 
-  /// Entry: model representing expected json input for an entry.
-  const Entry({
+  /// Domain model and DTO for json serialization.
+  const JournalEntry({
     required this.entryId,
     required this.uid,
     required this.content,
@@ -37,12 +37,12 @@ class Entry {
     required this.updatedAt,
   });
 
-  factory Entry.fromJSON(Map<String, dynamic> json) => _$EntryFromJson(json);
+  factory JournalEntry.fromJSON(Map<String, dynamic> json) => _$JournalEntryFromJson(json);
 
-  Map<String, dynamic> toJSON() => _$EntryToJson(this);
+  Map<String, dynamic> toJSON() => _$JournalEntryToJson(this);
 
   @override
   String toString() {
-    return 'Entry(uid: $uid, entryId: $entryId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
+    return 'JournalEntry(uid: $uid, entryId: $entryId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
   }
 }

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'entry.dart';
+part of 'journal_entry.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
+JournalEntry _$JournalEntryFromJson(Map<String, dynamic> json) => JournalEntry(
       entryId: json['id'] as int,
       uid: json['user_id'] as int,
       content: json['content'] as String,
@@ -15,7 +15,8 @@ Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
+Map<String, dynamic> _$JournalEntryToJson(JournalEntry instance) =>
+    <String, dynamic>{
       'user_id': instance.uid,
       'id': instance.entryId,
       'content': instance.content,

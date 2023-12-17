@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 class FormContainer extends StatelessWidget {
   final Widget child;
   final double? height;
-  final Entry? entry;
+  final JournalEntry? entry;
 
   const FormContainer({
     required this.child,

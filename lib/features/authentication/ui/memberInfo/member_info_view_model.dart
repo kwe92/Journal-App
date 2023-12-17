@@ -1,6 +1,7 @@
 import 'package:journal_app/features/journal/extensions/string_extensions.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:http/http.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class MemberInfoViewModel extends BaseViewModel {
@@ -14,6 +15,8 @@ class MemberInfoViewModel extends BaseViewModel {
 
   bool obscurePassword = true;
 
+  String? mindfulImage;
+
   /// Check that all required fields are filled in
   bool get ready {
     return firstName != null &&
@@ -24,6 +27,23 @@ class MemberInfoViewModel extends BaseViewModel {
         email!.isNotEmpty &&
         phoneNumber != null &&
         phoneNumber!.isNotEmpty;
+  }
+
+  Future<void> initialize() async {
+    mindfulImage = imageService.getRandomMindfulImage();
+
+    setBusy(true);
+
+    // create temp user for registration
+    await userService.createTempUser();
+
+    // if value is null assign empty string
+    firstName = userService.tempUser?.firstName ?? '';
+    lastName = userService.tempUser?.lastName ?? '';
+    phoneNumber = userService.tempUser?.phoneNumber ?? '';
+    email = userService.tempUser?.email ?? '';
+
+    setBusy(false);
   }
 
   void setFirstName(String text) {
@@ -58,11 +78,12 @@ class MemberInfoViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<Response> checkAvailableEmail({required String email}) async {
+  Future<bool> checkAvailableEmail({required String email}) async {
     setBusy(true);
     final Response response = await authService.checkAvailableEmail(email: email);
     setBusy(false);
-    return response;
+
+    return ResponseHandler.checkStatusCode(response);
   }
 }
 

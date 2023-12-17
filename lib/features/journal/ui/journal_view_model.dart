@@ -1,57 +1,77 @@
 import 'package:journal_app/app/general/constants.dart';
-import 'package:journal_app/features/shared/models/entry.dart';
+import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
+// TODO: implement getAllEntries method
+
 class JournalViewModel extends BaseViewModel {
-  List<Entry> journalEntries = [];
+  List<JournalEntry> _journalEntries = [];
+
+  List<JournalEntry> get journalEntries => _journalEntries;
 
   Future<void> initialize() async {
     setBusy(true);
 
     // TODO: remove Future.delayed | placed here for testing loading indicator
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
 
     await journalEntryService.getAllEntries();
 
     // initialize journalEntries with journalEntryService.journalEntries after backend call
-    journalEntries = journalEntryService.journalEntries;
+    _journalEntries = journalEntryService.journalEntries;
 
     setBusy(false);
   }
 
+  /// Filter journal entries by mood type.
   void setFilteredJournalEntries(String mood) {
     switch (mood) {
       case 'all':
-        journalEntries = journalEntryService.journalEntries;
+        _journalEntries = journalEntryService.journalEntries;
         notifyListeners();
         break;
 
       case MoodType.awesome:
-        journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.awesome).toList();
+        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.awesome).toList();
         notifyListeners();
         break;
 
       case MoodType.happy:
-        journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.happy).toList();
+        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.happy).toList();
         notifyListeners();
         break;
 
       case MoodType.okay:
-        journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.okay).toList();
+        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.okay).toList();
         notifyListeners();
         break;
 
       case MoodType.bad:
-        journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.bad).toList();
+        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.bad).toList();
         notifyListeners();
         break;
 
       case MoodType.terrible:
-        journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.terrible).toList();
+        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.terrible).toList();
         notifyListeners();
         break;
     }
+  }
+
+  Mood getMood(JournalEntry journalEntry) {
+    final MapEntry<String, MoodRecord> moodMap = MoodsData.getMoodDataByType(journalEntry.moodType);
+
+    final Mood mood = Mood(
+      moodColor: moodMap.value.color,
+      moodImagePath: moodMap.value.imagePath,
+      imageSize: 20,
+      moodText: journalEntry.moodType,
+    );
+
+    return mood;
   }
 
   Future<void> refresh() async {

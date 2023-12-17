@@ -20,7 +20,7 @@ import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dar
 import 'package:journal_app/features/entry/ui/entry_view.dart' as _i2;
 import 'package:journal_app/features/journal/ui/journal_view.dart' as _i3;
 import 'package:journal_app/features/mood/ui/mood_view.dart' as _i5;
-import 'package:journal_app/features/shared/models/entry.dart' as _i10;
+import 'package:journal_app/features/shared/models/journal_entry.dart' as _i10;
 
 abstract class $AppRouter extends _i8.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -48,11 +48,9 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     JournalRoute.name: (routeData) {
-      final args = routeData.argsAs<JournalRouteArgs>(
-          orElse: () => const JournalRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.JournalView(key: args.key),
+        child: const _i3.JournalView(),
       );
     },
     MemberInfoRoute.name: (routeData) {
@@ -130,7 +128,7 @@ class AddEntryRouteArgs {
 /// [_i2.EntryView]
 class EntryRoute extends _i8.PageRouteInfo<EntryRouteArgs> {
   EntryRoute({
-    required _i10.Entry entry,
+    required _i10.JournalEntry entry,
     _i9.Key? key,
     List<_i8.PageRouteInfo>? children,
   }) : super(
@@ -154,7 +152,7 @@ class EntryRouteArgs {
     this.key,
   });
 
-  final _i10.Entry entry;
+  final _i10.JournalEntry entry;
 
   final _i9.Key? key;
 
@@ -166,31 +164,16 @@ class EntryRouteArgs {
 
 /// generated route for
 /// [_i3.JournalView]
-class JournalRoute extends _i8.PageRouteInfo<JournalRouteArgs> {
-  JournalRoute({
-    _i9.Key? key,
-    List<_i8.PageRouteInfo>? children,
-  }) : super(
+class JournalRoute extends _i8.PageRouteInfo<void> {
+  const JournalRoute({List<_i8.PageRouteInfo>? children})
+      : super(
           JournalRoute.name,
-          args: JournalRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'JournalRoute';
 
-  static const _i8.PageInfo<JournalRouteArgs> page =
-      _i8.PageInfo<JournalRouteArgs>(name);
-}
-
-class JournalRouteArgs {
-  const JournalRouteArgs({this.key});
-
-  final _i9.Key? key;
-
-  @override
-  String toString() {
-    return 'JournalRouteArgs{key: $key}';
-  }
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
 }
 
 /// generated route for

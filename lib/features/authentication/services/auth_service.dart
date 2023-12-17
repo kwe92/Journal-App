@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 
 /// AuthService: authorization service that commincates with backend for user authorization.
 class AuthService extends ApiService with ChangeNotifier {
-  bool isLoggedIn = false;
+  bool _isLoggedIn = false;
+
+  bool get isLoggedIn => _isLoggedIn;
 
   /// register: registers a user via API call to backend.
   Future<http.Response> register({required User user}) async {
@@ -17,7 +19,7 @@ class AuthService extends ApiService with ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      isLoggedIn = true;
+      _isLoggedIn = true;
       notifyListeners();
     }
 
@@ -34,7 +36,7 @@ class AuthService extends ApiService with ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      isLoggedIn = true;
+      _isLoggedIn = true;
       notifyListeners();
     }
 

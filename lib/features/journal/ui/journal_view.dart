@@ -6,7 +6,7 @@ import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/filter_button.dart';
-import 'package:journal_app/features/journal/ui/widget/journal_entry.dart';
+import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/journal/ui/widget/mood_type_counter.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -26,7 +26,7 @@ class JournalView extends StatelessWidget {
       onViewModelReady: (model) async {
         await model.initialize();
 
-        debugPrint("\nJournal entries from JournalView: ${model.journalEntries}");
+        // debugPrint("\nJournal entries from JournalView: ${model.journalEntries}");
       },
       // ! could a refresh method be used here instead of rebuilding the widget on insert?
       createNewViewModelOnInsert: true,
@@ -82,7 +82,7 @@ class JournalView extends StatelessWidget {
                                   )
                                 : Entry.opacity(
                                     duration: const Duration(milliseconds: 600),
-                                    child: JournalEntry(
+                                    child: JournalEntryCard(
                                       index: i,
                                       journalEntry: model.journalEntries[i],
                                     ),
@@ -94,7 +94,7 @@ class JournalView extends StatelessWidget {
                   ],
                 ),
           // Open menu to the side
-          drawer: const SideMenu(),
+          drawer: SideMenu(),
           // BUTTON TO ADD NEW ENTRY
           floatingActionButton: AddButton(onTap: () {
             appRouter.push(const MoodRoute());

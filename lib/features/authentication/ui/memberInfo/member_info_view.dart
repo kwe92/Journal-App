@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
-import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
@@ -40,30 +38,14 @@ class MemberInfoView extends StatelessWidget {
   final FocusNode phoneFocus = FocusNode();
   final FocusNode emailFocus = FocusNode();
 
-  final image = imageService.getRandomMindfulImage();
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => MemberInfoViewModel(),
       onViewModelReady: (model) async {
-        // create temp user for registration
-        await userService.createTempUser();
-
-        // if value is null assign empty string
-        String firstName = userService.tempUser?.firstName ?? '';
-        String lastName = userService.tempUser?.lastName ?? '';
-        String phoneNumber = userService.tempUser?.phoneNumber ?? '';
-        String email = userService.tempUser?.email ?? '';
-
-        // Initialize values
-        model.setFirstName(firstName);
-        model.setLastName(lastName);
-        model.setPhoneNumber(phoneNumber);
-        model.setEmail(email);
-
-        firstNameController.text = firstName;
-        lastNameController.text = lastName;
+        await model.initialize();
+        firstNameController.text = model.firstName!;
+        lastNameController.text = model.lastName!;
       },
       builder: (context, model, child) {
         return SafeArea(
@@ -82,7 +64,7 @@ class MemberInfoView extends StatelessWidget {
                         height: 210,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(image),
+                            image: AssetImage(model.mindfulImage!),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -209,15 +191,11 @@ class MemberInfoView extends StatelessWidget {
                                     onPressed: () async {
                                       if (formKey.currentState!.validate() && model.ready) {
                                         // check if there is user registered with email already
-                                        final Response response = await model.checkAvailableEmail(email: model.email!);
+                                        final bool ok = await model.checkAvailableEmail(email: model.email!);
 
                                         // continue to signup view if email available else show user an error snack bar
-                                        if (response.statusCode == 200) {
+                                        if (ok) {
                                           appRouter.push(SignUpRoute());
-                                        } else {
-                                          toastService.showSnackBar(
-                                            message: getErrorMsg(response.body),
-                                          );
                                         }
                                       }
                                     },
@@ -284,4 +262,5 @@ class MemberInfoView extends StatelessWidget {
 
 //       - children are RenderSliver's (slivers for brevity): advanced constraints and geometry
 
+// Creating ViewModel Declaratively
 

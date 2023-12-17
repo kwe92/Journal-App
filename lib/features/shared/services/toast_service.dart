@@ -13,13 +13,14 @@ class ToastService {
   static const _genericErrorMsg = "An error has occured";
 
   /// showSnackBar: an information box appearing at the bottom of the users screen presisting on all views for the duration.
-  void showSnackBar({String? message, BuildContext? context, Duration? duration}) {
+  void showSnackBar({String? message, BuildContext? context, Duration? duration, Color? textColor}) {
     ScaffoldMessenger.of(context ?? appRouter.navigatorKey.currentContext!).showSnackBar(
       SnackBar(
         duration: duration ?? const Duration(milliseconds: 750),
         content: Text(
           message ?? _genericErrorMsg,
           textAlign: TextAlign.center,
+          style: textColor != null ? snackBarTextStyle.copyWith(color: textColor) : null,
         ),
       ),
     );
@@ -57,18 +58,14 @@ class ToastService {
                                   children: [
                                     SelectableButton(
                                       mainTheme: offGreyButtonTheme,
-                                      onPressed: () {
-                                        appRouter.pop(buttonOption.value);
-                                      },
+                                      onPressed: () => appRouter.pop(buttonOption.value),
                                       label: buttonOption.key,
                                     ),
                                     gap12,
                                   ],
                                 )
                               : SelectableButton(
-                                  onPressed: () {
-                                    appRouter.pop(buttonOption.value);
-                                  },
+                                  onPressed: () => appRouter.pop(buttonOption.value),
                                   label: buttonOption.key,
                                 );
                         }).toList()
