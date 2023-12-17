@@ -1,7 +1,7 @@
 import 'package:journal_app/features/journal/extensions/string_extensions.dart';
-import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:http/http.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class MemberInfoViewModel extends BaseViewModel {
@@ -83,14 +83,7 @@ class MemberInfoViewModel extends BaseViewModel {
     final Response response = await authService.checkAvailableEmail(email: email);
     setBusy(false);
 
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      toastService.showSnackBar(
-        message: getErrorMsg(response.body),
-      );
-      return false;
-    }
+    return ResponseHandler.checkStatusCode(response);
   }
 }
 
