@@ -5,6 +5,8 @@ import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
+// TODO: implement getAllEntries method
+
 class JournalViewModel extends BaseViewModel {
   List<JournalEntry> _journalEntries = [];
 

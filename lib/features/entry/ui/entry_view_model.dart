@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/entry/models/updated_entry.dart';
-import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class EntryviewModel extends BaseViewModel {
@@ -30,13 +30,7 @@ class EntryviewModel extends BaseViewModel {
     final Response response = await journalEntryService.updateEntry(updatedEntry);
     setBusy(false);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      toastService.showSnackBar(message: "Updated journal entry successfully.");
-      return true;
-    } else {
-      toastService.showSnackBar(message: getErrorMsg(response.body));
-      return false;
-    }
+    return ResponseHandler.checkStatusCode(response, "Updated journal entry successfully.");
   }
 
   Future<bool> deleteEntry(int entryId) async {
@@ -44,13 +38,7 @@ class EntryviewModel extends BaseViewModel {
     final Response response = await journalEntryService.deleteEntry(entryId);
     setBusy(false);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      toastService.showSnackBar(message: "Deleted journal entry successfully.");
-      return true;
-    } else {
-      toastService.showSnackBar(message: getErrorMsg(response.body));
-      return false;
-    }
+    return ResponseHandler.checkStatusCode(response, "Deleted journal entry successfully.");
   }
 
   Future<bool> continueDelete(BuildContext context) async {

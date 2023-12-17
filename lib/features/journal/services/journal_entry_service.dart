@@ -8,8 +8,8 @@ import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
-import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 
 const String _bearer = "Bearer";
 
@@ -29,17 +29,24 @@ class JournalEntryService extends ApiService with ChangeNotifier {
       HttpHeaders.authorizationHeader: "$_bearer $accessToken",
     });
 
-    // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
-    final Map<String, dynamic> reponseBody = jsonDecode(response.body);
+    // TODO: refactor: move to journal view model services should only return responses not check them===========================
 
-    final List<dynamic>? responseData = reponseBody["data"];
+    final bool ok = ResponseHandler.checkStatusCode(response);
 
-    if (responseData == null) {
-      journalEntries = [];
-      toastService.showSnackBar(message: getErrorMsg(response.body));
-    } else {
-      journalEntries = responseData.map((entry) => JournalEntry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
+    if (ok) {
+      // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
+      final Map<String, dynamic> reponseBody = jsonDecode(response.body);
+
+      final List<dynamic>? responseData = reponseBody["data"];
+
+      if (responseData != null) {
+        journalEntries = responseData.map((entry) => JournalEntry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
+      } else {
+        toastService.showSnackBar(message: "An error occured retrieving your data.", textColor: Colors.red);
+      }
     }
+
+    // TODO END===============================================================
 
     notifyListeners();
 

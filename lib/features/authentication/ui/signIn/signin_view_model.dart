@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:journal_app/features/shared/services/http_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class SignInViewModel extends BaseViewModel {
@@ -43,21 +43,14 @@ class SignInViewModel extends BaseViewModel {
     final Response response = await authService.login(email: email!, password: password!);
     setBusy(false);
 
-    switch (response.statusCode) {
-      case 209 || 400 || 401 || 403 || 550:
-        toastService.showSnackBar(
-          message: getErrorMsg(response.body),
-        );
-        return false;
-    }
+    final bool ok = ResponseHandler.checkStatusCode(response);
 
-    if (response.statusCode == 200 || response.statusCode == 201 && authService.isLoggedIn) {
+    if (ok && authService.isLoggedIn) {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       await tokenService.saveTokenData(responseBody);
-      return true;
-    } else {
-      return false;
+      return ok;
     }
+    return ok;
   }
 
   void unfocusAll(BuildContext context) => toastService.unfocusAll(context);

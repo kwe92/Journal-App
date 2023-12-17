@@ -90,7 +90,7 @@ class SignInView extends StatelessWidget {
                                   if (ok) {
                                     emailController.clear();
                                     passwordController.clear();
-                                    appRouter.push(JournalRoute());
+                                    appRouter.push(const JournalRoute());
                                   }
                                 }
                               },

@@ -1,10 +1,9 @@
 // ignore_for_file: unused_catch_stack
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 
 /// HttpService abstracts away commonly repeated API call details.
 mixin HttpService {
@@ -27,7 +26,7 @@ mixin HttpService {
         headers: headers..addAll(extraHeaders ?? {}),
       );
 
-      return parseStatusCode(response, host + endpoint);
+      return ResponseHandler.parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
       debugPrint('Error:\n\n${error.toString()}');
       return _httpSocketError;
@@ -48,7 +47,7 @@ mixin HttpService {
         headers: headers..addAll(extraHeaders ?? {}),
         body: body,
       );
-      return parseStatusCode(response, host + endpoint);
+      return ResponseHandler.parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
       debugPrint("Error:\n\n${error.toString()}");
       return _httpSocketError;
@@ -69,7 +68,7 @@ mixin HttpService {
         body: body,
         headers: headers..addAll(extraHeaders ?? {}),
       );
-      return parseStatusCode(response, host + endpoint);
+      return ResponseHandler.parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
       debugPrint("Error:\n\n${error.toString()}");
       return _httpSocketError;
@@ -90,7 +89,7 @@ mixin HttpService {
         headers: headers..addAll(extraHeaders ?? {}),
       );
 
-      return parseStatusCode(response, host + endpoint);
+      return ResponseHandler.parseStatusCode(response, host + endpoint);
     } catch (error, stackTrace) {
       debugPrint("Error:\n\n${error.toString()}");
       return _httpSocketError;
@@ -98,20 +97,8 @@ mixin HttpService {
   }
 }
 
-///  parseStatusCode: logs endpoint, response status code and the server response.
-http.Response parseStatusCode(http.Response response, String endpoint) {
-  debugPrint('\nEndpoint: \n$endpoint');
-  debugPrint('\nStatus Code:\n${response.statusCode}');
-  debugPrint('\nResponse Body:\n${utf8.decode(response.bodyBytes)}');
 
-  return response;
-}
 
-/// getErrorMsg: decodes json string and returns first error
-String getErrorMsg(String jsonString) {
-  final Map<String, dynamic> parsedJson = jsonDecode(jsonString);
-  return parsedJson.values.toList()[0];
-}
 
 // What is a Service?
 
