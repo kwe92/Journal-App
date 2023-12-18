@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:journal_app/features/shared/services/services.dart';
+
+// TODO: review and add comments
 
 /// AuthService: authorization service that commincates with backend for user authorization.
 class AuthService extends ApiService with ChangeNotifier {
@@ -36,6 +39,7 @@ class AuthService extends ApiService with ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
+      userService.getCurrentUser(jsonDecode(response.body));
       _isLoggedIn = true;
       notifyListeners();
     }
