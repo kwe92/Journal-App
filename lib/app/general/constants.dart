@@ -1,18 +1,21 @@
-import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/shared/records/mood_record.dart';
+// All of the constants used throughout the applicaton
+// All classes implemented in this module should not have the ability to be instantiated
+// using ClassName._() creates a private named constructor to prevent instantiation
 
-/// PrefKeys: shared preference keys.
+/// shared preference keys.
 class PrefKeys {
   const PrefKeys._();
 
   static const accessToken = "jwt";
 }
 
+/// MIME types used to transfer data between systems.
 class MediaType {
   const MediaType._();
   static const json = "application/json";
 }
 
+/// the set of available moods a user can be in when writing a journal entry.
 class MoodType {
   const MoodType._();
 
@@ -23,6 +26,7 @@ class MoodType {
   static const String terrible = "Terrible";
 }
 
+// image paths associated to mood types;
 class MoodImagePath {
   const MoodImagePath._();
   static const String moodAwesome = "assets/images/very_happy_face.svg";
@@ -30,22 +34,4 @@ class MoodImagePath {
   static const String moodOkay = "assets/images/meh_face.svg";
   static const String moodBad = "assets/images/sad_face.svg";
   static const String moodTerrible = "assets/images/aweful_face.svg";
-}
-
-class MoodsData {
-  const MoodsData._();
-
-  static final Map<String, MoodRecord> moodsData = {
-    MoodType.awesome: (color: AppColors.moodAwesome, imagePath: MoodImagePath.moodAwesome, defaultSize: 40.0),
-    MoodType.happy: (color: AppColors.moodHappy, imagePath: MoodImagePath.moodHappy, defaultSize: 50.0),
-    MoodType.okay: (color: AppColors.moodOkay, imagePath: MoodImagePath.moodOkay, defaultSize: 50.0),
-    MoodType.bad: (color: AppColors.moodBad, imagePath: MoodImagePath.moodBad, defaultSize: 50.0),
-    MoodType.terrible: (color: AppColors.moodTerrible, imagePath: MoodImagePath.moodTerrible, defaultSize: 70.0),
-  };
-
-  static final List<MapEntry<String, MoodRecord>> moodsMaps = moodsData.entries.toList();
-
-  static MapEntry<String, MoodRecord> getMoodDataByType(String moodType) {
-    return moodsMaps.where((moodMap) => moodMap.key == moodType).toList().first;
-  }
 }
