@@ -52,6 +52,7 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
     final bool ok = ResponseHandler.checkStatusCode(response);
 
     if (ok && authService.isLoggedIn) {
+      userService.getCurrentUser(jsonDecode(response.body));
       await tokenService.saveTokenData(
         jsonDecode(response.body),
       );
