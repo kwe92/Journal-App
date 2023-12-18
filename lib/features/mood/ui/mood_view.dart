@@ -3,7 +3,6 @@ import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:journal_app/app/app_router.gr.dart';
-import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
@@ -64,7 +63,7 @@ class MoodView extends StatelessWidget {
                         gap36,
                         Flexible(
                             child: GridView.builder(
-                          itemCount: MoodsData.moodsMaps.length,
+                          itemCount: model.moods.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             crossAxisSpacing: 16,
@@ -79,18 +78,20 @@ class MoodView extends StatelessWidget {
                                 model.setIndex(i);
 
                                 // set mood type to be sent to backend
-                                model.setMoodType(MoodsData.moodsMaps[i].key);
+                                model.setMoodType(model.moods[i].key);
                               },
                               child: Entry.opacity(
                                 duration: const Duration(milliseconds: 600),
                                 child: MoodCard(
                                   // determine if the card is currently selected or not
                                   isSelected: model.selectedIndex == i ? true : false,
+                                  // TODO: remove business logic | maybe instantiate all Moods and select by index from a list
                                   mood: Mood(
-                                      moodColor: MoodsData.moodsMaps[i].value.color,
-                                      moodImagePath: MoodsData.moodsMaps[i].value.imagePath,
-                                      imageSize: MoodsData.moodsMaps[i].value.defaultSize,
-                                      moodText: MoodsData.moodsMaps[i].key),
+                                    moodColor: model.moods[i].value.color,
+                                    moodImagePath: model.moods[i].value.imagePath,
+                                    imageSize: model.moods[i].value.defaultSize,
+                                    moodText: model.moods[i].key,
+                                  ),
                                 ),
                               ),
                             );
