@@ -8,6 +8,8 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
+// TODO: add comments
+
 class SignUpViewModel extends BaseViewModel with PasswordMixin {
   String? mindfulImage;
 
@@ -52,6 +54,7 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
     final bool ok = ResponseHandler.checkStatusCode(response);
 
     if (ok && authService.isLoggedIn) {
+      userService.getCurrentUser(jsonDecode(response.body));
       await tokenService.saveTokenData(
         jsonDecode(response.body),
       );

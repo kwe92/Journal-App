@@ -1,11 +1,14 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
-
-// TODO: implement getAllEntries method
 
 class JournalViewModel extends BaseViewModel {
   List<JournalEntry> _journalEntries = [];
@@ -24,6 +27,23 @@ class JournalViewModel extends BaseViewModel {
     _journalEntries = journalEntryService.journalEntries;
 
     setBusy(false);
+  }
+
+  Future<void> getAllEntries() async {
+    final Response response = await journalEntryService.getAllEntries();
+
+    final bool ok = ResponseHandler.checkStatusCode(response);
+
+    if (ok) {
+      // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
+      final Map<String, dynamic> reponseBody = jsonDecode(response.body);
+
+      final List<dynamic>? responseData = reponseBody["data"];
+
+      if (responseData != null) return;
+
+      toastService.showSnackBar(message: "An error occured retrieving your data.", textColor: Colors.red);
+    }
   }
 
   /// Filter journal entries by mood type.
@@ -61,14 +81,16 @@ class JournalViewModel extends BaseViewModel {
     }
   }
 
-  Mood getMood(JournalEntry journalEntry) {
-    final MapEntry<String, MoodRecord> moodMap = MoodsData.getMoodDataByType(journalEntry.moodType);
+  // TODO: change to setMood maybe | review where and how getMood is called
+
+  Mood getMood(String moodType) {
+    final MapEntry<String, MoodRecord> moodMap = moodService.getMoodByType(moodType);
 
     final Mood mood = Mood(
       moodColor: moodMap.value.color,
       moodImagePath: moodMap.value.imagePath,
       imageSize: 20,
-      moodText: journalEntry.moodType,
+      moodText: moodType,
     );
 
     return mood;
