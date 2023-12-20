@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// TODO: instead of using colors directly create variables that are derivations to control app theme
+
 class AppColors {
   const AppColors._();
   static const offGrey = Color(0xff445D67);
@@ -11,6 +13,8 @@ class AppColors {
   static const blue0 = Color(0xff1e91ff);
 
   static const blue1 = Color(0xff016595);
+
+  static const orange0 = Color(0xfff45e49);
 
   static const blueGrey0 = Color(0xff545F68);
 
