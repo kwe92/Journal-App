@@ -6,11 +6,13 @@ class SelectableButton extends StatelessWidget {
   final String label;
   final OutlinedButtonThemeData? mainTheme;
   final EdgeInsets? labelPadding;
+  final TextStyle? labelStyle;
   const SelectableButton({
     required this.onPressed,
     required this.label,
     this.mainTheme,
     this.labelPadding,
+    this.labelStyle,
     super.key,
   });
 
@@ -26,7 +28,10 @@ class SelectableButton extends StatelessWidget {
               onPressed: onPressed,
               child: Padding(
                 padding: labelPadding ?? const EdgeInsets.symmetric(vertical: 12.0),
-                child: Text(label),
+                child: Text(
+                  label,
+                  style: labelStyle,
+                ),
               ),
             ),
           ),
