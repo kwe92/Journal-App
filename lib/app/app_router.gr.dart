@@ -8,28 +8,30 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
+import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 import 'package:journal_app/features/addEntry/ui/add_entry_view.dart' as _i1;
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view.dart'
     as _i4;
 import 'package:journal_app/features/authentication/ui/signIn/signin_view.dart'
-    as _i6;
-import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dart'
     as _i7;
+import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dart'
+    as _i8;
 import 'package:journal_app/features/entry/ui/entry_view.dart' as _i2;
 import 'package:journal_app/features/journal/ui/journal_view.dart' as _i3;
 import 'package:journal_app/features/mood/ui/mood_view.dart' as _i5;
-import 'package:journal_app/features/shared/models/journal_entry.dart' as _i10;
+import 'package:journal_app/features/profile_settings/ui/profile_settings_view.dart'
+    as _i6;
+import 'package:journal_app/features/shared/models/journal_entry.dart' as _i11;
 
-abstract class $AppRouter extends _i8.RootStackRouter {
+abstract class $AppRouter extends _i9.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
+  final Map<String, _i9.PageFactory> pagesMap = {
     AddEntryRoute.name: (routeData) {
       final args = routeData.argsAs<AddEntryRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.AddEntryView(
           moodType: args.moodType,
@@ -39,7 +41,7 @@ abstract class $AppRouter extends _i8.RootStackRouter {
     },
     EntryRoute.name: (routeData) {
       final args = routeData.argsAs<EntryRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.EntryView(
           entry: args.entry,
@@ -48,7 +50,7 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     JournalRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i3.JournalView(),
       );
@@ -56,31 +58,37 @@ abstract class $AppRouter extends _i8.RootStackRouter {
     MemberInfoRoute.name: (routeData) {
       final args = routeData.argsAs<MemberInfoRouteArgs>(
           orElse: () => const MemberInfoRouteArgs());
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.MemberInfoView(key: args.key),
       );
     },
     MoodRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i5.MoodView(),
+      );
+    },
+    ProfileSettingsRoute.name: (routeData) {
+      return _i9.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i6.ProfileSettingsView(),
       );
     },
     SignInRoute.name: (routeData) {
       final args = routeData.argsAs<SignInRouteArgs>(
           orElse: () => const SignInRouteArgs());
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i6.SignInView(key: args.key),
+        child: _i7.SignInView(key: args.key),
       );
     },
     SignUpRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpRouteArgs>(
           orElse: () => const SignUpRouteArgs());
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i7.SignUpView(key: args.key),
+        child: _i8.SignUpView(key: args.key),
       );
     },
   };
@@ -88,11 +96,11 @@ abstract class $AppRouter extends _i8.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddEntryView]
-class AddEntryRoute extends _i8.PageRouteInfo<AddEntryRouteArgs> {
+class AddEntryRoute extends _i9.PageRouteInfo<AddEntryRouteArgs> {
   AddEntryRoute({
     required String moodType,
-    _i9.Key? key,
-    List<_i8.PageRouteInfo>? children,
+    _i10.Key? key,
+    List<_i9.PageRouteInfo>? children,
   }) : super(
           AddEntryRoute.name,
           args: AddEntryRouteArgs(
@@ -104,8 +112,8 @@ class AddEntryRoute extends _i8.PageRouteInfo<AddEntryRouteArgs> {
 
   static const String name = 'AddEntryRoute';
 
-  static const _i8.PageInfo<AddEntryRouteArgs> page =
-      _i8.PageInfo<AddEntryRouteArgs>(name);
+  static const _i9.PageInfo<AddEntryRouteArgs> page =
+      _i9.PageInfo<AddEntryRouteArgs>(name);
 }
 
 class AddEntryRouteArgs {
@@ -116,7 +124,7 @@ class AddEntryRouteArgs {
 
   final String moodType;
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {
@@ -126,11 +134,11 @@ class AddEntryRouteArgs {
 
 /// generated route for
 /// [_i2.EntryView]
-class EntryRoute extends _i8.PageRouteInfo<EntryRouteArgs> {
+class EntryRoute extends _i9.PageRouteInfo<EntryRouteArgs> {
   EntryRoute({
-    required _i10.JournalEntry entry,
-    _i9.Key? key,
-    List<_i8.PageRouteInfo>? children,
+    required _i11.JournalEntry entry,
+    _i10.Key? key,
+    List<_i9.PageRouteInfo>? children,
   }) : super(
           EntryRoute.name,
           args: EntryRouteArgs(
@@ -142,8 +150,8 @@ class EntryRoute extends _i8.PageRouteInfo<EntryRouteArgs> {
 
   static const String name = 'EntryRoute';
 
-  static const _i8.PageInfo<EntryRouteArgs> page =
-      _i8.PageInfo<EntryRouteArgs>(name);
+  static const _i9.PageInfo<EntryRouteArgs> page =
+      _i9.PageInfo<EntryRouteArgs>(name);
 }
 
 class EntryRouteArgs {
@@ -152,9 +160,9 @@ class EntryRouteArgs {
     this.key,
   });
 
-  final _i10.JournalEntry entry;
+  final _i11.JournalEntry entry;
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {
@@ -164,8 +172,8 @@ class EntryRouteArgs {
 
 /// generated route for
 /// [_i3.JournalView]
-class JournalRoute extends _i8.PageRouteInfo<void> {
-  const JournalRoute({List<_i8.PageRouteInfo>? children})
+class JournalRoute extends _i9.PageRouteInfo<void> {
+  const JournalRoute({List<_i9.PageRouteInfo>? children})
       : super(
           JournalRoute.name,
           initialChildren: children,
@@ -173,15 +181,15 @@ class JournalRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'JournalRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i4.MemberInfoView]
-class MemberInfoRoute extends _i8.PageRouteInfo<MemberInfoRouteArgs> {
+class MemberInfoRoute extends _i9.PageRouteInfo<MemberInfoRouteArgs> {
   MemberInfoRoute({
-    _i9.Key? key,
-    List<_i8.PageRouteInfo>? children,
+    _i10.Key? key,
+    List<_i9.PageRouteInfo>? children,
   }) : super(
           MemberInfoRoute.name,
           args: MemberInfoRouteArgs(key: key),
@@ -190,14 +198,14 @@ class MemberInfoRoute extends _i8.PageRouteInfo<MemberInfoRouteArgs> {
 
   static const String name = 'MemberInfoRoute';
 
-  static const _i8.PageInfo<MemberInfoRouteArgs> page =
-      _i8.PageInfo<MemberInfoRouteArgs>(name);
+  static const _i9.PageInfo<MemberInfoRouteArgs> page =
+      _i9.PageInfo<MemberInfoRouteArgs>(name);
 }
 
 class MemberInfoRouteArgs {
   const MemberInfoRouteArgs({this.key});
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {
@@ -207,8 +215,8 @@ class MemberInfoRouteArgs {
 
 /// generated route for
 /// [_i5.MoodView]
-class MoodRoute extends _i8.PageRouteInfo<void> {
-  const MoodRoute({List<_i8.PageRouteInfo>? children})
+class MoodRoute extends _i9.PageRouteInfo<void> {
+  const MoodRoute({List<_i9.PageRouteInfo>? children})
       : super(
           MoodRoute.name,
           initialChildren: children,
@@ -216,15 +224,29 @@ class MoodRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'MoodRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.SignInView]
-class SignInRoute extends _i8.PageRouteInfo<SignInRouteArgs> {
+/// [_i6.ProfileSettingsView]
+class ProfileSettingsRoute extends _i9.PageRouteInfo<void> {
+  const ProfileSettingsRoute({List<_i9.PageRouteInfo>? children})
+      : super(
+          ProfileSettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileSettingsRoute';
+
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i7.SignInView]
+class SignInRoute extends _i9.PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
-    _i9.Key? key,
-    List<_i8.PageRouteInfo>? children,
+    _i10.Key? key,
+    List<_i9.PageRouteInfo>? children,
   }) : super(
           SignInRoute.name,
           args: SignInRouteArgs(key: key),
@@ -233,14 +255,14 @@ class SignInRoute extends _i8.PageRouteInfo<SignInRouteArgs> {
 
   static const String name = 'SignInRoute';
 
-  static const _i8.PageInfo<SignInRouteArgs> page =
-      _i8.PageInfo<SignInRouteArgs>(name);
+  static const _i9.PageInfo<SignInRouteArgs> page =
+      _i9.PageInfo<SignInRouteArgs>(name);
 }
 
 class SignInRouteArgs {
   const SignInRouteArgs({this.key});
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {
@@ -249,11 +271,11 @@ class SignInRouteArgs {
 }
 
 /// generated route for
-/// [_i7.SignUpView]
-class SignUpRoute extends _i8.PageRouteInfo<SignUpRouteArgs> {
+/// [_i8.SignUpView]
+class SignUpRoute extends _i9.PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
-    _i9.Key? key,
-    List<_i8.PageRouteInfo>? children,
+    _i10.Key? key,
+    List<_i9.PageRouteInfo>? children,
   }) : super(
           SignUpRoute.name,
           args: SignUpRouteArgs(key: key),
@@ -262,14 +284,14 @@ class SignUpRoute extends _i8.PageRouteInfo<SignUpRouteArgs> {
 
   static const String name = 'SignUpRoute';
 
-  static const _i8.PageInfo<SignUpRouteArgs> page =
-      _i8.PageInfo<SignUpRouteArgs>(name);
+  static const _i9.PageInfo<SignUpRouteArgs> page =
+      _i9.PageInfo<SignUpRouteArgs>(name);
 }
 
 class SignUpRouteArgs {
   const SignUpRouteArgs({this.key});
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {
