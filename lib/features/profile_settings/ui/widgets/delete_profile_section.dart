@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
+import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 
 class DeleteProfileSection extends StatelessWidget {
   const DeleteProfileSection({super.key});
@@ -56,8 +58,25 @@ class DeleteAccountListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // TODO: Implement delete account popup
+      onTap: () async {
+        final bool shouldDeleteAccount = await toastService.deleteAccountPopupMenu(
+          context,
+          // TODO: move service call to view model | business logic does not go here
+          userEmail: userService.currentUser!.email!,
+          parameters: const PopupMenuParameters(
+            title: 'Permanantly delete account?',
+            content: 'ALL account information will be removed from our system withour recovery.',
+            defaultResult: false,
+            options: {
+              "Delete": true,
+              "Cancel": false,
+            },
+          ),
+        );
+
+        if (shouldDeleteAccount) {
+          // TODO: implement call to back end to delete user account
+        }
       },
       child: Container(
         height: 90,
