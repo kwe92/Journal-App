@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
+// TODO: organize theme
+
 class AppTheme {
   const AppTheme._();
 
@@ -59,30 +61,49 @@ final TextButtonThemeData textButtonTheme = TextButtonThemeData(
 );
 
 // TextField and TextFormField decoration
-final InputDecorationTheme inputTheme = () {
-  const borderWidth = 2.5;
-
-  debugPrint("Input theme called!");
-
-  return const InputDecorationTheme(
-    // hintStyle: appTextStyle,
-    //! contentPadding: moves cursor,label text and hint text | find a way to only move the cursor
-    // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: AppColors.lightGreen,
-        width: borderWidth,
-      ),
+const InputDecorationTheme inputTheme = InputDecorationTheme(
+  // hintStyle: appTextStyle,
+  //! contentPadding: moves cursor,label text and hint text | find a way to only move the cursor
+  // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
+  enabledBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: AppColors.lightGreen,
+      width: 2.5,
     ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: AppColors.lightGreen,
-        width: borderWidth,
-      ),
+  ),
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: AppColors.lightGreen,
+      width: 2.5,
     ),
-    floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
-  );
-}();
+  ),
+  floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
+);
+
+const InputDecorationTheme deleteAccoutInputTheme = InputDecorationTheme(
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(16)),
+    borderSide: BorderSide(
+      color: AppColors.orange0,
+      width: 2.5,
+    ),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(16)),
+    borderSide: BorderSide(
+      color: AppColors.orange0,
+      width: 2.5,
+    ),
+  ),
+  floatingLabelStyle: TextStyle(color: AppColors.orange0),
+);
+
+final deleteAccoutTextSelectionTheme = TextSelectionThemeData(
+  cursorColor: AppColors.orange0,
+
+  // selectionColor: text highlight color
+  selectionColor: AppColors.orange0.withOpacity(0.15),
+);
 
 const snackBarTheme = SnackBarThemeData(
   backgroundColor: AppColors.offWhite,
@@ -94,6 +115,7 @@ const snackBarTextStyle = TextStyle(
   color: AppColors.lightGreen,
 );
 
+// TODO: were is this code being called? should be removed?
 /// borderlessInput: borderless TextField and TextFormField.
 const InputDecoration borderlessInput = InputDecoration(
   enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
