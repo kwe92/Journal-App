@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
 import 'package:stacked/stacked.dart';
 
 class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
@@ -15,22 +15,16 @@ class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
     return passwordCriteriaSatisfied
         ? const SizedBox()
         : Container(
-            // TODO: determine if final width
             width: MediaQuery.of(context).size.width / 1.2125,
             height: 175,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(16),
               ),
               boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 2),
-                  color: AppColors.shadowColor,
-                  blurRadius: 3,
-                  spreadRadius: 1,
-                ),
+                CommonBoxShadow(),
               ],
             ),
             child: Column(
