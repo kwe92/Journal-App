@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
 
 class EditProfileListTile extends StatelessWidget {
@@ -15,9 +17,7 @@ class EditProfileListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // TODO: Implement navigating to edit profile screen
-      },
+      onTap: () => appRouter.push(const EditProfileRoute()),
       child: Container(
         height: 90,
         padding: const EdgeInsets.symmetric(horizontal: 12),

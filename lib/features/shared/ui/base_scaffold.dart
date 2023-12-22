@@ -8,15 +8,17 @@ import "package:journal_app/features/shared/utilities/common_box_shadow.dart";
 
 class BaseScaffold extends StatelessWidget {
   final String title;
+  final Widget body;
+  final VoidCallback? onPressed;
   final Widget? leading;
-  final Widget? body;
   final Widget? floatingActionButton;
   final Drawer? drawer;
 
   const BaseScaffold({
     required this.title,
-    this.leading,
     required this.body,
+    this.onPressed,
+    this.leading,
     this.floatingActionButton,
     this.drawer,
     super.key,
@@ -43,7 +45,7 @@ class BaseScaffold extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: ProfileIcon(
-                      onPressed: () => appRouter.push(const ProfileSettingsRoute()),
+                      onPressed: onPressed ?? () => appRouter.push(const ProfileSettingsRoute()),
                     ),
                   ),
                 ],
