@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/app/theme/theme.dart';
+import 'package:journal_app/features/profile_settings/ui/widgets/delete_profile_dialog_view.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
@@ -35,6 +36,8 @@ class ToastService {
             context: context,
             builder: (context) {
               return SimpleDialog(
+                titlePadding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
+                contentPadding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
                 title: Text(
                   parameters.title,
                   textAlign: TextAlign.center,
@@ -75,6 +78,18 @@ class ToastService {
                 ],
               );
             }) ??
+        parameters.defaultResult;
+  }
+
+  /// popup menu inteded for delete account flow
+  Future<T> deleteAccountPopupMenu<T>(
+    BuildContext context, {
+    required PopupMenuParameters parameters,
+  }) async {
+    return await showDialog(
+          context: context,
+          builder: (context) => DeleteProfileDialogView(parameters: parameters),
+        ) ??
         parameters.defaultResult;
   }
 
