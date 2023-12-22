@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/app/theme/theme.dart';
+import 'package:journal_app/features/profile_settings/ui/widgets/delete_profile_dialog_view.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
@@ -80,102 +81,15 @@ class ToastService {
         parameters.defaultResult;
   }
 
-  /// popupMenu: a generic modal with parameters.
+  /// popup menu inteded for delete account flow
   Future<T> deleteAccountPopupMenu<T>(
     BuildContext context, {
-    required String userEmail,
     required PopupMenuParameters parameters,
   }) async {
     return await showDialog(
-            context: context,
-            builder: (context) {
-              const style00 = TextStyle(fontSize: 12);
-
-              return SimpleDialog(
-                titlePadding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
-                contentPadding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
-                title: Text(
-                  parameters.title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, foreground: Paint()..color = AppColors.blueGrey0),
-                ),
-                children: [
-                  if (parameters.content != null) ...[
-                    Text(
-                      parameters.content!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    gap16,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'type ',
-                          style: style00,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6),
-                          decoration: BoxDecoration(
-                            color: AppColors.offGrey.withOpacity(0.15),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(4),
-                            ),
-                          ),
-                          child: Text(
-                            userEmail,
-                            style: style00.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        const Text(
-                          ' to proceed',
-                          style: style00,
-                        ),
-                      ],
-                    ),
-                    gap16,
-                    Form(
-                      // TODO: add form key for validation
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          inputDecorationTheme: deleteAccoutInputTheme,
-                          textSelectionTheme: deleteAccoutTextSelectionTheme,
-                        ),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'Confirm Email',
-                          ),
-                        ),
-                      ),
-                    ),
-                    gap16,
-                  ],
-                  Column(
-                    children: [
-                      ...parameters.options.entries.mapIndexed((int index, MapEntry buttonOption) {
-                        return index < parameters.options.entries.length - 1
-                            ? Column(
-                                children: [
-                                  SelectableButton(
-                                    mainTheme: offGreyButtonTheme,
-                                    onPressed: () => appRouter.pop(buttonOption.value),
-                                    label: buttonOption.key,
-                                  ),
-                                  gap12,
-                                ],
-                              )
-                            : SelectableButton(
-                                onPressed: () => appRouter.pop(buttonOption.value),
-                                label: buttonOption.key,
-                              );
-                      }).toList()
-                    ],
-                  )
-                ],
-              );
-            }) ??
+          context: context,
+          builder: (context) => DeleteProfileDialogView(parameters: parameters),
+        ) ??
         parameters.defaultResult;
   }
 
