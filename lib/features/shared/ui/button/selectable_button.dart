@@ -4,13 +4,13 @@ import 'package:journal_app/app/theme/theme.dart';
 class SelectableButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
-  final OutlinedButtonThemeData? mainTheme;
+  final OutlinedButtonThemeData? customTheme;
   final EdgeInsets? labelPadding;
   final TextStyle? labelStyle;
   const SelectableButton({
     required this.onPressed,
     required this.label,
-    this.mainTheme,
+    this.customTheme,
     this.labelPadding,
     this.labelStyle,
     super.key,
@@ -23,7 +23,7 @@ class SelectableButton extends StatelessWidget {
       child: InkWell(
         child: Ink(
           child: Theme(
-            data: Theme.of(context).copyWith(outlinedButtonTheme: mainTheme ?? lightGreenButtonTheme),
+            data: Theme.of(context).copyWith(outlinedButtonTheme: customTheme ?? mainButtonTheme),
             child: OutlinedButton(
               onPressed: onPressed,
               child: Padding(

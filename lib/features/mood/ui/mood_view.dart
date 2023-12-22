@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/mood/ui/mood_view_model.dart';
 import 'package:journal_app/features/mood/ui/widgets/cancel_button.dart';
@@ -100,7 +99,6 @@ class MoodView extends StatelessWidget {
                         Entry.opacity(
                           duration: const Duration(milliseconds: 600),
                           child: SelectableButton(
-                              mainTheme: lightGreenButtonTheme,
                               labelPadding: const EdgeInsets.symmetric(vertical: 16),
                               onPressed: () {
                                 appRouter.push(AddEntryRoute(moodType: model.moodType));

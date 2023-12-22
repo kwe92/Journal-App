@@ -60,7 +60,7 @@ class ToastService {
                               ? Column(
                                   children: [
                                     SelectableButton(
-                                      mainTheme: offGreyButtonTheme,
+                                      customTheme: offGreyButtonTheme,
                                       onPressed: () => appRouter.pop(buttonOption.value),
                                       label: buttonOption.key,
                                     ),

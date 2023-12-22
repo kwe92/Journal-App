@@ -122,13 +122,11 @@ const InputDecoration borderlessInput = InputDecoration(
   floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
 );
 
-final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
+final mainButtonTheme = OutlinedButtonThemeData(style: mainButtonStyle);
 
 final offGreyButtonTheme = OutlinedButtonThemeData(style: offGreyButtonStyle);
 
-final lightGreenButtonTheme = OutlinedButtonThemeData(style: lightGreenButtonStyle);
-
-final blueButtonStyle = ButtonStyle(
+final mainButtonStyle = ButtonStyle(
   shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
   side: resolver((state) => BorderSide.none),
   backgroundColor: resolver((states) => AppColors.lightGreen),
@@ -141,12 +139,8 @@ final blueButtonStyle = ButtonStyle(
   ),
 );
 
-final offGreyButtonStyle = blueButtonStyle.copyWith(
+final offGreyButtonStyle = mainButtonStyle.copyWith(
   backgroundColor: resolver((state) => AppColors.offGrey.withOpacity(0.25)),
-);
-
-final lightGreenButtonStyle = blueButtonStyle.copyWith(
-  backgroundColor: resolver((state) => AppColors.lightGreen),
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
