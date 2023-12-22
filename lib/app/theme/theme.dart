@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-// TODO: organize theme
+// TODO: organize and refactor theme
 
 class AppTheme {
   const AppTheme._();
@@ -29,6 +29,24 @@ class AppTheme {
         outlinedButtonTheme: mainButtonTheme,
         snackBarTheme: snackBarTheme,
       );
+
+  /// return main button theme in specified color
+  static OutlinedButtonThemeData customOutlinedButtonThemeData(Color? backgroundColor) {
+    return OutlinedButtonThemeData(
+      style: ButtonStyle(
+        shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
+        side: resolver((state) => BorderSide.none),
+        backgroundColor: resolver((states) => backgroundColor ?? AppColors.lightGreen),
+        textStyle: resolver(
+          (states) => TextStyle(
+            foreground: Paint()..color = AppColors.offWhite,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 const AppBarTheme appBarTheme = AppBarTheme(
@@ -41,15 +59,17 @@ const AppBarTheme appBarTheme = AppBarTheme(
 
 final TextTheme textTheme = TextTheme(
   // App Bar Title styling
-  titleLarge: TextStyle(
-    foreground: Paint()..color = AppColors.appBar,
-    fontSize: 28,
-    fontWeight: FontWeight.w700,
-  ),
+  titleLarge: titleLargeStyle,
   bodyMedium: const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w500,
   ),
+);
+
+final titleLargeStyle = TextStyle(
+  foreground: Paint()..color = AppColors.appBar,
+  fontSize: 28,
+  fontWeight: FontWeight.w700,
 );
 
 final TextButtonThemeData textButtonTheme = TextButtonThemeData(
@@ -122,13 +142,9 @@ const InputDecoration borderlessInput = InputDecoration(
   floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
 );
 
-final mainButtonTheme = OutlinedButtonThemeData(style: blueButtonStyle);
+final mainButtonTheme = OutlinedButtonThemeData(style: mainButtonStyle);
 
-final offGreyButtonTheme = OutlinedButtonThemeData(style: offGreyButtonStyle);
-
-final lightGreenButtonTheme = OutlinedButtonThemeData(style: lightGreenButtonStyle);
-
-final blueButtonStyle = ButtonStyle(
+final mainButtonStyle = ButtonStyle(
   shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
   side: resolver((state) => BorderSide.none),
   backgroundColor: resolver((states) => AppColors.lightGreen),
@@ -139,14 +155,6 @@ final blueButtonStyle = ButtonStyle(
       fontWeight: FontWeight.w600,
     ),
   ),
-);
-
-final offGreyButtonStyle = blueButtonStyle.copyWith(
-  backgroundColor: resolver((state) => AppColors.offGrey.withOpacity(0.25)),
-);
-
-final lightGreenButtonStyle = blueButtonStyle.copyWith(
-  backgroundColor: resolver((state) => AppColors.lightGreen),
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith

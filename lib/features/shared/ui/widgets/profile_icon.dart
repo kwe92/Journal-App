@@ -5,8 +5,13 @@ import 'package:journal_app/features/shared/services/services.dart';
 
 class ProfileIcon extends StatelessWidget {
   final VoidCallback onPressed;
+  final Color? color;
 
-  ProfileIcon({required this.onPressed, super.key});
+  ProfileIcon({
+    required this.onPressed,
+    this.color,
+    super.key,
+  });
 
 // TODO: remove business logic from UI Widget | should be in view model
   final User user = userService.currentUser!;
@@ -19,9 +24,9 @@ class ProfileIcon extends StatelessWidget {
       child: Container(
         width: side,
         height: side,
-        decoration: const BoxDecoration(
-          color: AppColors.lightGreen,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: color ?? AppColors.lightGreen,
+          borderRadius: const BorderRadius.all(
             Radius.circular(side / 2),
           ),
         ),

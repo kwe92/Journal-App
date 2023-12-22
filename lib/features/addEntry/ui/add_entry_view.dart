@@ -23,14 +23,16 @@ class AddEntryView extends StatelessWidget {
     final TextEditingController newEntryController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<AddEntryViewModel>.reactive(
       viewModelBuilder: () => AddEntryViewModel(),
-      builder: (context, model, _) => BaseScaffold(
+      onViewModelReady: (AddEntryViewModel model) => model.initialize(moodType),
+      builder: (BuildContext context, AddEntryViewModel model, _) => BaseScaffold(
         // title: "Add Entry",
-
+        moodColor: model.moodColor,
         // Manifested in french
         title: "Manifesté",
         leading: CustomBackButton(
+          color: model.moodColor,
           onPressed: () => appRouter.pop(),
         ),
         body: Column(
@@ -58,6 +60,7 @@ class AddEntryView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: SelectableButton(
+                  color: model.moodColor,
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
                       final bool ok = await model.addEntry(

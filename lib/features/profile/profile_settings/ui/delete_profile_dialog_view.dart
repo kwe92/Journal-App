@@ -96,7 +96,7 @@ class DeleteProfileDialogView extends StatelessWidget {
                       ? Column(
                           children: [
                             SelectableButton(
-                              mainTheme: model.emailMatch ? Theme.of(context).outlinedButtonTheme : offGreyButtonTheme,
+                              color: model.emailMatch ? AppColors.lightGreen : AppColors.offGrey,
                               onPressed: () {
                                 if (model.formKey.currentState!.validate()) {
                                   appRouter.pop(buttonOption.value);

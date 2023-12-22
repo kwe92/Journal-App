@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:journal_app/app/app_router.gr.dart";
 
 import "package:journal_app/app/theme/colors.dart";
+import "package:journal_app/app/theme/theme.dart";
 import "package:journal_app/features/shared/services/services.dart";
 import "package:journal_app/features/shared/ui/widgets/profile_icon.dart";
 import "package:journal_app/features/shared/utilities/common_box_shadow.dart";
@@ -10,6 +11,7 @@ class BaseScaffold extends StatelessWidget {
   final String title;
   final Widget body;
   final VoidCallback? onPressed;
+  final Color? moodColor;
   final Widget? leading;
   final Widget? floatingActionButton;
   final Drawer? drawer;
@@ -18,6 +20,7 @@ class BaseScaffold extends StatelessWidget {
     required this.title,
     required this.body,
     this.onPressed,
+    this.moodColor,
     this.leading,
     this.floatingActionButton,
     this.drawer,
@@ -34,10 +37,13 @@ class BaseScaffold extends StatelessWidget {
                 boxShadow: [CommonBoxShadow()],
               ),
               child: AppBar(
-                title: Text(title),
+                title: Text(
+                  title,
+                  style: moodColor != null ? titleLargeStyle.copyWith(foreground: Paint()..color = moodColor!) : titleLargeStyle,
+                ),
                 centerTitle: true,
-                iconTheme: const IconThemeData(
-                  color: AppColors.appBar,
+                iconTheme: IconThemeData(
+                  color: moodColor ?? AppColors.appBar,
                   size: 30,
                 ),
                 leading: leading,
@@ -45,6 +51,7 @@ class BaseScaffold extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: ProfileIcon(
+                      color: moodColor,
                       onPressed: onPressed ?? () => appRouter.push(const ProfileSettingsRoute()),
                     ),
                   ),

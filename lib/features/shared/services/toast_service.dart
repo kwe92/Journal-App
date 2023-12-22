@@ -30,6 +30,7 @@ class ToastService {
   /// popupMenu: a generic modal with parameters.
   Future<T> popupMenu<T>(
     BuildContext context, {
+    required Color? color,
     required PopupMenuParameters parameters,
   }) async {
     return await showDialog(
@@ -60,7 +61,7 @@ class ToastService {
                               ? Column(
                                   children: [
                                     SelectableButton(
-                                      mainTheme: offGreyButtonTheme,
+                                      color: AppColors.offGrey,
                                       onPressed: () => appRouter.pop(buttonOption.value),
                                       label: buttonOption.key,
                                     ),
@@ -68,6 +69,7 @@ class ToastService {
                                   ],
                                 )
                               : SelectableButton(
+                                  color: color,
                                   onPressed: () => appRouter.pop(buttonOption.value),
                                   label: buttonOption.key,
                                 );

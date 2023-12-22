@@ -20,6 +20,8 @@ class EntryView extends StatelessWidget {
 
   EntryView({required this.entry, super.key});
 
+  // TODO: move to view model
+
   final TextEditingController entryController = TextEditingController();
 
   final FocusNode entryFocus = FocusNode();
@@ -29,16 +31,21 @@ class EntryView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => EntryviewModel(),
       onViewModelReady: (model) {
+        model.initialize(entry);
+
+        // TODO: move to  ViewModel within initialize method
         model.content = entry.content;
         entryController.text = model.content!;
       },
       builder: (context, model, _) {
         return BaseScaffold(
+          moodColor: model.moodColor,
           title: entry.dateString,
           leading: CustomBackButton(
+            color: model.moodColor,
             onPressed: () {
               model.setReadOnly(true);
-              appRouter.replace(JournalRoute());
+              appRouter.replace(const JournalRoute());
             },
           ),
           body: Column(
@@ -66,6 +73,7 @@ class EntryView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: SelectableButton(
+                  color: model.moodColor,
                   onPressed: () async {
                     if (model.readOnly) {
                       model.setReadOnly(false);
@@ -78,7 +86,7 @@ class EntryView extends StatelessWidget {
                       );
 
                       if (ok) {
-                        appRouter.replace(JournalRoute());
+                        appRouter.replace(const JournalRoute());
                       }
 
                       debugPrint("update entry");
@@ -91,8 +99,9 @@ class EntryView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: SelectableButton(
+                  color: model.moodColor,
                   onPressed: () async {
-                    final bool deleteContinued = await model.continueDelete(context);
+                    final bool deleteContinued = await model.continueDelete(context, model.moodColor!);
 
                     debugPrint('Should delete entry: $deleteContinued');
 
@@ -100,7 +109,7 @@ class EntryView extends StatelessWidget {
                       final bool ok = await model.deleteEntry(entry.entryId);
 
                       if (ok) {
-                        appRouter.replace(JournalRoute());
+                        appRouter.replace(const JournalRoute());
                       }
                     }
                   },
