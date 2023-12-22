@@ -14,6 +14,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: MemberInfoRoute.page),
         AutoRoute(page: AddEntryRoute.page),
         AutoRoute(page: MoodRoute.page),
-        AutoRoute(page: ProfileSettingsRoute.page)
+        AutoRoute(page: ProfileSettingsRoute.page),
+        AutoRoute(page: EditProfileRoute.page),
       ];
 }
