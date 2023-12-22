@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/profile_settings/ui/profile_settings_view_model.dart';
+import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
@@ -65,7 +65,7 @@ class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
           context,
           parameters: const PopupMenuParameters(
             title: 'Permanantly delete account?',
-            content: 'ALL account information will be removed from our system withour recovery.',
+            content: 'ALL account information will be removed from our system without recovery.',
             defaultResult: false,
             options: {
               "Delete": true,

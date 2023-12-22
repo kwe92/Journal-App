@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/features/profile_settings/ui/profile_settings_view_model.dart';
-import 'package:journal_app/features/profile_settings/ui/widgets/delete_profile_section.dart';
-import 'package:journal_app/features/profile_settings/ui/widgets/edit_profile_list_tile.dart';
+import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view_model.dart';
+import 'package:journal_app/features/profile/profile_settings/ui/widgets/delete_profile_section.dart';
+import 'package:journal_app/features/profile/profile_settings/ui/widgets/edit_profile_list_tile.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:stacked/stacked.dart';
 

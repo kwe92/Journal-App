@@ -20,7 +20,7 @@ import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dar
 import 'package:journal_app/features/entry/ui/entry_view.dart' as _i2;
 import 'package:journal_app/features/journal/ui/journal_view.dart' as _i3;
 import 'package:journal_app/features/mood/ui/mood_view.dart' as _i5;
-import 'package:journal_app/features/profile_settings/ui/profile_settings_view.dart'
+import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view.dart'
     as _i6;
 import 'package:journal_app/features/shared/models/journal_entry.dart' as _i11;
 

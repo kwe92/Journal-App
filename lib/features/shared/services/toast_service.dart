@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/app/theme/theme.dart';
-import 'package:journal_app/features/profile_settings/ui/widgets/delete_profile_dialog_view.dart';
+import 'package:journal_app/features/profile/profile_settings/ui/delete_profile_dialog_view.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
