@@ -80,23 +80,22 @@ const InputDecorationTheme inputTheme = InputDecorationTheme(
   floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
 );
 
-const InputDecorationTheme deleteAccoutInputTheme = InputDecorationTheme(
-  enabledBorder: OutlineInputBorder(
+final InputDecorationTheme deleteAccoutInputTheme = () {
+  const sharedInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(16)),
     borderSide: BorderSide(
       color: AppColors.orange0,
       width: 2.5,
     ),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(16)),
-    borderSide: BorderSide(
-      color: AppColors.orange0,
-      width: 2.5,
-    ),
-  ),
-  floatingLabelStyle: TextStyle(color: AppColors.orange0),
-);
+  );
+  return const InputDecorationTheme(
+    enabledBorder: sharedInputBorder,
+    focusedBorder: sharedInputBorder,
+    focusedErrorBorder: sharedInputBorder,
+    errorBorder: sharedInputBorder,
+    floatingLabelStyle: TextStyle(color: AppColors.orange0),
+  );
+}();
 
 final deleteAccoutTextSelectionTheme = TextSelectionThemeData(
   cursorColor: AppColors.orange0,
