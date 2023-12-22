@@ -4,7 +4,7 @@ import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view_model.dart';
 import 'package:journal_app/features/profile/profile_settings/ui/widgets/delete_profile_section.dart';
 import 'package:journal_app/features/profile/profile_settings/ui/widgets/edit_profile_list_tile.dart';
-import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
+import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -17,16 +17,16 @@ class ProfileSettingsView extends StatelessWidget {
       viewModelBuilder: () => ProfileSettingsViewModel(),
       builder: (context, model, child) {
         return SafeArea(
-          child: Scaffold(
+          child: BaseScaffold(
+            onPressed: () {
+              // unimplemented on purpose to prevent adding ProfileSettingsView to the router stack ehen already in view
+            },
+            title: 'Profile',
             body: Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 18, right: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomBackButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  gap16,
                   const _SectionHeader(headerText: 'Edit Profile'),
                   gap16,
                   EditProfileListTile(
