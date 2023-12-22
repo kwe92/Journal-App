@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/entry/models/updated_entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
@@ -8,7 +10,21 @@ import 'package:stacked/stacked.dart';
 
 class EntryviewModel extends BaseViewModel {
   String? content;
-  bool readOnly = true;
+
+  Color? _moodColor;
+
+  bool _readOnly = true;
+
+  bool get readOnly => _readOnly;
+
+  Color? get moodColor => _moodColor;
+
+  void initialize(JournalEntry entry) {
+    setBusy(true);
+    MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(entry.moodType);
+    _moodColor = moodData.value.color;
+    setBusy(false);
+  }
 
   void setContent(String text) {
     content = text;
@@ -21,7 +37,7 @@ class EntryviewModel extends BaseViewModel {
   }
 
   void setReadOnly(bool isReadOnly) {
-    readOnly = isReadOnly;
+    _readOnly = isReadOnly;
     notifyListeners();
   }
 
@@ -41,9 +57,10 @@ class EntryviewModel extends BaseViewModel {
     return ResponseHandler.checkStatusCode(response, "Deleted journal entry successfully.");
   }
 
-  Future<bool> continueDelete(BuildContext context) async {
+  Future<bool> continueDelete(BuildContext context, Color color) async {
     return await toastService.popupMenu<bool>(
       context,
+      color: color,
       parameters: const PopupMenuParameters(
         title: "Delete Entry",
         content: "Are you sure you want to delete this entry?",
