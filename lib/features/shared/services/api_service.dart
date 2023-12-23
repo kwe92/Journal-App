@@ -26,12 +26,15 @@ enum Endpoint {
   register("/auth/register"),
   login("/auth/login"),
   checkAvailableEmail("/auth/available-email"),
-  deleteAccount("/api/delete-account"),
 
   // Journal Entry Endpoints
   entries("/api/entry"),
   updateEntry("/api/update-entry/"),
-  deleteEntry("/api/delete-entry/");
+  deleteEntry("/api/delete-entry/"),
+
+  // User Endpoints
+  deleteAccount("/api/delete-account"),
+  updateUserInfo("/api/update-user-info");
 
   final String path;
 

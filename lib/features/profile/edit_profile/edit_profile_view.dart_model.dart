@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
+import 'package:journal_app/features/profile/edit_profile/models/updated_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class EditProfileViewModel extends BaseViewModel {
@@ -47,12 +52,27 @@ class EditProfileViewModel extends BaseViewModel {
 
   String? get mindfulImage => _mindfulImage;
 
+  bool get ready =>
+      _updatedFirstName != null &&
+      _updatedFirstName!.isNotEmpty &&
+      _updatedLastName != null &&
+      _updatedLastName!.isNotEmpty &&
+      _updatedEmail != null &&
+      _updatedEmail!.isNotEmpty;
+
   void initialize() {
     setBusy(true);
+
     _mindfulImage = imageService.getRandomMindfulImage();
+
     firstNameController.text = userFirstName;
     lastNameController.text = userLastName;
     emailController.text = userEmail;
+
+    setFirstName(userFirstName);
+    setLastName(userLastName);
+    setEmail(userEmail);
+
     setBusy(false);
   }
 
@@ -85,5 +105,23 @@ class EditProfileViewModel extends BaseViewModel {
     firstNameController.clear();
     lastNameController.clear();
     emailController.clear();
+  }
+
+  Future<bool> updateUserInfo() async {
+    final UpdatedUser updatedUser = UpdatedUser(firstName: updatedFirstName, lastName: updatedLastName, email: updatedEmail);
+    setBusy(true);
+
+    final Response response = await userService.updateUserInfo(updatedUser);
+
+    setBusy(false);
+
+    final bool statusOk = ResponseHandler.checkStatusCode(response);
+
+    if (statusOk) {
+      // TODO: Figure out why the computed variables based off of userService.currentUser will not update their values when notified
+      userService.setCurrentUser(jsonDecode(response.body));
+    }
+
+    return statusOk;
   }
 }
