@@ -10,6 +10,8 @@ import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:stacked/stacked.dart';
 
 // TODO: Use scroll view for TextFormFields as there maybe overflow on smaller screens
+
+// TODO: Add the ability to edit phone number
 @RoutePage()
 class EditProfileView extends StatelessWidget {
   const EditProfileView({super.key});
@@ -99,14 +101,17 @@ class EditProfileView extends StatelessWidget {
                           ),
                           gap36,
                           SelectableButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (model.readOnly) {
                                 model.setReadOnly(false);
                               } else {
-                                if (model.formKey.currentState!.validate()) {
-                                  // TODO: Implement update flow
-                                  model.clearControllers();
-                                  appRouter.pop();
+                                if (model.formKey.currentState!.validate() && model.ready) {
+                                  // attempt to update user info
+                                  final bool statusOk = await model.updateUserInfo();
+                                  if (statusOk) {
+                                    model.clearControllers();
+                                    appRouter.pop();
+                                  }
                                 }
                               }
                             },
