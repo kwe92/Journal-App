@@ -10,7 +10,7 @@ import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
-const String _bearer = "Bearer";
+// const String _bearer = "Bearer";
 
 /// Entries: type alias for List of Entry.
 typedef JournalEntries = List<JournalEntry>;
@@ -25,7 +25,7 @@ class JournalEntryService extends ApiService with ChangeNotifier {
 
     // retrieve all entries based on access token
     final http.Response response = await get(Endpoint.entries.path, extraHeaders: {
-      HttpHeaders.authorizationHeader: "$_bearer $accessToken",
+      HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
     });
 
     // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
@@ -50,7 +50,7 @@ class JournalEntryService extends ApiService with ChangeNotifier {
     final http.Response response = await post(
       Endpoint.entries.path,
       extraHeaders: {
-        HttpHeaders.authorizationHeader: "$_bearer $accessToken",
+        HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
       },
       body:
           // serialize object into JSON string
@@ -65,7 +65,7 @@ class JournalEntryService extends ApiService with ChangeNotifier {
     final http.Response response = await post(
       "${Endpoint.updateEntry.path}${updatedEntry.entryId}",
       extraHeaders: {
-        HttpHeaders.authorizationHeader: "$_bearer $accessToken",
+        HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
       },
       body:
           // serialize object into JSON string
@@ -79,7 +79,7 @@ class JournalEntryService extends ApiService with ChangeNotifier {
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
     final http.Response response = await delete("${Endpoint.deleteEntry.path}$entryId", extraHeaders: {
-      HttpHeaders.authorizationHeader: "$_bearer $accessToken",
+      HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
     });
 
     return response;

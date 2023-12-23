@@ -44,6 +44,7 @@ class JournalEntryCard extends ViewModelWidget<JournalViewModel> {
             height: 12,
           ),
           JournalContent(
+            // TODO: this implementation does need to be changed to noe call the journalService API multiple times
             onPressed: () => appRouter.pushAndPopUntil(EntryRoute(entry: journalEntry), predicate: (route) => false),
             moodBackgroundColor: mood.moodColorBackground,
             content: journalEntry.content,
