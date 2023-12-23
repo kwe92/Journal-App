@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/app/theme/theme.dart';
@@ -97,9 +98,26 @@ class DeleteProfileDialogView extends StatelessWidget {
                           children: [
                             SelectableButton(
                               color: model.emailMatch ? AppColors.lightGreen : AppColors.offGrey,
-                              onPressed: () {
-                                if (model.formKey.currentState!.validate()) {
-                                  appRouter.pop(buttonOption.value);
+                              onPressed: () async {
+                                if (model.formKey.currentState!.validate() && model.emailMatch) {
+                                  final bool accountDeletedSuccessfully = await model.deleteAccount();
+                                  if (accountDeletedSuccessfully) {
+                                    debugPrint('user permanently deleted, farewell my friend: ${model.userEmail}');
+
+                                    // TODO: Implement FareWellView=======================================================
+                                    // appRouter.pushAndPopUntil(FarewellRoute(), predicate: (route) {
+                                    //   appRouter.push(SignInRoute());
+
+                                    //   () async {
+                                    //     await Future.delayed(const Duration(seconds: 2));
+                                    //     appRouter.pop();
+                                    //   }();
+
+                                    //   return false;
+                                    // });
+                                    // TODO END===========================================================================
+                                    appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
+                                  }
                                 }
                               },
                               label: buttonOption.key,

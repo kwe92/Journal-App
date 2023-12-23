@@ -8,6 +8,8 @@ import 'http_service.dart';
 
 // TODO: Can't we just add ChangeNotifer here since all classes that extend from ApiService require ChangeNotifier?
 abstract class ApiService with HttpService {
+  final bearerPrefix = "Bearer";
+
   @override
   Map<String, String> get headers => {
         HttpHeaders.contentTypeHeader: MediaType.json,
@@ -24,6 +26,7 @@ enum Endpoint {
   register("/auth/register"),
   login("/auth/login"),
   checkAvailableEmail("/auth/available-email"),
+  deleteAccount("/api/delete-account"),
 
   // Journal Entry Endpoints
   entries("/api/entry"),

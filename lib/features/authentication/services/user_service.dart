@@ -20,9 +20,10 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
   }
 
   // TODO: review and add comments | should it be its own endpoint on the backend so you dont have to use hashMaps
-  void getCurrentUser(Map<String, dynamic> responseBody) {
+  void setCurrentUser(Map<String, dynamic> responseBody) {
     final Map<String, dynamic> currentUserMap = responseBody['user'];
 
+    // TODO: Refactor : CurrentUser should be its own DTO for proper deserialization
     currentUser = User(
       firstName: currentUserMap['first_name'],
       lastName: currentUserMap['last_name'],
