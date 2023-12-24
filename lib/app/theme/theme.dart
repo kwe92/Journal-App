@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-// TODO: organize and refactor theme
-
 class AppTheme {
   const AppTheme._();
 
@@ -14,16 +12,10 @@ class AppTheme {
         appBarTheme: appBarTheme,
         textTheme: textTheme,
         inputDecorationTheme: inputTheme,
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: AppColors.lightGreen,
-
-          // selectionColor: text highlight color
-          selectionColor: AppColors.lightGreen.withOpacity(0.15),
-        ),
-
+        textSelectionTheme: textSelectionTheme,
         // change selectionHandleColor on IOS
         cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: AppColors.lightGreen,
+          primaryColor: AppColors.mainThemeColor,
         ),
         textButtonTheme: textButtonTheme,
         outlinedButtonTheme: mainButtonTheme,
@@ -36,7 +28,7 @@ class AppTheme {
       style: ButtonStyle(
         shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
         side: resolver((state) => BorderSide.none),
-        backgroundColor: resolver((states) => backgroundColor ?? AppColors.lightGreen),
+        backgroundColor: resolver((states) => backgroundColor ?? AppColors.mainThemeColor),
         textStyle: resolver(
           (states) => TextStyle(
             foreground: Paint()..color = AppColors.offWhite,
@@ -50,11 +42,7 @@ class AppTheme {
 }
 
 const AppBarTheme appBarTheme = AppBarTheme(
-  // backgroundColor: AppColors.offGrey,
-  // backgroundColor: AppColors.offWhite,
   backgroundColor: Colors.white,
-  // shadowColor: Colors.red,
-  // elevation: 1,
 );
 
 final TextTheme textTheme = TextTheme(
@@ -67,7 +55,7 @@ final TextTheme textTheme = TextTheme(
 );
 
 final titleLargeStyle = TextStyle(
-  foreground: Paint()..color = AppColors.appBar,
+  foreground: Paint()..color = AppColors.mainThemeColor,
   fontSize: 28,
   fontWeight: FontWeight.w700,
 );
@@ -76,7 +64,7 @@ final TextButtonThemeData textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
     // button splash color
     overlayColor: resolver((states) => AppColors.splashColor),
-    textStyle: resolver((states) => TextStyle(foreground: Paint()..color = AppColors.lightGreen)),
+    textStyle: resolver((states) => TextStyle(foreground: Paint()..color = AppColors.mainThemeColor)),
   ),
 );
 
@@ -87,20 +75,29 @@ const InputDecorationTheme inputTheme = InputDecorationTheme(
   // contentPadding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
   enabledBorder: UnderlineInputBorder(
     borderSide: BorderSide(
-      color: AppColors.lightGreen,
+      color: AppColors.mainThemeColor,
       width: 2.5,
     ),
   ),
   focusedBorder: UnderlineInputBorder(
     borderSide: BorderSide(
-      color: AppColors.lightGreen,
+      color: AppColors.mainThemeColor,
       width: 2.5,
     ),
   ),
-  floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
+  floatingLabelStyle: TextStyle(color: AppColors.mainThemeColor),
+);
+
+final TextSelectionThemeData textSelectionTheme = TextSelectionThemeData(
+  // TextFormField cursor color
+  cursorColor: AppColors.mainThemeColor,
+
+  // text highlight color
+  selectionColor: AppColors.mainThemeColor.withOpacity(0.15),
 );
 
 final InputDecorationTheme deleteAccoutInputTheme = () {
+  // Create a stadium like input border by adding a border radius to OutlineInputBorder
   const sharedInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(16)),
     borderSide: BorderSide(
@@ -118,9 +115,10 @@ final InputDecorationTheme deleteAccoutInputTheme = () {
 }();
 
 final deleteAccoutTextSelectionTheme = TextSelectionThemeData(
+  // TextFormField cursor color
   cursorColor: AppColors.orange0,
 
-  // selectionColor: text highlight color
+  // text highlight color
   selectionColor: AppColors.orange0.withOpacity(0.15),
 );
 
@@ -131,15 +129,14 @@ const snackBarTheme = SnackBarThemeData(
 
 const snackBarTextStyle = TextStyle(
   fontSize: 24,
-  color: AppColors.lightGreen,
+  color: AppColors.mainThemeColor,
 );
 
-// TODO: were is this code being called? should be removed?
-/// borderlessInput: borderless TextField and TextFormField.
+// borderless TextField and TextFormField for entry views.
 const InputDecoration borderlessInput = InputDecoration(
   enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
   focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-  floatingLabelStyle: TextStyle(color: AppColors.lightGreen),
+  floatingLabelStyle: TextStyle(color: AppColors.mainThemeColor),
 );
 
 final mainButtonTheme = OutlinedButtonThemeData(style: mainButtonStyle);
@@ -147,7 +144,7 @@ final mainButtonTheme = OutlinedButtonThemeData(style: mainButtonStyle);
 final mainButtonStyle = ButtonStyle(
   shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
   side: resolver((state) => BorderSide.none),
-  backgroundColor: resolver((states) => AppColors.lightGreen),
+  backgroundColor: resolver((states) => AppColors.mainThemeColor),
   textStyle: resolver(
     (states) => TextStyle(
       foreground: Paint()..color = AppColors.offWhite,
@@ -158,6 +155,6 @@ final mainButtonStyle = ButtonStyle(
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
-MaterialStateProperty<T> resolver<T>(T Function(Set<MaterialState> state) statesCallback) {
+MaterialStateProperty<T> resolver<T>(MaterialPropertyResolver<T> statesCallback) {
   return MaterialStateProperty.resolveWith(statesCallback);
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TODO: instead of using colors directly create variables that are derivations to control app theme
-
 class AppColors {
   const AppColors._();
   static const offGrey = Color(0xff445D67);
@@ -36,7 +34,7 @@ class AppColors {
 
   static const moodTerrible = Color(0xffaed9e0);
 
-  static const appBar = lightGreen;
+  static const mainThemeColor = lightGreen;
 
   static final shadowColor = Colors.black.withOpacity(0.15);
 

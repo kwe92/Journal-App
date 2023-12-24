@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/addEntry/ui/add_entry_view_model.dart';
-import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
@@ -64,11 +63,8 @@ class AddEntryView extends StatelessWidget {
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
                       final bool ok = await model.addEntry(
-                        // TODO: set NewEntry in view model and move NewEntry instantiation to view model
-                        NewEntry(
-                          moodType: moodType,
-                          content: model.content!.trim(),
-                        ),
+                        moodType,
+                        model.content!,
                       );
 
                       if (ok) {

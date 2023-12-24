@@ -94,7 +94,12 @@ class JournalView extends StatelessWidget {
                   ],
                 ),
           // Open menu to the side
-          drawer: SideMenu(),
+          drawer: SideMenu(logoutCallback: () async {
+            await model.cleanUpResources();
+
+            // remove all routes and return to the signin page
+            appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
+          }),
           // BUTTON TO ADD NEW ENTRY
           floatingActionButton: AddButton(onTap: () {
             appRouter.push(const MoodRoute());

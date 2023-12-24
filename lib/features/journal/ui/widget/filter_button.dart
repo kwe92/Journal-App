@@ -11,9 +11,9 @@ class FilterButton extends ViewModelWidget<JournalViewModel> {
   Widget build(BuildContext context, JournalViewModel viewModel) {
     const Color lightGreen = AppColors.lightGreen;
 
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<FilterButtonModel>.reactive(
       viewModelBuilder: () => FilterButtonModel(),
-      builder: (context, model, _) => DropdownButton<String>(
+      builder: (context, FilterButtonModel model, _) => DropdownButton<String>(
         value: model.dropdownValue,
         icon: const Icon(Icons.arrow_drop_down),
         elevation: 16,

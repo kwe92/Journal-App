@@ -104,6 +104,8 @@ class DeleteProfileDialogView extends StatelessWidget {
                                   if (accountDeletedSuccessfully) {
                                     debugPrint('user permanently deleted, farewell my friend: ${model.userEmail}');
 
+                                    // TODO: add resource clean up to implementation
+
                                     // TODO: Implement FareWellView=======================================================
                                     // appRouter.pushAndPopUntil(FarewellRoute(), predicate: (route) {
                                     //   appRouter.push(SignInRoute());

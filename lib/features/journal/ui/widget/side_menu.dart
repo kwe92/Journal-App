@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 class SideMenu extends Drawer {
-  SideMenu({super.key});
+  final VoidCallback logoutCallback;
+
+  SideMenu({required this.logoutCallback, super.key});
 
   //  should this be propigated down?
   final image = imageService.getRandomMindfulImage();
@@ -32,13 +33,7 @@ class SideMenu extends Drawer {
                         // Use InkWell combined with Ink to respond to
                         // user touch events and provide visual fedback
                         InkWell(
-                      onTap: () async {
-                        // remove access token upon user logout
-                        await tokenService.removeAccessTokenFromStorage();
-
-                        // remove all routes and return to the signin page
-                        appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
-                      },
+                      onTap: logoutCallback,
                       splashColor: AppColors.splashColor,
                       highlightColor: AppColors.splashColor,
                       child: Ink(

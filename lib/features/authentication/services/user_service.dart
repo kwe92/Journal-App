@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
-import 'package:journal_app/features/profile/edit_profile/models/updated_user.dart';
+import 'package:journal_app/features/profile/edit_profile/model/updated_user.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 // TODO: Delete User tempUser when signup complete to clean up resources
 
 class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier {
+  // TODO: user setter functions with change notifier | ensure data is updated properly
+
   User? user;
 
   User? tempUser;
@@ -60,5 +62,18 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
     );
 
     return response;
+  }
+
+  void clearUserData() {
+    user = null;
+    tempUser = null;
+    currentUser = null;
+    notifyListeners();
+  }
+
+  void clearTempUserData() {
+    tempUser = null;
+    notifyListeners();
+    debugPrint("\ntemporary user data cleared.");
   }
 }
