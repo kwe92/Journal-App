@@ -7,8 +7,6 @@ class JournalContent extends StatelessWidget {
 
   final String content;
 
-  // TODO: maybe add CustomBoxShadow?
-
   const JournalContent({
     required this.onPressed,
     required this.moodBackgroundColor,

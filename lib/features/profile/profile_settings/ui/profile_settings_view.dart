@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';

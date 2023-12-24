@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:journal_app/app/general/constants.dart';
@@ -19,7 +21,6 @@ class MoodTypeCounter extends ViewModelWidget<JournalViewModel> {
 
   @override
   Widget build(BuildContext context, JournalViewModel viewModel) {
-    // TODO: find a better implementation to remove business logic
     final Mood mood = viewModel.getMood(moodType);
     return Row(
       children: [
