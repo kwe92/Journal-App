@@ -13,7 +13,7 @@ class ProfileIcon extends StatelessWidget {
     super.key,
   });
 
-// TODO: remove business logic from UI Widget | should be in view model
+// TODO: Not Updating Properly
   final User user = userService.currentUser!;
 
   @override

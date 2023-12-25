@@ -4,9 +4,8 @@ import 'package:journal_app/app/general/constants.dart';
 
 import 'http_service.dart';
 
-// Todo: host should be hidden in .env | DotEnv dotenv | package:flutter_dotenv/src/dotenv.dart
+//? host should be hidden in .env | DotEnv dotenv | package:flutter_dotenv/src/dotenv.dart
 
-// TODO: Can't we just add ChangeNotifer here since all classes that extend from ApiService require ChangeNotifier?
 abstract class ApiService with HttpService {
   final bearerPrefix = "Bearer";
 

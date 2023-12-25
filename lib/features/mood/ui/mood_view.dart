@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/mood/ui/mood_view_model.dart';
 import 'package:journal_app/features/mood/ui/widgets/cancel_button.dart';
 import 'package:journal_app/features/mood/ui/widgets/mood_card.dart';
@@ -77,20 +76,14 @@ class MoodView extends StatelessWidget {
                                 model.setIndex(i);
 
                                 // set mood type to be sent to backend
-                                model.setMoodType(model.moods[i].key);
+                                model.setMoodType(model.moods[i].moodText);
                               },
                               child: Entry.opacity(
                                 duration: const Duration(milliseconds: 600),
                                 child: MoodCard(
                                   // determine if the card is currently selected or not
                                   isSelected: model.selectedIndex == i ? true : false,
-                                  // TODO: remove business logic | maybe instantiate all Moods and select by index from a list
-                                  mood: Mood(
-                                    moodColor: model.moods[i].value.color,
-                                    moodImagePath: model.moods[i].value.imagePath,
-                                    imageSize: model.moods[i].value.defaultSize,
-                                    moodText: model.moods[i].key,
-                                  ),
+                                  mood: model.moods[i],
                                 ),
                               ),
                             );

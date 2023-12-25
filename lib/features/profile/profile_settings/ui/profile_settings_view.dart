@@ -15,9 +15,9 @@ class ProfileSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<ProfileSettingsViewModel>.reactive(
       viewModelBuilder: () => ProfileSettingsViewModel(),
-      builder: (context, model, child) {
+      builder: (BuildContext context, ProfileSettingsViewModel model, _) {
         return SafeArea(
           child: BaseScaffold(
             onPressed: () {

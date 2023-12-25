@@ -8,8 +8,6 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: add comments
-
 class SignUpViewModel extends BaseViewModel with PasswordMixin {
   String? mindfulImage;
 
@@ -46,6 +44,7 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
     }
   }
 
+  // register user with email if available
   Future<bool> signupWithEmail({required User user}) async {
     setBusy(true);
     final Response response = await authService.register(user: user);
@@ -66,5 +65,6 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
     return ok;
   }
 
+  // unfocus currently focused nodes
   void unfocusAll(BuildContext context) => toastService.unfocusAll(context);
 }

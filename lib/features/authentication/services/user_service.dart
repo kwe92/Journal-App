@@ -9,11 +9,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
-// TODO: Delete User tempUser when signup complete to clean up resources
-
 class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier {
-  // TODO: user setter functions with change notifier | ensure data is updated properly
-
   User? user;
 
   User? tempUser;
@@ -27,13 +23,9 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
     notifyListeners();
   }
 
-  // TODO: review and add comments | should it be its own endpoint on the backend so you dont have to use hashMaps
-
   /// Set the currently authenticated User object
   void setCurrentUser(Map<String, dynamic> responseBody) {
     final Map<String, dynamic> currentUserMap = responseBody['user'];
-
-    // TODO: Refactor : CurrentUser should be its own DTO for proper deserialization
 
     currentUser = User(
       firstName: currentUserMap['first_name'],

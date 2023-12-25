@@ -47,13 +47,13 @@ class MemberInfoViewModel extends BaseViewModel {
   }
 
   void setFirstName(String text) {
-    firstName = text != '' ? text.capitalize().trim() : '';
+    firstName = text != '' ? text.toLowerCase().capitalize().trim() : '';
     userService.tempUser?.firstName = firstName;
     notifyListeners();
   }
 
   void setLastName(String text) {
-    lastName = text != '' ? text.capitalize().trim() : '';
+    lastName = text != '' ? text.toLowerCase().capitalize().trim() : '';
     userService.tempUser?.lastName = lastName;
     notifyListeners();
   }

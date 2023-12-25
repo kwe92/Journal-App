@@ -9,6 +9,7 @@ import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
@@ -76,8 +77,6 @@ class JournalViewModel extends BaseViewModel {
     }
   }
 
-  // TODO: change to setMood maybe | review where and how getMood is called
-
   Mood getMood(String moodType) {
     final MapEntry<String, MoodRecord> moodMap = moodService.getMoodByType(moodType);
 
@@ -91,15 +90,8 @@ class JournalViewModel extends BaseViewModel {
     return mood;
   }
 
-  // clean up resources when the user logs out
   Future<void> cleanUpResources() async {
-    // remove access token upon user logout
-    await tokenService.removeAccessTokenFromStorage();
-
-    // clear stored user data
-    userService.clearUserData();
-
-    debugPrint("all globally stored resources have been cleaned up.");
+    await ResourceCleanUp.clean();
   }
 
   /// Filter journal entries by mood type.

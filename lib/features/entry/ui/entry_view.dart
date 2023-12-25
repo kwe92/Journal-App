@@ -18,13 +18,7 @@ import "package:stacked/stacked.dart";
 class EntryView extends StatelessWidget {
   final JournalEntry entry;
 
-  EntryView({required this.entry, super.key});
-
-  // TODO: move to view model
-
-  final TextEditingController entryController = TextEditingController();
-
-  final FocusNode entryFocus = FocusNode();
+  const EntryView({required this.entry, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +26,6 @@ class EntryView extends StatelessWidget {
       viewModelBuilder: () => EntryviewModel(),
       onViewModelReady: (model) {
         model.initialize(entry);
-
-        // TODO: move to  ViewModel within initialize method
-        model.content = entry.content;
-        entryController.text = model.content!;
       },
       builder: (context, model, _) {
         return BaseScaffold(
@@ -55,14 +45,14 @@ class EntryView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 1.65,
                 child: Form(
                   child: TextFormField(
-                    controller: entryController,
-                    focusNode: entryFocus,
+                    controller: model.entryController,
+                    focusNode: model.entryFocus,
                     expands: true,
                     maxLines: null,
                     readOnly: model.readOnly,
                     textCapitalization: TextCapitalization.sentences,
                     validator: stringService.customStringValidator(
-                      entryController.text,
+                      model.entryController.text,
                       configuration: const StringValidatorConfiguration(notEmpty: true),
                     ),
                     decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
@@ -77,7 +67,7 @@ class EntryView extends StatelessWidget {
                   onPressed: () async {
                     if (model.readOnly) {
                       model.setReadOnly(false);
-                      entryFocus.requestFocus();
+                      model.entryFocus.requestFocus();
                     } else {
                       // push update to backend
 
