@@ -10,7 +10,6 @@ class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
 
   @override
   Widget build(BuildContext context, SignUpViewModel viewModel) {
-    // TODO: maybe find a better implementation as the barrier is not dismissed so a user may have to double click
     final bool passwordCriteriaSatisfied = _passwordCriteriaSatisfied(viewModel.password);
     return passwordCriteriaSatisfied
         ? const SizedBox()

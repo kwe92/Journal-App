@@ -1,5 +1,5 @@
 import 'package:journal_app/app/general/constants.dart';
-import 'package:journal_app/features/shared/records/mood_record.dart';
+import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,7 +14,17 @@ class MoodViewModel extends BaseViewModel {
 
   int get selectedIndex => _selectedIndex;
 
-  List<MapEntry<String, MoodRecord>> get moods => moodService.moods;
+  List<Mood> get moods => moodService.moods
+      .map(
+        (moodData) => Mood(
+            moodColor: moodData.value.color,
+            moodImagePath: moodData.value.imagePath,
+            imageSize: moodData.value.defaultSize,
+            moodText: moodData.key),
+      )
+      .toList();
+
+  // List<MapEntry<String, MoodRecord>> get moods => moodService.moods;
 
   void setIndex(int index) {
     _selectedIndex = index;

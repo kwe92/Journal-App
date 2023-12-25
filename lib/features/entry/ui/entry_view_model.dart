@@ -9,11 +9,17 @@ import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class EntryviewModel extends BaseViewModel {
-  String? content;
+  TextEditingController entryController = TextEditingController();
+
+  FocusNode entryFocus = FocusNode();
+
+  String? _content;
 
   Color? _moodColor;
 
   bool _readOnly = true;
+
+  String? get content => _content;
 
   bool get readOnly => _readOnly;
 
@@ -21,18 +27,20 @@ class EntryviewModel extends BaseViewModel {
 
   void initialize(JournalEntry entry) {
     setBusy(true);
+    setContent(entry.content);
+    entryController.text = _content!;
     MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(entry.moodType);
     _moodColor = moodData.value.color;
     setBusy(false);
   }
 
   void setContent(String text) {
-    content = text;
+    _content = text;
     notifyListeners();
   }
 
   void clearContent() {
-    content = null;
+    _content = null;
     notifyListeners();
   }
 

@@ -13,9 +13,13 @@ class UpdatedUser {
 
   String? email;
 
+  @JsonKey(name: "phone_number")
+  String? phoneNumber;
+
   UpdatedUser({
     this.firstName,
     this.lastName,
+    this.phoneNumber,
     this.email,
   });
 
@@ -24,5 +28,7 @@ class UpdatedUser {
   Map<String, dynamic> toJSON() => _$UpdatedUserToJson(this);
 
   @override
-  String toString() => 'UpdatedUser(firstName: $firstName, lastName: $lastName, email: $email)';
+  String toString() {
+    return 'UpdatedUser(firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber)';
+  }
 }

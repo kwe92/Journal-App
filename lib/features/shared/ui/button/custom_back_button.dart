@@ -18,7 +18,7 @@ class CustomBackButton extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(
           Icons.arrow_back_ios,
-          color: color ?? AppColors.appBar,
+          color: color ?? AppColors.mainThemeColor,
           size: size,
         ),
       );

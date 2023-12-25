@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
@@ -13,9 +15,9 @@ class ProfileSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<ProfileSettingsViewModel>.reactive(
       viewModelBuilder: () => ProfileSettingsViewModel(),
-      builder: (context, model, child) {
+      builder: (BuildContext context, ProfileSettingsViewModel model, _) {
         return SafeArea(
           child: BaseScaffold(
             onPressed: () {

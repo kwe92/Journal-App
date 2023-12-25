@@ -43,7 +43,7 @@ class BaseScaffold extends StatelessWidget {
                 ),
                 centerTitle: true,
                 iconTheme: IconThemeData(
-                  color: moodColor ?? AppColors.appBar,
+                  color: moodColor ?? AppColors.mainThemeColor,
                   size: 30,
                 ),
                 leading: leading,

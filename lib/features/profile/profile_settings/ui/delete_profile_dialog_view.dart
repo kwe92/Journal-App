@@ -102,6 +102,8 @@ class DeleteProfileDialogView extends StatelessWidget {
                                 if (model.formKey.currentState!.validate() && model.emailMatch) {
                                   final bool accountDeletedSuccessfully = await model.deleteAccount();
                                   if (accountDeletedSuccessfully) {
+                                    await model.cleanUpResources();
+
                                     debugPrint('user permanently deleted, farewell my friend: ${model.userEmail}');
 
                                     // TODO: Implement FareWellView=======================================================

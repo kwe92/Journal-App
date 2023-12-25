@@ -3,13 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
-import 'package:journal_app/features/profile/edit_profile/models/updated_user.dart';
+import 'package:journal_app/features/profile/edit_profile/model/updated_user.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
-
-// TODO: Delete User tempUser when signup complete to clean up resources
 
 class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier {
   User? user;
@@ -25,13 +23,9 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
     notifyListeners();
   }
 
-  // TODO: review and add comments | should it be its own endpoint on the backend so you dont have to use hashMaps
-
   /// Set the currently authenticated User object
   void setCurrentUser(Map<String, dynamic> responseBody) {
     final Map<String, dynamic> currentUserMap = responseBody['user'];
-
-    // TODO: Refactor : CurrentUser should be its own DTO for proper deserialization
 
     currentUser = User(
       firstName: currentUserMap['first_name'],
@@ -60,5 +54,18 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
     );
 
     return response;
+  }
+
+  void clearUserData() {
+    user = null;
+    tempUser = null;
+    currentUser = null;
+    notifyListeners();
+  }
+
+  void clearTempUserData() {
+    tempUser = null;
+    notifyListeners();
+    debugPrint("\ntemporary user data cleared.");
   }
 }

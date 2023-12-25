@@ -40,7 +40,6 @@ class JournalView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // TODO: disappear on scroll or make transparent somehow
                     Padding(
                       padding: const EdgeInsets.only(left: 0, top: 8.0, right: 16),
                       child: Row(
@@ -94,7 +93,12 @@ class JournalView extends StatelessWidget {
                   ],
                 ),
           // Open menu to the side
-          drawer: SideMenu(),
+          drawer: SideMenu(logoutCallback: () async {
+            await model.cleanUpResources();
+
+            // remove all routes and return to the signin page
+            appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
+          }),
           // BUTTON TO ADD NEW ENTRY
           floatingActionButton: AddButton(onTap: () {
             appRouter.push(const MoodRoute());

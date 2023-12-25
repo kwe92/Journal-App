@@ -61,7 +61,7 @@ class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
   Widget build(BuildContext context, ProfileSettingsViewModel viewModel) {
     return GestureDetector(
       onTap: () async {
-        final bool shouldDeleteAccount = await toastService.deleteAccountPopupMenu<bool>(
+        await toastService.deleteAccountPopupMenu<bool>(
           context,
           parameters: const PopupMenuParameters(
             title: 'Permanantly delete account?',
@@ -73,10 +73,6 @@ class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
             },
           ),
         );
-
-        if (shouldDeleteAccount) {
-          // TODO: implement call to back end to delete user account
-        }
       },
       child: Container(
         height: 90,

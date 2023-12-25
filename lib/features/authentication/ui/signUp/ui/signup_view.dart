@@ -108,7 +108,7 @@ class SignUpView extends StatelessWidget {
                                 model.setShowRequirements(passwordFocus.hasFocus);
                               });
                               // remove member info view and navigate to journal view | there maybe a better way to refresh widget
-                              appRouter.replace(JournalRoute());
+                              appRouter.replace(const JournalRoute());
                             }
                           }
                         },

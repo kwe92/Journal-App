@@ -17,7 +17,7 @@ class PasswordInput extends ViewModelWidget<SignInViewModel> {
   });
 
   @override
-  Widget build(BuildContext context, SignInViewModel model) {
+  Widget build(BuildContext context, SignInViewModel viewModel) {
     return TextFormField(
       textInputAction: TextInputAction.done,
       controller: passwordController,
@@ -27,15 +27,15 @@ class PasswordInput extends ViewModelWidget<SignInViewModel> {
         passwordController.text,
         configuration: const StringValidatorConfiguration(notEmpty: true),
       ),
-      obscureText: model.obscurePassword,
-      onChanged: model.setPassword,
+      obscureText: viewModel.obscurePassword,
+      onChanged: viewModel.setPassword,
       onEditingComplete: () => (nextFocus != null) ? nextFocus!.requestFocus() : focus.unfocus(),
       decoration: InputDecoration(
         labelText: "Password",
         hintText: "Enter Password",
         suffixIcon: IconButton(
-          onPressed: () => model.setObscure(!model.obscurePassword),
-          icon: Icon(model.obscurePassword ? Icons.visibility_off : Icons.visibility),
+          onPressed: () => viewModel.setObscure(!viewModel.obscurePassword),
+          icon: Icon(viewModel.obscurePassword ? Icons.visibility_off : Icons.visibility),
         ),
       ),
     );

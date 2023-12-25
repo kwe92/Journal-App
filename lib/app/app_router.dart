@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'app_router.gr.dart';
-// TODO: place in makefile or some script
+
 /// refresh generated router 'dart run build_runner build --delete-conflicting-outputs'
 
 @AutoRouterConfig(replaceInRouteName: "Page|Screen|View,Route")

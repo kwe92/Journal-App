@@ -17,7 +17,7 @@ class EmailInput extends ViewModelWidget<SignInViewModel> {
   });
 
   @override
-  Widget build(BuildContext context, SignInViewModel model) {
+  Widget build(BuildContext context, SignInViewModel viewModel) {
     // useTextEditingController: flutter hook that allows the use of TextEditingController's in a stateless widget
 
     return TextFormField(
@@ -28,7 +28,7 @@ class EmailInput extends ViewModelWidget<SignInViewModel> {
       // commonly used hints | imforms the platform `Android, IOS and Web` of the text field type
       autofillHints: const [AutofillHints.email],
       validator: stringService.emailIsValid,
-      onChanged: model.setEmail,
+      onChanged: viewModel.setEmail,
       onEditingComplete: () => (nextFocus != null) ? nextFocus!.requestFocus() : focus.unfocus(),
       decoration: InputDecoration(
         labelText: "Email",
