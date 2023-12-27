@@ -26,7 +26,6 @@ class AddEntryView extends StatelessWidget {
       viewModelBuilder: () => AddEntryViewModel(),
       onViewModelReady: (AddEntryViewModel model) => model.initialize(moodType),
       builder: (BuildContext context, AddEntryViewModel model, _) => BaseScaffold(
-        // title: "Add Entry",
         moodColor: model.moodColor,
         // Manifested in french
         title: "Manifesté",

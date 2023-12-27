@@ -7,14 +7,14 @@ import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_app/features/shared/services/services.dart';
 
-/// authentication service that commincates with backend for user authorization.
+/// authentication service that communicates with backend for user authorization.
 class AuthService extends ApiService with ChangeNotifier {
   bool _isLoggedIn = false;
 
-  /// represents if current user is properly authenticated and loggedin
+  /// indicates if current user is properly authenticated and loggedin
   bool get isLoggedIn => _isLoggedIn;
 
-  /// registers a user via API call to backend.
+  /// register a user via API call to backend.
   Future<http.Response> register({required User user}) async {
     final http.Response response = await post(
       Endpoint.register.path,
@@ -29,7 +29,7 @@ class AuthService extends ApiService with ChangeNotifier {
     return response;
   }
 
-  /// login: login a user via API call to backend.
+  /// login a user via API call to backend.
   Future<http.Response> login({required String email, required String password}) async {
     final http.Response response = await post(
       Endpoint.login.path,
@@ -39,6 +39,7 @@ class AuthService extends ApiService with ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
+      // set current user if request is successful
       userService.setCurrentUser(jsonDecode(response.body));
       _isLoggedIn = true;
       notifyListeners();
@@ -61,6 +62,7 @@ class AuthService extends ApiService with ChangeNotifier {
 
   /// PERMANENTLY deletes ALL user data and associations from backend database
   Future<http.Response> deleteAccount() async {
+    // retrieve access token to be sent to backend in header
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
     final http.Response response = await delete(Endpoint.deleteAccount.path, extraHeaders: {

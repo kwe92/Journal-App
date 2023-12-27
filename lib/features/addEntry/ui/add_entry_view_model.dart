@@ -7,15 +7,17 @@ import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class AddEntryViewModel extends BaseViewModel {
-  String? content;
+  String? _content;
 
   Color? _moodColor;
+
+  String? get content => _content;
 
   Color? get moodColor => _moodColor;
 
   // computed variable based on content state updated with change notifier
   bool get ready {
-    return content != null && content!.isNotEmpty;
+    return _content != null && _content!.isNotEmpty;
   }
 
   void initialize(String moodType) {
@@ -27,16 +29,17 @@ class AddEntryViewModel extends BaseViewModel {
   }
 
   void setContent(String text) {
-    content = text.trim();
+    _content = text.trim();
     notifyListeners();
   }
 
   void clearContent() {
-    content = null;
+    _content = null;
 
     notifyListeners();
   }
 
+  /// attemt to add entry to the backend
   Future<bool> addEntry(String moodType, String content) async {
     // instantiate new entry
     final NewEntry newEntry = NewEntry(content: content, moodType: moodType);
