@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
-import 'package:journal_app/features/shared/services/services.dart';
 
 class ProfileIcon extends StatelessWidget {
-  final VoidCallback onPressed;
+  final String userFirstName;
+  final VoidCallback? onPressed;
   final Color? color;
 
-  ProfileIcon({
-    required this.onPressed,
+  const ProfileIcon({
+    required this.userFirstName,
+    this.onPressed,
     this.color,
     super.key,
   });
-
-// TODO: Not Updating Properly
-  final User user = userService.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +29,7 @@ class ProfileIcon extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            user.firstName?.substring(0, 1).toUpperCase() ?? 'P',
+            userFirstName.substring(0, 1).toUpperCase(),
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w700,
