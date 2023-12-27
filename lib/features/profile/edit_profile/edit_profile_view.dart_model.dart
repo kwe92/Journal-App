@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
-import 'package:journal_app/features/journal/extensions/string_extensions.dart';
+import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:journal_app/features/profile/edit_profile/model/updated_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';

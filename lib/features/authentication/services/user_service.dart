@@ -12,18 +12,18 @@ import 'package:http/http.dart' as http;
 class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier {
   UserService();
 
-  User? user;
-
-  User? tempUser;
+  User? _tempUser;
 
   User? _currentUser;
+
+  User? get tempUser => _tempUser;
 
   User? get currentUser => _currentUser;
 
   /// Create a temporary user that will be updated during onboarding
   /// If a temp user already exists, keep that
   Future<void> createTempUser() async {
-    tempUser = User();
+    _tempUser = User();
 
     debugPrint("\ntemporary user created.");
 
@@ -71,41 +71,40 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
 
   /// set state of UserService properties to null
   void clearUserData() {
-    user = null;
-    tempUser = null;
+    _tempUser = null;
     _currentUser = null;
     notifyListeners();
   }
 
   /// set state of tempUser to null
   void clearTempUserData() {
-    tempUser = null;
+    _tempUser = null;
     notifyListeners();
     debugPrint("\ntemporary user data cleared.");
   }
 
   void setTempUserFirstName(String val) {
-    userService.tempUser?.firstName = val;
+    userService._tempUser?.firstName = val;
     notifyListeners();
   }
 
   void setTempUserLastName(String val) {
-    userService.tempUser?.lastName = val;
+    userService._tempUser?.lastName = val;
     notifyListeners();
   }
 
   void setTempUserEmail(String val) {
-    userService.tempUser?.email = val;
+    userService._tempUser?.email = val;
     notifyListeners();
   }
 
   void setTempUserPhoneNumber(String val) {
-    userService.tempUser?.phoneNumber = val;
+    userService._tempUser?.phoneNumber = val;
     notifyListeners();
   }
 
   void setTempUserPassword(String val) {
-    userService.tempUser?.password = val;
+    userService._tempUser?.password = val;
 
     notifyListeners();
   }

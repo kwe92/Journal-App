@@ -29,7 +29,6 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
     return Column(
       children: [
         TextFormField(
-          //? which one looks better enabled false or read-only true
           enabled: false,
           focusNode: emailFocus,
           textInputAction: TextInputAction.next,

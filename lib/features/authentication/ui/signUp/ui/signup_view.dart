@@ -13,8 +13,6 @@ import 'package:stacked/stacked.dart';
 class SignUpView extends StatelessWidget {
   SignUpView({super.key});
 
-  // TODO: move to view model?
-
   final formKey = GlobalKey<FormState>();
 
   final TextEditingController passwordController = TextEditingController();
@@ -31,13 +29,12 @@ class SignUpView extends StatelessWidget {
       viewModelBuilder: () => SignUpViewModel(),
       onViewModelReady: (SignUpViewModel model) {
         model.initialize();
-        // TODO: move to initialize method
         // assign user email to emailController to be displayed on signup view
         emailController.text = model.email!;
 
-        // TODO: move to initialize method
-        // add listener to passwordFocus watching for state chages and triggering associated callback
+        // add listener to passwordFocus watching for state changes and triggering associated callback
         passwordFocus.addListener(() {
+          // if the password TextFormField has focus show the requirements popup
           model.setShowRequirements(passwordFocus.hasFocus);
         });
       },
@@ -107,7 +104,7 @@ class SignUpView extends StatelessWidget {
                             final bool ok = await model.signupWithEmail(user: userService.tempUser!);
 
                             if (ok) {
-                              //  TODO: move to the view model as a method
+                              // remove added listeners
                               passwordFocus.removeListener(() {
                                 model.setShowRequirements(passwordFocus.hasFocus);
                               });

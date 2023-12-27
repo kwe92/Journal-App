@@ -24,14 +24,12 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
     return password == confirmPassword;
   }
 
+  bool get passwordCriteriaSatisfied => _passwordCriteriaSatisfied();
+
   void initialize() {
     mindfulImage = imageService.getRandomMindfulImage();
 
-    setBusy(true);
-
     email = userService.tempUser?.email ?? "";
-
-    setBusy(false);
   }
 
   String? confirmValidator(String? value) {
@@ -42,6 +40,12 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
     } else {
       return null;
     }
+  }
+
+  /// determines if the password criteria was met.
+  bool _passwordCriteriaSatisfied() {
+    final String? allSatisfied = stringService.passwordIsValid(password);
+    return allSatisfied != null && allSatisfied.isNotEmpty ? false : true;
   }
 
   // register user with email if available

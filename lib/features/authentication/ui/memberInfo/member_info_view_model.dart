@@ -1,4 +1,4 @@
-import 'package:journal_app/features/journal/extensions/string_extensions.dart';
+import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';

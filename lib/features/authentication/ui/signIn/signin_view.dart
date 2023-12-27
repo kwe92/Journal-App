@@ -13,7 +13,6 @@ import 'package:stacked/stacked.dart';
 class SignInView extends StatelessWidget {
   SignInView({super.key});
 
-  // TODO: remove keys and nodes, add them to the view model
   // used to locate form in widget tree and validate text form fields before processing them further
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
