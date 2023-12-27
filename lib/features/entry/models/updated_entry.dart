@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'updated_entry.g.dart';
 
+/// domain model and DTO for updating an users entry.
 @JsonSerializable()
 class UpdatedEntry {
   @JsonKey(name: "id")

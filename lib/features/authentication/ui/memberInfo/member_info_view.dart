@@ -40,9 +40,9 @@ class MemberInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<MemberInfoViewModel>.reactive(
       viewModelBuilder: () => MemberInfoViewModel(),
-      onViewModelReady: (model) async {
+      onViewModelReady: (MemberInfoViewModel model) async {
         await model.initialize();
         firstNameController.text = model.firstName!;
         lastNameController.text = model.lastName!;

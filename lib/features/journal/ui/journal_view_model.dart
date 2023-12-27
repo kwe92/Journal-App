@@ -91,11 +91,11 @@ class JournalViewModel extends ReactiveViewModel {
 
   // create Mood instance by mood type
   Mood getMood(String moodType) {
-    final MapEntry<String, MoodRecord> moodMap = moodService.getMoodByType(moodType);
+    final MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(moodType);
 
     final Mood mood = Mood(
-      moodColor: moodMap.value.color,
-      moodImagePath: moodMap.value.imagePath,
+      moodColor: moodData.value.color,
+      moodImagePath: moodData.value.imagePath,
       imageSize: 20,
       moodText: moodType,
     );

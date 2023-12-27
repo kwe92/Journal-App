@@ -2,7 +2,6 @@ import "package:auto_route/annotations.dart";
 import "package:journal_app/app/app_router.gr.dart";
 import "package:journal_app/app/resources/reusables.dart";
 import "package:journal_app/app/theme/theme.dart";
-import "package:journal_app/features/entry/models/updated_entry.dart";
 import "package:journal_app/features/entry/ui/entry_view_model.dart";
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import "package:journal_app/features/shared/services/services.dart";
@@ -23,12 +22,12 @@ class EntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
-      viewModelBuilder: () => EntryviewModel(),
-      onViewModelReady: (model) {
-        model.initialize(entry);
+    return ViewModelBuilder<EntryviewModel>.reactive(
+      viewModelBuilder: () => EntryviewModel(entry: entry),
+      onViewModelReady: (EntryviewModel model) {
+        model.initialize();
       },
-      builder: (context, model, _) {
+      builder: (context, EntryviewModel model, _) {
         return BaseScaffold(
           moodColor: model.moodColor,
           title: entry.dateString,
@@ -88,14 +87,14 @@ class EntryView extends StatelessWidget {
                       model.setReadOnly(false);
                       model.entryFocus.requestFocus();
                     } else {
-                      // TODO: if content hasn't changed do nothing and pop or warn the user?
+                      // if the content is identical do not call backend and pop route
+                      if (model.isIdenticalContent) {
+                        appRouter.pop();
+                        return;
+                      }
+
                       // push update to backend
-                      final bool ok = await model.updateEntry(
-                        UpdatedEntry(
-                          entryId: entry.entryId,
-                          content: model.content,
-                        ),
-                      );
+                      final bool ok = await model.updateEntry();
 
                       if (ok) {
                         appRouter.replace(const JournalRoute());

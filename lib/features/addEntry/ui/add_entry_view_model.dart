@@ -21,11 +21,9 @@ class AddEntryViewModel extends BaseViewModel {
   }
 
   void initialize(String moodType) {
-    setBusy(true);
     // set the theme for the view to the color of the mood type
     MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(moodType);
     _moodColor = moodData.value.color;
-    setBusy(false);
   }
 
   void setContent(String text) {

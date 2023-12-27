@@ -22,12 +22,12 @@ class JournalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<JournalViewModel>.reactive(
       viewModelBuilder: () => JournalViewModel(),
-      onViewModelReady: (model) async {
+      onViewModelReady: (JournalViewModel model) async {
         await model.initialize();
       },
-      builder: (context, model, child) {
+      builder: (context, JournalViewModel model, child) {
         return BaseScaffold(
           // means Thoughts in french
           title: "Pensées",

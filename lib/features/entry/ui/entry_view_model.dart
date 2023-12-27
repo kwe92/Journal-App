@@ -10,9 +10,11 @@ import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class EntryviewModel extends ReactiveViewModel {
-  TextEditingController entryController = TextEditingController();
+  final TextEditingController entryController = TextEditingController();
 
-  FocusNode entryFocus = FocusNode();
+  final FocusNode entryFocus = FocusNode();
+
+  final JournalEntry entry;
 
   String? _content;
 
@@ -22,6 +24,8 @@ class EntryviewModel extends ReactiveViewModel {
 
   String? get content => _content;
 
+  bool get isIdenticalContent => content == entry.content.trim();
+
   bool get readOnly => _readOnly;
 
   Color? get moodColor => _moodColor;
@@ -30,23 +34,23 @@ class EntryviewModel extends ReactiveViewModel {
 
   User? get currentUser => _currentUser;
 
+  EntryviewModel({required this.entry});
+
 // required override for ReactiveViewModel to react to changes in a service
   @override
   List<ListenableServiceMixin> get listenableServices => [
         userService,
       ];
 
-  void initialize(JournalEntry entry) {
-    setBusy(true);
+  void initialize() {
     setContent(entry.content);
     entryController.text = _content!;
     MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(entry.moodType);
     _moodColor = moodData.value.color;
-    setBusy(false);
   }
 
   void setContent(String text) {
-    _content = text;
+    _content = text.trim();
     notifyListeners();
   }
 
@@ -61,7 +65,11 @@ class EntryviewModel extends ReactiveViewModel {
   }
 
   /// update journal entry via API call to backend
-  Future<bool> updateEntry(UpdatedEntry updatedEntry) async {
+  Future<bool> updateEntry() async {
+    final UpdatedEntry updatedEntry = UpdatedEntry(
+      entryId: entry.entryId,
+      content: content,
+    );
     setBusy(true);
     final Response response = await journalEntryService.updateEntry(updatedEntry);
     setBusy(false);

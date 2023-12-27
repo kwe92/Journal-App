@@ -10,17 +10,15 @@ import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
-// const String _bearer = "Bearer";
-
 /// Entries: type alias for List of Entry.
 typedef JournalEntries = List<JournalEntry>;
 
-/// handles all C.R.U.D API calls for journmal entries based on the currently logged in user based on their access token.
+/// handles all C.R.U.D API calls for journal entries based on the currently authenticated and logged in user.
 class JournalEntryService extends ApiService with ListenableServiceMixin {
   JournalEntries journalEntries = [];
 
   Future<http.Response> getAllEntries() async {
-    // get jwt access token saved in persistent storage
+    // get jwt from persistent storage
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
     // retrieve all entries based on access token
@@ -34,7 +32,10 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     final List<dynamic>? responseData = reponseBody["data"];
 
     if (responseData != null) {
-      journalEntries = responseData.map((entry) => JournalEntry.fromJSON(entry)).toList().sortedBy((entry) => entry.updatedAt);
+      journalEntries = responseData.map((entry) => JournalEntry.fromJSON(entry)).toList().sorted(
+            // sort by decending udated date
+            (entryA, entryB) => entryB.updatedAt.compareTo(entryA.updatedAt),
+          );
     } else {
       journalEntries = [];
     }
@@ -45,7 +46,7 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
   }
 
   Future<http.Response> addEntry(NewEntry newEntry) async {
-    // retrieve jwt access token to be sent to backend for verification
+    // retrieve jwt from persistent storage
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
     final http.Response response = await post(
@@ -62,7 +63,7 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
   }
 
   Future<http.Response> updateEntry(UpdatedEntry updatedEntry) async {
-    // retrieve jwt access token to be sent to backend for verification
+    // retrieve jwt from persistent storage
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
     final http.Response response = await post(
@@ -79,8 +80,7 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
   }
 
   Future<http.Response> deleteEntry(int entryId) async {
-    // retrieve jwt access token to be sent to backend for verification
-
+    // retrieve jwt from persistent storage
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
     final http.Response response = await delete("${Endpoint.deleteEntry.path}$entryId", extraHeaders: {

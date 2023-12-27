@@ -7,7 +7,6 @@ class SideMenu extends Drawer {
 
   SideMenu({required this.logoutCallback, super.key});
 
-  //  should this be propigated down?
   final image = imageService.getRandomMindfulImage();
 
   @override

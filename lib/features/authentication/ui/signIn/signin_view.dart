@@ -24,11 +24,11 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<SignInViewModel>.reactive(
       createNewViewModelOnInsert: true,
       viewModelBuilder: () => SignInViewModel(),
-      onViewModelReady: (model) => model.initialize(),
-      builder: (context, model, _) {
+      onViewModelReady: (SignInViewModel model) => model.initialize(),
+      builder: (context, SignInViewModel model, _) {
         return SafeArea(
           child: Scaffold(
             body: SizedBox(

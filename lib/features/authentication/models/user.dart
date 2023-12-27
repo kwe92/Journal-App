@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
 
-/// domain model and DTO representing an authenticated user that is logged-in
+/// domain model and DTO representing an authenticated logged-in user
 @JsonSerializable()
 class User {
   @JsonKey(name: "first_name")
