@@ -17,9 +17,9 @@ class MoodView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<MoodViewModel>.reactive(
       viewModelBuilder: () => MoodViewModel(),
-      builder: (context, model, _) {
+      builder: (context, MoodViewModel model, _) {
         return SafeArea(
           child: Scaffold(
             body: Column(
@@ -69,9 +69,11 @@ class MoodView extends StatelessWidget {
                             // represents the width / height respectively
                             childAspectRatio: (100 / 160),
                           ),
-                          itemBuilder: (context, i) {
+                          itemBuilder: (BuildContext context, int i) {
                             return GestureDetector(
-                              onTap: () {
+                              onTap:
+                                  // anonymous closure that saves the state of the index integer above within its scope
+                                  () {
                                 // set selected mood
                                 model.setIndex(i);
 
@@ -119,7 +121,7 @@ class MoodView extends StatelessWidget {
 
 //  SliverGridDelegateWithFixedCrossAxisCount
 
-//    - controls the layout of the children of a GridView.builder
+//    - controls GridView.builder children layout
 
 // Flexible wapping in Flex, Row or Column Widgets for GridView.builder
 

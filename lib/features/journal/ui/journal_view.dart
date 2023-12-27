@@ -106,22 +106,9 @@ class JournalView extends StatelessWidget {
           // BUTTON TO ADD NEW ENTRY
           floatingActionButton: AddButton(onTap: () {
             appRouter.push(const MoodRoute());
-
-            // push add entry route and pop all routes to trigger createNewViewModelOnInsert
-            // appRouter.pushAndPopUntil(const AddEntryRoute(), predicate: (route) => false);
           }),
         );
       },
     );
   }
 }
-
-// Create RenderBox That Starts at Min Height Grows to Max Height
-
-//   - most RenderBox's have a default infinite with and height
-//   - in order to have a growable RenderBox you must use a DecoratedBox widget
-//   - DecoratedBox widget has a default height and width of 0
-//   - wrapping DecoratedBox with a ContrainedBox and adding minimum and maximum contraints
-//     allows the chidren of a DecoratedBox to be growable from the minimum size to the maximum size
-
-

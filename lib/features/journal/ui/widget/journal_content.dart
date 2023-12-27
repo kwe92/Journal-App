@@ -48,3 +48,11 @@ class JournalContent extends StatelessWidget {
     );
   }
 }
+
+// Create RenderBox That Starts at Min Height Grows to Max Height
+
+//   - most RenderBox's have a default infinite width and height
+//   - in order to have a growable RenderBox you must use a DecoratedBox widget
+//   - DecoratedBox widgets have a default height and width of 0
+//   - wrapping a DecoratedBox with a ContrainedBox and adding minimum and maximum contraints
+//     allows the chidren of a DecoratedBox to be growable from the minimum size to the maximum size

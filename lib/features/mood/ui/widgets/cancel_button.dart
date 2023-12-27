@@ -4,7 +4,11 @@ class CancelButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double? size;
 
-  const CancelButton({required this.onPressed, this.size, super.key});
+  const CancelButton({
+    required this.onPressed,
+    this.size,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
