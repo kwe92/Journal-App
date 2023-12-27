@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
@@ -18,8 +19,10 @@ class SignInViewModel extends BaseViewModel {
   // controls password obscurity
   bool obscurePassword = true;
 
-  void initialize() {
+  void initialize() async {
     mindfulImage = imageService.getRandomMindfulImage();
+
+    await ResourceCleanUp.clean();
   }
 
   void setEmail(String text) {
@@ -38,16 +41,22 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  /// attemt to sign with the provided email and password
   Future<bool> signInWithEmail(BuildContext context) async {
     setBusy(true);
     final Response response = await authService.login(email: email!, password: password!);
     setBusy(false);
 
+    // check status code
     final bool ok = ResponseHandler.checkStatusCode(response);
 
     if (ok && authService.isLoggedIn) {
+      // deserialize json response body
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
+
+      // save the returned jwt from the response body to persistent storage
       await tokenService.saveTokenData(responseBody);
+
       return ok;
     }
     return ok;
