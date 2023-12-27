@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view_model.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/widgets/email_sign_up.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -13,6 +12,8 @@ import 'package:stacked/stacked.dart';
 @RoutePage()
 class SignUpView extends StatelessWidget {
   SignUpView({super.key});
+
+  // TODO: move to view model?
 
   final formKey = GlobalKey<FormState>();
 
@@ -26,19 +27,21 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<SignUpViewModel>.reactive(
       viewModelBuilder: () => SignUpViewModel(),
-      onViewModelReady: (model) {
+      onViewModelReady: (SignUpViewModel model) {
         model.initialize();
+        // TODO: move to initialize method
         // assign user email to emailController to be displayed on signup view
         emailController.text = model.email!;
 
+        // TODO: move to initialize method
         // add listener to passwordFocus watching for state chages and triggering associated callback
         passwordFocus.addListener(() {
           model.setShowRequirements(passwordFocus.hasFocus);
         });
       },
-      builder: (context, model, _) {
+      builder: (context, SignUpViewModel model, _) {
         return SafeArea(
             child: Scaffold(
           body: SizedBox(
@@ -101,9 +104,10 @@ class SignUpView extends StatelessWidget {
                             model.unfocusAll(context);
 
                             // upon successful validation sign the user up.
-                            final bool ok = await model.signupWithEmail(user: userService.tempUser as User);
+                            final bool ok = await model.signupWithEmail(user: userService.tempUser!);
 
                             if (ok) {
+                              //  TODO: move to the view model as a method
                               passwordFocus.removeListener(() {
                                 model.setShowRequirements(passwordFocus.hasFocus);
                               });
