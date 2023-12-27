@@ -26,7 +26,7 @@ class MoodType {
   static const String terrible = "Terrible";
 }
 
-// image paths associated to mood types;
+/// image paths associated to mood types;
 class MoodImagePath {
   const MoodImagePath._();
   static const String moodAwesome = "assets/images/very_happy_face.svg";

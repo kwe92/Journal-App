@@ -4,6 +4,8 @@ import 'app_router.gr.dart';
 /// refresh generated router 'dart run build_runner build --delete-conflicting-outputs'
 
 @AutoRouterConfig(replaceInRouteName: "Page|Screen|View,Route")
+
+/// navigation for all available views
 class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [

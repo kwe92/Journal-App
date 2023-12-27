@@ -56,19 +56,25 @@ class EntryView extends StatelessWidget {
                 // TODO: check if this abitrary number 1.65 actually works on smaller screens
                 height: MediaQuery.of(context).size.height / 1.65,
                 child: Form(
-                  child: TextFormField(
-                    controller: model.entryController,
-                    focusNode: model.entryFocus,
-                    expands: true,
-                    maxLines: null,
-                    readOnly: model.readOnly,
-                    textCapitalization: TextCapitalization.sentences,
-                    validator: stringService.customStringValidator(
-                      model.entryController.text,
-                      configuration: const StringValidatorConfiguration(notEmpty: true),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      textSelectionTheme: AppTheme.getTextSelectionThemeData(model.moodColor!),
+                      cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(model.moodColor!),
                     ),
-                    decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
-                    onChanged: (value) => model.setContent(value),
+                    child: TextFormField(
+                      controller: model.entryController,
+                      focusNode: model.entryFocus,
+                      expands: true,
+                      maxLines: null,
+                      readOnly: model.readOnly,
+                      textCapitalization: TextCapitalization.sentences,
+                      validator: stringService.customStringValidator(
+                        model.entryController.text,
+                        configuration: const StringValidatorConfiguration(notEmpty: true),
+                      ),
+                      decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
+                      onChanged: (value) => model.setContent(value),
+                    ),
                   ),
                 ),
               ),

@@ -39,19 +39,25 @@ class AddEntryView extends StatelessWidget {
             FormContainer(
               child: Form(
                 key: formKey,
-                child: TextFormField(
-                  // focus text field upon inital render
-                  autofocus: true,
-                  expands: true,
-                  maxLines: null,
-                  // automatically capitalize sentences for user
-                  textCapitalization: TextCapitalization.sentences,
-                  controller: newEntryController,
-                  decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
-                  onChanged: (value) => model.setContent(value),
-                  validator: stringService.customStringValidator(
-                    newEntryController.text,
-                    configuration: const StringValidatorConfiguration(notEmpty: true),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    textSelectionTheme: AppTheme.getTextSelectionThemeData(model.moodColor!),
+                    cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(model.moodColor!),
+                  ),
+                  child: TextFormField(
+                    // focus text field upon inital render
+                    autofocus: true,
+                    expands: true,
+                    maxLines: null,
+                    // automatically capitalize sentences for user
+                    textCapitalization: TextCapitalization.sentences,
+                    controller: newEntryController,
+                    decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
+                    onChanged: (value) => model.setContent(value),
+                    validator: stringService.customStringValidator(
+                      newEntryController.text,
+                      configuration: const StringValidatorConfiguration(notEmpty: true),
+                    ),
                   ),
                 ),
               ),
