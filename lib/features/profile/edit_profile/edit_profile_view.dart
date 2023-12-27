@@ -7,6 +7,7 @@ import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
+import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:stacked/stacked.dart';
 
 // TODO: Use scroll view for TextFormFields as there maybe overflow on smaller screens
@@ -18,7 +19,7 @@ class EditProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<EditProfileViewModel>.reactive(
         viewModelBuilder: () => EditProfileViewModel(),
         onViewModelReady: (EditProfileViewModel viewModel) {
           viewModel.initialize();
@@ -26,8 +27,16 @@ class EditProfileView extends StatelessWidget {
         builder: (BuildContext context, EditProfileViewModel model, _) {
           return SafeArea(
             child: BaseScaffold(
-              onPressed: () => appRouter.pop(),
               title: 'Edit Profile',
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: ProfileIcon(
+                    userFirstName: model.userFirstName,
+                    onPressed: () => appRouter.pop(),
+                  ),
+                ),
+              ],
               body: Column(
                 children: [
                   Container(
@@ -108,7 +117,9 @@ class EditProfileView extends StatelessWidget {
                                 if (model.formKey.currentState!.validate() && model.ready) {
                                   // attempt to update user info
                                   final bool statusOk = await model.updateUserInfo();
+
                                   if (statusOk) {
+                                    debugPrint("updated user info successfully");
                                     model.clearControllers();
                                     appRouter.pop();
                                   }

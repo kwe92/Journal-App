@@ -9,6 +9,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 class ResponseHandler {
   ResponseHandler._();
 
+// TODO: should this really be displaying a snackbar? Single Responsibility
   /// Checks status code of response, returns message as snackbar popup if response is 200 or 201.
   /// If response code is other than 200 or 201 the error message is parsed and dispalyed as a snackbar popup.
   static bool checkStatusCode(Response response, [String? message]) {

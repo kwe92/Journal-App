@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
@@ -9,7 +7,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
-class EditProfileViewModel extends BaseViewModel {
+class EditProfileViewModel extends ReactiveViewModel {
   // Mutable Variables
   String? _updatedFirstName;
 
@@ -60,6 +58,11 @@ class EditProfileViewModel extends BaseViewModel {
       _updatedLastName!.isNotEmpty &&
       _updatedEmail != null &&
       _updatedEmail!.isNotEmpty;
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+        userService,
+      ];
 
   void initialize() {
     setBusy(true);
@@ -115,14 +118,11 @@ class EditProfileViewModel extends BaseViewModel {
       email: updatedEmail!.toLowerCase().trim(),
     );
 
+    // attempt to update the currently authenticated user
     final Response response = await userService.updateUserInfo(updatedUser);
 
+    // check the status code
     final bool statusOk = ResponseHandler.checkStatusCode(response);
-
-    if (statusOk) {
-      // TODO: Figure out why the computed variables based off of userService.currentUser will not update their values when notified
-      userService.setCurrentUser(jsonDecode(response.body));
-    }
 
     return statusOk;
   }

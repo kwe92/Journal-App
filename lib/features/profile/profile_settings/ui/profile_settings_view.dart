@@ -7,6 +7,7 @@ import 'package:journal_app/features/profile/profile_settings/ui/profile_setting
 import 'package:journal_app/features/profile/profile_settings/ui/widgets/delete_profile_section.dart';
 import 'package:journal_app/features/profile/profile_settings/ui/widgets/edit_profile_list_tile.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
+import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -20,10 +21,15 @@ class ProfileSettingsView extends StatelessWidget {
       builder: (BuildContext context, ProfileSettingsViewModel model, _) {
         return SafeArea(
           child: BaseScaffold(
-            onPressed: () {
-              // unimplemented on purpose to prevent adding ProfileSettingsView to the router stack ehen already in view
-            },
             title: 'Profile',
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: ProfileIcon(
+                  userFirstName: model.currentUser?.firstName ?? "P",
+                ),
+              ),
+            ],
             body: Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 18, right: 16),
               child: Column(

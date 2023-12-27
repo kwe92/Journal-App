@@ -10,11 +10,15 @@ import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
 class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier {
+  UserService();
+
   User? user;
 
   User? tempUser;
 
-  User? currentUser;
+  User? _currentUser;
+
+  User? get currentUser => _currentUser;
 
   /// Create a temporary user that will be updated during onboarding
   /// If a temp user already exists, keep that
@@ -27,20 +31,22 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
   void setCurrentUser(Map<String, dynamic> responseBody) {
     final Map<String, dynamic> currentUserMap = responseBody['user'];
 
-    currentUser = User(
+    // TODO: should be its own DTO | maybe create an abstract User class
+    _currentUser = User(
       firstName: currentUserMap['first_name'],
       lastName: currentUserMap['last_name'],
       email: currentUserMap['email'],
       phoneNumber: currentUserMap['phone_number'],
     );
 
-    debugPrint("\nCurrent User Object: $currentUser");
+    debugPrint("\nCurrent User Object: $_currentUser");
 
     notifyListeners();
   }
 
   // update currently loggedin user info
   Future<http.Response> updateUserInfo(UpdatedUser updatedUser) async {
+    // retrieve access token that was saved when the user logged in or registered
     final accessToken = await tokenService.getAccessTokenFromStorage();
 
     final http.Response response = await post(
@@ -53,16 +59,22 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
           jsonEncode(updatedUser.toJSON()),
     );
 
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      userService.setCurrentUser(jsonDecode(response.body));
+    }
+
     return response;
   }
 
+  /// set state of UserService properties to null
   void clearUserData() {
     user = null;
     tempUser = null;
-    currentUser = null;
+    _currentUser = null;
     notifyListeners();
   }
 
+  /// set state of tempUser to null
   void clearTempUserData() {
     tempUser = null;
     notifyListeners();

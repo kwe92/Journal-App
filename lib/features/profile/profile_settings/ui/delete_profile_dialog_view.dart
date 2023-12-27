@@ -16,7 +16,7 @@ class DeleteProfileDialogView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<DeleteProfileDialogViewModel>.reactive(
       viewModelBuilder: () => DeleteProfileDialogViewModel(),
       builder: (BuildContext context, DeleteProfileDialogViewModel model, _) {
         const style00 = TextStyle(fontSize: 12);
@@ -101,9 +101,8 @@ class DeleteProfileDialogView extends StatelessWidget {
                               onPressed: () async {
                                 if (model.formKey.currentState!.validate() && model.emailMatch) {
                                   final bool accountDeletedSuccessfully = await model.deleteAccount();
-                                  if (accountDeletedSuccessfully) {
-                                    await model.cleanUpResources();
 
+                                  if (accountDeletedSuccessfully) {
                                     debugPrint('user permanently deleted, farewell my friend: ${model.userEmail}');
 
                                     // TODO: Implement FareWellView=======================================================
