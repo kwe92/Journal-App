@@ -12,6 +12,7 @@ import "package:flutter/material.dart";
 import "package:journal_app/features/shared/ui/button/custom_back_button.dart";
 import "package:journal_app/features/shared/ui/button/selectable_button.dart";
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
+import "package:journal_app/features/shared/ui/widgets/profile_icon.dart";
 import "package:stacked/stacked.dart";
 
 @RoutePage()
@@ -38,10 +39,21 @@ class EntryView extends StatelessWidget {
               appRouter.replace(const JournalRoute());
             },
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: ProfileIcon(
+                userFirstName: model.currentUser?.firstName ?? "P",
+                color: model.moodColor,
+                onPressed: () => appRouter.push(const ProfileSettingsRoute()),
+              ),
+            ),
+          ],
           body: Column(
             children: [
               FormContainer(
                 entry: entry,
+                // TODO: check if this abitrary number 1.65 actually works on smaller screens
                 height: MediaQuery.of(context).size.height / 1.65,
                 child: Form(
                   child: TextFormField(
@@ -65,21 +77,25 @@ class EntryView extends StatelessWidget {
                 child: SelectableButton(
                   color: model.moodColor,
                   onPressed: () async {
+                    // if the model is read-only, unlock and focus
                     if (model.readOnly) {
                       model.setReadOnly(false);
                       model.entryFocus.requestFocus();
                     } else {
+                      // TODO: if content hasn't changed do nothing and pop or warn the user?
                       // push update to backend
-
                       final bool ok = await model.updateEntry(
-                        UpdatedEntry(entryId: entry.entryId, content: model.content),
+                        UpdatedEntry(
+                          entryId: entry.entryId,
+                          content: model.content,
+                        ),
                       );
 
                       if (ok) {
                         appRouter.replace(const JournalRoute());
                       }
 
-                      debugPrint("update entry");
+                      debugPrint("updated entry");
                     }
                   },
                   label: model.readOnly ? "Edit Entry" : "Update Entry",
@@ -91,6 +107,7 @@ class EntryView extends StatelessWidget {
                 child: SelectableButton(
                   color: model.moodColor,
                   onPressed: () async {
+                    // retrieve deletion response from user
                     final bool deleteContinued = await model.continueDelete(context, model.moodColor!);
 
                     debugPrint('Should delete entry: $deleteContinued');
@@ -99,6 +116,8 @@ class EntryView extends StatelessWidget {
                       final bool ok = await model.deleteEntry(entry.entryId);
 
                       if (ok) {
+                        debugPrint('entry deleted successfully');
+
                         appRouter.replace(const JournalRoute());
                       }
                     }

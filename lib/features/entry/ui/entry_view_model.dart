@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
@@ -8,7 +9,7 @@ import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
-class EntryviewModel extends BaseViewModel {
+class EntryviewModel extends ReactiveViewModel {
   TextEditingController entryController = TextEditingController();
 
   FocusNode entryFocus = FocusNode();
@@ -24,6 +25,16 @@ class EntryviewModel extends BaseViewModel {
   bool get readOnly => _readOnly;
 
   Color? get moodColor => _moodColor;
+
+  User? get _currentUser => userService.currentUser;
+
+  User? get currentUser => _currentUser;
+
+// required override for ReactiveViewModel to react to changes in a service
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+        userService,
+      ];
 
   void initialize(JournalEntry entry) {
     setBusy(true);
@@ -49,22 +60,26 @@ class EntryviewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  /// update journal entry via API call to backend
   Future<bool> updateEntry(UpdatedEntry updatedEntry) async {
     setBusy(true);
     final Response response = await journalEntryService.updateEntry(updatedEntry);
     setBusy(false);
-
+    // check status code and display a snack bar on success
     return ResponseHandler.checkStatusCode(response, "Updated journal entry successfully.");
   }
 
+  /// delete journal entry via API call to backend
   Future<bool> deleteEntry(int entryId) async {
     setBusy(true);
     final Response response = await journalEntryService.deleteEntry(entryId);
     setBusy(false);
 
+    // check status code and display a snack bar on success
     return ResponseHandler.checkStatusCode(response, "Deleted journal entry successfully.");
   }
 
+  /// popup menu warning the user of permanent entry deletion
   Future<bool> continueDelete(BuildContext context, Color color) async {
     return await toastService.popupMenu<bool>(
       context,
