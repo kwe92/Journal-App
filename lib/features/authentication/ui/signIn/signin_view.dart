@@ -13,6 +13,7 @@ import 'package:stacked/stacked.dart';
 class SignInView extends StatelessWidget {
   SignInView({super.key});
 
+  // TODO: remove keys and nodes, add them to the view model
   // used to locate form in widget tree and validate text form fields before processing them further
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -25,6 +26,7 @@ class SignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
+      createNewViewModelOnInsert: true,
       viewModelBuilder: () => SignInViewModel(),
       onViewModelReady: (model) => model.initialize(),
       builder: (context, model, _) {
@@ -81,12 +83,16 @@ class SignInView extends StatelessWidget {
                           gap16,
                           SelectableButton(
                               onPressed: () async {
+                                // focus email TextFormField if it is empty
                                 model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
+
                                 if ((formKey.currentState?.validate() ?? false) && model.ready) {
                                   model.unfocusAll(context);
 
+                                  // check successful login
                                   final bool ok = await model.signInWithEmail(context);
 
+                                  // if successful login
                                   if (ok) {
                                     emailController.clear();
                                     passwordController.clear();

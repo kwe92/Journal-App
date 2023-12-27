@@ -41,7 +41,7 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  /// attemt to sign with the provided email and password
+  /// attempt to sign with the provided email and password providing a true or false value for success or failure respectively
   Future<bool> signInWithEmail(BuildContext context) async {
     setBusy(true);
     final Response response = await authService.login(email: email!, password: password!);
