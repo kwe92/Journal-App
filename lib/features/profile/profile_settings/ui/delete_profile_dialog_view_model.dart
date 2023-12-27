@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
@@ -23,9 +22,9 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
 
   bool get emailMatch => confirmedEmail?.trim() == userEmail;
 
-  User get currentUser => userService.currentUser!;
+  User? get currentUser => userService.currentUser;
 
-  String get userEmail => currentUser.email ?? '';
+  String get userEmail => currentUser?.email ?? '';
 
   TextEditingController get confirmedEmailController => _confirmedEmailControllerController;
 
@@ -41,6 +40,8 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
     return validationText ?? (confirmationEmail != userEmail ? "emails do not match" : null);
   }
 
+  /// PERMANENTLY delete ALL user data
+
   Future<bool> deleteAccount() async {
     setBusy(true);
 
@@ -48,10 +49,7 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
 
     setBusy(false);
 
+    // check response status code
     return ResponseHandler.checkStatusCode(response);
-  }
-
-  Future<void> cleanUpResources() async {
-    await ResourceCleanUp.clean();
   }
 }
