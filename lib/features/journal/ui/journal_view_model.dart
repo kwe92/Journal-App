@@ -5,38 +5,48 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/app/general/constants.dart';
+import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
-class JournalViewModel extends BaseViewModel {
+class JournalViewModel extends ReactiveViewModel {
   List<JournalEntry> _journalEntries = [];
 
   List<JournalEntry> get journalEntries => _journalEntries;
 
   int get awesomeCount {
-    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.awesome).length;
+    return _getMoodCountByMoodType(MoodType.awesome);
   }
 
   int get happyCount {
-    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.happy).length;
+    return _getMoodCountByMoodType(MoodType.happy);
   }
 
   int get okayCount {
-    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.okay).length;
+    return _getMoodCountByMoodType(MoodType.okay);
   }
 
   int get badCount {
-    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.bad).length;
+    return _getMoodCountByMoodType(MoodType.bad);
   }
 
   int get terribleCount {
-    return journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.terrible).length;
+    return _getMoodCountByMoodType(MoodType.terrible);
   }
+
+  User? get _currentUser => userService.currentUser;
+
+  User? get currentUser => _currentUser;
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+        userService,
+        journalEntryService,
+      ];
 
   Future<void> initialize() async {
     setBusy(true);
@@ -47,6 +57,7 @@ class JournalViewModel extends BaseViewModel {
     await journalEntryService.getAllEntries();
 
     // initialize journalEntries with journalEntryService.journalEntries after backend call
+
     _journalEntries = journalEntryService.journalEntries;
 
     setBusy(false);
@@ -58,6 +69,7 @@ class JournalViewModel extends BaseViewModel {
     setBusy(false);
   }
 
+  // retrieve all journal entries for the currently authenticated user
   Future<void> getAllEntries() async {
     final Response response = await journalEntryService.getAllEntries();
 
@@ -71,12 +83,13 @@ class JournalViewModel extends BaseViewModel {
         final List<dynamic>? responseData = reponseBody["data"];
         if (responseData != null) return;
       } catch (error, stackTrace) {
-        debugPrint("error in getAllEntries: ${error.toString()}");
+        debugPrint("error in JournalViewModel getAllEntries: ${error.toString()}");
         toastService.showSnackBar(message: "An error occured retrieving your data.", textColor: Colors.red);
       }
     }
   }
 
+  // create Mood instance by mood type
   Mood getMood(String moodType) {
     final MapEntry<String, MoodRecord> moodMap = moodService.getMoodByType(moodType);
 
@@ -90,11 +103,7 @@ class JournalViewModel extends BaseViewModel {
     return mood;
   }
 
-  Future<void> cleanUpResources() async {
-    await ResourceCleanUp.clean();
-  }
-
-  /// Filter journal entries by mood type.
+  /// filter journal entries by mood type.
   void setFilteredJournalEntries(String mood) {
     switch (mood) {
       case 'all':
@@ -103,29 +112,37 @@ class JournalViewModel extends BaseViewModel {
         break;
 
       case MoodType.awesome:
-        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.awesome).toList();
+        _journalEntries = _fiterJournalEntries(MoodType.awesome);
         notifyListeners();
         break;
 
       case MoodType.happy:
-        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.happy).toList();
+        _journalEntries = _fiterJournalEntries(MoodType.happy);
         notifyListeners();
         break;
 
       case MoodType.okay:
-        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.okay).toList();
+        _journalEntries = _fiterJournalEntries(MoodType.okay);
         notifyListeners();
         break;
 
       case MoodType.bad:
-        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.bad).toList();
+        _journalEntries = _fiterJournalEntries(MoodType.bad);
         notifyListeners();
         break;
 
       case MoodType.terrible:
-        _journalEntries = journalEntryService.journalEntries.where((entry) => entry.moodType == MoodType.terrible).toList();
+        _journalEntries = _fiterJournalEntries(MoodType.terrible);
         notifyListeners();
         break;
     }
+  }
+
+  int _getMoodCountByMoodType(String moodType) {
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == moodType).length;
+  }
+
+  List<JournalEntry> _fiterJournalEntries(String moodType) {
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == moodType).toList();
   }
 }

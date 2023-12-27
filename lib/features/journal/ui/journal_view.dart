@@ -13,6 +13,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -25,15 +26,20 @@ class JournalView extends StatelessWidget {
       viewModelBuilder: () => JournalViewModel(),
       onViewModelReady: (model) async {
         await model.initialize();
-
-        // debugPrint("\nJournal entries from JournalView: ${model.journalEntries}");
       },
-      // ! could a refresh method be used here instead of rebuilding the widget on insert?
-      createNewViewModelOnInsert: true,
       builder: (context, model, child) {
         return BaseScaffold(
-          // Thoughts in french
+          // means Thoughts in french
           title: "Pensées",
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: ProfileIcon(
+                userFirstName: model.currentUser?.firstName ?? "P",
+                onPressed: () => appRouter.push(const ProfileSettingsRoute()),
+              ),
+            ),
+          ],
           body: model.isBusy
               ? circleLoader
               : Column(
@@ -94,10 +100,8 @@ class JournalView extends StatelessWidget {
                 ),
           // Open menu to the side
           drawer: SideMenu(logoutCallback: () async {
-            await model.cleanUpResources();
-
             // remove all routes and return to the signin page
-            appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
+            await appRouter.pushAndPopUntil(SignInRoute(), predicate: (route) => false);
           }),
           // BUTTON TO ADD NEW ENTRY
           floatingActionButton: AddButton(onTap: () {
