@@ -1,12 +1,15 @@
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
-mixin PasswordMixin on BaseViewModel {
+mixin PasswordMixin on ReactiveViewModel {
   String? email;
   String? password;
   String? confirmPassword;
   bool obscurePassword = true;
   bool showRequirements = false;
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [userService];
 
   void setEmail(String text) {
     email = text.trim();
@@ -15,7 +18,7 @@ mixin PasswordMixin on BaseViewModel {
 
   void setPassword(String text) {
     password = text.trim();
-    userService.tempUser?.password = password;
+    userService.setTempUserPassword(password!);
     notifyListeners();
   }
 

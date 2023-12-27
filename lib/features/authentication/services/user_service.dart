@@ -24,6 +24,9 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
   /// If a temp user already exists, keep that
   Future<void> createTempUser() async {
     tempUser = User();
+
+    debugPrint("\ntemporary user created.");
+
     notifyListeners();
   }
 
@@ -44,7 +47,7 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
     notifyListeners();
   }
 
-  // update currently loggedin user info
+  // update currently authenticated and loggedin user info
   Future<http.Response> updateUserInfo(UpdatedUser updatedUser) async {
     // retrieve access token that was saved when the user logged in or registered
     final accessToken = await tokenService.getAccessTokenFromStorage();
@@ -79,5 +82,31 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
     tempUser = null;
     notifyListeners();
     debugPrint("\ntemporary user data cleared.");
+  }
+
+  void setTempUserFirstName(String val) {
+    userService.tempUser?.firstName = val;
+    notifyListeners();
+  }
+
+  void setTempUserLastName(String val) {
+    userService.tempUser?.lastName = val;
+    notifyListeners();
+  }
+
+  void setTempUserEmail(String val) {
+    userService.tempUser?.email = val;
+    notifyListeners();
+  }
+
+  void setTempUserPhoneNumber(String val) {
+    userService.tempUser?.phoneNumber = val;
+    notifyListeners();
+  }
+
+  void setTempUserPassword(String val) {
+    userService.tempUser?.password = val;
+
+    notifyListeners();
   }
 }

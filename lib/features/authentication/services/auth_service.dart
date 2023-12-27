@@ -48,7 +48,7 @@ class AuthService extends ApiService with ChangeNotifier {
     return response;
   }
 
-  /// checks backend database to ensure the specified email is available
+  /// check backend database to ensure the specified email is available
   Future<http.Response> checkAvailableEmail({required String email}) async {
     final http.Response response = await post(
       Endpoint.checkAvailableEmail.path,

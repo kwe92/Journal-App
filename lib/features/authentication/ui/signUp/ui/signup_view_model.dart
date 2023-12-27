@@ -8,7 +8,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
-class SignUpViewModel extends BaseViewModel with PasswordMixin {
+class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
   String? mindfulImage;
 
   bool get ready {
@@ -50,11 +50,17 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
     final Response response = await authService.register(user: user);
     setBusy(false);
 
+    // indicate if request was successful
     final bool ok = ResponseHandler.checkStatusCode(response);
 
     if (ok && authService.isLoggedIn) {
+      // set currently authenticated user
       userService.setCurrentUser(jsonDecode(response.body));
+
+      // clear temp user dat
       userService.clearTempUserData();
+
+      // save jwt token to persistent storage
       await tokenService.saveTokenData(
         jsonDecode(response.body),
       );
