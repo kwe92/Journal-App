@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
-/// clean up global resources
+/// cleans up global resources.
 class ResourceCleanUp {
   const ResourceCleanUp._();
 

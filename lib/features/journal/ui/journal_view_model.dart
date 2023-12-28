@@ -86,7 +86,12 @@ class JournalViewModel extends ReactiveViewModel {
         debugPrint("error in JournalViewModel getAllEntries: ${error.toString()}");
         toastService.showSnackBar(message: "An error occured retrieving your data.", textColor: Colors.red);
       }
+      return;
     }
+    toastService.showSnackBar(
+      message: ResponseHandler.getErrorMsg(response.body),
+      textColor: Colors.red,
+    );
   }
 
   // create Mood instance by mood type

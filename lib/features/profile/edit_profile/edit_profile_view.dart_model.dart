@@ -125,6 +125,15 @@ class EditProfileViewModel extends ReactiveViewModel {
     // check the status code
     final bool statusOk = ResponseHandler.checkStatusCode(response);
 
+    if (!statusOk) {
+      toastService.showSnackBar(
+        message: ResponseHandler.getErrorMsg(response.body),
+        textColor: Colors.red,
+      );
+
+      return statusOk;
+    }
+
     return statusOk;
   }
 }

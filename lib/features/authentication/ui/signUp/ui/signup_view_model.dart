@@ -72,6 +72,11 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
       return ok;
     }
 
+    toastService.showSnackBar(
+      message: ResponseHandler.getErrorMsg(response.body),
+      textColor: Colors.red,
+    );
+
     return ok;
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:http/http.dart';
@@ -108,7 +109,19 @@ class MemberInfoViewModel extends ReactiveViewModel {
     setBusy(false);
 
     // indicate if response status was statusOK
-    return ResponseHandler.checkStatusCode(response);
+
+    final bool statusOk = ResponseHandler.checkStatusCode(response);
+
+    if (!statusOk) {
+      toastService.showSnackBar(
+        message: ResponseHandler.getErrorMsg(response.body),
+        textColor: Colors.red,
+      );
+
+      return statusOk;
+    }
+
+    return statusOk;
   }
 }
 

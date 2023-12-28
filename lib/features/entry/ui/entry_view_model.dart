@@ -82,7 +82,22 @@ class EntryviewModel extends ReactiveViewModel {
     final Response response = await journalEntryService.updateEntry(updatedEntry);
     setBusy(false);
     // check status code and display a snack bar on success
-    return ResponseHandler.checkStatusCode(response, "Updated journal entry successfully.");
+
+    final bool statusOk = ResponseHandler.checkStatusCode(response);
+
+    if (statusOk) {
+      clearContent();
+      toastService.showSnackBar(message: "Updated journal entry successfully.");
+
+      return statusOk;
+    }
+
+    toastService.showSnackBar(
+      message: ResponseHandler.getErrorMsg(response.body),
+      textColor: Colors.red,
+    );
+
+    return statusOk;
   }
 
   /// delete journal entry via API call to backend
@@ -92,7 +107,22 @@ class EntryviewModel extends ReactiveViewModel {
     setBusy(false);
 
     // check status code and display a snack bar on success
-    return ResponseHandler.checkStatusCode(response, "Deleted journal entry successfully.");
+
+    final bool statusOk = ResponseHandler.checkStatusCode(response);
+
+    if (statusOk) {
+      clearContent();
+      toastService.showSnackBar(message: "Deleted journal entry successfully.");
+
+      return statusOk;
+    }
+
+    toastService.showSnackBar(
+      message: ResponseHandler.getErrorMsg(response.body),
+      textColor: Colors.red,
+    );
+
+    return statusOk;
   }
 
   /// popup menu warning the user of permanent entry deletion

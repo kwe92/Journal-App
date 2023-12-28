@@ -4,8 +4,14 @@ import 'package:journal_app/app/resources/reusables.dart';
 
 class LoadingOverlay extends StatelessWidget {
   final bool isFullPage;
+
   final bool useInStack;
-  const LoadingOverlay({Key? key, this.isFullPage = false, this.useInStack = true}) : super(key: key);
+
+  const LoadingOverlay({
+    this.isFullPage = false,
+    this.useInStack = true,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
