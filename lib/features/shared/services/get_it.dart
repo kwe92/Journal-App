@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // service locator global variable
 final locator = GetIt.instance;
 
-/// configureDependencies: initalize and register all GetIt singleton services.
+/// initalize and register all GetIt singleton services.
 Future<void> configureDependencies() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 

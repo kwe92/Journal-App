@@ -51,7 +51,9 @@ class EntryView extends StatelessWidget {
           body: Column(
             children: [
               FormContainer(
-                entry: entry,
+                dayOfWeekByName: model.dayOfWeekByName,
+                timeOfDay: model.timeOfDay,
+                continentalTime: model.continentalTime,
                 // TODO: check if this abitrary number 1.65 actually works on smaller screens
                 height: MediaQuery.of(context).size.height / 1.65,
                 child: Form(

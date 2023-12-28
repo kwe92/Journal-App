@@ -9,9 +9,7 @@ class ConditionalClearIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => IconButton(
-        onPressed: () {
-          controller.clear();
-        },
+        onPressed: () => controller.clear(),
         icon: const Icon(Icons.clear),
       );
 }

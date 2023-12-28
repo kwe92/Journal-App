@@ -28,6 +28,14 @@ class EntryviewModel extends ReactiveViewModel {
 
   bool get readOnly => _readOnly;
 
+  int get continentalTime {
+    return int.parse(timeService.getContinentalTime(entry.updatedAt.toLocal()));
+  }
+
+  String get dayOfWeekByName => timeService.dayOfWeekByName(entry.updatedAt.toLocal());
+
+  String get timeOfDay => timeService.timeOfDay(entry.updatedAt.toLocal());
+
   Color? get moodColor => _moodColor;
 
   User? get _currentUser => userService.currentUser;
@@ -104,3 +112,9 @@ class EntryviewModel extends ReactiveViewModel {
     );
   }
 }
+
+// DateTime.toLocal()
+
+//   - Return DateTime value in the local timezone of the user
+//   - should use to ensure the value matches what the back end sends
+

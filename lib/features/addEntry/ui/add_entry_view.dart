@@ -36,6 +36,9 @@ class AddEntryView extends StatelessWidget {
         body: Column(
           children: [
             FormContainer(
+              dayOfWeekByName: model.dayOfWeekByName,
+              timeOfDay: model.timeOfDay,
+              continentalTime: model.continentalTime,
               child: Form(
                 key: formKey,
                 child: Theme(

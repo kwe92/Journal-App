@@ -4,22 +4,26 @@ import 'package:journal_app/app/general/constants.dart';
 
 import 'http_service.dart';
 
-//? host should be hidden in .env | DotEnv dotenv | package:flutter_dotenv/src/dotenv.dart
+//! host should be hidden in .env | DotEnv dotenv | package:flutter_dotenv/src/dotenv.dart
 
+/// abstracts away commonly repeated API call details and provides bearer authorization prefix, headers, and host
 abstract class ApiService with HttpService {
+  /// required prefix of authorization header value i.e. the jwt
   final bearerPrefix = "Bearer";
 
+  /// HTTP base header with content-type and MIME type
   @override
   Map<String, String> get headers => {
         HttpHeaders.contentTypeHeader: MediaType.json,
       };
 
 //! In real app hide behind environment variable
+  /// composed of scheme, domain name or ip address and port number.
   @override
   String get host => "http://127.0.0.1:8080";
 }
 
-/// Endpoint: enum of endpoint paths.
+/// backend API endpoint paths.
 enum Endpoint {
   // Authentication Endpoints
   register("/auth/register"),

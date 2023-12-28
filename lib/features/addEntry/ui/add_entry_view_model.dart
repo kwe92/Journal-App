@@ -15,15 +15,27 @@ class AddEntryViewModel extends BaseViewModel {
 
   Color? get moodColor => _moodColor;
 
+  late final DateTime now;
+
   // computed variable based on content state updated with change notifier
   bool get ready {
     return _content != null && _content!.isNotEmpty;
   }
 
+  int get continentalTime {
+    return int.parse(timeService.getContinentalTime(now));
+  }
+
+  String get dayOfWeekByName => timeService.dayOfWeekByName(now);
+
+  String get timeOfDay => timeService.timeOfDay(now);
+
   void initialize(String moodType) {
     // set the theme for the view to the color of the mood type
     MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(moodType);
     _moodColor = moodData.value.color;
+
+    now = DateTime.now();
   }
 
   void setContent(String text) {

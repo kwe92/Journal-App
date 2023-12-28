@@ -22,7 +22,7 @@ class ProfileIcon extends StatelessWidget {
         width: side,
         height: side,
         decoration: BoxDecoration(
-          color: color ?? AppColors.lightGreen,
+          color: color ?? AppColors.mainThemeColor,
           borderRadius: const BorderRadius.all(
             Radius.circular(side / 2),
           ),
