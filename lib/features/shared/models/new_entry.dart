@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'new_entry.g.dart';
 
+/// domain model and DTO representing a new journal entry
 @JsonSerializable()
 class NewEntry {
   final String content;

@@ -4,6 +4,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 
 part 'journal_entry.g.dart';
 
+/// domain model and DTO representing a journal entry
 @JsonSerializable()
 class JournalEntry {
   @JsonKey(name: "user_id")

@@ -112,6 +112,7 @@ class EditProfileViewModel extends ReactiveViewModel {
   }
 
   Future<bool> updateUserInfo() async {
+    // TODO: add phone number
     final UpdatedUser updatedUser = UpdatedUser(
       firstName: updatedFirstName!.toLowerCase().capitalize().trim(),
       lastName: updatedLastName!.toLowerCase().capitalize().trim(),

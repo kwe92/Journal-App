@@ -8,8 +8,9 @@ import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class DeleteProfileDialogViewModel extends BaseViewModel {
+  final TextEditingController confirmedEmailController = TextEditingController();
+
   // Mutable Variables
-  TextEditingController _confirmedEmailControllerController = TextEditingController();
 
   String? _confirmedEmail;
 
@@ -26,8 +27,6 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
 
   String get userEmail => currentUser?.email ?? '';
 
-  TextEditingController get confirmedEmailController => _confirmedEmailControllerController;
-
   void setConfirmedEmail(String email) {
     _confirmedEmail = email;
     debugPrint('\nconfirmed email text: $email');
@@ -41,7 +40,6 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
   }
 
   /// PERMANENTLY delete ALL user data
-
   Future<bool> deleteAccount() async {
     setBusy(true);
 
