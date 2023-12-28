@@ -8,15 +8,21 @@ import 'package:journal_app/features/shared/services/services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // disable landscape mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  //
+  // initalize and register all services.
   await configureDependencies();
 
   // ensure token is removed from user device on app startup
   await tokenService.removeAccessTokenFromStorage();
 
-  runApp(const Portal(child: MyApp()));
+  runApp(
+    // Portal Widget required at the root of the widget tree to use the PortalTarget Widget
+    const Portal(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

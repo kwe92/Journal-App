@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'token_response.g.dart';
 
-/// TokenResponse: model for access token.
+/// domain model and DTO for jwt access token.
 @JsonSerializable()
 class TokenResponse {
   @JsonKey(name: "jwt")

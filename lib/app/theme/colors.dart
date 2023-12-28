@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// all colors used throughout the application
 class AppColors {
   const AppColors._();
   static const offGrey = Color(0xff445D67);

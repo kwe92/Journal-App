@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Domain mi=odel representing the mood a user was in when a journal entry was created
 class Mood {
   final Color moodColor;
   final String moodImagePath;

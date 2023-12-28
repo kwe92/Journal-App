@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/authentication/models/user.dart';
-import 'package:journal_app/features/journal/extensions/string_extensions.dart';
+import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:journal_app/features/profile/edit_profile/model/updated_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
@@ -112,6 +112,7 @@ class EditProfileViewModel extends ReactiveViewModel {
   }
 
   Future<bool> updateUserInfo() async {
+    // TODO: add phone number
     final UpdatedUser updatedUser = UpdatedUser(
       firstName: updatedFirstName!.toLowerCase().capitalize().trim(),
       lastName: updatedLastName!.toLowerCase().capitalize().trim(),
@@ -123,6 +124,15 @@ class EditProfileViewModel extends ReactiveViewModel {
 
     // check the status code
     final bool statusOk = ResponseHandler.checkStatusCode(response);
+
+    if (!statusOk) {
+      toastService.showSnackBar(
+        message: ResponseHandler.getErrorMsg(response.body),
+        textColor: Colors.red,
+      );
+
+      return statusOk;
+    }
 
     return statusOk;
   }

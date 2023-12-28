@@ -5,7 +5,6 @@ class SelectableButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
   final Color? color;
-  // final OutlinedButtonThemeData? customTheme;
   final EdgeInsets? labelPadding;
   final TextStyle? labelStyle;
   const SelectableButton({

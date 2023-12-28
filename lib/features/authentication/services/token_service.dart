@@ -4,7 +4,7 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/authentication/models/token_response.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
-/// TokenService: handles managing access token within encypted persistent storage.
+/// handles managing jwt access token within encypted persistent storage.
 class TokenService {
   Future<void> saveTokenData(Map<String, dynamic> responseBody) async {
     // deserialize login response body into TokenResponse
@@ -12,16 +12,17 @@ class TokenService {
 
     debugPrint("\njwt access token: ${tokenResponse.accessToken}");
 
+    // save access token to persistent storage
     await saveAccessTokenToStorage(tokenResponse.accessToken);
   }
 
-  /// saveAccessTokenToStorage: save access token to persisent storage with encrypted shared preferences.
+  /// saves access token to persistent storage with encrypted shared preferences.
   Future<void> saveAccessTokenToStorage(String token) async {
     await storage.write(key: PrefKeys.accessToken, value: token);
     debugPrint("\njwt access token saved successfully!");
   }
 
-  /// getAccessTokenFromStorage: retrieve access token from storage.
+  /// retrieve access token from storage.
   Future<String?> getAccessTokenFromStorage() async {
     try {
       String? token = await storage.read(key: PrefKeys.accessToken);
@@ -34,7 +35,7 @@ class TokenService {
     return null;
   }
 
-  /// removeAccessTokenFromStorage: remove  current access token from storage.
+  /// remove current access token from storage.
   Future<void> removeAccessTokenFromStorage() async {
     await storage.delete(key: PrefKeys.accessToken);
     debugPrint("\njwt access token deleted successfully!");
@@ -44,7 +45,7 @@ class TokenService {
 // Shared Preferences && UserDefaults
 
 //   - Shared preferences `Android` and UserDefaults `IOS`
-//     are used to save key / values pairs to persistent storage on a users device
+//     are used to save key / value pairs to persistent storage on a users device
 //   - saved values should not be large amounts of data
 
 // shared preferences flutter package

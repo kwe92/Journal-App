@@ -10,8 +10,7 @@ class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
 
   @override
   Widget build(BuildContext context, SignUpViewModel viewModel) {
-    final bool passwordCriteriaSatisfied = _passwordCriteriaSatisfied(viewModel.password);
-    return passwordCriteriaSatisfied
+    return viewModel.passwordCriteriaSatisfied
         ? const SizedBox()
         : Container(
             width: MediaQuery.of(context).size.width / 1.2125,
@@ -59,11 +58,11 @@ class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
   }
 }
 
-/// determines if the password criteria was met.
-bool _passwordCriteriaSatisfied(String? password) {
-  final String? allSatisfied = stringService.passwordIsValid(password);
-  return allSatisfied != null && allSatisfied.isNotEmpty ? false : true;
-}
+// /// determines if the password criteria was met.
+// bool _passwordCriteriaSatisfied(String? password) {
+//   final String? allSatisfied = stringService.passwordIsValid(password);
+//   return allSatisfied != null && allSatisfied.isNotEmpty ? false : true;
+// }
 
 class Requirement extends StatelessWidget {
   final String label;

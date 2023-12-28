@@ -26,6 +26,7 @@ class CustomPortalTarget extends StatelessWidget {
     required this.anchor,
     required this.follower,
     required this.target,
+    // default parameters should always be initialized in the condtructor
     this.isAnimated = false,
     this.animationDuration = kThemeAnimationDuration,
     this.animationType = 0,
@@ -39,26 +40,26 @@ class CustomPortalTarget extends StatelessWidget {
         onPressed: onPressed,
         isVisible: isVisible,
         target: PortalTarget(
-          // add closeDuration if you want to animate out as well as in
+          // closeDuration, animate out as well as in
           closeDuration: isAnimated && animateOnClose ? animationDuration : null,
           visible: isVisible,
           anchor: anchor,
           portalFollower: isAnimated
               ?
-              // double is passed as a parameterized type to TweenAnimationBuilder to return a double as value/progress intstead of an integer
-              // the Opacity Widget expects a double and not an integer so you must pass double to TweenAnimationBuilder as a parameterized type
+              // the parameterized type T passed to TweenAnimationBuilder<T> represents the type for the value/progress parameter of the builder callback
               TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0, end: isVisible ? 1 : 0),
                   duration: animationDuration,
-                  // renamed value argument to progress and used placeholder underscore for child property as it will not be used
-                  builder: (context, progress, _) {
-                    // debugPrint("progress value: $progress");
-
+                  builder: (BuildContext context, double progress, _) {
                     return Transform(
-                      // determines the translation of a widget dynamically were the screen acts as the cartesian plane (i.e. how the widget slides on the screen on the x and y axis)
+                      // determines dynamic translation of widget, screen acts as cartesian plane (i.e. how the widget slides on the screen on the x and y axis)
                       transform: animationType == 0
-                          ? Matrix4.translationValues(0, (1 - progress) * translationStartDistance, 0)
-                          : Matrix4.translationValues((1 - progress) * translationStartDistance, 0, 0),
+                          ?
+                          // slide in the vertical direction y axis
+                          Matrix4.translationValues(0, (1 - progress) * translationStartDistance, 0)
+                          :
+                          // slide in the horizontal direction x axis
+                          Matrix4.translationValues((1 - progress) * translationStartDistance, 0, 0),
                       child: Opacity(
                         opacity: progress,
                         child: follower,
@@ -102,19 +103,19 @@ class DismissibleBarrier extends StatelessWidget {
 
 // TweenAnimationBuilder
 
-//    - allows you to build custom animations without the need for an AnimationController
+//    - build custom animations without an AnimationController
 //    - important properties:
 //        - TweenAnimationBuilder<T>: T represents the type of value you want to animate with
-//        - tween: the range of values that you want to animate between
-//        - duration: the duration of the animation
-//        - builder: the widget you wish to animate
+//        - tween: the range of values that you want to animate be-tween
+//        - duration: duration of the animation
+//        - builder: widget you wish to animate
 //        - onEnd: a callback triggered at the end of the animation | can also be use to set and new value and animate again
 //        - child: allows flutter to not rebuild the entire widget tree during animation for optimization purposes
 
 // Tween
 
-//   - stands for `between` and represents the animation valuse that you want to range over from beginning to end
-//   - represents the start and end value of the TweenAnimationBuilder builder property callback
+//   - stands for `be-tween`, represents the animation values to range over from beginning to end
+//   - start and end values of the TweenAnimationBuilder builder property callback
 
 // Curve
 

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
+// main application theme
 class AppTheme {
   const AppTheme._();
 
@@ -15,7 +16,8 @@ class AppTheme {
         textSelectionTheme: textSelectionTheme,
         // change selectionHandleColor on IOS
         cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: AppColors.mainThemeColor,
+          // primaryColor: AppColors.mainThemeColor,
+          primaryColor: Colors.black54,
         ),
         textButtonTheme: textButtonTheme,
         outlinedButtonTheme: mainButtonTheme,
@@ -25,18 +27,29 @@ class AppTheme {
   /// return main button theme in specified color
   static OutlinedButtonThemeData customOutlinedButtonThemeData(Color? backgroundColor) {
     return OutlinedButtonThemeData(
-      style: ButtonStyle(
-        shape: resolver((states) => const StadiumBorder(side: BorderSide.none)),
-        side: resolver((state) => BorderSide.none),
-        backgroundColor: resolver((states) => backgroundColor ?? AppColors.mainThemeColor),
-        textStyle: resolver(
-          (states) => TextStyle(
-            foreground: Paint()..color = AppColors.offWhite,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
+      style: mainButtonStyle.copyWith(
+        backgroundColor: resolver(
+          (states) => backgroundColor ?? AppColors.mainThemeColor,
         ),
       ),
+    );
+  }
+
+  static TextSelectionThemeData getTextSelectionThemeData(Color moodColor) {
+    return textSelectionTheme.copyWith(
+      // TextFormField cursor color
+      cursorColor: moodColor,
+
+      // text highlight color
+      selectionColor: moodColor.withOpacity(0.15),
+    );
+  }
+
+  // TODO: not changing dynamically | research why | seems to be implemented correctly
+  static NoDefaultCupertinoThemeData getCupertinoOverrideTheme(Color moodColor) {
+    return CupertinoThemeData(
+      // change selectionHandleColor on IOS
+      primaryColor: moodColor,
     );
   }
 }

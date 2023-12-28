@@ -13,7 +13,6 @@ import 'package:stacked/stacked.dart';
 class SignInView extends StatelessWidget {
   SignInView({super.key});
 
-  // TODO: remove keys and nodes, add them to the view model
   // used to locate form in widget tree and validate text form fields before processing them further
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -25,11 +24,11 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<SignInViewModel>.reactive(
       createNewViewModelOnInsert: true,
       viewModelBuilder: () => SignInViewModel(),
-      onViewModelReady: (model) => model.initialize(),
-      builder: (context, model, _) {
+      onViewModelReady: (SignInViewModel model) => model.initialize(),
+      builder: (context, SignInViewModel model, _) {
         return SafeArea(
           child: Scaffold(
             body: SizedBox(

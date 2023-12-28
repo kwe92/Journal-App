@@ -8,7 +8,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
-class SignUpViewModel extends BaseViewModel with PasswordMixin {
+class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
   String? mindfulImage;
 
   bool get ready {
@@ -24,14 +24,12 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
     return password == confirmPassword;
   }
 
+  bool get passwordCriteriaSatisfied => _passwordCriteriaSatisfied();
+
   void initialize() {
     mindfulImage = imageService.getRandomMindfulImage();
 
-    setBusy(true);
-
     email = userService.tempUser?.email ?? "";
-
-    setBusy(false);
   }
 
   String? confirmValidator(String? value) {
@@ -44,23 +42,40 @@ class SignUpViewModel extends BaseViewModel with PasswordMixin {
     }
   }
 
+  /// determines if the password criteria was met.
+  bool _passwordCriteriaSatisfied() {
+    final String? allSatisfied = stringService.passwordIsValid(password);
+    return allSatisfied != null && allSatisfied.isNotEmpty ? false : true;
+  }
+
   // register user with email if available
   Future<bool> signupWithEmail({required User user}) async {
     setBusy(true);
     final Response response = await authService.register(user: user);
     setBusy(false);
 
+    // indicate if request was successful
     final bool ok = ResponseHandler.checkStatusCode(response);
 
     if (ok && authService.isLoggedIn) {
+      // set currently authenticated user
       userService.setCurrentUser(jsonDecode(response.body));
+
+      // clear temp user dat
       userService.clearTempUserData();
+
+      // save jwt token to persistent storage
       await tokenService.saveTokenData(
         jsonDecode(response.body),
       );
 
       return ok;
     }
+
+    toastService.showSnackBar(
+      message: ResponseHandler.getErrorMsg(response.body),
+      textColor: Colors.red,
+    );
 
     return ok;
   }

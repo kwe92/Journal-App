@@ -2,7 +2,9 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:stacked/stacked.dart';
 
 class FilterButtonModel extends BaseViewModel {
-  String dropdownValue = dropdownOptions.first;
+  String _dropdownValue = dropdownOptions.first;
+
+  String get dropdownValue => _dropdownValue;
 
   static final List<String> dropdownOptions = <String>[
     'all',
@@ -14,7 +16,7 @@ class FilterButtonModel extends BaseViewModel {
   ];
 
   void setDropdownValue(String value) {
-    dropdownValue = value;
+    _dropdownValue = value;
     notifyListeners();
   }
 }

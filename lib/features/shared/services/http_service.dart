@@ -55,7 +55,6 @@ mixin HttpService {
   }
 
   /// put sends an HTTP PUT request with the passed in headers and body to the given URI.
-
   Future<http.Response> put(
     String endpoint, {
     required dynamic body,
@@ -76,7 +75,6 @@ mixin HttpService {
   }
 
   /// delete sends an HTTP DELETE request with the passed in headers to the specified URI.
-
   Future<http.Response> delete(
     String endpoint, {
     dynamic body,

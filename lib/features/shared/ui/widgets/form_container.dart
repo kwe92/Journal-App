@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/shared/models/journal_entry.dart';
-import 'package:journal_app/features/shared/services/services.dart';
 
 class FormContainer extends StatelessWidget {
   final Widget child;
+  final String dayOfWeekByName;
+  final String timeOfDay;
+  final int continentalTime;
   final double? height;
-  final JournalEntry? entry;
 
   const FormContainer({
+    required this.dayOfWeekByName,
+    required this.timeOfDay,
+    required this.continentalTime,
     required this.child,
     this.height,
-    this.entry,
     super.key,
   });
-
-  static final DateTime now = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +36,13 @@ class FormContainer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(timeService.dayOfWeekByName(entry != null ? entry!.updatedAt.toLocal() : now)),
+                Text(dayOfWeekByName),
                 Row(
                   children: [
-                    Text(timeService.timeOfDay(entry != null ? entry!.updatedAt.toLocal() : now)),
-                    (hour24 >= 19 || hour24 <= 6) ? gap4 : gap6,
+                    Text(timeOfDay),
+                    (continentalTime >= 19 || continentalTime <= 6) ? gap4 : gap6,
                     Icon(
-                      (hour24 >= 19 || hour24 <= 6) ? Icons.mode_night_outlined : Icons.wb_sunny_outlined,
+                      (continentalTime >= 19 || continentalTime <= 6) ? Icons.mode_night_outlined : Icons.wb_sunny_outlined,
                     ),
                   ],
                 )
@@ -54,14 +54,4 @@ class FormContainer extends StatelessWidget {
       ),
     );
   }
-
-  int get hour24 {
-    return int.parse(entry != null ? timeService.getHour24(entry!.updatedAt.toLocal()) : timeService.getHour24(now));
-  }
 }
-
-
-// DateTime.toLocal()
-
-//   - Return DateTime value in the local timezone of the user
-//   - should use to ensure the value matches what the back end sends

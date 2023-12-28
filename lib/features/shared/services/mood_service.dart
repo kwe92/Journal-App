@@ -2,7 +2,7 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 
-/// Encapsulates all data associated with mood type
+/// Encapsulates all data associated with mood type.
 class MoodService {
   static const double _commonDefaultSize = 50.0;
 
