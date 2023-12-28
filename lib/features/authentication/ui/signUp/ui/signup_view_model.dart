@@ -55,9 +55,9 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
     setBusy(false);
 
     // indicate if request was successful
-    final bool ok = ResponseHandler.checkStatusCode(response);
+    final bool statucOk = ResponseHandler.checkStatusCode(response);
 
-    if (ok && authService.isLoggedIn) {
+    if (statucOk && authService.isLoggedIn) {
       // set currently authenticated user
       userService.setCurrentUser(jsonDecode(response.body));
 
@@ -69,7 +69,7 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
         jsonDecode(response.body),
       );
 
-      return ok;
+      return statucOk;
     }
 
     toastService.showSnackBar(
@@ -77,7 +77,7 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
       textColor: Colors.red,
     );
 
-    return ok;
+    return statucOk;
   }
 
   // unfocus currently focused nodes

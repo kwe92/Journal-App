@@ -48,16 +48,16 @@ class SignInViewModel extends BaseViewModel {
     setBusy(false);
 
     // check status code
-    final bool ok = ResponseHandler.checkStatusCode(response);
+    final bool statucOk = ResponseHandler.checkStatusCode(response);
 
-    if (ok && authService.isLoggedIn) {
+    if (statucOk && authService.isLoggedIn) {
       // deserialize json response body
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
       // save the returned jwt from the response body to persistent storage
       await tokenService.saveTokenData(responseBody);
 
-      return ok;
+      return statucOk;
     }
 
     toastService.showSnackBar(
@@ -65,7 +65,7 @@ class SignInViewModel extends BaseViewModel {
       textColor: Colors.red,
     );
 
-    return ok;
+    return statucOk;
   }
 
   void unfocusAll(BuildContext context) => toastService.unfocusAll(context);

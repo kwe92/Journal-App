@@ -101,9 +101,9 @@ class SignUpView extends StatelessWidget {
                             model.unfocusAll(context);
 
                             // upon successful validation sign the user up.
-                            final bool ok = await model.signupWithEmail(user: userService.tempUser!);
+                            final bool statucOk = await model.signupWithEmail(user: userService.tempUser!);
 
-                            if (ok) {
+                            if (statucOk) {
                               // remove added listeners
                               passwordFocus.removeListener(() {
                                 model.setShowRequirements(passwordFocus.hasFocus);

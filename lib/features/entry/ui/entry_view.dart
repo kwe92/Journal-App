@@ -96,9 +96,9 @@ class EntryView extends StatelessWidget {
                       }
 
                       // push update to backend
-                      final bool ok = await model.updateEntry();
+                      final bool statucOk = await model.updateEntry();
 
-                      if (ok) {
+                      if (statucOk) {
                         appRouter.replace(const JournalRoute());
                       }
 
@@ -120,9 +120,9 @@ class EntryView extends StatelessWidget {
                     debugPrint('Should delete entry: $deleteContinued');
 
                     if (deleteContinued) {
-                      final bool ok = await model.deleteEntry(entry.entryId);
+                      final bool statucOk = await model.deleteEntry(entry.entryId);
 
-                      if (ok) {
+                      if (statucOk) {
                         debugPrint('entry deleted successfully');
 
                         appRouter.replace(const JournalRoute());

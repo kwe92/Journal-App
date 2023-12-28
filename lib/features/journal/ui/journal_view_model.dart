@@ -73,9 +73,9 @@ class JournalViewModel extends ReactiveViewModel {
   Future<void> getAllEntries() async {
     final Response response = await journalEntryService.getAllEntries();
 
-    final bool ok = ResponseHandler.checkStatusCode(response);
+    final bool statucOk = ResponseHandler.checkStatusCode(response);
 
-    if (ok) {
+    if (statucOk) {
       // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
       final Map<String, dynamic> reponseBody = jsonDecode(response.body);
 

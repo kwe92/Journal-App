@@ -191,10 +191,10 @@ class MemberInfoView extends StatelessWidget {
                                     onPressed: () async {
                                       if (formKey.currentState!.validate() && model.ready) {
                                         // check if there is user registered with email already
-                                        final bool ok = await model.checkAvailableEmail(email: model.email!);
+                                        final bool statucOk = await model.checkAvailableEmail(email: model.email!);
 
                                         // continue to signup view if email available else show user an error snack bar
-                                        if (ok) {
+                                        if (statucOk) {
                                           appRouter.push(SignUpRoute());
                                         }
                                       }

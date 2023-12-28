@@ -58,19 +58,19 @@ class AddEntryViewModel extends BaseViewModel {
     final Response response = await journalEntryService.addEntry(newEntry);
     setBusy(false);
 
-    final bool ok = ResponseHandler.checkStatusCode(response);
+    final bool statucOk = ResponseHandler.checkStatusCode(response);
 
-    if (ok) {
+    if (statucOk) {
       clearContent();
       toastService.showSnackBar(message: "New journal entry added.");
 
-      return ok;
+      return statucOk;
     }
     toastService.showSnackBar(
       message: ResponseHandler.getErrorMsg(response.body),
       textColor: Colors.red,
     );
 
-    return ok;
+    return statucOk;
   }
 }

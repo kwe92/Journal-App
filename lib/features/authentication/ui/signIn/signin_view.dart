@@ -89,10 +89,10 @@ class SignInView extends StatelessWidget {
                                   model.unfocusAll(context);
 
                                   // check successful login
-                                  final bool ok = await model.signInWithEmail(context);
+                                  final bool statucOk = await model.signInWithEmail(context);
 
                                   // if successful login
-                                  if (ok) {
+                                  if (statucOk) {
                                     emailController.clear();
                                     passwordController.clear();
                                     appRouter.push(const JournalRoute());
