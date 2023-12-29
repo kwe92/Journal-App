@@ -69,7 +69,7 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 
   void setFirstName(String text) {
-    _firstName = text.toLowerCase().capitalize().trim();
+    _firstName = text.isNotEmpty ? text.toLowerCase().capitalize().trim() : '';
 
     debugPrint("member info first name: $_firstName");
 
@@ -79,7 +79,7 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 
   void setLastName(String text) {
-    _lastName = text.toLowerCase().capitalize().trim();
+    _lastName = text.isNotEmpty ? text.toLowerCase().capitalize().trim() : '';
 
     debugPrint("member info last name: $_lastName");
 
