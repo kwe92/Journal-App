@@ -44,7 +44,7 @@ class EditProfileView extends StatelessWidget {
                     height: 210,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(model.mindfulImage!),
+                        image: model.mindfulImage!,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -115,6 +115,7 @@ class EditProfileView extends StatelessWidget {
                                 model.setReadOnly(false);
                               } else {
                                 if (model.formKey.currentState!.validate() && model.ready) {
+                                  // TODO: don't send update to backend if the users data has not changed
                                   // attempt to update user info
                                   final bool statusOk = await model.updateUserInfo();
 

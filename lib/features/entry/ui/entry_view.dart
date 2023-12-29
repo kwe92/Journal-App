@@ -96,13 +96,13 @@ class EntryView extends StatelessWidget {
                       }
 
                       // push update to backend
-                      final bool statucOk = await model.updateEntry();
+                      final bool statusOk = await model.updateEntry();
 
-                      if (statucOk) {
+                      if (statusOk) {
+                        debugPrint("updated entry");
+
                         appRouter.replace(const JournalRoute());
                       }
-
-                      debugPrint("updated entry");
                     }
                   },
                   label: model.readOnly ? "Edit Entry" : "Update Entry",
@@ -120,9 +120,9 @@ class EntryView extends StatelessWidget {
                     debugPrint('Should delete entry: $deleteContinued');
 
                     if (deleteContinued) {
-                      final bool statucOk = await model.deleteEntry(entry.entryId);
+                      final bool statusOk = await model.deleteEntry(entry.entryId);
 
-                      if (statucOk) {
+                      if (statusOk) {
                         debugPrint('entry deleted successfully');
 
                         appRouter.replace(const JournalRoute());

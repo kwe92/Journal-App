@@ -7,22 +7,42 @@ import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
-class SignInViewModel extends BaseViewModel {
+class SignInViewModel extends ReactiveViewModel {
+  /// Controls password obscurity.
+  bool obscurePassword = true;
+
+  bool? _isLoading;
+
   String? email;
+
   String? password;
-  String? mindfulImage;
+
+  ImageProvider? mindfulImage;
+
+  /// ViewModel loading state.
+  bool? get isLoading => _isLoading;
 
   bool get ready {
     return email != null && email!.isNotEmpty && password != null && password!.isNotEmpty;
   }
 
-  // controls password obscurity
-  bool obscurePassword = true;
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+        imageService,
+      ];
 
-  void initialize() async {
+  Future<void> initialize(BuildContext context) async {
+    setLoading(true);
+    await imageService.cacheImage(context);
     mindfulImage = imageService.getRandomMindfulImage();
-
     await ResourceCleanUp.clean();
+
+    setLoading(false);
+  }
+
+  void setLoading(bool loading) {
+    _isLoading = loading;
+    notifyListeners();
   }
 
   void setEmail(String text) {
@@ -31,33 +51,32 @@ class SignInViewModel extends BaseViewModel {
   }
 
   void setPassword(String text) {
-    password = text;
+    password = text.trim();
     notifyListeners();
   }
 
   void setObscure(bool isObscured) {
     obscurePassword = isObscured;
-
     notifyListeners();
   }
 
-  /// attempt to sign with the provided email and password providing a true or false value for success or failure respectively
+  /// Attempt to sign with provided email and password, returning true or false value for success or failure respectively.
   Future<bool> signInWithEmail(BuildContext context) async {
     setBusy(true);
     final Response response = await authService.login(email: email!, password: password!);
     setBusy(false);
 
     // check status code
-    final bool statucOk = ResponseHandler.checkStatusCode(response);
+    final bool statusOk = ResponseHandler.checkStatusCode(response);
 
-    if (statucOk && authService.isLoggedIn) {
+    if (statusOk && authService.isLoggedIn) {
       // deserialize json response body
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
       // save the returned jwt from the response body to persistent storage
       await tokenService.saveTokenData(responseBody);
 
-      return statucOk;
+      return statusOk;
     }
 
     toastService.showSnackBar(
@@ -65,7 +84,7 @@ class SignInViewModel extends BaseViewModel {
       textColor: Colors.red,
     );
 
-    return statucOk;
+    return statusOk;
   }
 
   void unfocusAll(BuildContext context) => toastService.unfocusAll(context);

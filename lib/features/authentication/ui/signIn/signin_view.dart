@@ -27,105 +27,122 @@ class SignInView extends StatelessWidget {
     return ViewModelBuilder<SignInViewModel>.reactive(
       createNewViewModelOnInsert: true,
       viewModelBuilder: () => SignInViewModel(),
-      onViewModelReady: (SignInViewModel model) => model.initialize(),
+      onViewModelReady: (SignInViewModel model) async => await model.initialize(context),
       builder: (context, SignInViewModel model, _) {
-        return SafeArea(
-          child: Scaffold(
-            body: SizedBox(
-              width: double.maxFinite,
-              height: double.maxFinite,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 3.125,
-                    width: double.maxFinite,
-                    child: Image.asset(
-                      model.mindfulImage!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  gap24,
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      "Log-in",
-                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  gap12,
-                  Form(
-                    key: formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 36.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          EmailInput(
-                            emailController: emailController,
-                            focus: emailFocus,
-                            nextFocus: passwordFocus,
-                          ),
-                          gap16,
-                          PasswordInput(
-                            passwordController: passwordController,
-                            focus: passwordFocus,
-                          ),
-                          gap12,
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Forgot password?",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          gap16,
-                          SelectableButton(
-                              onPressed: () async {
-                                // focus email TextFormField if it is empty
-                                model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
-
-                                if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                                  model.unfocusAll(context);
-
-                                  // check successful login
-                                  final bool statucOk = await model.signInWithEmail(context);
-
-                                  // if successful login
-                                  if (statucOk) {
-                                    emailController.clear();
-                                    passwordController.clear();
-                                    appRouter.push(const JournalRoute());
-                                  }
-                                }
-                              },
-                              label: "Login"),
-                          gap16,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Don't have an account?",
-                                style: TextStyle(fontSize: 14),
-                              ),
-                              TextButton(
-                                onPressed: () => appRouter.push(MemberInfoRoute()),
-                                child: const Text(
-                                  "Sign-up",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+        return model.isLoading!
+            ? Scaffold(
+                body: Center(
+                  child: Container(
+                    // TODO: check if the initial splash screen and this bellow image are the same size on smaller devices
+                    height: MediaQuery.of(context).size.height / 7.875,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        // to use Image.asset within DecorationImage retrieve the ImageProvider using image property e.g. Image.asset('assets/imeage/path').image
+                        image: Image.asset(
+                          'assets/images/splash_screen.png',
+                        ).image,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        );
+                ),
+              )
+            : SafeArea(
+                child: Scaffold(
+                  body: SizedBox(
+                    width: double.maxFinite,
+                    height: double.maxFinite,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 3.125,
+                          width: double.maxFinite,
+                          child: Image(
+                            image: model.mindfulImage!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        gap24,
+                        const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
+                          child: Text(
+                            "Log-in",
+                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        gap12,
+                        Form(
+                          key: formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                EmailInput(
+                                  emailController: emailController,
+                                  focus: emailFocus,
+                                  nextFocus: passwordFocus,
+                                ),
+                                gap16,
+                                PasswordInput(
+                                  passwordController: passwordController,
+                                  focus: passwordFocus,
+                                ),
+                                gap12,
+                                TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    "Forgot password?",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                gap16,
+                                SelectableButton(
+                                    onPressed: () async {
+                                      // focus email TextFormField if it is empty
+                                      model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
+
+                                      if ((formKey.currentState?.validate() ?? false) && model.ready) {
+                                        model.unfocusAll(context);
+
+                                        // check successful login
+                                        final bool statusOk = await model.signInWithEmail(context);
+
+                                        // if successful, login
+                                        if (statusOk) {
+                                          emailController.clear();
+                                          passwordController.clear();
+                                          appRouter.push(const JournalRoute());
+                                        }
+                                      }
+                                    },
+                                    label: "Login"),
+                                gap16,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "Don't have an account?",
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => appRouter.push(MemberInfoRoute()),
+                                      child: const Text(
+                                        "Sign-up",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
       },
     );
   }

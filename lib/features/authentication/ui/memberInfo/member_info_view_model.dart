@@ -16,7 +16,9 @@ class MemberInfoViewModel extends ReactiveViewModel {
 
   bool _obscurePassword = true;
 
-  String? _mindfulImage;
+  ImageProvider? _mindfulImage;
+
+  // getter computer variables
 
   String? get firstName => _firstName;
 
@@ -28,9 +30,9 @@ class MemberInfoViewModel extends ReactiveViewModel {
 
   bool get obscurePassword => _obscurePassword;
 
-  String? get mindfulImage => _mindfulImage;
+  ImageProvider? get mindfulImage => _mindfulImage;
 
-  /// Check that all required fields are filled in
+  /// Check required fields are filled in
   bool get ready {
     return _firstName != null &&
         _firstName!.isNotEmpty &&
@@ -42,8 +44,12 @@ class MemberInfoViewModel extends ReactiveViewModel {
         _phoneNumber!.isNotEmpty;
   }
 
+  // required override to listen to changes in service state
   @override
-  List<ListenableServiceMixin> get listenableServices => [userService];
+  List<ListenableServiceMixin> get listenableServices => [
+        userService,
+        imageService,
+      ];
 
   Future<void> initialize() async {
     _mindfulImage = imageService.getRandomMindfulImage();
@@ -63,7 +69,9 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 
   void setFirstName(String text) {
-    _firstName = text != '' ? text.toLowerCase().capitalize().trim() : '';
+    _firstName = text.toLowerCase().capitalize().trim();
+
+    debugPrint("member info first name: $_firstName");
 
     userService.setTempUserFirstName(_firstName!);
 
@@ -71,7 +79,9 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 
   void setLastName(String text) {
-    _lastName = text != '' ? text.toLowerCase().capitalize().trim() : '';
+    _lastName = text.toLowerCase().capitalize().trim();
+
+    debugPrint("member info last name: $_lastName");
 
     userService.setTempUserLastName(_lastName!);
 
@@ -93,7 +103,7 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 
   void setPhoneNumber(String text) {
-    // E164Standard pohne number format expected by the backend
+    // E164Standard pohne number format expected by the backend API.
     String phoneNumberWithCountryCode = _formatPhoneNumberE164Standard(text);
     _phoneNumber = phoneNumberWithCountryCode;
 
@@ -102,14 +112,13 @@ class MemberInfoViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  /// check backend database to ensure the specified email is available
+  /// API call to backend database, checking specified email availability.
   Future<bool> checkAvailableEmail({required String email}) async {
     setBusy(true);
     final Response response = await authService.checkAvailableEmail(email: email);
     setBusy(false);
 
     // indicate if response status was statusOK
-
     final bool statusOk = ResponseHandler.checkStatusCode(response);
 
     if (!statusOk) {
@@ -125,7 +134,7 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 }
 
-/// returns a string representation of a phone number in e164 format.
+/// returns a string representation of a phone number in e164 format required by the backend API.
 String _formatPhoneNumberE164Standard(String phoneNumber) {
   return '+1${(phoneNumber.replaceAll('-', '').replaceAll(' ', '')).replaceAll('(', '').replaceAll(')', '')}';
 }

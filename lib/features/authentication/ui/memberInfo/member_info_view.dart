@@ -47,7 +47,7 @@ class MemberInfoView extends StatelessWidget {
         firstNameController.text = model.firstName!;
         lastNameController.text = model.lastName!;
       },
-      builder: (context, model, child) {
+      builder: (BuildContext context, MemberInfoViewModel model, _) {
         return SafeArea(
           child: Scaffold(
             body: SizedBox(
@@ -61,10 +61,10 @@ class MemberInfoView extends StatelessWidget {
                     children: [
                       Container(
                         width: double.maxFinite,
-                        height: 210,
+                        height: MediaQuery.of(context).size.height / 3.125,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(model.mindfulImage!),
+                            image: model.mindfulImage!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -190,7 +190,7 @@ class MemberInfoView extends StatelessWidget {
                                   SelectableButton(
                                     onPressed: () async {
                                       if (formKey.currentState!.validate() && model.ready) {
-                                        // check if there is user registered with email already
+                                        // check email availability
                                         final bool statucOk = await model.checkAvailableEmail(email: model.email!);
 
                                         // continue to signup view if email available else show user an error snack bar
