@@ -103,8 +103,8 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 
   void setPhoneNumber(String text) {
-    // E164Standard pohne number format expected by the backend API.
-    String phoneNumberWithCountryCode = _formatPhoneNumberE164Standard(text);
+    // E164Standard phone number format expected by the backend API.
+    final String phoneNumberWithCountryCode = stringService.formatPhoneNumberE164Standard(text);
     _phoneNumber = phoneNumberWithCountryCode;
 
     userService.setTempUserPhoneNumber(phoneNumberWithCountryCode);
@@ -132,9 +132,4 @@ class MemberInfoViewModel extends ReactiveViewModel {
 
     return statusOk;
   }
-}
-
-/// returns a string representation of a phone number in e164 format required by the backend API.
-String _formatPhoneNumberE164Standard(String phoneNumber) {
-  return '+1${(phoneNumber.replaceAll('-', '').replaceAll(' ', '')).replaceAll('(', '').replaceAll(')', '')}';
 }

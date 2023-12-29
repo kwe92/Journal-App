@@ -16,6 +16,8 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   final TextEditingController emailController = TextEditingController();
 
+  final TextEditingController phoneNumberController = TextEditingController();
+
   // Mutable Variables
 
   bool _readOnly = true;
@@ -25,6 +27,8 @@ class EditProfileViewModel extends ReactiveViewModel {
   String? _updatedLastName;
 
   String? _updatedEmail;
+
+  String? _updatedPhoneNumber;
 
   ImageProvider? _mindfulImage;
 
@@ -38,6 +42,8 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   String get userEmail => _currentUser.email!;
 
+  String get userPhoneNumber => stringService.formatPhoneNumberNANP(_currentUser.phoneNumber!.substring(2));
+
   // Computed Update Variables
 
   String? get updatedFirstName => _updatedFirstName;
@@ -45,6 +51,8 @@ class EditProfileViewModel extends ReactiveViewModel {
   String? get updatedLastName => _updatedLastName;
 
   String? get updatedEmail => _updatedEmail;
+
+  String? get updatedPhoneNumber => _updatedPhoneNumber;
 
   bool get readOnly => _readOnly;
 
@@ -71,13 +79,16 @@ class EditProfileViewModel extends ReactiveViewModel {
 
     _mindfulImage = imageService.getRandomMindfulImage();
 
+    // set controller text to current user info
     firstNameController.text = userFirstName;
     lastNameController.text = userLastName;
     emailController.text = userEmail;
+    phoneNumberController.text = userPhoneNumber;
 
     setFirstName(userFirstName);
     setLastName(userLastName);
     setEmail(userEmail);
+    setPhoneNumber(userPhoneNumber);
 
     setBusy(false);
   }
@@ -102,6 +113,17 @@ class EditProfileViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  void setPhoneNumber(String value) {
+    // E164Standard phone number format expected by the backend API.
+    final String phoneNumberWithCountryCode = stringService.formatPhoneNumberE164Standard(value);
+
+    _updatedPhoneNumber = phoneNumberWithCountryCode;
+
+    debugPrint(phoneNumberWithCountryCode);
+
+    notifyListeners();
+  }
+
   void setReadOnly(bool readOnly) {
     _readOnly = readOnly;
     notifyListeners();
@@ -114,11 +136,11 @@ class EditProfileViewModel extends ReactiveViewModel {
   }
 
   Future<bool> updateUserInfo() async {
-    // TODO: add phone number
     final UpdatedUser updatedUser = UpdatedUser(
       firstName: updatedFirstName!.toLowerCase().capitalize().trim(),
       lastName: updatedLastName!.toLowerCase().capitalize().trim(),
       email: updatedEmail!.toLowerCase().trim(),
+      phoneNumber: updatedPhoneNumber!.trim(),
     );
 
     // attempt to update currently authenticated user
