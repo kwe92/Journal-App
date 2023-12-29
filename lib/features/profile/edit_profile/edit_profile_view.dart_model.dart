@@ -8,17 +8,6 @@ import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class EditProfileViewModel extends ReactiveViewModel {
-  // Mutable Variables
-  String? _updatedFirstName;
-
-  String? _updatedLastName;
-
-  String? _updatedEmail;
-
-  String? _mindfulImage;
-
-  bool _readOnly = true;
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final TextEditingController firstNameController = TextEditingController();
@@ -26,6 +15,18 @@ class EditProfileViewModel extends ReactiveViewModel {
   final TextEditingController lastNameController = TextEditingController();
 
   final TextEditingController emailController = TextEditingController();
+
+  // Mutable Variables
+
+  bool _readOnly = true;
+
+  String? _updatedFirstName;
+
+  String? _updatedLastName;
+
+  String? _updatedEmail;
+
+  ImageProvider? _mindfulImage;
 
   // Computed User Variables
 
@@ -49,7 +50,7 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   // Other Computed Variables
 
-  String? get mindfulImage => _mindfulImage;
+  ImageProvider? get mindfulImage => _mindfulImage;
 
   bool get ready =>
       _updatedFirstName != null &&
@@ -62,6 +63,7 @@ class EditProfileViewModel extends ReactiveViewModel {
   @override
   List<ListenableServiceMixin> get listenableServices => [
         userService,
+        imageService,
       ];
 
   void initialize() {
@@ -119,10 +121,10 @@ class EditProfileViewModel extends ReactiveViewModel {
       email: updatedEmail!.toLowerCase().trim(),
     );
 
-    // attempt to update the currently authenticated user
+    // attempt to update currently authenticated user
     final Response response = await userService.updateUserInfo(updatedUser);
 
-    // check the status code
+    // check status code
     final bool statusOk = ResponseHandler.checkStatusCode(response);
 
     if (!statusOk) {

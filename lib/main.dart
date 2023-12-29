@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ void main() async {
 
   // ensure token is removed from user device on app startup
   await tokenService.removeAccessTokenFromStorage();
+
+  appRouter.push(SignInRoute());
 
   runApp(
     // Portal Widget required at the root of the widget tree to use the PortalTarget Widget

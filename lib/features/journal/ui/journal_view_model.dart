@@ -38,9 +38,7 @@ class JournalViewModel extends ReactiveViewModel {
     return _getMoodCountByMoodType(MoodType.terrible);
   }
 
-  User? get _currentUser => userService.currentUser;
-
-  User? get currentUser => _currentUser;
+  User? get currentUser => userService.currentUser;
 
   @override
   List<ListenableServiceMixin> get listenableServices => [
@@ -63,19 +61,13 @@ class JournalViewModel extends ReactiveViewModel {
     setBusy(false);
   }
 
-  Future<void> refresh() async {
-    setBusy(true);
-    await journalEntryService.getAllEntries();
-    setBusy(false);
-  }
-
-  // retrieve all journal entries for the currently authenticated user
+  /// Retrieve all journal entries for the currently authenticated user.
   Future<void> getAllEntries() async {
     final Response response = await journalEntryService.getAllEntries();
 
-    final bool ok = ResponseHandler.checkStatusCode(response);
+    final bool statusOk = ResponseHandler.checkStatusCode(response);
 
-    if (ok) {
+    if (statusOk) {
       // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
       final Map<String, dynamic> reponseBody = jsonDecode(response.body);
 
@@ -94,7 +86,7 @@ class JournalViewModel extends ReactiveViewModel {
     );
   }
 
-  // create Mood instance by mood type
+  /// Create [Mood] instance by mood type.
   Mood getMood(String moodType) {
     final MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(moodType);
 
@@ -108,7 +100,7 @@ class JournalViewModel extends ReactiveViewModel {
     return mood;
   }
 
-  /// filter journal entries by mood type.
+  /// Filter journal entries by mood type.
   void setFilteredJournalEntries(String mood) {
     switch (mood) {
       case 'all':

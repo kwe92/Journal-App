@@ -9,7 +9,9 @@ import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
-  String? mindfulImage;
+  ImageProvider? _mindfulImage;
+
+  ImageProvider? get mindfulImage => _mindfulImage;
 
   bool get ready {
     return email != null &&
@@ -26,8 +28,11 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
 
   bool get passwordCriteriaSatisfied => _passwordCriteriaSatisfied();
 
-  void initialize() {
-    mindfulImage = imageService.getRandomMindfulImage();
+  @override
+  List<ListenableServiceMixin> get listenableServices => [imageService];
+
+  void initialize(BuildContext context) async {
+    _mindfulImage = imageService.getRandomMindfulImage();
 
     email = userService.tempUser?.email ?? "";
   }
@@ -55,9 +60,9 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
     setBusy(false);
 
     // indicate if request was successful
-    final bool ok = ResponseHandler.checkStatusCode(response);
+    final bool statusOk = ResponseHandler.checkStatusCode(response);
 
-    if (ok && authService.isLoggedIn) {
+    if (statusOk && authService.isLoggedIn) {
       // set currently authenticated user
       userService.setCurrentUser(jsonDecode(response.body));
 
@@ -69,7 +74,7 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
         jsonDecode(response.body),
       );
 
-      return ok;
+      return statusOk;
     }
 
     toastService.showSnackBar(
@@ -77,7 +82,7 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
       textColor: Colors.red,
     );
 
-    return ok;
+    return statusOk;
   }
 
   // unfocus currently focused nodes

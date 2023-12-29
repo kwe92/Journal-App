@@ -20,8 +20,8 @@ class SideMenu extends Drawer {
                   SizedBox(
                     width: double.maxFinite,
                     height: MediaQuery.of(context).size.height / 3.5,
-                    child: Image.asset(
-                      image,
+                    child: Image(
+                      image: image,
                       fit: BoxFit.cover,
                     ),
                   ),

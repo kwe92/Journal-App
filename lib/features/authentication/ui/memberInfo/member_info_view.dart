@@ -47,7 +47,7 @@ class MemberInfoView extends StatelessWidget {
         firstNameController.text = model.firstName!;
         lastNameController.text = model.lastName!;
       },
-      builder: (context, model, child) {
+      builder: (BuildContext context, MemberInfoViewModel model, _) {
         return SafeArea(
           child: Scaffold(
             body: SizedBox(
@@ -61,10 +61,10 @@ class MemberInfoView extends StatelessWidget {
                     children: [
                       Container(
                         width: double.maxFinite,
-                        height: 210,
+                        height: MediaQuery.of(context).size.height / 3.125,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(model.mindfulImage!),
+                            image: model.mindfulImage!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -190,11 +190,11 @@ class MemberInfoView extends StatelessWidget {
                                   SelectableButton(
                                     onPressed: () async {
                                       if (formKey.currentState!.validate() && model.ready) {
-                                        // check if there is user registered with email already
-                                        final bool ok = await model.checkAvailableEmail(email: model.email!);
+                                        // check email availability
+                                        final bool statusOk = await model.checkAvailableEmail(email: model.email!);
 
                                         // continue to signup view if email available else show user an error snack bar
-                                        if (ok) {
+                                        if (statusOk) {
                                           appRouter.push(SignUpRoute());
                                         }
                                       }
@@ -221,29 +221,30 @@ class MemberInfoView extends StatelessWidget {
 }
 
 
-// Keyboard Type | property TextFormField
+// keyboardType | property TextFormField
 
 //   - change keyboard type automatically for the user
-//   - defaults to old-school 0 - 9 keyboard
-//   -  signed = true for modern keyboard
+//   - const TextInputType.numberWithOptions(signed: true):
+//       - defaults to old-school 0 - 9 keyboard
+//       -  signed = true (for modern keyboard)
 
 
 // Focus on Next Input Field in Focus Tree | textInputAction | onEditingComplete
 
-//   - tell input controller to jump to next field in focus node tree
+//   - tell input controller to jump to next TextField in focus node tree
 //   - when editing commplete request focus for next focus node in focus tree 
-//     the next focus node should belong to the text form field above the requester 
+//     the next focus node should belong to the TextField
 
 // CustomScrollView
 
 //   - sub-type of ScrollView that allows custom scroll effects with slivers
 //   - analogous to ListView with scrolling effects
-//   - the children of a CustomScrollView are RenderSliver's (SliverToBoxAdapter, SliverList, et)
+//   - children of a CustomScrollView are RenderSliver's (SliverToBoxAdapter, SliverList, etc)
 //   - where as ListView's children are RenderBox's (Container, Row, Column etc)
 
 // Slivers
 
-//   - portion of a scrollable area that can be configured in diffrent ways
+//   - portion of a scrollable area that can be configured in different ways
 //   - slivers can be combined to create custom scroll effects
 //   - Sliver objects begin with a sliver prefix
 
@@ -252,11 +253,11 @@ class MemberInfoView extends StatelessWidget {
 //   - slivers are lazily built by their parent only being created
 //     once visible in the view port
 
-// Catigories of Scrolling
+// Categories of Scrolling
 
 //   - Scrolling without effects (ListView)
 
-//       - children are Renderbox's: basic two demmentional objects on the cartesian plane
+//       - children are Renderbox's: basic two dimensional objects on the cartesian plane
 
 //   - Scrolling with effects (CustomScrollView)
 
@@ -264,3 +265,6 @@ class MemberInfoView extends StatelessWidget {
 
 // Creating ViewModel Declaratively
 
+//   - you create ViewModel's declaratively with the stacked framework     
+//     by passing an anonymous function that instantiates the ViewModel
+//     to the viewModelBuild property of the ViewModelBuilder class

@@ -70,12 +70,12 @@ class AddEntryView extends StatelessWidget {
                   color: model.moodColor,
                   onPressed: () async {
                     if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                      final bool ok = await model.addEntry(
+                      final bool statusOk = await model.addEntry(
                         moodType,
                         model.content!,
                       );
 
-                      if (ok) {
+                      if (statusOk) {
                         appRouter.replace(const JournalRoute());
                       }
                     }
