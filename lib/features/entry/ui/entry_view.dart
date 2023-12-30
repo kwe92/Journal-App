@@ -35,7 +35,7 @@ class EntryView extends StatelessWidget {
             color: model.moodColor,
             onPressed: () {
               model.setReadOnly(true);
-              appRouter.replace(const JournalRoute());
+              appRouter.pop();
             },
           ),
           actions: [
