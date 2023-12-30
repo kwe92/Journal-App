@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_app/features/shared/services/services.dart';
@@ -15,7 +15,7 @@ class AuthService extends ApiService with ChangeNotifier {
   bool get isLoggedIn => _isLoggedIn;
 
   /// register a user via API call to backend.
-  Future<http.Response> register({required User user}) async {
+  Future<http.Response> register({required BaseUser user}) async {
     final http.Response response = await post(
       Endpoint.register.path,
       body: jsonEncode(user.toJSON()),

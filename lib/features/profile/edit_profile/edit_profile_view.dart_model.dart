@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:journal_app/features/profile/edit_profile/model/updated_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -34,7 +34,7 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   // Computed User Variables
 
-  User get _currentUser => userService.currentUser!;
+  BaseUser get _currentUser => userService.currentUser!;
 
   String get userFirstName => _currentUser.firstName!;
 
@@ -135,8 +135,9 @@ class EditProfileViewModel extends ReactiveViewModel {
     emailController.clear();
   }
 
+  // ! UpdatedUser
   Future<bool> updateUserInfo() async {
-    final UpdatedUser updatedUser = UpdatedUser(
+    final BaseUser updatedUser = UpdatedUser(
       firstName: updatedFirstName!.toLowerCase().capitalize().trim(),
       lastName: updatedLastName!.toLowerCase().capitalize().trim(),
       email: updatedEmail!.toLowerCase().trim(),

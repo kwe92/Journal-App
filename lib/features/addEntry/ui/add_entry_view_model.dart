@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -16,7 +16,7 @@ class AddEntryViewModel extends ReactiveViewModel {
 
   Color? get moodColor => _moodColor;
 
-  User? get currentUser => userService.currentUser;
+  BaseUser? get currentUser => userService.currentUser;
 
   late final DateTime now;
 
