@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/entry/models/updated_entry.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -38,9 +38,9 @@ class EntryviewModel extends ReactiveViewModel {
 
   Color? get moodColor => _moodColor;
 
-  User? get _currentUser => userService.currentUser;
+  BaseUser? get _currentUser => userService.currentUser;
 
-  User? get currentUser => _currentUser;
+  BaseUser? get currentUser => _currentUser;
 
   EntryviewModel({required this.entry});
 

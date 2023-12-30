@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:journal_app/features/profile/edit_profile/model/updated_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -16,6 +16,8 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   final TextEditingController emailController = TextEditingController();
 
+  final TextEditingController phoneNumberController = TextEditingController();
+
   // Mutable Variables
 
   bool _readOnly = true;
@@ -26,17 +28,21 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   String? _updatedEmail;
 
+  String? _updatedPhoneNumber;
+
   ImageProvider? _mindfulImage;
 
   // Computed User Variables
 
-  User get _currentUser => userService.currentUser!;
+  BaseUser get _currentUser => userService.currentUser!;
 
   String get userFirstName => _currentUser.firstName!;
 
   String get userLastName => _currentUser.lastName!;
 
   String get userEmail => _currentUser.email!;
+
+  String get userPhoneNumber => stringService.formatPhoneNumberNANP(_currentUser.phoneNumber!.substring(2));
 
   // Computed Update Variables
 
@@ -45,6 +51,8 @@ class EditProfileViewModel extends ReactiveViewModel {
   String? get updatedLastName => _updatedLastName;
 
   String? get updatedEmail => _updatedEmail;
+
+  String? get updatedPhoneNumber => _updatedPhoneNumber;
 
   bool get readOnly => _readOnly;
 
@@ -71,13 +79,16 @@ class EditProfileViewModel extends ReactiveViewModel {
 
     _mindfulImage = imageService.getRandomMindfulImage();
 
+    // set controller text to current user info
     firstNameController.text = userFirstName;
     lastNameController.text = userLastName;
     emailController.text = userEmail;
+    phoneNumberController.text = userPhoneNumber;
 
     setFirstName(userFirstName);
     setLastName(userLastName);
     setEmail(userEmail);
+    setPhoneNumber(userPhoneNumber);
 
     setBusy(false);
   }
@@ -102,6 +113,17 @@ class EditProfileViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  void setPhoneNumber(String value) {
+    // E164Standard phone number format expected by the backend API.
+    final String phoneNumberWithCountryCode = stringService.formatPhoneNumberE164Standard(value);
+
+    _updatedPhoneNumber = phoneNumberWithCountryCode;
+
+    debugPrint(phoneNumberWithCountryCode);
+
+    notifyListeners();
+  }
+
   void setReadOnly(bool readOnly) {
     _readOnly = readOnly;
     notifyListeners();
@@ -113,12 +135,13 @@ class EditProfileViewModel extends ReactiveViewModel {
     emailController.clear();
   }
 
+  // ! UpdatedUser
   Future<bool> updateUserInfo() async {
-    // TODO: add phone number
-    final UpdatedUser updatedUser = UpdatedUser(
+    final BaseUser updatedUser = UpdatedUser(
       firstName: updatedFirstName!.toLowerCase().capitalize().trim(),
       lastName: updatedLastName!.toLowerCase().capitalize().trim(),
       email: updatedEmail!.toLowerCase().trim(),
+      phoneNumber: updatedPhoneNumber!.trim(),
     );
 
     // attempt to update currently authenticated user

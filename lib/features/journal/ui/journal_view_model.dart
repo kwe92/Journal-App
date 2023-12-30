@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/app/general/constants.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -38,7 +38,7 @@ class JournalViewModel extends ReactiveViewModel {
     return _getMoodCountByMoodType(MoodType.terrible);
   }
 
-  User? get currentUser => userService.currentUser;
+  BaseUser? get currentUser => userService.currentUser;
 
   @override
   List<ListenableServiceMixin> get listenableServices => [

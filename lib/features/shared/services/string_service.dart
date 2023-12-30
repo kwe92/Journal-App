@@ -121,4 +121,23 @@ class StringService {
 
     return passed;
   }
+
+  /// returns a string representation of a phone number in e164 format required by the backend API.
+  String formatPhoneNumberE164Standard(String phoneNumber) {
+    return '+1${(phoneNumber.replaceAll('-', '').replaceAll(' ', '')).replaceAll('(', '').replaceAll(')', '')}';
+  }
+
+  /// formats a 10 digit phone number string to NANP (North American Numbering Plan) Standard.
+  String formatPhoneNumberNANP(String phoneNumber) {
+    if (phoneNumber.length != 10) {
+      return phoneNumber;
+    }
+    final List<String> numbers = phoneNumber.split('');
+
+    numbers.insert(3, "-");
+
+    numbers.insert(7, "-");
+
+    return numbers.join();
+  }
 }

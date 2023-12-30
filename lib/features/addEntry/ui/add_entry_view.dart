@@ -9,6 +9,7 @@ import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
+import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -33,6 +34,16 @@ class AddEntryView extends StatelessWidget {
           color: model.moodColor,
           onPressed: () => appRouter.pop(),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: ProfileIcon(
+              userFirstName: model.currentUser?.firstName ?? "P",
+              color: model.moodColor,
+              onPressed: () => appRouter.push(const ProfileSettingsRoute()),
+            ),
+          ),
+        ],
         body: Column(
           children: [
             FormContainer(

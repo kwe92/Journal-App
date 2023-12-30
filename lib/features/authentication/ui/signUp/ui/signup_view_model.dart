@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/ui/mixins/password_mixin.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
@@ -54,7 +54,7 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
   }
 
   // register user with email if available
-  Future<bool> signupWithEmail({required User user}) async {
+  Future<bool> signupWithEmail({required BaseUser user}) async {
     setBusy(true);
     final Response response = await authService.register(user: user);
     setBusy(false);
