@@ -62,9 +62,7 @@ class AddEntryViewModel extends ReactiveViewModel {
     // instantiate new entry
     final NewEntry newEntry = NewEntry(content: content, moodType: moodType);
 
-    setBusy(true);
-    final Response response = await journalEntryService.addEntry(newEntry);
-    setBusy(false);
+    final Response response = await runBusyFuture(journalEntryService.addEntry(newEntry));
 
     final bool statusOk = ResponseHandler.checkStatusCode(response);
 

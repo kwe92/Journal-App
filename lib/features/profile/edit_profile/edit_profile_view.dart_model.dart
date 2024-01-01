@@ -75,8 +75,6 @@ class EditProfileViewModel extends ReactiveViewModel {
       ];
 
   void initialize() {
-    setBusy(true);
-
     _mindfulImage = imageService.getRandomMindfulImage();
 
     // set controller text to current user info
@@ -89,8 +87,6 @@ class EditProfileViewModel extends ReactiveViewModel {
     setLastName(userLastName);
     setEmail(userEmail);
     setPhoneNumber(userPhoneNumber);
-
-    setBusy(false);
   }
 
   // Setter Functions

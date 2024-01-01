@@ -41,11 +41,7 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
 
   /// PERMANENTLY delete ALL user data
   Future<bool> deleteAccount() async {
-    setBusy(true);
-
-    final Response response = await authService.deleteAccount();
-
-    setBusy(false);
+    final Response response = await runBusyFuture(authService.deleteAccount());
 
     // check response status code
     final bool statusOk = ResponseHandler.checkStatusCode(response);

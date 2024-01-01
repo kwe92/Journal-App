@@ -55,9 +55,7 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
 
   // register user with email if available
   Future<bool> signupWithEmail({required BaseUser user}) async {
-    setBusy(true);
-    final Response response = await authService.register(user: user);
-    setBusy(false);
+    final Response response = await runBusyFuture(authService.register(user: user));
 
     // indicate if request was successful
     final bool statusOk = ResponseHandler.checkStatusCode(response);

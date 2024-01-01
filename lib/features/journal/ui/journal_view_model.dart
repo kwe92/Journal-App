@@ -48,18 +48,16 @@ class JournalViewModel extends ReactiveViewModel {
       ];
 
   Future<void> initialize() async {
-    setBusy(true);
-
     // TODO: remove Future.delayed | placed here for testing loading indicator
-    await Future.delayed(const Duration(seconds: 1));
 
-    await journalEntryService.getAllEntries();
+    await runBusyFuture(() async {
+      await Future.delayed(const Duration(seconds: 1));
+      await journalEntryService.getAllEntries();
+    }());
 
     // initialize journalEntries with journalEntryService.journalEntries after backend call
 
     _journalEntries = journalEntryService.journalEntries;
-
-    setBusy(false);
   }
 
   /// Retrieve all journal entries for the currently authenticated user.
