@@ -3,8 +3,8 @@ import 'package:journal_app/features/profile/edit_profile/model/updated_user.dar
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 
 // TODO: add comments
-class Factory {
-  Factory._();
+class AbstractFactory {
+  AbstractFactory._();
 
   static BaseUser createUser({
     required UserType userType,

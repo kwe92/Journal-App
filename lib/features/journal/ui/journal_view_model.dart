@@ -10,6 +10,7 @@ import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
@@ -98,6 +99,11 @@ class JournalViewModel extends ReactiveViewModel {
     );
 
     return mood;
+  }
+
+  ///
+  Future<void> cleanResources() async {
+    await ResourceCleanUp.clean();
   }
 
   /// Filter journal entries by mood type.
