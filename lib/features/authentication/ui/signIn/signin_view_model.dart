@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
@@ -33,9 +32,15 @@ class SignInViewModel extends ReactiveViewModel {
 
   Future<void> initialize(BuildContext context) async {
     setLoading(true);
+
     await imageService.cacheImage(context);
+
     mindfulImage = imageService.getRandomMindfulImage();
-    await ResourceCleanUp.clean();
+
+    // Manual Delay
+    await Future.delayed(
+      const Duration(milliseconds: 600),
+    );
 
     setLoading(false);
   }
@@ -62,9 +67,7 @@ class SignInViewModel extends ReactiveViewModel {
 
   /// Attempt to sign with provided email and password, returning true or false value for success or failure respectively.
   Future<bool> signInWithEmail(BuildContext context) async {
-    setBusy(true);
-    final Response response = await authService.login(email: email!, password: password!);
-    setBusy(false);
+    final Response response = await runBusyFuture(authService.login(email: email!, password: password!));
 
     // check status code
     final bool statusOk = ResponseHandler.checkStatusCode(response);

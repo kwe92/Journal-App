@@ -9,8 +9,8 @@ class UpdatedUser extends BaseUser {
   UpdatedUser({
     super.firstName,
     super.lastName,
-    super.phoneNumber,
     super.email,
+    super.phoneNumber,
   });
 
   @override

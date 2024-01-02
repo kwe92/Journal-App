@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
+import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/utilities/string_extensions.dart';
-import 'package:journal_app/features/profile/edit_profile/model/updated_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
@@ -75,8 +75,6 @@ class EditProfileViewModel extends ReactiveViewModel {
       ];
 
   void initialize() {
-    setBusy(true);
-
     _mindfulImage = imageService.getRandomMindfulImage();
 
     // set controller text to current user info
@@ -89,8 +87,6 @@ class EditProfileViewModel extends ReactiveViewModel {
     setLastName(userLastName);
     setEmail(userEmail);
     setPhoneNumber(userPhoneNumber);
-
-    setBusy(false);
   }
 
   // Setter Functions
@@ -135,9 +131,9 @@ class EditProfileViewModel extends ReactiveViewModel {
     emailController.clear();
   }
 
-  // ! UpdatedUser
   Future<bool> updateUserInfo() async {
-    final BaseUser updatedUser = UpdatedUser(
+    final BaseUser updatedUser = AbstractFactory.createUser(
+      userType: UserType.updatedUser,
       firstName: updatedFirstName!.toLowerCase().capitalize().trim(),
       lastName: updatedLastName!.toLowerCase().capitalize().trim(),
       email: updatedEmail!.toLowerCase().trim(),

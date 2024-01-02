@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
+import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
@@ -23,7 +23,7 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
   /// Create a temporary user that will be updated during onboarding
   /// If a temp user already exists, keep that
   Future<void> createTempUser() async {
-    _tempUser = User();
+    _tempUser = AbstractFactory.createUser(userType: UserType.curentUser);
 
     debugPrint("\ntemporary user created.");
 
@@ -34,8 +34,8 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
   void setCurrentUser(Map<String, dynamic> responseBody) {
     final Map<String, dynamic> currentUserMap = responseBody['user'];
 
-    // TODO: should be its own DTO | maybe create an abstract User class
-    _currentUser = User(
+    _currentUser = AbstractFactory.createUser(
+      userType: UserType.curentUser,
       firstName: currentUserMap['first_name'],
       lastName: currentUserMap['last_name'],
       email: currentUserMap['email'],
@@ -47,7 +47,6 @@ class UserService extends ApiService with ListenableServiceMixin, ChangeNotifier
     notifyListeners();
   }
 
-  // ! UpdatedUser
   // update currently authenticated and loggedin user info
   Future<http.Response> updateUserInfo(BaseUser updatedUser) async {
     // retrieve access token that was saved when the user logged in or registered

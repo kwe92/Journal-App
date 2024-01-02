@@ -54,18 +54,13 @@ class MemberInfoViewModel extends ReactiveViewModel {
   Future<void> initialize() async {
     _mindfulImage = imageService.getRandomMindfulImage();
 
-    setBusy(true);
-
     // create temp user for registration
-    await userService.createTempUser();
-
+    await runBusyFuture(userService.createTempUser());
     // if value is null assign empty string
     _firstName = userService.tempUser?.firstName ?? '';
     _lastName = userService.tempUser?.lastName ?? '';
     _phoneNumber = userService.tempUser?.phoneNumber ?? '';
     _email = userService.tempUser?.email ?? '';
-
-    setBusy(false);
   }
 
   void setFirstName(String text) {
@@ -114,9 +109,7 @@ class MemberInfoViewModel extends ReactiveViewModel {
 
   /// API call to backend database, checking specified email availability.
   Future<bool> checkAvailableEmail({required String email}) async {
-    setBusy(true);
-    final Response response = await authService.checkAvailableEmail(email: email);
-    setBusy(false);
+    final Response response = await runBusyFuture(authService.checkAvailableEmail(email: email));
 
     // indicate if response status was statusOK
     final bool statusOk = ResponseHandler.checkStatusCode(response);

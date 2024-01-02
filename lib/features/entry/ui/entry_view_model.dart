@@ -78,9 +78,8 @@ class EntryviewModel extends ReactiveViewModel {
       entryId: entry.entryId,
       content: content,
     );
-    setBusy(true);
-    final Response response = await journalEntryService.updateEntry(updatedEntry);
-    setBusy(false);
+    final Response response = await runBusyFuture(journalEntryService.updateEntry(updatedEntry));
+
     // check status code and display a snack bar on success
 
     final bool statusOk = ResponseHandler.checkStatusCode(response);
@@ -102,9 +101,7 @@ class EntryviewModel extends ReactiveViewModel {
 
   /// delete journal entry via API call to backend
   Future<bool> deleteEntry(int entryId) async {
-    setBusy(true);
-    final Response response = await journalEntryService.deleteEntry(entryId);
-    setBusy(false);
+    final Response response = await runBusyFuture(journalEntryService.deleteEntry(entryId));
 
     // check status code and display a snack bar on success
 
