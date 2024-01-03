@@ -14,8 +14,6 @@ class ResponseHandler {
     return (response.statusCode == 200 || response.statusCode == 201) ? true : false;
   }
 
-// TODO: should this really be displaying a snackbar? Single Responsibility
-
   /// Decodes json string and return first error
   static String getErrorMsg(String jsonString) {
     final Map<String, dynamic> parsedJson = jsonDecode(jsonString);
