@@ -99,7 +99,6 @@ class JournalViewModel extends ReactiveViewModel {
     return mood;
   }
 
-  ///
   Future<void> cleanResources() async {
     await ResourceCleanUp.clean();
   }

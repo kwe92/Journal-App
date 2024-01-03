@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
@@ -56,5 +57,9 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
     }
 
     return statusOk;
+  }
+
+  Future<void> cleanResources() async {
+    await ResourceCleanUp.clean();
   }
 }
