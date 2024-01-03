@@ -15,12 +15,17 @@ class StringValidatorConfiguration {
   final bool includesLowercase;
   final bool includesSpecial;
   final bool includesNumber;
+  final bool includesOnlyNumbers;
+  final bool includes12Characters;
+
   const StringValidatorConfiguration({
     this.notEmpty = false,
     this.includesUppercase = false,
     this.includesLowercase = false,
     this.includesSpecial = false,
     this.includesNumber = false,
+    this.includesOnlyNumbers = false,
+    this.includes12Characters = false,
   });
 }
 
@@ -45,6 +50,10 @@ class StringService {
         return '$label must contain a special character';
       } else if (configuration.includesNumber && !containsNumber(value)) {
         return '$label must contain a number';
+      } else if (configuration.includesOnlyNumbers && !containsCharacter(value)) {
+        return 'must only contain numbers 0-9';
+      } else if (configuration.includes12Characters && !contains12Characters(value)) {
+        return 'must contain at least 10 digits';
       } else {
         return null;
       }
@@ -63,7 +72,7 @@ class StringService {
     } else if (!containsSpecialCharacter(password)) {
       return 'Password must contain a special character';
     } else if (!contains8Characters(password)) {
-      return 'Password must contain at least 6 characters';
+      return 'Password must contain at least 8 characters';
     } else {
       return null;
     }
@@ -87,6 +96,14 @@ class StringService {
 
   bool containsSpecialCharacter(String? value) {
     return RegExp('[^a-zA-Z0-9d]').hasMatch(value ?? '');
+  }
+
+  bool containsCharacter(String? value) {
+    return RegExp(r'^[0-9]+([0-9]|-[0-9])+$').hasMatch(value ?? '');
+  }
+
+  bool contains12Characters(String? value) {
+    return (value ?? '').length >= 12;
   }
 
   bool contains8Characters(String? value) {

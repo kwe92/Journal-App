@@ -98,6 +98,8 @@ class MemberInfoViewModel extends ReactiveViewModel {
   }
 
   void setPhoneNumber(String text) {
+    debugPrint(text);
+
     // E164Standard phone number format expected by the backend API.
     final String phoneNumberWithCountryCode = stringService.formatPhoneNumberE164Standard(text);
     _phoneNumber = phoneNumberWithCountryCode;

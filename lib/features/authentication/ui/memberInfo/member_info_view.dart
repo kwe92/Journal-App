@@ -151,7 +151,11 @@ class MemberInfoView extends StatelessWidget {
                                     onEditingComplete: () => emailFocus.requestFocus(),
                                     validator: stringService.customStringValidator(
                                       phoneNumberController.text,
-                                      configuration: const StringValidatorConfiguration(notEmpty: true),
+                                      configuration: const StringValidatorConfiguration(
+                                        notEmpty: true,
+                                        includesOnlyNumbers: true,
+                                        includes12Characters: true,
+                                      ),
                                     ),
                                     autofillHints: const [AutofillHints.telephoneNumberNational],
                                     autovalidateMode: AutovalidateMode.disabled,

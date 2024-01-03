@@ -116,7 +116,11 @@ class EditProfileView extends StatelessWidget {
                                   onChanged: model.setPhoneNumber,
                                   validator: stringService.customStringValidator(
                                     model.phoneNumberController.text,
-                                    configuration: const StringValidatorConfiguration(notEmpty: true),
+                                    configuration: const StringValidatorConfiguration(
+                                      notEmpty: true,
+                                      includesOnlyNumbers: true,
+                                      includes12Characters: true,
+                                    ),
                                   ),
                                   autofillHints: const [AutofillHints.telephoneNumberNational],
                                   autovalidateMode: AutovalidateMode.disabled,
@@ -144,7 +148,14 @@ class EditProfileView extends StatelessWidget {
                                       debugPrint('user phone number ${model.userPhoneNumber}');
                                       debugPrint('updated user phone number ${model.updatedPhoneNumber}');
 
-                                      if ((model.formKey.currentState?.validate() ?? false) && model.ready && !model.isIdenticalInfo) {
+                                      debugPrint('form key validation ${model.formKey.currentState!.validate()}');
+
+                                      if ((model.formKey.currentState?.validate() ?? false) && model.ready) {
+                                        if (model.isIdenticalInfo) {
+                                          model.clearControllers();
+                                          appRouter.pop();
+                                          return;
+                                        }
                                         // attempt to update user info
                                         final bool statusOk = await model.updateUserInfo();
 
@@ -154,8 +165,6 @@ class EditProfileView extends StatelessWidget {
                                           appRouter.pop();
                                         }
                                       }
-                                      model.clearControllers();
-                                      appRouter.pop();
                                     }
                                   },
                                   label: model.readOnly ? "Edit" : "Update",
