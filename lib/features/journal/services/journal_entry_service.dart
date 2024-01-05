@@ -29,6 +29,7 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
     final Map<String, dynamic> reponseBody = jsonDecode(response.body);
 
+    // TODO: down-cast using List.from
     final List<dynamic>? responseData = reponseBody["data"];
 
     if (responseData != null) {
