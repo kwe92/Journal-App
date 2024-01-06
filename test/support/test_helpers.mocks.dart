@@ -18,6 +18,7 @@ import 'package:journal_app/features/journal/services/journal_entry_service.dart
 import 'package:journal_app/features/shared/abstractions/base_user.dart' as _i6;
 import 'package:journal_app/features/shared/models/journal_entry.dart' as _i9;
 import 'package:journal_app/features/shared/models/new_entry.dart' as _i10;
+import 'package:journal_app/features/shared/services/mood_service.dart' as _i16;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i4;
 
@@ -1138,4 +1139,79 @@ class MockClient extends _i1.Mock implements _i2.Client {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [MoodService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockMoodService extends _i1.Mock implements _i16.MoodService {
+  @override
+  List<
+          MapEntry<String,
+              ({_i7.Color color, double defaultSize, String imagePath})>>
+      get moods => (super.noSuchMethod(
+            Invocation.getter(#moods),
+            returnValue: <MapEntry<String,
+                ({_i7.Color color, double defaultSize, String imagePath})>>[],
+            returnValueForMissingStub: <MapEntry<String,
+                ({_i7.Color color, double defaultSize, String imagePath})>>[],
+          ) as List<
+              MapEntry<String,
+                  ({_i7.Color color, double defaultSize, String imagePath})>>);
+
+  @override
+  MapEntry<String, ({_i7.Color color, double defaultSize, String imagePath})>
+      getMoodByType(String? moodType) => (super.noSuchMethod(
+            Invocation.method(
+              #getMoodByType,
+              [moodType],
+            ),
+            returnValue: _i4.dummyValue<
+                MapEntry<String,
+                    ({_i7.Color color, double defaultSize, String imagePath})>>(
+              this,
+              Invocation.method(
+                #getMoodByType,
+                [moodType],
+              ),
+            ),
+            returnValueForMissingStub: _i4.dummyValue<
+                MapEntry<String,
+                    ({_i7.Color color, double defaultSize, String imagePath})>>(
+              this,
+              Invocation.method(
+                #getMoodByType,
+                [moodType],
+              ),
+            ),
+          ) as MapEntry<String,
+              ({_i7.Color color, double defaultSize, String imagePath})>);
+
+  @override
+  MapEntry<String, ({_i7.Color color, double defaultSize, String imagePath})>
+      getMoodByIndex(int? index) => (super.noSuchMethod(
+            Invocation.method(
+              #getMoodByIndex,
+              [index],
+            ),
+            returnValue: _i4.dummyValue<
+                MapEntry<String,
+                    ({_i7.Color color, double defaultSize, String imagePath})>>(
+              this,
+              Invocation.method(
+                #getMoodByIndex,
+                [index],
+              ),
+            ),
+            returnValueForMissingStub: _i4.dummyValue<
+                MapEntry<String,
+                    ({_i7.Color color, double defaultSize, String imagePath})>>(
+              this,
+              Invocation.method(
+                #getMoodByIndex,
+                [index],
+              ),
+            ),
+          ) as MapEntry<String,
+              ({_i7.Color color, double defaultSize, String imagePath})>);
 }
