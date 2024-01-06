@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.dart';
-import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
+import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
@@ -37,7 +37,7 @@ Future<void> registerSharedServices() async {
   getAndRegisterAppRouterMock();
   getAndRegisterUserServiceMock();
   getAndRegisterJournalEntryServiceMock();
-  getAndRegisterMoodServiceMock();
+  // getAndRegisterMoodServiceMock();
 }
 
 // Individual Services and Utility Classes
@@ -104,23 +104,19 @@ Client getAndRegisterClientMock() {
   return service;
 }
 
-MoodService getAndRegisterMoodServiceMock() {
+MoodService getAndRegisterMoodServiceMock(String moodType, double imageSize) {
   _removeRegistrationIfExists<MoodService>();
 
   final MoodService service = MockMoodService();
 
   // TODO: try using a map instead of MpEntry
 
-  // when(service.getMoodByType(MoodType.okay)).thenReturn(
-  //   const MapEntry(
-  //     MoodType.okay,
-  //     (
-  //       color: AppColors.moodOkay,
-  //       imagePath: MoodImagePath.moodOkay,
-  //       defaultSize: MoodService.commonDefaultSize,
-  //     ),
-  //   ),
-  // );
+  when(service.createMoodByType(moodType, imageSize)).thenReturn(Mood(
+    moodColor: AppColors.mainThemeColor,
+    moodImagePath: '',
+    imageSize: imageSize,
+    moodText: moodType,
+  ));
 
   locator.registerSingleton<MoodService>(service);
 

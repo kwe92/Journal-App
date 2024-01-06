@@ -8,11 +8,11 @@ class FilterButtonModel extends BaseViewModel {
 
   static final List<String> dropdownOptions = <String>[
     'all',
-    MoodType.awesome,
-    MoodType.happy,
-    MoodType.okay,
-    MoodType.bad,
-    MoodType.terrible,
+    MoodType.awesome.text,
+    MoodType.happy.text,
+    MoodType.okay.text,
+    MoodType.bad.text,
+    MoodType.terrible.text,
   ];
 
   void setDropdownValue(String value) {

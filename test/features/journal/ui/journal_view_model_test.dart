@@ -38,7 +38,7 @@ final JournalEntry entry = JournalEntry(
   entryId: 1,
   uid: 1,
   content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
-  moodType: MoodType.awesome,
+  moodType: MoodType.awesome.text,
   createdAt: DateTime.now(),
   updatedAt: DateTime.now(),
 );
@@ -49,7 +49,7 @@ final List<JournalEntry> initialEntries = [
     entryId: 1,
     uid: 1,
     content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
-    moodType: MoodType.awesome,
+    moodType: MoodType.awesome.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
@@ -57,7 +57,7 @@ final List<JournalEntry> initialEntries = [
     entryId: 1,
     uid: 1,
     content: 'compund intrst is the eighth wonder of the world',
-    moodType: MoodType.awesome,
+    moodType: MoodType.awesome.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
@@ -65,7 +65,7 @@ final List<JournalEntry> initialEntries = [
     entryId: 1,
     uid: 1,
     content: "the man who thinks he can and the man who thinks he can't are both right; which one are you?",
-    moodType: MoodType.happy,
+    moodType: MoodType.happy.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
@@ -73,7 +73,7 @@ final List<JournalEntry> initialEntries = [
     entryId: 1,
     uid: 1,
     content: 'calmness is emptiness, emptiness is calmness.',
-    moodType: MoodType.okay,
+    moodType: MoodType.okay.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
@@ -229,26 +229,25 @@ void main() {
       expect(actualTerribleCount, expectedTerribleCount);
     });
 
-    // TODO: continue implementing
-    // test('when model is created, getMood returns the correct mood object', () {
-    //   // Arrange - Setup
+    test('when model is created, createMood returns mood object', () {
+      // Arrange - Setup
 
-    //   var model = getModel();
+      var model = getModel();
 
-    //   getAndRegisterMoodServiceMock();
+      getAndRegisterMoodServiceMock(MoodType.okay.text, 20);
 
-    //   // Act
+      // Act
 
-    //   var mood = model.getMood(MoodType.okay);
+      var mood = model.createMood(MoodType.okay.text, 20);
 
-    //   // Assert - Result
+      // Assert - Result
 
-    //   var actual = mood.moodText;
+      var actual = mood.moodText;
 
-    //   var expected = MoodType.okay;
+      var expected = MoodType.okay.text;
 
-    //   expect(actual, expected);
-    // });
+      expect(actual, expected);
+    });
 
     // registered tear down function ran once after each tests
     // TODO: review why tearDown is making tests fail

@@ -21,7 +21,7 @@ class MoodTypeCounter extends ViewModelWidget<JournalViewModel> {
 
   @override
   Widget build(BuildContext context, JournalViewModel viewModel) {
-    final Mood mood = viewModel.getMood(moodType);
+    final Mood mood = viewModel.createMood(moodType, 20);
     return Row(
       children: [
         SvgPicture.asset(

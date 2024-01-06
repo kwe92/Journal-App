@@ -54,11 +54,11 @@ class JournalView extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                MoodTypeCounter(moodType: MoodType.awesome, moodCount: model.awesomeCount),
-                                MoodTypeCounter(moodType: MoodType.happy, moodCount: model.happyCount),
-                                MoodTypeCounter(moodType: MoodType.okay, moodCount: model.okayCount),
-                                MoodTypeCounter(moodType: MoodType.bad, moodCount: model.badCount),
-                                MoodTypeCounter(moodType: MoodType.terrible, moodCount: model.terribleCount),
+                                MoodTypeCounter(moodType: MoodType.awesome.text, moodCount: model.awesomeCount),
+                                MoodTypeCounter(moodType: MoodType.happy.text, moodCount: model.happyCount),
+                                MoodTypeCounter(moodType: MoodType.okay.text, moodCount: model.okayCount),
+                                MoodTypeCounter(moodType: MoodType.bad.text, moodCount: model.badCount),
+                                MoodTypeCounter(moodType: MoodType.terrible.text, moodCount: model.terribleCount),
                               ],
                             ),
                           ),
