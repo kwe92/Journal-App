@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
-import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
@@ -40,8 +39,7 @@ class AddEntryViewModel extends ReactiveViewModel {
 
   void initialize(String moodType) {
     // set the theme for the view to the color of the mood type
-    MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(moodType);
-    _moodColor = moodData.value.color;
+    _moodColor = moodService.getMoodColorByType(moodType);
 
     now = DateTime.now();
   }

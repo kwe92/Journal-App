@@ -22,7 +22,7 @@ class JournalEntryCard extends ViewModelWidget<JournalViewModel> {
 
   @override
   Widget build(BuildContext context, JournalViewModel viewModel) {
-    final Mood mood = viewModel.getMood(journalEntry.moodType);
+    final Mood mood = viewModel.createMood(journalEntry.moodType, 20);
 
     return Container(
       padding: EdgeInsets.only(top: index == 0 ? 16 : 0, bottom: 42),

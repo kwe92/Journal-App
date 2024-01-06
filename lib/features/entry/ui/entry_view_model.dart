@@ -3,7 +3,6 @@ import 'package:http/http.dart';
 import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
-import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
@@ -53,8 +52,7 @@ class EntryviewModel extends ReactiveViewModel {
   void initialize() {
     setContent(entry.content);
     entryController.text = _content!;
-    MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(entry.moodType);
-    _moodColor = moodData.value.color;
+    _moodColor = moodService.getMoodColorByType(entry.moodType);
   }
 
   void setContent(String text) {

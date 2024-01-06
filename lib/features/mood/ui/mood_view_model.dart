@@ -8,7 +8,7 @@ class MoodViewModel extends BaseViewModel {
   int _selectedIndex = 0;
 
   // default moodType to awesome
-  String _moodType = MoodType.awesome;
+  String _moodType = MoodType.awesome.text;
 
   String get moodType => _moodType;
 
