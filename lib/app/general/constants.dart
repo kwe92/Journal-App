@@ -15,9 +15,22 @@ class MediaType {
   static const json = "application/json";
 }
 
+/// backend API endpoint paths.
+enum MoodType {
+  awesome("Awesome"),
+  happy("Happy"),
+  okay("Okay"),
+  bad("Bad"),
+  terrible("Terrible");
+
+  final String text;
+
+  const MoodType(this.text);
+}
+
 /// the set of available moods a user can be in when writing a journal entry.
-class MoodType {
-  const MoodType._();
+class StaticMoodType {
+  const StaticMoodType._();
 
   static const String awesome = "Awesome";
   static const String happy = "Happy";
