@@ -11,7 +11,6 @@ import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: do not send back end call if the data remains the same
 @RoutePage()
 class EditProfileView extends StatelessWidget {
   const EditProfileView({super.key});
@@ -117,7 +116,11 @@ class EditProfileView extends StatelessWidget {
                                   onChanged: model.setPhoneNumber,
                                   validator: stringService.customStringValidator(
                                     model.phoneNumberController.text,
-                                    configuration: const StringValidatorConfiguration(notEmpty: true),
+                                    configuration: const StringValidatorConfiguration(
+                                      notEmpty: true,
+                                      includesOnlyNumbers: true,
+                                      includes12Characters: true,
+                                    ),
                                   ),
                                   autofillHints: const [AutofillHints.telephoneNumberNational],
                                   autovalidateMode: AutovalidateMode.disabled,
@@ -141,8 +144,18 @@ class EditProfileView extends StatelessWidget {
                                     if (model.readOnly) {
                                       model.setReadOnly(false);
                                     } else {
-                                      if (model.formKey.currentState!.validate() && model.ready) {
-                                        // TODO: don't send update to backend if the users data has not changed
+                                      debugPrint('identical info${model.isIdenticalInfo}');
+                                      debugPrint('user phone number ${model.userPhoneNumber}');
+                                      debugPrint('updated user phone number ${model.updatedPhoneNumber}');
+
+                                      debugPrint('form key validation ${model.formKey.currentState!.validate()}');
+
+                                      if ((model.formKey.currentState?.validate() ?? false) && model.ready) {
+                                        if (model.isIdenticalInfo) {
+                                          model.clearControllers();
+                                          appRouter.pop();
+                                          return;
+                                        }
                                         // attempt to update user info
                                         final bool statusOk = await model.updateUserInfo();
 

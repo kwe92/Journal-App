@@ -53,6 +53,7 @@ dependencies:
   entry: ^0.0.9
   flutter_native_splash: ^2.3.6
   flutter_portal: ^1.1.4
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:

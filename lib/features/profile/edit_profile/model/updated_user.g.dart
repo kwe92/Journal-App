@@ -9,8 +9,8 @@ part of 'updated_user.dart';
 UpdatedUser _$UpdatedUserFromJson(Map<String, dynamic> json) => UpdatedUser(
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
-      phoneNumber: json['phone_number'] as String?,
       email: json['email'] as String?,
+      phoneNumber: json['phone_number'] as String?,
     )..password = json['password'] as String?;
 
 Map<String, dynamic> _$UpdatedUserToJson(UpdatedUser instance) =>

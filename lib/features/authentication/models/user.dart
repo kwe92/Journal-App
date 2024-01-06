@@ -14,6 +14,8 @@ class User extends BaseUser {
     super.password,
   });
 
+  factory User.fromJSON(Map<String, dynamic> json) => _$UserFromJson(json);
+
   @override
   Map<String, dynamic> toJSON() => _$UserToJson(this);
 

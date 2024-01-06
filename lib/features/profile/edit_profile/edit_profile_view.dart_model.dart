@@ -68,6 +68,12 @@ class EditProfileViewModel extends ReactiveViewModel {
       _updatedEmail != null &&
       _updatedEmail!.isNotEmpty;
 
+  bool get isIdenticalInfo =>
+      userFirstName == updatedFirstName &&
+      userLastName == updatedLastName &&
+      userEmail == updatedEmail &&
+      stringService.formatPhoneNumberE164Standard(userPhoneNumber) == updatedPhoneNumber;
+
   @override
   List<ListenableServiceMixin> get listenableServices => [
         userService,

@@ -19,6 +19,7 @@ void main() async {
   await tokenService.removeAccessTokenFromStorage();
 
   appRouter.push(SignInRoute());
+  // appRouter.push(FarewellRoute());
 
   runApp(
     // Portal Widget required at the root of the widget tree to use the PortalTarget Widget

@@ -13,6 +13,8 @@ class UpdatedUser extends BaseUser {
     super.phoneNumber,
   });
 
+  factory UpdatedUser.fromJSON(Map<String, dynamic> json) => _$UpdatedUserFromJson(json);
+
   @override
   Map<String, dynamic> toJSON() => _$UpdatedUserToJson(this);
 

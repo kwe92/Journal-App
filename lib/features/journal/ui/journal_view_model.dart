@@ -48,17 +48,17 @@ class JournalViewModel extends ReactiveViewModel {
       ];
 
   Future<void> initialize() async {
-    // TODO: remove Future.delayed | placed here for testing loading indicator
-
     await runBusyFuture(() async {
+      // TODO: remove Future.delayed | placed here for testing loading indicator
       await Future.delayed(const Duration(seconds: 1));
       await journalEntryService.getAllEntries();
     }());
 
     // initialize journalEntries with journalEntryService.journalEntries after backend call
-
     _journalEntries = journalEntryService.journalEntries;
   }
+
+  //TODO: why is getAllEntries implemented? where is it being used?
 
   /// Retrieve all journal entries for the currently authenticated user.
   Future<void> getAllEntries() async {
@@ -99,7 +99,6 @@ class JournalViewModel extends ReactiveViewModel {
     return mood;
   }
 
-  ///
   Future<void> cleanResources() async {
     await ResourceCleanUp.clean();
   }
