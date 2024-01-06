@@ -8,7 +8,6 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
-import 'package:journal_app/features/shared/records/mood_record.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
@@ -20,23 +19,23 @@ class JournalViewModel extends ReactiveViewModel {
   List<JournalEntry> get journalEntries => _journalEntries;
 
   int get awesomeCount {
-    return _getMoodCountByMoodType(MoodType.awesome);
+    return _getMoodCountByMoodType(MoodType.awesome.text);
   }
 
   int get happyCount {
-    return _getMoodCountByMoodType(MoodType.happy);
+    return _getMoodCountByMoodType(MoodType.happy.text);
   }
 
   int get okayCount {
-    return _getMoodCountByMoodType(MoodType.okay);
+    return _getMoodCountByMoodType(MoodType.okay.text);
   }
 
   int get badCount {
-    return _getMoodCountByMoodType(MoodType.bad);
+    return _getMoodCountByMoodType(MoodType.bad.text);
   }
 
   int get terribleCount {
-    return _getMoodCountByMoodType(MoodType.terrible);
+    return _getMoodCountByMoodType(MoodType.terrible.text);
   }
 
   BaseUser? get currentUser => userService.currentUser;
@@ -85,16 +84,10 @@ class JournalViewModel extends ReactiveViewModel {
     );
   }
 
+  // TODO: should createMood be moved to factory class??
   /// Create [Mood] instance by mood type.
-  Mood getMood(String moodType) {
-    final MapEntry<String, MoodRecord> moodData = moodService.getMoodByType(moodType);
-
-    final Mood mood = Mood(
-      moodColor: moodData.value.color,
-      moodImagePath: moodData.value.imagePath,
-      imageSize: 20,
-      moodText: moodType,
-    );
+  Mood createMood(String moodType, double? imageSize) {
+    final Mood mood = moodService.createMoodByType(moodType, imageSize);
 
     return mood;
   }
@@ -111,28 +104,29 @@ class JournalViewModel extends ReactiveViewModel {
         notifyListeners();
         break;
 
-      case MoodType.awesome:
-        _journalEntries = _fiterJournalEntries(MoodType.awesome);
+      // used StaticMoodType as I could not use the MoodType enum for some reason
+      case StaticMoodType.awesome:
+        _journalEntries = _fiterJournalEntries(StaticMoodType.awesome);
         notifyListeners();
         break;
 
-      case MoodType.happy:
-        _journalEntries = _fiterJournalEntries(MoodType.happy);
+      case StaticMoodType.happy:
+        _journalEntries = _fiterJournalEntries(StaticMoodType.happy);
         notifyListeners();
         break;
 
-      case MoodType.okay:
-        _journalEntries = _fiterJournalEntries(MoodType.okay);
+      case StaticMoodType.okay:
+        _journalEntries = _fiterJournalEntries(StaticMoodType.okay);
         notifyListeners();
         break;
 
-      case MoodType.bad:
-        _journalEntries = _fiterJournalEntries(MoodType.bad);
+      case StaticMoodType.bad:
+        _journalEntries = _fiterJournalEntries(StaticMoodType.bad);
         notifyListeners();
         break;
 
-      case MoodType.terrible:
-        _journalEntries = _fiterJournalEntries(MoodType.terrible);
+      case StaticMoodType.terrible:
+        _journalEntries = _fiterJournalEntries(StaticMoodType.terrible);
         notifyListeners();
         break;
     }
