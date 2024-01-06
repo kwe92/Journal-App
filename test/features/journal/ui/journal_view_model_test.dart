@@ -33,52 +33,66 @@ import 'package:mockito/mockito.dart';
 
 import '../../../support/test_helpers.dart';
 
+// single entry
 final JournalEntry entry = JournalEntry(
   entryId: 1,
   uid: 1,
   content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
-  moodType: 'Okay',
+  moodType: MoodType.awesome,
   createdAt: DateTime.now(),
   updatedAt: DateTime.now(),
 );
 
-// final List<JournalEntry> initialEntries = [
-//   entry,
-//   JournalEntry(
-//     entryId: 1,
-//     uid: 1,
-//     content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
-//     moodType: MoodType.awesome,
-//     createdAt: DateTime.now(),
-//     updatedAt: DateTime.now(),
-//   ),
-//   JournalEntry(
-//     entryId: 1,
-//     uid: 1,
-//     content: ,
-//     moodType: MoodType.happy,
-//     createdAt: DateTime.now(),
-//     updatedAt: DateTime.now(),
-//   ),
-//   JournalEntry(
-//     entryId: 1,
-//     uid: 1,
-//     content: ,
-//     moodType: MoodType.okay,
-//     createdAt: DateTime.now(),
-//     updatedAt: DateTime.now(),
-//   ),
-// ];
+// array of entries
+final List<JournalEntry> initialEntries = [
+  JournalEntry(
+    entryId: 1,
+    uid: 1,
+    content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
+    moodType: MoodType.awesome,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  ),
+  JournalEntry(
+    entryId: 1,
+    uid: 1,
+    content: 'compund intrst is the eighth wonder of the world',
+    moodType: MoodType.awesome,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  ),
+  JournalEntry(
+    entryId: 1,
+    uid: 1,
+    content: "the man who thinks he can and the man who thinks he can't are both right; which one are you?",
+    moodType: MoodType.happy,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  ),
+  JournalEntry(
+    entryId: 1,
+    uid: 1,
+    content: 'calmness is emptiness, emptiness is calmness.',
+    moodType: MoodType.okay,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  ),
+];
 
 // TODO: Write Comments
 
 void main() {
+  /// returns ViewModel for this test
   JournalViewModel getModel() => JournalViewModel();
 
   group('JournalViewModelTest - Setup', () {
+    // registered setup function ran once before all tests
     setUpAll(
       () async {
+        // register required depenencies
         await registerSharedServices();
+
+        // stub api call with Client
         when(
           locator.get<Client>().get(
                 Uri.parse(testHost + Endpoint.entries.path),
@@ -91,39 +105,57 @@ void main() {
     );
 
     test('when model is first created, journal entry list is empty', () async {
-      // Arrange - Setup
-      final JournalViewModel model = getModel();
+      /// Arrange - Setup
 
-      // Act
+      var model = getModel();
+
+      /// Act
+
       await model.initialize();
 
-      // Assert - Result
+      /// Assert - Result
+
+      // actual result
       var actual = model.journalEntries;
 
+      // expected result
       var expected = [];
 
+      // assert and match
       expect(actual, expected);
     });
 
     test('when model is created and journal entries have been loaded, journal entry list is not empty', () async {
-      // Arrange - Setup
-      final JournalViewModel model = getModel();
+      /// Arrange - Setup
 
+      var model = getModel();
+
+      // register with a single entry
       getAndRegisterJournalEntryServiceMock(initialEntries: [entry]);
 
-      // Act
+      /// Act
+
       await model.initialize();
 
-      // Assert - Result
+      /// Assert - Result
+
+      // actual result
       var actual = model.journalEntries;
 
+      // expected result
       var expected = [entry];
 
+      // assert and match
       expect(actual, expected);
+
+      // registered tear down function ran once after each tests
     });
+    // TODO: review why tearDown is making tests fail
+    // tearDown(() => unregisterServices());
   });
 
   group('JournalViewModelTest - General', () {
+    // registered setup function ran once before all tests
     setUpAll(
       () async {
         await registerSharedServices();
@@ -138,16 +170,89 @@ void main() {
       },
     );
 
-    // TODO: continue implementation
-
     test('when model created and journal entries loaded, getter methods return correct count by mood', () async {
-      // Arrange - Setup
+      /// Arrange - Setup
 
-      final JournalViewModel model = getModel();
+      var model = getModel();
 
-      // Act
+      getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
 
-      // Assert - Result
+      /// Act
+
+      await model.initialize();
+
+      /// Assert - Result
+
+      // actual result
+      var actual = model.journalEntries;
+
+      // expected result
+      var expected = initialEntries;
+
+      // assert and match
+      expect(actual, expected);
+
+      // actual mood count
+
+      var actualAwesomeCount = model.awesomeCount;
+
+      var actualHappyCount = model.happyCount;
+
+      var actualOkayCount = model.okayCount;
+
+      var actualBadCount = model.badCount;
+
+      var actualTerribleCount = model.terribleCount;
+
+      // expected mood count
+
+      var expectedAwesomeCount = 2;
+
+      var expectedHappyCount = 1;
+
+      var expectedOkayCount = 1;
+
+      var expectedBadCount = 0;
+
+      var expectedTerribleCount = 0;
+
+      // assert and match
+
+      expect(actualAwesomeCount, expectedAwesomeCount);
+
+      expect(actualHappyCount, expectedHappyCount);
+
+      expect(actualOkayCount, expectedOkayCount);
+
+      expect(actualBadCount, expectedBadCount);
+
+      expect(actualTerribleCount, expectedTerribleCount);
     });
+
+    // TODO: continue implementing
+    // test('when model is created, getMood returns the correct mood object', () {
+    //   // Arrange - Setup
+
+    //   var model = getModel();
+
+    //   getAndRegisterMoodServiceMock();
+
+    //   // Act
+
+    //   var mood = model.getMood(MoodType.okay);
+
+    //   // Assert - Result
+
+    //   var actual = mood.moodText;
+
+    //   var expected = MoodType.okay;
+
+    //   expect(actual, expected);
+    // });
+
+    // registered tear down function ran once after each tests
+    // TODO: review why tearDown is making tests fail
+
+    // tearDown(() => unregisterServices());
   });
 }
