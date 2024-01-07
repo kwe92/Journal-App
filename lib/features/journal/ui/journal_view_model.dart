@@ -50,10 +50,10 @@ class JournalViewModel extends ReactiveViewModel {
     await runBusyFuture(() async {
       // TODO: remove Future.delayed | placed here for testing loading indicator
       await Future.delayed(const Duration(seconds: 1));
+
       await journalEntryService.getAllEntries();
     }());
 
-    // initialize journalEntries with journalEntryService.journalEntries after backend call
     _journalEntries = journalEntryService.journalEntries;
   }
 
@@ -66,7 +66,6 @@ class JournalViewModel extends ReactiveViewModel {
     final bool statusOk = ResponseHandler.checkStatusCode(response);
 
     if (statusOk) {
-      // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
       final Map<String, dynamic> reponseBody = jsonDecode(response.body);
 
       try {
@@ -74,6 +73,7 @@ class JournalViewModel extends ReactiveViewModel {
         if (responseData != null) return;
       } catch (error, stackTrace) {
         debugPrint("error in JournalViewModel getAllEntries: ${error.toString()}");
+
         toastService.showSnackBar(message: "An error occured retrieving your data.", textColor: Colors.red);
       }
       return;
@@ -85,6 +85,7 @@ class JournalViewModel extends ReactiveViewModel {
   }
 
   // TODO: should createMood be moved to factory class??
+
   /// Create [Mood] instance by mood type.
   Mood createMood(String moodType, double? imageSize) {
     final Mood mood = moodService.createMoodByType(moodType, imageSize);
@@ -97,8 +98,8 @@ class JournalViewModel extends ReactiveViewModel {
   }
 
   /// Filter journal entries by mood type.
-  void setFilteredJournalEntries(String mood) {
-    switch (mood) {
+  void setFilteredJournalEntries(String moodType) {
+    switch (moodType) {
       case 'all':
         _journalEntries = journalEntryService.journalEntries;
         notifyListeners();
