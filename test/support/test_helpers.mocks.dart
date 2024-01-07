@@ -10,6 +10,8 @@ import 'dart:ui' as _i4;
 
 import 'package:auto_route/auto_route.dart' as _i14;
 import 'package:http/http.dart' as _i2;
+import 'package:journal_app/features/authentication/services/token_service.dart'
+    as _i18;
 import 'package:journal_app/features/authentication/services/user_service.dart'
     as _i5;
 import 'package:journal_app/features/entry/models/updated_entry.dart' as _i12;
@@ -1183,14 +1185,14 @@ class MockMoodService extends _i1.Mock implements _i17.MoodService {
   @override
   _i3.Mood createMoodByType(
     String? moodType, [
-    double? size,
+    double? imageSize,
   ]) =>
       (super.noSuchMethod(
         Invocation.method(
           #createMoodByType,
           [
             moodType,
-            size,
+            imageSize,
           ],
         ),
         returnValue: _FakeMood_2(
@@ -1199,7 +1201,7 @@ class MockMoodService extends _i1.Mock implements _i17.MoodService {
             #createMoodByType,
             [
               moodType,
-              size,
+              imageSize,
             ],
           ),
         ),
@@ -1209,7 +1211,7 @@ class MockMoodService extends _i1.Mock implements _i17.MoodService {
             #createMoodByType,
             [
               moodType,
-              size,
+              imageSize,
             ],
           ),
         ),
@@ -1264,4 +1266,51 @@ class MockMoodService extends _i1.Mock implements _i17.MoodService {
             ),
           ) as MapEntry<String,
               ({_i4.Color color, double defaultSize, String imagePath})>);
+}
+
+/// A class which mocks [TokenService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTokenService extends _i1.Mock implements _i18.TokenService {
+  @override
+  _i7.Future<void> saveTokenData(Map<String, dynamic>? responseBody) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveTokenData,
+          [responseBody],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> saveAccessTokenToStorage(String? token) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveAccessTokenToStorage,
+          [token],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<String?> getAccessTokenFromStorage() => (super.noSuchMethod(
+        Invocation.method(
+          #getAccessTokenFromStorage,
+          [],
+        ),
+        returnValue: _i7.Future<String?>.value(),
+        returnValueForMissingStub: _i7.Future<String?>.value(),
+      ) as _i7.Future<String?>);
+
+  @override
+  _i7.Future<void> removeAccessTokenFromStorage() => (super.noSuchMethod(
+        Invocation.method(
+          #removeAccessTokenFromStorage,
+          [],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }
