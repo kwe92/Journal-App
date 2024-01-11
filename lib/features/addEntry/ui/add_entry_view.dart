@@ -25,7 +25,7 @@ class AddEntryView extends StatelessWidget {
 
     return ViewModelBuilder<AddEntryViewModel>.reactive(
       viewModelBuilder: () => AddEntryViewModel(),
-      onViewModelReady: (AddEntryViewModel model) => model.initialize(moodType),
+      onViewModelReady: (AddEntryViewModel model) => model.initialize(moodType, DateTime.now()),
       builder: (BuildContext context, AddEntryViewModel model, _) => BaseScaffold(
         moodColor: model.moodColor,
         // Manifested in french
