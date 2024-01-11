@@ -6,6 +6,7 @@ import 'package:journal_app/features/addEntry/ui/add_entry_view_model.dart';
 import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../support/test_helpers.dart';
@@ -45,7 +46,7 @@ void main() {
 
       // Act
 
-      model.initialize(moodType);
+      model.initialize(moodType, DateTime.now());
 
       // Assert - Result
 
@@ -78,6 +79,41 @@ void main() {
       // Assert - Result
 
       var expected = currentUser;
+
+      expect(actual, expected);
+    });
+
+    test('when model is initialized, getContinentalTime, dayOfWeekByName, and timeOfDay retrieve the correct values from the timeService',
+        () {
+      // Arrange - Setup
+
+      final model = getModel();
+
+      final now = DateTime.now();
+
+      getAndRegisterTimeServiceMock(now);
+
+      // Act
+
+      model.initialize(MoodType.awesome.text, now);
+
+      dynamic actual = model.continentalTime;
+
+      // Assert - Result
+
+      dynamic expected = int.parse(timeService.getContinentalTime(now));
+
+      expect(actual, expected);
+
+      actual = model.dayOfWeekByName;
+
+      expected = timeService.dayOfWeekByName(now);
+
+      expect(actual, expected);
+
+      actual = model.timeOfDay;
+
+      expected = timeService.timeOfDay(now);
 
       expect(actual, expected);
     });
