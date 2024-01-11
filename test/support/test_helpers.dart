@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
@@ -12,6 +13,7 @@ import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
+import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'test_helpers.mocks.dart';
@@ -33,6 +35,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<Client>(),
   MockSpec<MoodService>(),
   MockSpec<TokenService>(),
+  MockSpec<TimeService>(),
 ])
 class MockRouter extends Mock implements AppRouter {}
 
@@ -195,6 +198,31 @@ TokenService getAndRegisterTokenServiceMock() {
 
   // register mocked service as singleton
   locator.registerSingleton<TokenService>(service);
+
+  return service;
+}
+
+TimeService getAndRegisterTimeServiceMock(DateTime now) {
+  //  remove service if registered
+  _removeRegistrationIfExists<TimeService>();
+
+  // instantiate mock service
+  final TimeService service = MockTimeService();
+
+  // stub mocked methods and properties...
+  when(service.getContinentalTime(now)).thenReturn(DateFormat.H().format(now));
+
+  //   int get continentalTime {
+  //   return int.parse(timeService.getContinentalTime(now));
+  // }
+
+  // String get dayOfWeekByName => timeService.dayOfWeekByName(now);
+
+  // String get timeOfDay => timeService.timeOfDay(now);
+
+  // register mocked service as singleton
+
+  locator.registerSingleton<TimeService>(service);
 
   return service;
 }

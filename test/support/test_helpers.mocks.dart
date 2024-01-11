@@ -22,6 +22,7 @@ import 'package:journal_app/features/shared/abstractions/base_user.dart' as _i8;
 import 'package:journal_app/features/shared/models/journal_entry.dart' as _i10;
 import 'package:journal_app/features/shared/models/new_entry.dart' as _i11;
 import 'package:journal_app/features/shared/services/mood_service.dart' as _i17;
+import 'package:journal_app/features/shared/services/time_service.dart' as _i19;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 
@@ -1313,4 +1314,132 @@ class MockTokenService extends _i1.Mock implements _i18.TokenService {
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
+}
+
+/// A class which mocks [TimeService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTimeService extends _i1.Mock implements _i19.TimeService {
+  @override
+  String dayOfWeekByName([DateTime? dateTime]) => (super.noSuchMethod(
+        Invocation.method(
+          #dayOfWeekByName,
+          [dateTime],
+        ),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #dayOfWeekByName,
+            [dateTime],
+          ),
+        ),
+        returnValueForMissingStub: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #dayOfWeekByName,
+            [dateTime],
+          ),
+        ),
+      ) as String);
+
+  @override
+  String customDateString(
+    String? pattern, [
+    DateTime? dateTime,
+  ]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #customDateString,
+          [
+            pattern,
+            dateTime,
+          ],
+        ),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #customDateString,
+            [
+              pattern,
+              dateTime,
+            ],
+          ),
+        ),
+        returnValueForMissingStub: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #customDateString,
+            [
+              pattern,
+              dateTime,
+            ],
+          ),
+        ),
+      ) as String);
+
+  @override
+  String timeOfDay([DateTime? dateTime]) => (super.noSuchMethod(
+        Invocation.method(
+          #timeOfDay,
+          [dateTime],
+        ),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #timeOfDay,
+            [dateTime],
+          ),
+        ),
+        returnValueForMissingStub: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #timeOfDay,
+            [dateTime],
+          ),
+        ),
+      ) as String);
+
+  @override
+  String getStringFromDate(DateTime? dataTime) => (super.noSuchMethod(
+        Invocation.method(
+          #getStringFromDate,
+          [dataTime],
+        ),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getStringFromDate,
+            [dataTime],
+          ),
+        ),
+        returnValueForMissingStub: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getStringFromDate,
+            [dataTime],
+          ),
+        ),
+      ) as String);
+
+  @override
+  String getContinentalTime(DateTime? dateTime) => (super.noSuchMethod(
+        Invocation.method(
+          #getContinentalTime,
+          [dateTime],
+        ),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getContinentalTime,
+            [dateTime],
+          ),
+        ),
+        returnValueForMissingStub: _i6.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getContinentalTime,
+            [dateTime],
+          ),
+        ),
+      ) as String);
 }
