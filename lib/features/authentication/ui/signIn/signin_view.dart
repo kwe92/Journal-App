@@ -106,7 +106,7 @@ class SignInView extends StatelessWidget {
                                         model.unfocusAll(context);
 
                                         // check successful login
-                                        final bool statusOk = await model.signInWithEmail(context);
+                                        final bool statusOk = await model.signInWithEmail();
 
                                         // if successful, login
                                         if (statusOk) {

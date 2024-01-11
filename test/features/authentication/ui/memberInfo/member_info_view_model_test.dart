@@ -78,7 +78,7 @@ void main() {
 
       const email = 'beginnersMind@soto.io';
 
-      getAndRegisterAuthService(email);
+      getAndRegisterAuthService(availableEmail: email);
 
       final model = getModel();
 
