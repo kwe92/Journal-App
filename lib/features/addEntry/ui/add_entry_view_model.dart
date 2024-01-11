@@ -55,7 +55,7 @@ class AddEntryViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  /// attemt to add entry to the backend
+  /// attempt to add entry to the backend
   Future<bool> addEntry(String moodType, String content) async {
     // instantiate new entry
     final NewEntry newEntry = NewEntry(content: content, moodType: moodType);

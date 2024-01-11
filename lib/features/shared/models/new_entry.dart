@@ -9,7 +9,7 @@ class NewEntry {
   @JsonKey(name: "mood_type")
   final String moodType;
 
-  NewEntry({
+  const NewEntry({
     required this.content,
     required this.moodType,
   });
