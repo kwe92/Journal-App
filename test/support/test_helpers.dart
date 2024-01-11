@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/authentication/services/auth_service.dart';
+import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
@@ -36,6 +39,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<MoodService>(),
   MockSpec<TokenService>(),
   MockSpec<TimeService>(),
+  MockSpec<ImageService>(),
+  MockSpec<AuthService>(),
 ])
 class MockRouter extends Mock implements AppRouter {}
 
@@ -225,6 +230,51 @@ TimeService getAndRegisterTimeServiceMock(DateTime now) {
   locator.registerSingleton<TimeService>(service);
 
   return service;
+}
+
+ImageService getAndRegisterImageServiceMock() {
+  //  remove service if registered
+  _removeRegistrationIfExists<ImageService>();
+
+  // instantiate mock service
+  final ImageService service = MockImageService();
+
+  // stub mocked methods and properties...
+  when(service.getRandomMindfulImage()).thenReturn(Image.asset("assets/images/mindful01.avif").image);
+
+  locator.registerSingleton<ImageService>(service);
+
+  return service;
+}
+
+AuthService getAndRegisterAuthService() {
+  //  remove service if registered
+  _removeRegistrationIfExists<AuthService>();
+
+  // instantiate mock service
+  final AuthService service = MockAuthService();
+
+  // stub mocked methods and properties...
+
+  locator.registerSingleton<AuthService>(service);
+
+  return service;
+}
+
+T getAndRegisterService<T extends Object>(dynamic service, {bool singleton = true, bool lazySingleton = false}) {
+  assert(service.runtimeType == T);
+
+  _removeRegistrationIfExists<T>();
+
+  if (lazySingleton) {
+    locator.registerLazySingleton<T>(() => service);
+  } else if (singleton) {
+    locator.registerSingleton<T>(service);
+  } else {
+    locator.registerFactory<T>(() => service);
+  }
+
+  return locator.get<T>();
 }
 
 /// unregister an instance of an object or a factory / singleton by Type [T]
