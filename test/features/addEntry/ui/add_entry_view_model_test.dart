@@ -3,12 +3,12 @@ import 'package:http/http.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/addEntry/ui/add_entry_view_model.dart';
-import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../support/test_data.dart';
 import '../../../support/test_helpers.dart';
 
 void main() {
@@ -38,11 +38,11 @@ void main() {
     test('when model is created and initialized, mood color is the correct color', () {
       // Arrange - Setup
 
-      var model = getModel();
-
       var moodType = MoodType.awesome.text;
 
       getAndRegisterMoodServiceMock(moodType, 20);
+
+      var model = getModel();
 
       // Act
 
@@ -59,18 +59,9 @@ void main() {
 
     test('when user is authenticated, currentUser method returns correct user object', () {
       // Arrange - Setup
+      getAndRegisterUserServiceMock(testCurrentUser);
 
       final model = getModel();
-
-      final currentUser = AbstractFactory.createUser(
-        userType: UserType.curentUser,
-        firstName: 'Baki',
-        lastName: 'Hanma',
-        email: 'baki@grappler.io',
-        phoneNumber: '+11234567890',
-      );
-
-      getAndRegisterUserServiceMock(currentUser);
 
       // Act
 
@@ -78,7 +69,7 @@ void main() {
 
       // Assert - Result
 
-      var expected = currentUser;
+      var expected = testCurrentUser;
 
       expect(actual, expected);
     });
@@ -87,11 +78,11 @@ void main() {
         () {
       // Arrange - Setup
 
-      final model = getModel();
-
       final now = DateTime.now();
 
       getAndRegisterTimeServiceMock(now);
+
+      final model = getModel();
 
       // Act
 

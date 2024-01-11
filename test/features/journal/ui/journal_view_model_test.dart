@@ -127,10 +127,10 @@ void main() {
     test('when model is created and journal entries have been loaded, journal entry list is not empty', () async {
       /// Arrange - Setup
 
-      var model = getModel();
-
       // register with a single entry
       getAndRegisterJournalEntryServiceMock(initialEntries: [entry]);
+
+      var model = getModel();
 
       /// Act
 
@@ -172,9 +172,9 @@ void main() {
     test('when model created and journal entries loaded, getter methods return correct count by mood', () async {
       /// Arrange - Setup
 
-      var model = getModel();
-
       getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
+
+      var model = getModel();
 
       /// Act
 
@@ -231,13 +231,13 @@ void main() {
     test('when model is created, createMood returns mood object', () {
       // Arrange - Setup
 
-      var model = getModel();
-
       var moodType = MoodType.okay.text;
 
       var imageSize = 20.0;
 
       getAndRegisterMoodServiceMock(moodType, imageSize);
+
+      var model = getModel();
 
       // Act
 
@@ -272,10 +272,9 @@ void main() {
 
     test('when model created and journal entries loaded, entries are filtered correctly', () async {
       // Arrange - Setup
+      getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
 
       var model = getModel();
-
-      getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
 
       // Act
 
