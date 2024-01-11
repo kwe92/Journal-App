@@ -56,6 +56,7 @@ class MemberInfoViewModel extends ReactiveViewModel {
 
     // create temp user for registration
     await runBusyFuture(userService.createTempUser());
+
     // if value is null assign empty string
     _firstName = userService.tempUser?.firstName ?? '';
     _lastName = userService.tempUser?.lastName ?? '';

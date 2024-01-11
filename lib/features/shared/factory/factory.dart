@@ -14,23 +14,22 @@ class AbstractFactory {
     String? phoneNumber,
     String? password,
   }) {
-    switch (userType) {
-      case UserType.curentUser:
-        return User(
+    // TODO: review returning switch statements with shorter syntax
+    return switch (userType) {
+      UserType.curentUser => User(
           firstName: firstName,
           lastName: lastName,
           email: email,
           phoneNumber: phoneNumber,
           password: password,
-        );
-      case UserType.updatedUser:
-        return UpdatedUser(
+        ),
+      UserType.updatedUser => UpdatedUser(
           firstName: firstName,
           lastName: lastName,
           email: email,
           phoneNumber: phoneNumber,
-        );
-    }
+        )
+    };
   }
 
   static BaseUser createUserFromJson({

@@ -66,7 +66,7 @@ class SignInViewModel extends ReactiveViewModel {
   }
 
   /// Attempt to sign with provided email and password, returning true or false value for success or failure respectively.
-  Future<bool> signInWithEmail(BuildContext context) async {
+  Future<bool> signInWithEmail() async {
     final Response response = await runBusyFuture(authService.login(email: email!, password: password!));
 
     // check status code

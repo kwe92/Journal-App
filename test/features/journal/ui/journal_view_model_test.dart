@@ -7,6 +7,7 @@ import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:mockito/mockito.dart';
 
 // What does Arrange, Act and Assert mean?
@@ -15,7 +16,7 @@ import 'package:mockito/mockito.dart';
 
 //   - the setup part of a test
 //   - create an instance of the class you want to test
-//   - instantiate any required dependancies the class you are testing needs
+//   - instantiate any required dependancies (services) the class you are testing needs
 
 // Act (execute)
 
@@ -26,7 +27,7 @@ import 'package:mockito/mockito.dart';
 
 //   - after executing the method or property you want to test
 //     verify that the method or property had the correct behavior
-//   - this is done by assert methods of your testing framework
+//   - this is done by the assert methods of your testing framework
 //     comparing actual results with expected results
 //   - if the actual results match the expected results the test passes
 //   - if the actual results do not match the expected results the test fails
@@ -79,8 +80,6 @@ final List<JournalEntry> initialEntries = [
   ),
 ];
 
-// TODO: Write Comments
-
 void main() {
   /// returns ViewModel for this test
   JournalViewModel getModel() => JournalViewModel();
@@ -128,10 +127,10 @@ void main() {
     test('when model is created and journal entries have been loaded, journal entry list is not empty', () async {
       /// Arrange - Setup
 
-      var model = getModel();
-
       // register with a single entry
       getAndRegisterJournalEntryServiceMock(initialEntries: [entry]);
+
+      var model = getModel();
 
       /// Act
 
@@ -173,9 +172,9 @@ void main() {
     test('when model created and journal entries loaded, getter methods return correct count by mood', () async {
       /// Arrange - Setup
 
-      var model = getModel();
-
       getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
+
+      var model = getModel();
 
       /// Act
 
@@ -232,19 +231,62 @@ void main() {
     test('when model is created, createMood returns mood object', () {
       // Arrange - Setup
 
-      var model = getModel();
+      var moodType = MoodType.okay.text;
 
-      getAndRegisterMoodServiceMock(MoodType.okay.text, 20);
+      var imageSize = 20.0;
+
+      getAndRegisterMoodServiceMock(moodType, imageSize);
+
+      var model = getModel();
 
       // Act
 
-      var mood = model.createMood(MoodType.okay.text, 20);
+      var mood = model.createMood(moodType, imageSize);
 
       // Assert - Result
 
       var actual = mood.moodText;
 
       var expected = MoodType.okay.text;
+
+      expect(actual, expected);
+    });
+
+    test('when cleanResources called, resource clean up functions are executed', () async {
+      // Arrange - Setup
+
+      var model = getModel();
+
+      // Act
+
+      await model.cleanResources();
+
+      // Assert - Result
+
+      var actual = userService.tempUser;
+
+      Null expected;
+
+      expect(actual, expected);
+    });
+
+    test('when model created and journal entries loaded, entries are filtered correctly', () async {
+      // Arrange - Setup
+      getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
+
+      var model = getModel();
+
+      // Act
+
+      await model.initialize();
+
+      model.setFilteredJournalEntries(MoodType.awesome.text);
+
+      // Assert - Result
+
+      var actual = model.journalEntries.length;
+
+      var expected = 2;
 
       expect(actual, expected);
     });
