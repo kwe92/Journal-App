@@ -247,7 +247,7 @@ ImageService getAndRegisterImageServiceMock() {
   return service;
 }
 
-AuthService getAndRegisterAuthService() {
+AuthService getAndRegisterAuthService([String? email]) {
   //  remove service if registered
   _removeRegistrationIfExists<AuthService>();
 
@@ -255,6 +255,8 @@ AuthService getAndRegisterAuthService() {
   final AuthService service = MockAuthService();
 
   // stub mocked methods and properties...
+
+  when(service.checkAvailableEmail(email: email ?? '')).thenAnswer((_) => Future.value(Response('', 200)));
 
   locator.registerSingleton<AuthService>(service);
 
