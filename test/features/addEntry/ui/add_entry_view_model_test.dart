@@ -118,6 +118,56 @@ void main() {
       expect(actual, expected);
     });
 
+    test('when setContent called, content is not empty', () {
+      // Arrange - Setup
+
+      final model = getModel();
+
+      // Act
+
+      var content = 'Having difficulty when you want difficulty is okay.';
+
+      model.setContent(content);
+
+      dynamic actual = model.content;
+
+      dynamic expected = content;
+
+      // Assert - Result
+
+      expect(actual, expected);
+
+      actual = model.ready;
+
+      expected = true;
+
+      // Assert - Result
+
+      expect(actual, expected);
+    });
+
+    test('when content is set and clearContent called, content is null', () {
+      // Arrange - Setup
+
+      final model = getModel();
+
+      // Act
+
+      var content = 'Having difficulty when you want difficulty is okay.';
+
+      model.setContent(content);
+
+      model.clearContent();
+
+      var actual = model.content;
+
+      Null expected;
+
+      // Assert - Result
+
+      expect(actual, expected);
+    });
+
     // TODO: work on test
 
     // test('', () async {
