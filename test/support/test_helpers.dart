@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:mockito/annotations.dart';
@@ -67,12 +69,17 @@ AppRouter getAndRegisterAppRouterMock() {
   return router;
 }
 
-JournalEntryService getAndRegisterJournalEntryServiceMock({List<JournalEntry> initialEntries = const []}) {
+JournalEntryService getAndRegisterJournalEntryServiceMock({
+  List<JournalEntry> initialEntries = const [],
+  NewEntry newEntry = const NewEntry(moodType: '', content: ''),
+}) {
   //  remove service if registered
   _removeRegistrationIfExists<JournalEntryService>();
 
   // represents deserialized data instantiated into domain models
   final List<JournalEntry> loadedEntries = initialEntries;
+
+  final addedEntry = newEntry;
 
   // instantiate mock service
   final JournalEntryService service = MockJournalEntryService();
@@ -83,6 +90,13 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({List<JournalEntry> in
   when(service.getAllEntries()).thenAnswer(
     (_) async => Future.value(
       Response('{"data":${loadedEntries.map((entry) => jsonEncode(entry.toJSON()))}}', 200),
+    ),
+  );
+
+  // TODO: verify functionality is working | atm not working
+  when(service.addEntry(addedEntry)).thenAnswer(
+    (_) async => Future.value(
+      Response('{"data": ${jsonEncode(addedEntry.toJSON())}}', 200),
     ),
   );
 
@@ -135,6 +149,16 @@ MoodService getAndRegisterMoodServiceMock(String moodType, double imageSize) {
     imageSize: imageSize,
     moodText: moodType,
   ));
+
+  // stub mocked methods and properties...
+  when(service.getMoodColorByType(moodType)).thenReturn(switch (moodType) {
+    StaticMoodType.awesome => AppColors.moodAwesome,
+    StaticMoodType.happy => AppColors.moodHappy,
+    StaticMoodType.okay => AppColors.moodOkay,
+    StaticMoodType.bad => AppColors.moodBad,
+    StaticMoodType.terrible => AppColors.moodTerrible,
+    String() => AppColors.moodAwesome,
+  });
 
   // register mocked service as singleton
   locator.registerSingleton<MoodService>(service);
