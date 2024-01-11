@@ -7,6 +7,7 @@ import 'package:journal_app/features/authentication/services/token_service.dart'
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
@@ -106,7 +107,9 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
   return service;
 }
 
-UserService getAndRegisterUserServiceMock() {
+UserService getAndRegisterUserServiceMock([BaseUser? authenticatedUser]) {
+  final currentUser = authenticatedUser;
+
   //  remove service if registered
   _removeRegistrationIfExists<UserService>();
 
@@ -115,6 +118,8 @@ UserService getAndRegisterUserServiceMock() {
 
   // stub mocked methods and properties...
   when(service.clearUserData()).thenReturn(null);
+
+  when(service.currentUser).thenReturn(currentUser);
 
   // register mocked service as singleton
   locator.registerSingleton<UserService>(service);

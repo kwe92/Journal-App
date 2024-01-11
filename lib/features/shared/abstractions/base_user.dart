@@ -28,4 +28,21 @@ abstract class BaseUser {
 
   @override
   String toString();
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is BaseUser &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber &&
+        other.password == password;
+  }
+
+  @override
+  int get hashCode {
+    return firstName.hashCode ^ lastName.hashCode ^ email.hashCode ^ phoneNumber.hashCode ^ password.hashCode;
+  }
 }
