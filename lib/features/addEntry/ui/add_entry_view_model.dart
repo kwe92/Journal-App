@@ -17,7 +17,7 @@ class AddEntryViewModel extends ReactiveViewModel {
 
   BaseUser? get currentUser => userService.currentUser;
 
-  late final DateTime now;
+  DateTime? now;
 
   // computed variable based on content state updated with change notifier
   bool get ready {
@@ -25,7 +25,7 @@ class AddEntryViewModel extends ReactiveViewModel {
   }
 
   int get continentalTime {
-    return int.parse(timeService.getContinentalTime(now));
+    return int.parse(timeService.getContinentalTime(now!));
   }
 
   String get dayOfWeekByName => timeService.dayOfWeekByName(now);
@@ -37,11 +37,11 @@ class AddEntryViewModel extends ReactiveViewModel {
         userService,
       ];
 
-  void initialize(String moodType) {
+  void initialize(String moodType, DateTime dateTime) {
     // set the theme for the view to the color of the mood type
     _moodColor = moodService.getMoodColorByType(moodType);
 
-    now = DateTime.now();
+    now = dateTime;
   }
 
   void setContent(String text) {
