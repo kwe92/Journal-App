@@ -26,12 +26,13 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
     return password == confirmPassword;
   }
 
+  // refactor to isPasswordCriteriaSatisfied
   bool get passwordCriteriaSatisfied => _passwordCriteriaSatisfied();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [imageService];
 
-  void initialize(BuildContext context) async {
+  void initialize() async {
     _mindfulImage = imageService.getRandomMindfulImage();
 
     email = userService.tempUser?.email ?? "";

@@ -7,6 +7,7 @@ class AbstractFactory {
   AbstractFactory._();
 
   static BaseUser createUser({
+    // TODO: use a record instead on a slew of parameters | reduce the arity
     required UserType userType,
     String? firstName,
     String? lastName,
@@ -36,12 +37,10 @@ class AbstractFactory {
     required UserType userType,
     required Map<String, dynamic> json,
   }) {
-    switch (userType) {
-      case UserType.curentUser:
-        return User.fromJSON(json);
-      case UserType.updatedUser:
-        return UpdatedUser.fromJSON(json);
-    }
+    return switch (userType) {
+      UserType.curentUser => User.fromJSON(json),
+      UserType.updatedUser => UpdatedUser.fromJSON(json),
+    };
   }
 }
 
