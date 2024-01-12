@@ -247,7 +247,7 @@ ImageService getAndRegisterImageServiceMock() {
   return service;
 }
 
-AuthService getAndRegisterAuthService({String? availableEmail, String? loginEmail, String? loginPassword}) {
+AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, String? loginEmail, String? loginPassword}) {
   //  remove service if registered
   _removeRegistrationIfExists<AuthService>();
 
@@ -262,6 +262,8 @@ AuthService getAndRegisterAuthService({String? availableEmail, String? loginEmai
       .thenAnswer((_) => Future.value(Response('{"error": "there was an error"}', 200)));
 
   when(service.isLoggedIn).thenReturn(true);
+
+  when(service.register(user: user!)).thenAnswer((_) => Future.value(Response('{"error": "there was an error"}', 200)));
 
   locator.registerSingleton<AuthService>(service);
 
