@@ -22,17 +22,13 @@ void main() {
 
       // Act
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: Builder(builder: (context) {
-              model.initialize(context);
+      await tester.pumpWidget(TestingWrapper(
+        Builder(builder: (context) {
+          model.initialize(context);
 
-              return const Placeholder();
-            }),
-          ),
-        ),
-      );
+          return const Placeholder();
+        }),
+      ));
 
       // waits for all animations to complete
       await tester.pumpAndSettle(

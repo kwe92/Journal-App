@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - lcov.info - authentication/ui/signUp/ui/lib/features/authentication/ui/signUp/ui/signup_view_model.dart</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../../../../../../index.html">top level</a> - <a href="index.html">authentication/ui/signUp/ui/lib/features/authentication/ui/signUp/ui</a> - signup_view_model.dart<span style="font-size: 80%;"> (source / <a href="signup_view_model.dart.func-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">lcov.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryMed">78.8&nbsp;%</td>
+            <td class="headerCovTableEntry">33</td>
+            <td class="headerCovTableEntry">26</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2024-01-13 15:30:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : import 'dart:convert';</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : import 'package:flutter/material.dart';</span>
+<span id="L4"><span class="lineNum">       4</span>              : import 'package:http/http.dart';</span>
+<span id="L5"><span class="lineNum">       5</span>              : import 'package:journal_app/features/authentication/ui/mixins/password_mixin.dart';</span>
+<span id="L6"><span class="lineNum">       6</span>              : import 'package:journal_app/features/shared/abstractions/base_user.dart';</span>
+<span id="L7"><span class="lineNum">       7</span>              : import 'package:journal_app/features/shared/services/services.dart';</span>
+<span id="L8"><span class="lineNum">       8</span>              : import 'package:journal_app/features/shared/utilities/response_handler.dart';</span>
+<span id="L9"><span class="lineNum">       9</span>              : import 'package:stacked/stacked.dart';</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : class SignUpViewModel extends ReactiveViewModel with PasswordMixin {</span>
+<span id="L12"><span class="lineNum">      12</span>              :   ImageProvider? _mindfulImage;</span>
+<span id="L13"><span class="lineNum">      13</span>              : </span>
+<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC tlaBgGNC">           2 :   ImageProvider? get mindfulImage =&gt; _mindfulImage;</span></span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">           1 :   bool get ready {</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">           1 :     return email != null &amp;&amp;</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">           2 :         email!.isNotEmpty &amp;&amp;</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">           1 :         password != null &amp;&amp;</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           2 :         password!.isNotEmpty &amp;&amp;</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">           1 :         confirmPassword != null &amp;&amp;</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">           2 :         confirmPassword!.isNotEmpty;</span></span>
+<span id="L23"><span class="lineNum">      23</span>              :   }</span>
+<span id="L24"><span class="lineNum">      24</span>              : </span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">           1 :   bool get passwordMatch {</span></span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">           3 :     return password == confirmPassword;</span></span>
+<span id="L27"><span class="lineNum">      27</span>              :   }</span>
+<span id="L28"><span class="lineNum">      28</span>              : </span>
+<span id="L29"><span class="lineNum">      29</span>              :   // refactor to isPasswordCriteriaSatisfied</span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">           2 :   bool get passwordCriteriaSatisfied =&gt; _passwordCriteriaSatisfied();</span></span>
+<span id="L31"><span class="lineNum">      31</span>              : </span>
+<span id="L32"><span class="lineNum">      32</span> <span class="tlaGNC">           1 :   @override</span></span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaGNC">           2 :   List&lt;ListenableServiceMixin&gt; get listenableServices =&gt; [imageService];</span></span>
+<span id="L34"><span class="lineNum">      34</span>              : </span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaGNC">           1 :   void initialize() async {</span></span>
+<span id="L36"><span class="lineNum">      36</span> <span class="tlaGNC">           3 :     _mindfulImage = imageService.getRandomMindfulImage();</span></span>
+<span id="L37"><span class="lineNum">      37</span>              : </span>
+<span id="L38"><span class="lineNum">      38</span> <span class="tlaGNC">           3 :     email = userService.tempUser?.email ?? &quot;&quot;;</span></span>
+<span id="L39"><span class="lineNum">      39</span>              :   }</span>
+<span id="L40"><span class="lineNum">      40</span>              : </span>
+<span id="L41"><span class="lineNum">      41</span> <span class="tlaUNC tlaBgUNC">           0 :   String? confirmValidator(String? value) {</span></span>
+<span id="L42"><span class="lineNum">      42</span> <span class="tlaUNC">           0 :     if (value == null || value.isEmpty) {</span></span>
+<span id="L43"><span class="lineNum">      43</span>              :       return &quot;password cannot be empty&quot;;</span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaUNC">           0 :     } else if (value != password) {</span></span>
+<span id="L45"><span class="lineNum">      45</span>              :       return &quot;passwords do not match&quot;;</span>
+<span id="L46"><span class="lineNum">      46</span>              :     } else {</span>
+<span id="L47"><span class="lineNum">      47</span>              :       return null;</span>
+<span id="L48"><span class="lineNum">      48</span>              :     }</span>
+<span id="L49"><span class="lineNum">      49</span>              :   }</span>
+<span id="L50"><span class="lineNum">      50</span>              : </span>
+<span id="L51"><span class="lineNum">      51</span>              :   /// determines if the password criteria was met.</span>
+<span id="L52"><span class="lineNum">      52</span> <span class="tlaGNC tlaBgGNC">           1 :   bool _passwordCriteriaSatisfied() {</span></span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">           3 :     final String? allSatisfied = stringService.passwordIsValid(password);</span></span>
+<span id="L54"><span class="lineNum">      54</span> <span class="tlaUNC tlaBgUNC">           0 :     return allSatisfied != null &amp;&amp; allSatisfied.isNotEmpty ? false : true;</span></span>
+<span id="L55"><span class="lineNum">      55</span>              :   }</span>
+<span id="L56"><span class="lineNum">      56</span>              : </span>
+<span id="L57"><span class="lineNum">      57</span>              :   // register user with email if available</span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC tlaBgGNC">           1 :   Future&lt;bool&gt; signupWithEmail({required BaseUser user}) async {</span></span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">           3 :     final Response response = await runBusyFuture(authService.register(user: user));</span></span>
+<span id="L60"><span class="lineNum">      60</span>              : </span>
+<span id="L61"><span class="lineNum">      61</span>              :     // indicate if request was successful</span>
+<span id="L62"><span class="lineNum">      62</span> <span class="tlaGNC">           1 :     final bool statusOk = ResponseHandler.checkStatusCode(response);</span></span>
+<span id="L63"><span class="lineNum">      63</span>              : </span>
+<span id="L64"><span class="lineNum">      64</span> <span class="tlaGNC">           2 :     if (statusOk &amp;&amp; authService.isLoggedIn) {</span></span>
+<span id="L65"><span class="lineNum">      65</span>              :       // set currently authenticated user</span>
+<span id="L66"><span class="lineNum">      66</span> <span class="tlaGNC">           4 :       userService.setCurrentUser(jsonDecode(response.body));</span></span>
+<span id="L67"><span class="lineNum">      67</span>              : </span>
+<span id="L68"><span class="lineNum">      68</span>              :       // clear temp user dat</span>
+<span id="L69"><span class="lineNum">      69</span> <span class="tlaGNC">           2 :       userService.clearTempUserData();</span></span>
+<span id="L70"><span class="lineNum">      70</span>              : </span>
+<span id="L71"><span class="lineNum">      71</span>              :       // save jwt token to persistent storage</span>
+<span id="L72"><span class="lineNum">      72</span> <span class="tlaGNC">           2 :       await tokenService.saveTokenData(</span></span>
+<span id="L73"><span class="lineNum">      73</span> <span class="tlaGNC">           2 :         jsonDecode(response.body),</span></span>
+<span id="L74"><span class="lineNum">      74</span>              :       );</span>
+<span id="L75"><span class="lineNum">      75</span>              : </span>
+<span id="L76"><span class="lineNum">      76</span>              :       return statusOk;</span>
+<span id="L77"><span class="lineNum">      77</span>              :     }</span>
+<span id="L78"><span class="lineNum">      78</span>              : </span>
+<span id="L79"><span class="lineNum">      79</span> <span class="tlaUNC tlaBgUNC">           0 :     toastService.showSnackBar(</span></span>
+<span id="L80"><span class="lineNum">      80</span> <span class="tlaUNC">           0 :       message: ResponseHandler.getErrorMsg(response.body),</span></span>
+<span id="L81"><span class="lineNum">      81</span>              :       textColor: Colors.red,</span>
+<span id="L82"><span class="lineNum">      82</span>              :     );</span>
+<span id="L83"><span class="lineNum">      83</span>              : </span>
+<span id="L84"><span class="lineNum">      84</span>              :     return statusOk;</span>
+<span id="L85"><span class="lineNum">      85</span>              :   }</span>
+<span id="L86"><span class="lineNum">      86</span>              : </span>
+<span id="L87"><span class="lineNum">      87</span>              :   // unfocus currently focused nodes</span>
+<span id="L88"><span class="lineNum">      88</span> <span class="tlaUNC">           0 :   void unfocusAll(BuildContext context) =&gt; toastService.unfocusAll(context);</span></span>
+<span id="L89"><span class="lineNum">      89</span>              : }</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>
