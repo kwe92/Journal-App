@@ -61,6 +61,31 @@ void main() {
       expect(actual, expected);
     });
 
+    test('when model created and initialize called followed by a call to clearControllers, then all TextEditingController().text are empty',
+        () {
+      // Arrange - Setup
+      getAndRegisterUserServiceMock(testCurrentUser);
+      getAndRegisterService<ImageService>(ImageService());
+      getAndRegisterService<StringService>(StringService());
+
+      final model = getModel();
+
+      // Act
+      model.initialize();
+      model.clearControllers();
+
+      // Assert - Result
+
+      var actual = model.firstNameController.text.isEmpty &&
+          model.lastNameController.text.isEmpty &&
+          model.emailController.text.isEmpty &&
+          model.phoneNumberController.text.isEmpty;
+
+      var expected = true;
+
+      expect(actual, expected);
+    });
+
     test('when model created and setReadOnly(false) called, then all readOnly property is false', () {
       // Arrange - Setup
 
@@ -98,6 +123,27 @@ void main() {
       // Assert - Result
 
       var actual = model.ready;
+
+      var expected = true;
+
+      expect(actual, expected);
+    });
+
+    test('when model created and user info has not changed, then isIdenticalInfo returns true', () {
+      // Arrange - Setup
+
+      getAndRegisterService<StringService>(StringService());
+      getAndRegisterUserServiceMock(testCurrentUser);
+
+      final model = getModel();
+
+      // Act
+
+      model.initialize();
+
+      // Assert - Result
+
+      var actual = model.isIdenticalInfo;
 
       var expected = true;
 
