@@ -13,6 +13,7 @@ import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
+import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
@@ -20,6 +21,7 @@ import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
+import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'test_data.dart';
@@ -147,6 +149,18 @@ UserService getAndRegisterUserServiceMock([BaseUser? authenticatedUser]) {
   when(service.clearUserData()).thenReturn(null);
 
   when(service.currentUser).thenReturn(currentUser);
+
+  when(service.updateUserInfo(AbstractFactory.createUser(
+    userType: UserType.updatedUser,
+    firstName: testCurrentUser.firstName!.toLowerCase().capitalize().trim(),
+    lastName: testCurrentUser.lastName!.toLowerCase().capitalize().trim(),
+    email: testCurrentUser.email!.toLowerCase().trim(),
+    phoneNumber: testCurrentUser.phoneNumber!.trim(),
+  ))).thenAnswer(
+    (_) async => Future.value(
+      Response('{"success": "user updated"}', 200),
+    ),
+  );
 
   // register mocked service as singleton
   locator.registerSingleton<UserService>(service);
