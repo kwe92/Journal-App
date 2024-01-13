@@ -122,6 +122,12 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
     ),
   );
 
+  when(service.deleteEntry(testEntry.entryId)).thenAnswer(
+    (_) async => Future.value(
+      Response('{"success": "entry deleted"}', 200),
+    ),
+  );
+
   // register mocked service as singleton
   locator.registerSingleton<JournalEntryService>(service);
 
