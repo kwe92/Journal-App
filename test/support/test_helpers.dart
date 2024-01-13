@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/authentication/models/user.dart';
 import 'package:journal_app/features/authentication/services/auth_service.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
@@ -13,6 +15,7 @@ import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
+import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
@@ -20,6 +23,7 @@ import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
+import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'test_data.dart';
@@ -147,6 +151,18 @@ UserService getAndRegisterUserServiceMock([BaseUser? authenticatedUser]) {
   when(service.clearUserData()).thenReturn(null);
 
   when(service.currentUser).thenReturn(currentUser);
+
+  when(service.updateUserInfo(AbstractFactory.createUser(
+    userType: UserType.updatedUser,
+    firstName: testCurrentUser.firstName!.toLowerCase().capitalize().trim(),
+    lastName: testCurrentUser.lastName!.toLowerCase().capitalize().trim(),
+    email: testCurrentUser.email!.toLowerCase().trim(),
+    phoneNumber: testCurrentUser.phoneNumber!.trim(),
+  ))).thenAnswer(
+    (_) async => Future.value(
+      Response('{"success": "user updated"}', 200),
+    ),
+  );
 
   // register mocked service as singleton
   locator.registerSingleton<UserService>(service);
@@ -277,12 +293,15 @@ AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, S
 
   when(service.checkAvailableEmail(email: availableEmail ?? '')).thenAnswer((_) => Future.value(Response('', 200)));
 
+  // TODO: figure out a way to return status code 200 without error json body string
   when(service.login(email: loginEmail ?? '', password: loginPassword ?? ''))
       .thenAnswer((_) => Future.value(Response('{"error": "there was an error"}', 200)));
 
   when(service.isLoggedIn).thenReturn(true);
 
-  when(service.register(user: user!)).thenAnswer((_) => Future.value(Response('{"error": "there was an error"}', 200)));
+  when(service.register(user: user ?? User())).thenAnswer((_) => Future.value(Response('{"error": "there was an error"}', 200)));
+
+  when(service.deleteAccount()).thenAnswer((_) async => Future.value(Response('{"success": "so long farewell to you my friend"}', 200)));
 
   locator.registerSingleton<AuthService>(service);
 
@@ -342,19 +361,36 @@ Future<void> _removeRegistrationIfExists<T extends Object>() async {
   }
 }
 
-// base get and register function
+/// Necessary because Scaffolds require MediaQuery ancestor widget (MaterialApp)
+/// https://stackoverflow.com/questions/48498709/widget-test-fails-with-no-mediaquery-widget-found
+class TestingWrapper extends StatelessWidget {
+  const TestingWrapper(
+    this.child, {
+    super.key,
+    this.portal = false,
+  });
 
-//  getAndRegister_Mock() {
-//   //  remove service if registered
-//   _removeRegistrationIfExists<>();
+  final Widget child;
+  final bool portal;
 
-//   // instantiate mock service
-//   final  service = ();
+  const TestingWrapper.portal(
+    this.child, {
+    super.key,
+    this.portal = true,
+  });
 
-//   // register mocked service as singleton
-//   locator.registerSingleton<>(service);
-
-//   // stub mocked methods and properties...
-
-//   return service;
-// }
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        locale: const Locale('en'),
+        home: portal
+            ? Portal(
+                child: MediaQuery(
+                data: const MediaQueryData(size: Size(1080, 2160)),
+                child: Material(child: child),
+              ))
+            : MediaQuery(
+                data: const MediaQueryData(size: Size(1080, 2160)),
+                child: Material(child: child),
+              ),
+      );
+}

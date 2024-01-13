@@ -4,7 +4,6 @@ import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/entry/ui/entry_view_model.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
-import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
 
 import '../../../support/test_data.dart';
@@ -106,17 +105,21 @@ void main() {
 
     dynamic result;
 
-    await tester.pumpWidget(MaterialApp(
-      home: Scaffold(body: Builder(
-        builder: (context) {
-          () async {
-            result = await model.updateEntry(context);
-          }();
+    await tester.pumpWidget(
+      TestingWrapper(
+        Scaffold(
+          body: Builder(
+            builder: (context) {
+              () async {
+                result = await model.updateEntry(context);
+              }();
 
-          return const Placeholder();
-        },
-      )),
-    ));
+              return const Placeholder();
+            },
+          ),
+        ),
+      ),
+    );
 
     // Assert - Result
 
@@ -145,19 +148,23 @@ void main() {
 
     dynamic result;
 
-    await tester.pumpWidget(MaterialApp(
-      home: Scaffold(body: Builder(
-        builder: (context) {
-          () async {
-            const color = AppColors.moodAwesome;
-            getAndToastServiceService(context, color);
-            result = await model.continueDelete(context, color);
-          }();
+    await tester.pumpWidget(
+      TestingWrapper(
+        Scaffold(
+          body: Builder(
+            builder: (context) {
+              () async {
+                const color = AppColors.moodAwesome;
+                getAndToastServiceService(context, color);
+                result = await model.continueDelete(context, color);
+              }();
 
-          return const Placeholder();
-        },
-      )),
-    ));
+              return const Placeholder();
+            },
+          ),
+        ),
+      ),
+    );
 
     // Assert - Result
 

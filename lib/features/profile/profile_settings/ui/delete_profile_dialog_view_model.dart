@@ -59,7 +59,5 @@ class DeleteProfileDialogViewModel extends BaseViewModel {
     return statusOk;
   }
 
-  Future<void> cleanResources() async {
-    await ResourceCleanUp.clean();
-  }
+  Future<void> cleanResources() async => await ResourceCleanUp.clean();
 }
