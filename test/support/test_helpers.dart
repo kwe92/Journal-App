@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:journal_app/app/app_router.dart';
@@ -360,19 +361,36 @@ Future<void> _removeRegistrationIfExists<T extends Object>() async {
   }
 }
 
-// base get and register function
+/// Necessary because Scaffolds require MediaQuery ancestor widget (MaterialApp)
+/// https://stackoverflow.com/questions/48498709/widget-test-fails-with-no-mediaquery-widget-found
+class TestingWrapper extends StatelessWidget {
+  const TestingWrapper(
+    this.child, {
+    super.key,
+    this.portal = false,
+  });
 
-//  getAndRegister_Mock() {
-//   //  remove service if registered
-//   _removeRegistrationIfExists<>();
+  final Widget child;
+  final bool portal;
 
-//   // instantiate mock service
-//   final  service = ();
+  const TestingWrapper.portal(
+    this.child, {
+    super.key,
+    this.portal = true,
+  });
 
-//   // register mocked service as singleton
-//   locator.registerSingleton<>(service);
-
-//   // stub mocked methods and properties...
-
-//   return service;
-// }
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        locale: const Locale('en'),
+        home: portal
+            ? Portal(
+                child: MediaQuery(
+                data: const MediaQueryData(size: Size(1080, 2160)),
+                child: Material(child: child),
+              ))
+            : MediaQuery(
+                data: const MediaQueryData(size: Size(1080, 2160)),
+                child: Material(child: child),
+              ),
+      );
+}
