@@ -99,8 +99,10 @@ class JournalViewModel extends ReactiveViewModel {
 
   /// Filter journal entries by mood type.
   void setFilteredJournalEntries(String moodType) {
+    const all = 'all';
+
     switch (moodType) {
-      case 'all':
+      case all:
         _journalEntries = journalEntryService.journalEntries;
         notifyListeners();
         break;

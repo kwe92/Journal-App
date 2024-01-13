@@ -3,7 +3,7 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
+import 'dart:async' as _i6;
 import 'dart:convert' as _i16;
 import 'dart:typed_data' as _i17;
 import 'dart:ui' as _i4;
@@ -18,7 +18,7 @@ import 'package:journal_app/features/authentication/services/image_service.dart'
 import 'package:journal_app/features/authentication/services/token_service.dart'
     as _i19;
 import 'package:journal_app/features/authentication/services/user_service.dart'
-    as _i6;
+    as _i7;
 import 'package:journal_app/features/entry/models/updated_entry.dart' as _i13;
 import 'package:journal_app/features/journal/services/journal_entry_service.dart'
     as _i10;
@@ -28,8 +28,12 @@ import 'package:journal_app/features/shared/models/journal_entry.dart' as _i11;
 import 'package:journal_app/features/shared/models/new_entry.dart' as _i12;
 import 'package:journal_app/features/shared/services/mood_service.dart' as _i18;
 import 'package:journal_app/features/shared/services/time_service.dart' as _i20;
+import 'package:journal_app/features/shared/services/toast_service.dart'
+    as _i23;
+import 'package:journal_app/features/shared/utilities/popup_parameters.dart'
+    as _i24;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i8;
 
 import 'test_helpers.dart' as _i14;
 
@@ -98,18 +102,28 @@ class _FakeImageProvider_4<T extends Object> extends _i1.SmartFake
         );
 }
 
+class _FakeFuture_5<T1> extends _i1.SmartFake implements _i6.Future<T1> {
+  _FakeFuture_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [UserService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserService extends _i1.Mock implements _i6.UserService {
+class MockUserService extends _i1.Mock implements _i7.UserService {
   @override
   String get bearerPrefix => (super.noSuchMethod(
         Invocation.getter(#bearerPrefix),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#bearerPrefix),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#bearerPrefix),
         ),
@@ -125,11 +139,11 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
   @override
   String get host => (super.noSuchMethod(
         Invocation.getter(#host),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#host),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#host),
         ),
@@ -150,14 +164,14 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
       ) as bool);
 
   @override
-  _i8.Future<void> createTempUser() => (super.noSuchMethod(
+  _i6.Future<void> createTempUser() => (super.noSuchMethod(
         Invocation.method(
           #createTempUser,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
   void setCurrentUser(Map<String, dynamic>? responseBody) => super.noSuchMethod(
@@ -169,13 +183,13 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
       );
 
   @override
-  _i8.Future<_i2.Response> updateUserInfo(_i9.BaseUser? updatedUser) =>
+  _i6.Future<_i2.Response> updateUserInfo(_i9.BaseUser? updatedUser) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateUserInfo,
           [updatedUser],
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #updateUserInfo,
@@ -183,14 +197,14 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #updateUserInfo,
             [updatedUser],
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
   void clearUserData() => super.noSuchMethod(
@@ -256,7 +270,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
       );
 
   @override
-  _i8.Future<_i2.Response> get(
+  _i6.Future<_i2.Response> get(
     String? endpoint, {
     String? tempHost,
     Map<String, String>? extraHeaders,
@@ -270,7 +284,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -282,7 +296,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -293,10 +307,10 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> post(
+  _i6.Future<_i2.Response> post(
     String? endpoint, {
     required dynamic body,
     String? tempHost,
@@ -314,7 +328,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -328,7 +342,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -341,10 +355,10 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> put(
+  _i6.Future<_i2.Response> put(
     String? endpoint, {
     required dynamic body,
     String? tempHost,
@@ -360,7 +374,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -373,7 +387,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -385,10 +399,10 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> delete(
+  _i6.Future<_i2.Response> delete(
     String? endpoint, {
     dynamic body,
     String? tempHost,
@@ -404,7 +418,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -417,7 +431,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -429,7 +443,7 @@ class MockUserService extends _i1.Mock implements _i6.UserService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
@@ -503,11 +517,11 @@ class MockJournalEntryService extends _i1.Mock
   @override
   String get bearerPrefix => (super.noSuchMethod(
         Invocation.getter(#bearerPrefix),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#bearerPrefix),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#bearerPrefix),
         ),
@@ -523,11 +537,11 @@ class MockJournalEntryService extends _i1.Mock
   @override
   String get host => (super.noSuchMethod(
         Invocation.getter(#host),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#host),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#host),
         ),
@@ -541,12 +555,12 @@ class MockJournalEntryService extends _i1.Mock
       ) as int);
 
   @override
-  _i8.Future<_i2.Response> getAllEntries() => (super.noSuchMethod(
+  _i6.Future<_i2.Response> getAllEntries() => (super.noSuchMethod(
         Invocation.method(
           #getAllEntries,
           [],
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #getAllEntries,
@@ -554,23 +568,23 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #getAllEntries,
             [],
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> addEntry(_i12.NewEntry? newEntry) =>
+  _i6.Future<_i2.Response> addEntry(_i12.NewEntry? newEntry) =>
       (super.noSuchMethod(
         Invocation.method(
           #addEntry,
           [newEntry],
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #addEntry,
@@ -578,23 +592,23 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #addEntry,
             [newEntry],
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> updateEntry(_i13.UpdatedEntry? updatedEntry) =>
+  _i6.Future<_i2.Response> updateEntry(_i13.UpdatedEntry? updatedEntry) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateEntry,
           [updatedEntry],
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #updateEntry,
@@ -602,22 +616,22 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #updateEntry,
             [updatedEntry],
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> deleteEntry(int? entryId) => (super.noSuchMethod(
+  _i6.Future<_i2.Response> deleteEntry(int? entryId) => (super.noSuchMethod(
         Invocation.method(
           #deleteEntry,
           [entryId],
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #deleteEntry,
@@ -625,17 +639,17 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #deleteEntry,
             [entryId],
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> get(
+  _i6.Future<_i2.Response> get(
     String? endpoint, {
     String? tempHost,
     Map<String, String>? extraHeaders,
@@ -649,7 +663,7 @@ class MockJournalEntryService extends _i1.Mock
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -661,7 +675,7 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -672,10 +686,10 @@ class MockJournalEntryService extends _i1.Mock
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> post(
+  _i6.Future<_i2.Response> post(
     String? endpoint, {
     required dynamic body,
     String? tempHost,
@@ -693,7 +707,7 @@ class MockJournalEntryService extends _i1.Mock
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -707,7 +721,7 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -720,10 +734,10 @@ class MockJournalEntryService extends _i1.Mock
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> put(
+  _i6.Future<_i2.Response> put(
     String? endpoint, {
     required dynamic body,
     String? tempHost,
@@ -739,7 +753,7 @@ class MockJournalEntryService extends _i1.Mock
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -752,7 +766,7 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -764,10 +778,10 @@ class MockJournalEntryService extends _i1.Mock
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> delete(
+  _i6.Future<_i2.Response> delete(
     String? endpoint, {
     dynamic body,
     String? tempHost,
@@ -783,7 +797,7 @@ class MockJournalEntryService extends _i1.Mock
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -796,7 +810,7 @@ class MockJournalEntryService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -808,7 +822,7 @@ class MockJournalEntryService extends _i1.Mock
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
@@ -865,7 +879,7 @@ class MockAppRouter extends _i1.Mock implements _i14.MockRouter {
 /// See the documentation for Mockito's code generation for more information.
 class MockClient extends _i1.Mock implements _i2.Client {
   @override
-  _i8.Future<_i2.Response> head(
+  _i6.Future<_i2.Response> head(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -875,7 +889,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #head,
@@ -884,7 +898,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #head,
@@ -892,10 +906,10 @@ class MockClient extends _i1.Mock implements _i2.Client {
             {#headers: headers},
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> get(
+  _i6.Future<_i2.Response> get(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -905,7 +919,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -914,7 +928,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -922,10 +936,10 @@ class MockClient extends _i1.Mock implements _i2.Client {
             {#headers: headers},
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> post(
+  _i6.Future<_i2.Response> post(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
@@ -941,7 +955,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -954,7 +968,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -966,10 +980,10 @@ class MockClient extends _i1.Mock implements _i2.Client {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> put(
+  _i6.Future<_i2.Response> put(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
@@ -985,7 +999,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -998,7 +1012,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -1010,10 +1024,10 @@ class MockClient extends _i1.Mock implements _i2.Client {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> patch(
+  _i6.Future<_i2.Response> patch(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
@@ -1029,7 +1043,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #patch,
@@ -1042,7 +1056,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #patch,
@@ -1054,10 +1068,10 @@ class MockClient extends _i1.Mock implements _i2.Client {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> delete(
+  _i6.Future<_i2.Response> delete(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
@@ -1073,7 +1087,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -1086,7 +1100,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -1098,10 +1112,10 @@ class MockClient extends _i1.Mock implements _i2.Client {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<String> read(
+  _i6.Future<String> read(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -1111,7 +1125,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i8.Future<String>.value(_i7.dummyValue<String>(
+        returnValue: _i6.Future<String>.value(_i8.dummyValue<String>(
           this,
           Invocation.method(
             #read,
@@ -1120,7 +1134,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<String>.value(_i7.dummyValue<String>(
+            _i6.Future<String>.value(_i8.dummyValue<String>(
           this,
           Invocation.method(
             #read,
@@ -1128,10 +1142,10 @@ class MockClient extends _i1.Mock implements _i2.Client {
             {#headers: headers},
           ),
         )),
-      ) as _i8.Future<String>);
+      ) as _i6.Future<String>);
 
   @override
-  _i8.Future<_i17.Uint8List> readBytes(
+  _i6.Future<_i17.Uint8List> readBytes(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -1141,20 +1155,20 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i8.Future<_i17.Uint8List>.value(_i17.Uint8List(0)),
+        returnValue: _i6.Future<_i17.Uint8List>.value(_i17.Uint8List(0)),
         returnValueForMissingStub:
-            _i8.Future<_i17.Uint8List>.value(_i17.Uint8List(0)),
-      ) as _i8.Future<_i17.Uint8List>);
+            _i6.Future<_i17.Uint8List>.value(_i17.Uint8List(0)),
+      ) as _i6.Future<_i17.Uint8List>);
 
   @override
-  _i8.Future<_i2.StreamedResponse> send(_i2.BaseRequest? request) =>
+  _i6.Future<_i2.StreamedResponse> send(_i2.BaseRequest? request) =>
       (super.noSuchMethod(
         Invocation.method(
           #send,
           [request],
         ),
         returnValue:
-            _i8.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_1(
+            _i6.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_1(
           this,
           Invocation.method(
             #send,
@@ -1162,14 +1176,14 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_1(
+            _i6.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_1(
           this,
           Invocation.method(
             #send,
             [request],
           ),
         )),
-      ) as _i8.Future<_i2.StreamedResponse>);
+      ) as _i6.Future<_i2.StreamedResponse>);
 
   @override
   void close() => super.noSuchMethod(
@@ -1263,7 +1277,7 @@ class MockMoodService extends _i1.Mock implements _i18.MoodService {
               #getMoodByIndex,
               [index],
             ),
-            returnValue: _i7.dummyValue<
+            returnValue: _i8.dummyValue<
                 MapEntry<String,
                     ({_i4.Color color, double defaultSize, String imagePath})>>(
               this,
@@ -1272,7 +1286,7 @@ class MockMoodService extends _i1.Mock implements _i18.MoodService {
                 [index],
               ),
             ),
-            returnValueForMissingStub: _i7.dummyValue<
+            returnValueForMissingStub: _i8.dummyValue<
                 MapEntry<String,
                     ({_i4.Color color, double defaultSize, String imagePath})>>(
               this,
@@ -1290,46 +1304,46 @@ class MockMoodService extends _i1.Mock implements _i18.MoodService {
 /// See the documentation for Mockito's code generation for more information.
 class MockTokenService extends _i1.Mock implements _i19.TokenService {
   @override
-  _i8.Future<void> saveTokenData(Map<String, dynamic>? responseBody) =>
+  _i6.Future<void> saveTokenData(Map<String, dynamic>? responseBody) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveTokenData,
           [responseBody],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
-  _i8.Future<void> saveAccessTokenToStorage(String? token) =>
+  _i6.Future<void> saveAccessTokenToStorage(String? token) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveAccessTokenToStorage,
           [token],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
-  _i8.Future<String?> getAccessTokenFromStorage() => (super.noSuchMethod(
+  _i6.Future<String?> getAccessTokenFromStorage() => (super.noSuchMethod(
         Invocation.method(
           #getAccessTokenFromStorage,
           [],
         ),
-        returnValue: _i8.Future<String?>.value(),
-        returnValueForMissingStub: _i8.Future<String?>.value(),
-      ) as _i8.Future<String?>);
+        returnValue: _i6.Future<String?>.value(),
+        returnValueForMissingStub: _i6.Future<String?>.value(),
+      ) as _i6.Future<String?>);
 
   @override
-  _i8.Future<void> removeAccessTokenFromStorage() => (super.noSuchMethod(
+  _i6.Future<void> removeAccessTokenFromStorage() => (super.noSuchMethod(
         Invocation.method(
           #removeAccessTokenFromStorage,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 }
 
 /// A class which mocks [TimeService].
@@ -1342,14 +1356,14 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
           #dayOfWeekByName,
           [dateTime],
         ),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #dayOfWeekByName,
             [dateTime],
           ),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #dayOfWeekByName,
@@ -1371,7 +1385,7 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
             dateTime,
           ],
         ),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #customDateString,
@@ -1381,7 +1395,7 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
             ],
           ),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #customDateString,
@@ -1399,14 +1413,14 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
           #timeOfDay,
           [dateTime],
         ),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #timeOfDay,
             [dateTime],
           ),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #timeOfDay,
@@ -1421,14 +1435,14 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
           #getStringFromDate,
           [dataTime],
         ),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #getStringFromDate,
             [dataTime],
           ),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #getStringFromDate,
@@ -1443,14 +1457,14 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
           #getContinentalTime,
           [dateTime],
         ),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #getContinentalTime,
             [dateTime],
           ),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.method(
             #getContinentalTime,
@@ -1538,14 +1552,14 @@ class MockImageService extends _i1.Mock implements _i21.ImageService {
       ) as int);
 
   @override
-  _i8.Future<void> cacheImage(_i5.BuildContext? context) => (super.noSuchMethod(
+  _i6.Future<void> cacheImage(_i5.BuildContext? context) => (super.noSuchMethod(
         Invocation.method(
           #cacheImage,
           [context],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
   _i5.ImageProvider<Object> getRandomMindfulImage() => (super.noSuchMethod(
@@ -1621,11 +1635,11 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
   @override
   String get bearerPrefix => (super.noSuchMethod(
         Invocation.getter(#bearerPrefix),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#bearerPrefix),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#bearerPrefix),
         ),
@@ -1641,11 +1655,11 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
   @override
   String get host => (super.noSuchMethod(
         Invocation.getter(#host),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#host),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#host),
         ),
@@ -1659,14 +1673,14 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
       ) as bool);
 
   @override
-  _i8.Future<_i2.Response> register({required _i9.BaseUser? user}) =>
+  _i6.Future<_i2.Response> register({required _i9.BaseUser? user}) =>
       (super.noSuchMethod(
         Invocation.method(
           #register,
           [],
           {#user: user},
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #register,
@@ -1675,7 +1689,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #register,
@@ -1683,10 +1697,10 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             {#user: user},
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> login({
+  _i6.Future<_i2.Response> login({
     required String? email,
     required String? password,
   }) =>
@@ -1699,7 +1713,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             #password: password,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #login,
@@ -1711,7 +1725,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #login,
@@ -1722,17 +1736,17 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> checkAvailableEmail({required String? email}) =>
+  _i6.Future<_i2.Response> checkAvailableEmail({required String? email}) =>
       (super.noSuchMethod(
         Invocation.method(
           #checkAvailableEmail,
           [],
           {#email: email},
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #checkAvailableEmail,
@@ -1741,7 +1755,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #checkAvailableEmail,
@@ -1749,15 +1763,15 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             {#email: email},
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> deleteAccount() => (super.noSuchMethod(
+  _i6.Future<_i2.Response> deleteAccount() => (super.noSuchMethod(
         Invocation.method(
           #deleteAccount,
           [],
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #deleteAccount,
@@ -1765,17 +1779,17 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #deleteAccount,
             [],
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> get(
+  _i6.Future<_i2.Response> get(
     String? endpoint, {
     String? tempHost,
     Map<String, String>? extraHeaders,
@@ -1789,7 +1803,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -1801,7 +1815,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -1812,10 +1826,10 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> post(
+  _i6.Future<_i2.Response> post(
     String? endpoint, {
     required dynamic body,
     String? tempHost,
@@ -1833,7 +1847,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -1847,7 +1861,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -1860,10 +1874,10 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> put(
+  _i6.Future<_i2.Response> put(
     String? endpoint, {
     required dynamic body,
     String? tempHost,
@@ -1879,7 +1893,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -1892,7 +1906,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #put,
@@ -1904,10 +1918,10 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
-  _i8.Future<_i2.Response> delete(
+  _i6.Future<_i2.Response> delete(
     String? endpoint, {
     dynamic body,
     String? tempHost,
@@ -1923,7 +1937,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             #extraHeaders: extraHeaders,
           },
         ),
-        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -1936,7 +1950,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i2.Response>.value(_FakeResponse_0(
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #delete,
@@ -1948,7 +1962,7 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
             },
           ),
         )),
-      ) as _i8.Future<_i2.Response>);
+      ) as _i6.Future<_i2.Response>);
 
   @override
   void addListener(_i4.VoidCallback? listener) => super.noSuchMethod(
@@ -1982,6 +1996,159 @@ class MockAuthService extends _i1.Mock implements _i22.AuthService {
         Invocation.method(
           #notifyListeners,
           [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ToastService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockToastService extends _i1.Mock implements _i23.ToastService {
+  @override
+  void showSnackBar({
+    String? message,
+    _i5.BuildContext? context,
+    Duration? duration,
+    _i4.Color? textColor,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #showSnackBar,
+          [],
+          {
+            #message: message,
+            #context: context,
+            #duration: duration,
+            #textColor: textColor,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<T> popupMenu<T>(
+    _i5.BuildContext? context, {
+    required _i4.Color? color,
+    required _i24.PopupMenuParameters<dynamic>? parameters,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #popupMenu,
+          [context],
+          {
+            #color: color,
+            #parameters: parameters,
+          },
+        ),
+        returnValue: _i8.ifNotNull(
+              _i8.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #popupMenu,
+                  [context],
+                  {
+                    #color: color,
+                    #parameters: parameters,
+                  },
+                ),
+              ),
+              (T v) => _i6.Future<T>.value(v),
+            ) ??
+            _FakeFuture_5<T>(
+              this,
+              Invocation.method(
+                #popupMenu,
+                [context],
+                {
+                  #color: color,
+                  #parameters: parameters,
+                },
+              ),
+            ),
+        returnValueForMissingStub: _i8.ifNotNull(
+              _i8.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #popupMenu,
+                  [context],
+                  {
+                    #color: color,
+                    #parameters: parameters,
+                  },
+                ),
+              ),
+              (T v) => _i6.Future<T>.value(v),
+            ) ??
+            _FakeFuture_5<T>(
+              this,
+              Invocation.method(
+                #popupMenu,
+                [context],
+                {
+                  #color: color,
+                  #parameters: parameters,
+                },
+              ),
+            ),
+      ) as _i6.Future<T>);
+
+  @override
+  _i6.Future<T> deleteAccountPopupMenu<T>(
+    _i5.BuildContext? context, {
+    required _i24.PopupMenuParameters<dynamic>? parameters,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteAccountPopupMenu,
+          [context],
+          {#parameters: parameters},
+        ),
+        returnValue: _i8.ifNotNull(
+              _i8.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #deleteAccountPopupMenu,
+                  [context],
+                  {#parameters: parameters},
+                ),
+              ),
+              (T v) => _i6.Future<T>.value(v),
+            ) ??
+            _FakeFuture_5<T>(
+              this,
+              Invocation.method(
+                #deleteAccountPopupMenu,
+                [context],
+                {#parameters: parameters},
+              ),
+            ),
+        returnValueForMissingStub: _i8.ifNotNull(
+              _i8.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #deleteAccountPopupMenu,
+                  [context],
+                  {#parameters: parameters},
+                ),
+              ),
+              (T v) => _i6.Future<T>.value(v),
+            ) ??
+            _FakeFuture_5<T>(
+              this,
+              Invocation.method(
+                #deleteAccountPopupMenu,
+                [context],
+                {#parameters: parameters},
+              ),
+            ),
+      ) as _i6.Future<T>);
+
+  @override
+  void unfocusAll(_i5.BuildContext? context) => super.noSuchMethod(
+        Invocation.method(
+          #unfocusAll,
+          [context],
         ),
         returnValueForMissingStub: null,
       );

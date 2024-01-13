@@ -9,6 +9,7 @@ import 'package:journal_app/features/authentication/services/auth_service.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
+import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
@@ -17,8 +18,11 @@ import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
+import 'package:journal_app/features/shared/services/toast_service.dart';
+import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'test_data.dart';
 import 'test_helpers.mocks.dart';
 
 // Generating Mock CLasses to be Stubbed
@@ -41,6 +45,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<TimeService>(),
   MockSpec<ImageService>(),
   MockSpec<AuthService>(),
+  MockSpec<ToastService>(),
 ])
 class MockRouter extends Mock implements AppRouter {}
 
@@ -90,6 +95,8 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
 
   final addedEntry = newEntry;
 
+  final updatedEntry = UpdatedEntry(entryId: testEntry.entryId, content: testEntry.content);
+
   // instantiate mock service
   final JournalEntryService service = MockJournalEntryService();
 
@@ -102,10 +109,22 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
     ),
   );
 
-  // TODO: verify functionality is working | atm not working
+  when(service.updateEntry(updatedEntry)).thenAnswer(
+    (_) async => Future.value(
+      Response('{"updated_entry":${jsonEncode(updatedEntry.toJSON())}', 200),
+    ),
+  );
+
+  // TODO: verify functionality is working | atm not working | maybe due to creating model within the function calling the service
   when(service.addEntry(addedEntry)).thenAnswer(
     (_) async => Future.value(
       Response('{"data": ${jsonEncode(addedEntry.toJSON())}}', 200),
+    ),
+  );
+
+  when(service.deleteEntry(testEntry.entryId)).thenAnswer(
+    (_) async => Future.value(
+      Response('{"success": "entry deleted"}', 200),
     ),
   );
 
@@ -247,7 +266,7 @@ ImageService getAndRegisterImageServiceMock() {
   return service;
 }
 
-AuthService getAndRegisterAuthService({String? availableEmail, String? loginEmail, String? loginPassword}) {
+AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, String? loginEmail, String? loginPassword}) {
   //  remove service if registered
   _removeRegistrationIfExists<AuthService>();
 
@@ -263,7 +282,39 @@ AuthService getAndRegisterAuthService({String? availableEmail, String? loginEmai
 
   when(service.isLoggedIn).thenReturn(true);
 
+  when(service.register(user: user!)).thenAnswer((_) => Future.value(Response('{"error": "there was an error"}', 200)));
+
   locator.registerSingleton<AuthService>(service);
+
+  return service;
+}
+
+ToastService getAndToastServiceService(BuildContext context, Color color) {
+  //  remove service if registered
+  _removeRegistrationIfExists<ToastService>();
+
+  // instantiate mock service
+  final ToastService service = MockToastService();
+
+  // stub mocked methods and properties...
+  when(
+    // Note: arguments and parameterized types must be an exact match to what is passed to the actual function called for stub to work
+    service.popupMenu<bool>(
+      context,
+      color: color,
+      parameters: const PopupMenuParameters(
+        title: "Delete Entry",
+        content: "Are you sure you want to delete this entry?",
+        defaultResult: false,
+        options: {
+          "Delete Entry": true,
+          "Cancel": false,
+        },
+      ),
+    ),
+  ).thenAnswer((_) => Future.value(true));
+
+  locator.registerSingleton<ToastService>(service);
 
   return service;
 }

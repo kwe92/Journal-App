@@ -28,7 +28,7 @@ class SignUpView extends StatelessWidget {
     return ViewModelBuilder<SignUpViewModel>.reactive(
       viewModelBuilder: () => SignUpViewModel(),
       onViewModelReady: (SignUpViewModel model) async {
-        model.initialize(context);
+        model.initialize();
         // assign user email to emailController to be displayed on signup view
         emailController.text = model.email!;
 
