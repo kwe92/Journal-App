@@ -10,12 +10,10 @@ void main() {
   EditProfileViewModel getModel() => EditProfileViewModel();
 
   group('EditProfileViewModel - ', () {
-    setUpAll(() async {
-      await registerSharedServices();
-    });
+    setUpAll(() async => await registerSharedServices());
 
     test(
-        'when model created and initialize called, then mindfulImage, userFirstName, userLastName, userEmail, userPhoneNumber and TextEditingControllers are not null nor empty',
+        'when model created and initialize called, then mindfulImage, userFirstName, userLastName, userEmail, an userPhoneNumber are not null nor empty',
         () {
       // Arrange - Setup
       getAndRegisterUserServiceMock(testCurrentUser);
@@ -36,6 +34,98 @@ void main() {
 
       actual =
           model.userFirstName.isNotEmpty && model.userLastName.isNotEmpty && model.userEmail.isNotEmpty && model.userPhoneNumber.isNotEmpty;
+
+      expect(actual, expected);
+    });
+
+    test('when model created and initialize called, then all TextEditingController().text not null nor empty', () {
+      // Arrange - Setup
+      getAndRegisterUserServiceMock(testCurrentUser);
+      getAndRegisterService<ImageService>(ImageService());
+      getAndRegisterService<StringService>(StringService());
+
+      final model = getModel();
+
+      // Act
+      model.initialize();
+
+      // Assert - Result
+
+      var actual = model.firstNameController.text.isNotEmpty &&
+          model.lastNameController.text.isNotEmpty &&
+          model.emailController.text.isNotEmpty &&
+          model.phoneNumberController.text.isNotEmpty;
+
+      var expected = true;
+
+      expect(actual, expected);
+    });
+
+    test('when model created and setReadOnly(false) called, then all readOnly property is false', () {
+      // Arrange - Setup
+
+      getAndRegisterService<StringService>(StringService());
+
+      final model = getModel();
+
+      // Act
+      model.setReadOnly(true);
+
+      // Assert - Result
+
+      var actual = model.readOnly;
+
+      var expected = true;
+
+      expect(actual, expected);
+    });
+
+    test(
+        'when model created and updatedFirstName, updatedLastName, updatedEmail, updatedPhoneNumber are set and ready getter called, the ready returns true',
+        () {
+      // Arrange - Setup
+
+      getAndRegisterService<StringService>(StringService());
+
+      final model = getModel();
+
+      // Act
+      model.setFirstName(testCurrentUser.firstName!);
+      model.setLastName(testCurrentUser.lastName!);
+      model.setEmail(testCurrentUser.email!);
+      model.setPhoneNumber(testCurrentUser.phoneNumber!);
+
+      // Assert - Result
+
+      var actual = model.ready;
+
+      var expected = true;
+
+      expect(actual, expected);
+    });
+
+    test(
+        'when model created, updatedFirstName, updatedLastName, updatedEmail, updatedPhoneNumber are set and updateUserInfo called, returns true',
+        () async {
+      // Arrange - Setup
+
+      getAndRegisterService<StringService>(StringService());
+
+      final model = getModel();
+
+      // Act
+      model.setFirstName(testCurrentUser.firstName!);
+      model.setLastName(testCurrentUser.lastName!);
+      model.setEmail(testCurrentUser.email!);
+      model.setPhoneNumber(testCurrentUser.phoneNumber!.substring(2));
+
+      final result = await model.updateUserInfo();
+
+      // Assert - Result
+
+      var actual = result;
+
+      var expected = true;
 
       expect(actual, expected);
     });
