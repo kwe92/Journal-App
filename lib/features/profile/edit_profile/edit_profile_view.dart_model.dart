@@ -20,6 +20,7 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   // Mutable Variables
 
+  // TODO: refactor to isReadOnly
   bool _readOnly = true;
 
   String? _updatedFirstName;
@@ -95,7 +96,7 @@ class EditProfileViewModel extends ReactiveViewModel {
     setPhoneNumber(userPhoneNumber);
   }
 
-  // Setter Functions
+  // Setter methods
 
   void setFirstName(String value) {
     _updatedFirstName = value.trim();
@@ -135,6 +136,7 @@ class EditProfileViewModel extends ReactiveViewModel {
     firstNameController.clear();
     lastNameController.clear();
     emailController.clear();
+    phoneNumberController.clear();
   }
 
   Future<bool> updateUserInfo() async {
