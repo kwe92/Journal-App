@@ -5,12 +5,14 @@ import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view_mod
 import 'package:journal_app/features/authentication/ui/signUp/ui/widgets/requirements_popup.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/custom_portal_target.dart';
+import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:stacked/stacked.dart';
 
 class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
+
   final FocusNode emailFocus;
   final FocusNode passwordFocus;
   final FocusNode confirmPasswordFocus;
@@ -65,6 +67,7 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
           follower: const RequirementsPopup(),
           // target: the Widget to be overlayed with floating attached follower Widget
           target: TextFormField(
+            key: WidgetKey.initialPasswordKey,
             textInputAction: TextInputAction.next,
             autofocus: true,
             controller: passwordController,
@@ -86,6 +89,7 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
         ),
         gap12,
         TextFormField(
+          key: WidgetKey.confirmPasswordKey,
           textInputAction: TextInputAction.done,
           controller: confirmPasswordController,
           focusNode: confirmPasswordFocus,
