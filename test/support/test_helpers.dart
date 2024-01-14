@@ -354,6 +354,35 @@ T getAndRegisterService<T extends Object>(dynamic service, {bool singleton = tru
   return locator.get<T>();
 }
 
+// TODO: Review ignoreOverflowErrors
+
+/// overrides the functionality of overflow errors
+void ignoreOverflowErrors(
+  FlutterErrorDetails details, {
+  bool forceReport = false,
+}) {
+  bool ifIsOverflowError = false;
+  bool isUnableToLoadAsset = false;
+
+  // Detect overflow error.
+  var exception = details.exception;
+  if (exception is FlutterError) {
+    ifIsOverflowError = !exception.diagnostics.any(
+      (error) => error.value.toString().startsWith("A RenderFlex overflowed by"),
+    );
+    isUnableToLoadAsset = !exception.diagnostics.any(
+      (error) => error.value.toString().startsWith("Unable to load asset"),
+    );
+  }
+
+  // Ignore if is overflow error.
+  if (ifIsOverflowError || isUnableToLoadAsset) {
+    debugPrint('Ignored Error');
+  } else {
+    FlutterError.dumpErrorToConsole(details, forceReport: forceReport);
+  }
+}
+
 /// unregister an instance of an object or a factory / singleton by Type [T]
 Future<void> _removeRegistrationIfExists<T extends Object>() async {
   if (locator.isRegistered<T>()) {
