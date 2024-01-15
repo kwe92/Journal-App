@@ -79,10 +79,10 @@ AppRouter getAndRegisterAppRouterMock() {
   _removeRegistrationIfExists<AppRouter>();
 
   // instantiate mock service
-  final MockRouter router = MockAppRouter();
+  final router = MockAppRouter();
 
   // register mocked service as singleton
-  locator.registerSingleton<MockRouter>(router);
+  locator.registerSingleton<AppRouter>(router);
 
   return router;
 }
