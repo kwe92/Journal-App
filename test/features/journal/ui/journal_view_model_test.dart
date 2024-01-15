@@ -32,6 +32,7 @@ import 'package:mockito/mockito.dart';
 //   - if the actual results match the expected results the test passes
 //   - if the actual results do not match the expected results the test fails
 
+import '../../../support/test_data.dart';
 import '../../../support/test_helpers.dart';
 
 // single entry
@@ -287,6 +288,84 @@ void main() {
       var actual = model.journalEntries.length;
 
       var expected = 2;
+
+      expect(actual, expected);
+
+      // Act
+
+      model.setFilteredJournalEntries(MoodType.happy.text);
+
+      // Assert - Result
+
+      actual = model.journalEntries.length;
+
+      expected = 1;
+
+      expect(actual, expected);
+
+      // Act
+
+      model.setFilteredJournalEntries(MoodType.okay.text);
+
+      // Assert - Result
+
+      actual = model.journalEntries.length;
+
+      expected = 1;
+
+      expect(actual, expected);
+
+      // Act
+
+      model.setFilteredJournalEntries(MoodType.bad.text);
+
+      // Assert - Result
+
+      actual = model.journalEntries.length;
+
+      expected = 0;
+
+      expect(actual, expected);
+
+      // Act
+
+      model.setFilteredJournalEntries(MoodType.terrible.text);
+
+      // Assert - Result
+
+      actual = model.journalEntries.length;
+
+      expected = 0;
+
+      expect(actual, expected);
+
+      // Act
+      model.setFilteredJournalEntries('all');
+
+      // Assert - Result
+
+      actual = model.journalEntries.length;
+
+      expected = 4;
+
+      expect(actual, expected);
+    });
+
+    test('when currentUser called, then the currently authenticated user is logged in', () {
+      // Arrange - Setup
+      getAndRegisterUserServiceMock(testCurrentUser);
+
+      final model = getModel();
+
+      // Act
+
+      final result = model.currentUser;
+
+      // Assert - Results
+
+      var actual = result;
+
+      var expected = userService.currentUser;
 
       expect(actual, expected);
     });

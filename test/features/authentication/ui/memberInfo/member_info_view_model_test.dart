@@ -73,12 +73,30 @@ void main() {
       expect(actual, expected);
     });
 
+    test('when setObscure called with false argument, obscurePassword returns false', () {
+      // Arrange - Setup
+
+      final model = getModel();
+
+      // Act
+
+      model.setObscure(false);
+
+      // Assert - Result
+
+      var actual = model.obscurePassword;
+
+      var expected = false;
+
+      expect(actual, expected);
+    });
+
     test('when checkAvailableEmail called, response returns status ok', () async {
       // Arrange - Setup
 
       const email = 'beginnersMind@soto.io';
 
-      getAndRegisterAuthService(availableEmail: email);
+      getAndRegisterAuthServiceMock(availableEmail: email);
 
       final model = getModel();
 

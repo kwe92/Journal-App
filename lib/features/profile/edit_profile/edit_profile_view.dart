@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/features/profile/edit_profile/edit_profile_view.dart_model.dart';
+import 'package:journal_app/features/profile/edit_profile/edit_profile_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';

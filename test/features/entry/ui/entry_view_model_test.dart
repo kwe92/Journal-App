@@ -4,6 +4,8 @@ import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/entry/ui/entry_view_model.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
+import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
 
 import '../../../support/test_data.dart';
@@ -155,7 +157,7 @@ void main() {
             builder: (context) {
               () async {
                 const color = AppColors.moodAwesome;
-                getAndToastServiceService(context, color);
+                getAndRegisterToastServiceMock(context, color);
                 result = await model.continueDelete(context, color);
               }();
 
@@ -171,6 +173,87 @@ void main() {
     var actual = result;
 
     var expected = true;
+
+    expect(actual, expected);
+  });
+
+  test('if content has not changed, then isIdenticalContent returns true', () {
+    // Arrange - Setup
+    final model = getModel();
+
+    // Act
+    model.initialize();
+
+    // Assert - Result
+    var actual = model.isIdenticalContent;
+
+    var expected = true;
+
+    expect(actual, expected);
+  });
+
+  test('when model initialize called, then continentalTime, dayOfWeekByName, and timeOfDay return correct date and time information', () {
+    // Arrange - Setup
+    getAndRegisterService<TimeService>(TimeService());
+
+    final model = getModel();
+
+    // Act
+    final result = model.continentalTime ==
+            int.parse(timeService.getContinentalTime(
+              testEntry.updatedAt.toLocal(),
+            )) &&
+        model.dayOfWeekByName ==
+            timeService.dayOfWeekByName(
+              testEntry.updatedAt.toLocal(),
+            ) &&
+        model.timeOfDay ==
+            timeService.timeOfDay(
+              testEntry.updatedAt.toLocal(),
+            );
+    ;
+
+    // Assert - Result
+
+    var actual = result;
+
+    var expected = true;
+
+    expect(actual, expected);
+  });
+
+  test('when currentUser called, then the currently authenticated user is logged in', () {
+    // Arrange - Setup
+    getAndRegisterUserServiceMock(testCurrentUser);
+
+    final model = getModel();
+
+    // Act
+
+    final result = model.currentUser;
+
+    // Assert - Results
+
+    var actual = result;
+
+    var expected = userService.currentUser;
+
+    expect(actual, expected);
+  });
+
+  test('when serReadOnly called with false argument, then readOnly returns false', () {
+    // Arrange - Setup
+
+    final model = getModel();
+
+    // Act
+    model.setReadOnly(false);
+
+    // Assert - Results
+
+    var actual = model.readOnly;
+
+    var expected = false;
 
     expect(actual, expected);
   });
@@ -193,18 +276,3 @@ void main() {
   //   // expect(actual, expected);
   // });
 }
-
-
-
-
-
-
-  // test('when model created ', () {
-  //     // Arrange - Setup
-
-  //     var model = getModel();
-
-  //     // Act
-
-  //     // Assert - Result
-  //   });

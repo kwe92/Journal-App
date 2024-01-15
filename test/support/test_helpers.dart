@@ -79,10 +79,10 @@ AppRouter getAndRegisterAppRouterMock() {
   _removeRegistrationIfExists<AppRouter>();
 
   // instantiate mock service
-  final MockRouter router = MockAppRouter();
+  final router = MockAppRouter();
 
   // register mocked service as singleton
-  locator.registerSingleton<MockRouter>(router);
+  locator.registerSingleton<AppRouter>(router);
 
   return router;
 }
@@ -282,7 +282,7 @@ ImageService getAndRegisterImageServiceMock() {
   return service;
 }
 
-AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, String? loginEmail, String? loginPassword}) {
+AuthService getAndRegisterAuthServiceMock({BaseUser? user, String? availableEmail, String? loginEmail, String? loginPassword}) {
   //  remove service if registered
   _removeRegistrationIfExists<AuthService>();
 
@@ -308,7 +308,7 @@ AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, S
   return service;
 }
 
-ToastService getAndToastServiceService(BuildContext context, Color color) {
+ToastService getAndRegisterToastServiceMock(BuildContext context, [Color? color]) {
   //  remove service if registered
   _removeRegistrationIfExists<ToastService>();
 
@@ -320,7 +320,7 @@ ToastService getAndToastServiceService(BuildContext context, Color color) {
     // Note: arguments and parameterized types must be an exact match to what is passed to the actual function called for stub to work
     service.popupMenu<bool>(
       context,
-      color: color,
+      color: color ?? Colors.white,
       parameters: const PopupMenuParameters(
         title: "Delete Entry",
         content: "Are you sure you want to delete this entry?",
@@ -331,7 +331,22 @@ ToastService getAndToastServiceService(BuildContext context, Color color) {
         },
       ),
     ),
-  ).thenAnswer((_) => Future.value(true));
+  ).thenAnswer((_) async => Future.value(true));
+
+  when(
+    service.deleteAccountPopupMenu<bool>(
+      context,
+      parameters: const PopupMenuParameters(
+        title: 'Permanantly delete account?',
+        content: 'ALL account information will be removed from our system without recovery.',
+        defaultResult: false,
+        options: {
+          "Delete": true,
+          "Cancel": false,
+        },
+      ),
+    ),
+  ).thenAnswer((realInvocation) async => Future.value(true));
 
   locator.registerSingleton<ToastService>(service);
 
@@ -352,6 +367,35 @@ T getAndRegisterService<T extends Object>(dynamic service, {bool singleton = tru
   }
 
   return locator.get<T>();
+}
+
+// TODO: Review ignoreOverflowErrors
+
+/// overrides the functionality of overflow errors
+void ignoreOverflowErrors(
+  FlutterErrorDetails details, {
+  bool forceReport = false,
+}) {
+  bool ifIsOverflowError = false;
+  bool isUnableToLoadAsset = false;
+
+  // Detect overflow error.
+  var exception = details.exception;
+  if (exception is FlutterError) {
+    ifIsOverflowError = !exception.diagnostics.any(
+      (error) => error.value.toString().startsWith("A RenderFlex overflowed by"),
+    );
+    isUnableToLoadAsset = !exception.diagnostics.any(
+      (error) => error.value.toString().startsWith("Unable to load asset"),
+    );
+  }
+
+  // Ignore if is overflow error.
+  if (ifIsOverflowError || isUnableToLoadAsset) {
+    debugPrint('Ignored Error');
+  } else {
+    FlutterError.dumpErrorToConsole(details, forceReport: forceReport);
+  }
 }
 
 /// unregister an instance of an object or a factory / singleton by Type [T]

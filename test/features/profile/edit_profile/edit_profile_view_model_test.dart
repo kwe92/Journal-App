@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
-import 'package:journal_app/features/profile/edit_profile/edit_profile_view.dart_model.dart';
+import 'package:journal_app/features/profile/edit_profile/edit_profile_view_model.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 
 import '../../../support/test_data.dart';

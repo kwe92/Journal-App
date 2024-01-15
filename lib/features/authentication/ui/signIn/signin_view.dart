@@ -33,11 +33,13 @@ class SignInView extends StatelessWidget {
             ? Scaffold(
                 body: Center(
                   child: Container(
+                    // TODO: temp key for testing | remove later
+                    key: GlobalObjectKey('find-widget'),
+
                     // TODO: check if the initial splash screen and this bellow image are the same size on smaller devices
                     height: MediaQuery.of(context).size.height / 7.875,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        // to use Image.asset within DecorationImage retrieve the ImageProvider using image property e.g. Image.asset('assets/imeage/path').image
                         image: Image.asset(
                           'assets/images/splash_screen.png',
                         ).image,
@@ -147,3 +149,9 @@ class SignInView extends StatelessWidget {
     );
   }
 }
+
+// ImageProvider
+
+//   - to use Image.asset within DecorationImage retrieve
+//     - ImageProvider from image property
+//       e.g. Image.asset('assets/imeage/path').image
