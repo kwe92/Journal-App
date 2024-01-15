@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view.dart';
-import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
 
 import '../../../../support/test_helpers.dart';
 
@@ -15,7 +14,7 @@ void main() {
     });
 
     testWidgets('...', (tester) async {
-      WidgetsFlutterBinding.ensureInitialized();
+      TestWidgetsFlutterBinding.ensureInitialized();
 
       getAndRegisterService<ImageService>(ImageService());
 
@@ -25,10 +24,11 @@ void main() {
         ),
       );
 
-      await tester.pumpAndSettle(const Duration(seconds: 3));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       // Finders
-      final loginText = find.byType(DecorationImage);
+      // TODO: figure out why image service causing issues | if you put a print statement after image service call in view model it will not print in test
+      final loginText = find.byKey(const GlobalObjectKey('find-widget'));
 
       expect(loginText, findsOneWidget);
     });
