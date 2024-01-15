@@ -54,6 +54,7 @@ dependencies:
   flutter_native_splash: ^2.3.6
   flutter_portal: ^1.1.4
   mockito: ^5.4.4
+  device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:
