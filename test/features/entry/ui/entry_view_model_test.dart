@@ -222,6 +222,42 @@ void main() {
     expect(actual, expected);
   });
 
+  test('when currentUser called, then the currently authenticated user is logged in', () {
+    // Arrange - Setup
+    getAndRegisterUserServiceMock(testCurrentUser);
+
+    final model = getModel();
+
+    // Act
+
+    final result = model.currentUser;
+
+    // Assert - Results
+
+    var actual = result;
+
+    var expected = userService.currentUser;
+
+    expect(actual, expected);
+  });
+
+  test('when serReadOnly called with false argument, then readOnly returns false', () {
+    // Arrange - Setup
+
+    final model = getModel();
+
+    // Act
+    model.setReadOnly(false);
+
+    // Assert - Results
+
+    var actual = model.readOnly;
+
+    var expected = false;
+
+    expect(actual, expected);
+  });
+
   //TODO: figureout how to build out this test without using BuildContext
 
   // test('when model created and deleteEntry called, then true returned', () {
@@ -240,18 +276,3 @@ void main() {
   //   // expect(actual, expected);
   // });
 }
-
-
-
-
-
-
-  // test('when model created ', () {
-  //     // Arrange - Setup
-
-  //     var model = getModel();
-
-  //     // Act
-
-  //     // Assert - Result
-  //   });
