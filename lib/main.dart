@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:journal_app/app/app_router.gr.dart';
@@ -22,9 +23,16 @@ void main() async {
   // appRouter.push(FarewellRoute());
 
   runApp(
-    // Portal Widget required at the root of the widget tree to use the PortalTarget Widget
-    const Portal(
-      child: MyApp(),
+    DevicePreview(
+      enabled: false,
+      tools: const [
+        ...DevicePreview.defaultTools,
+      ],
+      builder: (context) =>
+          // Portal Widget required at the root of the widget tree to use the PortalTarget Widget
+          const Portal(
+        child: MyApp(),
+      ),
     ),
   );
 }
