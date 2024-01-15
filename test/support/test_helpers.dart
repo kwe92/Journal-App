@@ -282,7 +282,7 @@ ImageService getAndRegisterImageServiceMock() {
   return service;
 }
 
-AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, String? loginEmail, String? loginPassword}) {
+AuthService getAndRegisterAuthServiceMock({BaseUser? user, String? availableEmail, String? loginEmail, String? loginPassword}) {
   //  remove service if registered
   _removeRegistrationIfExists<AuthService>();
 
@@ -308,7 +308,7 @@ AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, S
   return service;
 }
 
-ToastService getAndToastServiceMock(BuildContext context, [Color? color]) {
+ToastService getAndRegisterToastServiceMock(BuildContext context, [Color? color]) {
   //  remove service if registered
   _removeRegistrationIfExists<ToastService>();
 

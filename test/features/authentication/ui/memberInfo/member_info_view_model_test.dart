@@ -96,7 +96,7 @@ void main() {
 
       const email = 'beginnersMind@soto.io';
 
-      getAndRegisterAuthService(availableEmail: email);
+      getAndRegisterAuthServiceMock(availableEmail: email);
 
       final model = getModel();
 

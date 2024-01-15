@@ -117,7 +117,7 @@ void main() {
 
     getAndRegisterService<StringService>(StringService());
     getAndRegisterService<ToastService>(ToastService());
-    getAndRegisterAuthService(user: testCurrentUser);
+    getAndRegisterAuthServiceMock(user: testCurrentUser);
 
     // Assert - Result
 

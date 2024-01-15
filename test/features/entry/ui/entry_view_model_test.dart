@@ -157,7 +157,7 @@ void main() {
             builder: (context) {
               () async {
                 const color = AppColors.moodAwesome;
-                getAndToastServiceService(context, color);
+                getAndRegisterToastServiceMock(context, color);
                 result = await model.continueDelete(context, color);
               }();
 

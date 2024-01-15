@@ -79,7 +79,7 @@ void main() {
 
       var loginPassword = 'persistence';
 
-      getAndRegisterAuthService(loginEmail: loginEmail, loginPassword: loginPassword);
+      getAndRegisterAuthServiceMock(loginEmail: loginEmail, loginPassword: loginPassword);
 
       getAndRegisterService<ToastService>(ToastService());
 

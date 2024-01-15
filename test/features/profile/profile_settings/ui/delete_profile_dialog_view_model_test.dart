@@ -77,7 +77,7 @@ void main() {
 
       getAndRegisterService<StringService>(StringService());
       getAndRegisterService<ToastService>(ToastService());
-      getAndRegisterAuthService();
+      getAndRegisterAuthServiceMock();
 
       final model = getModel();
 
