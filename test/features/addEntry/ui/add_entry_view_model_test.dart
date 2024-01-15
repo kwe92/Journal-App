@@ -1,11 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
+import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/addEntry/ui/add_entry_view_model.dart';
+import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/services/toast_service.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../support/test_data.dart';
@@ -164,26 +167,30 @@ void main() {
     // test('', () async {
     //   // Arrange - Setup
 
+    //   TestWidgetsFlutterBinding.ensureInitialized();
+
+    //   getAndRegisterService<ToastService>(ToastService());
+
+    //   getAndRegisterService<AppRouter>(AppRouter());
+
+    //   getAndRegisterJournalEntryServiceMock(
+    //     newEntry: NewEntry(
+    //       content: 'compound intrest is the eighth wonder of the world.',
+    //       moodType: MoodType.okay.text,
+    //     ),
+    //   );
+
     //   var model = getModel();
 
     //   // Act
 
-    //   getAndRegisterJournalEntryServiceMock(
-    //       newEntry: NewEntry(content: 'compound intrest is the eighth wonder of the world.', moodType: MoodType.okay.text));
-
     //   var actual = await model.addEntry(MoodType.okay.text, 'compound intrest is the eighth wonder of the world.');
-
-    //   print(actual);
-
-    //   // model.addEntry(MoodType.okay.text, 'compound intrest is the eighth wonder of the world.');
 
     //   // Assert - Result
 
-    //   // var actual = model.moodColor;
-
     //   var expected = true;
 
-    //   // expect(actual, expected);
+    //   expect(actual, expected);
     // });
   });
 }
