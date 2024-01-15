@@ -9,6 +9,7 @@ import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
+import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -25,12 +26,6 @@ class MemberInfoView extends StatelessWidget {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-
-  /// AutoFill keys
-  final GlobalObjectKey firstNameKey = const GlobalObjectKey('first');
-  final GlobalObjectKey lastNameKey = const GlobalObjectKey('last');
-  final GlobalObjectKey phoneNumberKey = const GlobalObjectKey('phone');
-  final GlobalObjectKey emailKey = const GlobalObjectKey('email');
 
   /// Focus nodes | used to have a smooth flow from one text field to another
   final FocusNode firstNameFocus = FocusNode();
@@ -101,7 +96,7 @@ class MemberInfoView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   TextFormField(
-                                    key: firstNameKey,
+                                    key: WidgetKey.firstNameKey,
                                     focusNode: firstNameFocus,
                                     textInputAction: TextInputAction.next,
                                     controller: firstNameController,
@@ -124,7 +119,7 @@ class MemberInfoView extends StatelessWidget {
                                   ),
                                   gap12,
                                   TextFormField(
-                                    key: lastNameKey,
+                                    key: WidgetKey.lastNameKey,
                                     focusNode: lastNameFocus,
                                     textInputAction: TextInputAction.next,
                                     textCapitalization: TextCapitalization.words,
@@ -143,7 +138,7 @@ class MemberInfoView extends StatelessWidget {
                                   ),
                                   gap12,
                                   TextFormField(
-                                    key: phoneNumberKey,
+                                    key: WidgetKey.phoneNumberKey,
                                     focusNode: phoneFocus,
                                     textInputAction: TextInputAction.next,
                                     controller: phoneNumberController,
@@ -175,7 +170,7 @@ class MemberInfoView extends StatelessWidget {
                                   ),
                                   gap12,
                                   TextFormField(
-                                    key: emailKey,
+                                    key: WidgetKey.emailKey,
                                     focusNode: emailFocus,
                                     textInputAction: TextInputAction.done,
                                     controller: emailController,
