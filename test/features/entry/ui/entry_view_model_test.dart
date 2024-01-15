@@ -4,6 +4,8 @@ import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/entry/ui/entry_view_model.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
+import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
 
 import '../../../support/test_data.dart';
@@ -165,6 +167,51 @@ void main() {
         ),
       ),
     );
+
+    // Assert - Result
+
+    var actual = result;
+
+    var expected = true;
+
+    expect(actual, expected);
+  });
+
+  test('if content has not changed, then isIdenticalContent returns true', () {
+    // Arrange - Setup
+    final model = getModel();
+
+    // Act
+    model.initialize();
+
+    // Assert - Result
+    var actual = model.isIdenticalContent;
+
+    var expected = true;
+
+    expect(actual, expected);
+  });
+
+  test('when model initialize called, then continentalTime, dayOfWeekByName, and timeOfDay return correct date and time information', () {
+    // Arrange - Setup
+    getAndRegisterService<TimeService>(TimeService());
+
+    final model = getModel();
+
+    // Act
+    final result = model.continentalTime ==
+            int.parse(timeService.getContinentalTime(
+              testEntry.updatedAt.toLocal(),
+            )) &&
+        model.dayOfWeekByName ==
+            timeService.dayOfWeekByName(
+              testEntry.updatedAt.toLocal(),
+            ) &&
+        model.timeOfDay ==
+            timeService.timeOfDay(
+              testEntry.updatedAt.toLocal(),
+            );
+    ;
 
     // Assert - Result
 
