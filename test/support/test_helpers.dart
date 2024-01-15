@@ -308,7 +308,7 @@ AuthService getAndRegisterAuthService({BaseUser? user, String? availableEmail, S
   return service;
 }
 
-ToastService getAndToastServiceService(BuildContext context, Color color) {
+ToastService getAndToastServiceMock(BuildContext context, [Color? color]) {
   //  remove service if registered
   _removeRegistrationIfExists<ToastService>();
 
@@ -320,7 +320,7 @@ ToastService getAndToastServiceService(BuildContext context, Color color) {
     // Note: arguments and parameterized types must be an exact match to what is passed to the actual function called for stub to work
     service.popupMenu<bool>(
       context,
-      color: color,
+      color: color ?? Colors.white,
       parameters: const PopupMenuParameters(
         title: "Delete Entry",
         content: "Are you sure you want to delete this entry?",
@@ -331,7 +331,22 @@ ToastService getAndToastServiceService(BuildContext context, Color color) {
         },
       ),
     ),
-  ).thenAnswer((_) => Future.value(true));
+  ).thenAnswer((_) async => Future.value(true));
+
+  when(
+    service.deleteAccountPopupMenu<bool>(
+      context,
+      parameters: const PopupMenuParameters(
+        title: 'Permanantly delete account?',
+        content: 'ALL account information will be removed from our system without recovery.',
+        defaultResult: false,
+        options: {
+          "Delete": true,
+          "Cancel": false,
+        },
+      ),
+    ),
+  ).thenAnswer((realInvocation) async => Future.value(true));
 
   locator.registerSingleton<ToastService>(service);
 
