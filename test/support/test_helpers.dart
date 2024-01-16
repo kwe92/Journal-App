@@ -24,6 +24,7 @@ import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:journal_app/features/shared/utilities/string_extensions.dart';
+import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'test_data.dart';
@@ -119,7 +120,6 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
     ),
   );
 
-  // TODO: verify functionality is working | atm not working | maybe due to creating model within the function calling the service
   when(service.addEntry(addedEntry)).thenAnswer(
     (_) async => Future.value(
       Response('{"data": ${jsonEncode(addedEntry.toJSON())}}', 200),
@@ -369,8 +369,6 @@ T getAndRegisterService<T extends Object>(dynamic service, {bool singleton = tru
   return locator.get<T>();
 }
 
-// TODO: Review ignoreOverflowErrors
-
 /// overrides the functionality of overflow errors
 void ignoreOverflowErrors(
   FlutterErrorDetails details, {
@@ -425,6 +423,7 @@ class TestingWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
+        scaffoldMessengerKey: WidgetKey.rootScaffoldMessengerKey,
         locale: const Locale('en'),
         home: portal
             ? Portal(

@@ -26,10 +26,10 @@ class MoodTypeCounter extends ViewModelWidget<JournalViewModel> {
       children: [
         SvgPicture.asset(
           mood.moodImagePath,
-          height: moodType == MoodType.terrible ? 25 : 20,
+          height: moodType == MoodType.terrible.text ? 25 : 20,
           color: mood.moodColor,
         ),
-        moodType == MoodType.terrible ? gap2 : gap4,
+        moodType == MoodType.terrible.text ? gap2 : gap4,
         Text(
           "$moodCount",
           style: const TextStyle(

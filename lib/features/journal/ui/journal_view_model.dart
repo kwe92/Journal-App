@@ -84,8 +84,6 @@ class JournalViewModel extends ReactiveViewModel {
     );
   }
 
-  // TODO: should createMood be moved to factory class??
-
   /// Create [Mood] instance by mood type.
   Mood createMood(String moodType, double? imageSize) {
     final Mood mood = moodService.createMoodByType(moodType, imageSize);

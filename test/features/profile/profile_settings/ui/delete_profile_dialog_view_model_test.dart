@@ -42,7 +42,6 @@ void main() {
       model.setConfirmedEmail(testCurrentUser.email!);
 
       final result = model.emailMatch;
-      ;
 
       // Assert
 
