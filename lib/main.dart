@@ -6,6 +6,7 @@ import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
+        scaffoldMessengerKey: WidgetKey.rootScaffoldMessengerKey,
         theme: AppTheme.getTheme(),
         routerConfig: appRouter.config(),
       );

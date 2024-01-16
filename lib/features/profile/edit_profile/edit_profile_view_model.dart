@@ -21,7 +21,8 @@ class EditProfileViewModel extends ReactiveViewModel {
   // Mutable Variables
 
   // TODO: refactor to isReadOnly
-  bool _readOnly = true;
+
+  bool _isReadOnly = true;
 
   String? _updatedFirstName;
 
@@ -55,7 +56,7 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   String? get updatedPhoneNumber => _updatedPhoneNumber;
 
-  bool get readOnly => _readOnly;
+  bool get isReadOnly => _isReadOnly;
 
   // Other Computed Variables
 
@@ -128,7 +129,7 @@ class EditProfileViewModel extends ReactiveViewModel {
   }
 
   void setReadOnly(bool readOnly) {
-    _readOnly = readOnly;
+    _isReadOnly = readOnly;
     notifyListeners();
   }
 

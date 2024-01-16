@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/app/app_router.dart';
@@ -162,35 +163,49 @@ void main() {
       expect(actual, expected);
     });
 
-    // TODO: work on test
+    testWidgets('when addEntry called, then return status ok', (tester) async {
+      // Arrange - Setup
 
-    // test('', () async {
-    //   // Arrange - Setup
+      TestWidgetsFlutterBinding.ensureInitialized();
 
-    //   TestWidgetsFlutterBinding.ensureInitialized();
+      getAndRegisterService<ToastService>(ToastService());
 
-    //   getAndRegisterService<ToastService>(ToastService());
+      getAndRegisterService<AppRouter>(AppRouter());
 
-    //   getAndRegisterService<AppRouter>(AppRouter());
+      getAndRegisterJournalEntryServiceMock(
+        newEntry: NewEntry(
+          content: 'compound intrest is the eighth wonder of the world.',
+          moodType: MoodType.okay.text,
+        ),
+      );
 
-    //   getAndRegisterJournalEntryServiceMock(
-    //     newEntry: NewEntry(
-    //       content: 'compound intrest is the eighth wonder of the world.',
-    //       moodType: MoodType.okay.text,
-    //     ),
-    //   );
+      var model = getModel();
 
-    //   var model = getModel();
+      dynamic result;
 
-    //   // Act
+      await tester.pumpWidget(
+        TestingWrapper(
+          Scaffold(
+            body: Builder(builder: (context) {
+              () async {
+                result = await model.addEntry(MoodType.okay.text, 'compound intrest is the eighth wonder of the world.');
+              }();
 
-    //   var actual = await model.addEntry(MoodType.okay.text, 'compound intrest is the eighth wonder of the world.');
+              return const Placeholder();
+            }),
+          ),
+        ),
+      );
 
-    //   // Assert - Result
+      // Act
 
-    //   var expected = true;
+      // Assert - Result
 
-    //   expect(actual, expected);
-    // });
+      var actual = result;
+
+      var expected = true;
+
+      expect(actual, expected);
+    });
   });
 }

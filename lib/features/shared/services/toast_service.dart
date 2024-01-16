@@ -7,6 +7,7 @@ import 'package:journal_app/features/profile/profile_settings/ui/delete_profile_
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
+import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 
 /// Service for displaying user feedback upon success or failure of some event.
 /// Info boxes displayed include toasts, snackbars, banners and other temporary infomation popup boxes.
@@ -15,8 +16,8 @@ class ToastService {
 
   /// Information box appearing at the bottom of the users screen presisting on all views for the duration.
   /// If more than one snack bar is triggered the snack bar will be added to the Queue of snack bars and displayed in the order added.
-  void showSnackBar({String? message, BuildContext? context, Duration? duration, Color? textColor}) {
-    ScaffoldMessenger.of(context ?? appRouter.navigatorKey.currentContext!).showSnackBar(
+  void showSnackBar({String? message, Duration? duration, Color? textColor}) {
+    WidgetKey.rootScaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
         duration: duration ?? const Duration(milliseconds: 750),
         content: Text(
@@ -26,6 +27,17 @@ class ToastService {
         ),
       ),
     );
+
+    // ScaffoldMessenger.of(context ?? appRouter.navigatorKey.currentContext!).showSnackBar(
+    //   SnackBar(
+    //     duration: duration ?? const Duration(milliseconds: 750),
+    //     content: Text(
+    //       message ?? _genericErrorMsg,
+    //       textAlign: TextAlign.center,
+    //       style: textColor != null ? snackBarTextStyle.copyWith(color: textColor) : null,
+    //     ),
+    //   ),
+    // );
   }
 
   /// generic modal with parameters.

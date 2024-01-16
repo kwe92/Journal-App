@@ -71,7 +71,7 @@ class EntryviewModel extends ReactiveViewModel {
   }
 
   /// update journal entry via API call to backend
-  Future<bool> updateEntry(BuildContext context) async {
+  Future<bool> updateEntry() async {
     final UpdatedEntry updatedEntry = UpdatedEntry(
       entryId: entry.entryId,
       content: content,
@@ -85,7 +85,9 @@ class EntryviewModel extends ReactiveViewModel {
     if (statusOk) {
       clearContent();
 
-      toastService.showSnackBar(message: "Updated journal entry successfully.", context: context);
+      toastService.showSnackBar(
+        message: "Updated journal entry successfully.",
+      );
 
       return statusOk;
     }

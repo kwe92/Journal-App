@@ -96,7 +96,7 @@ class EntryView extends StatelessWidget {
                       }
 
                       // push update to backend
-                      final bool statusOk = await model.updateEntry(context);
+                      final bool statusOk = await model.updateEntry();
 
                       if (statusOk) {
                         debugPrint("updated entry");

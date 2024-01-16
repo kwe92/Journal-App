@@ -98,7 +98,7 @@ void main() {
 
       // Assert - Result
 
-      var actual = model.readOnly;
+      var actual = model.isReadOnly;
 
       var expected = true;
 
