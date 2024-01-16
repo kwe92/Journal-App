@@ -113,7 +113,7 @@ void main() {
           body: Builder(
             builder: (context) {
               () async {
-                result = await model.updateEntry(context);
+                result = await model.updateEntry();
               }();
 
               return const Placeholder();
@@ -211,7 +211,6 @@ void main() {
             timeService.timeOfDay(
               testEntry.updatedAt.toLocal(),
             );
-    ;
 
     // Assert - Result
 
@@ -258,21 +257,35 @@ void main() {
     expect(actual, expected);
   });
 
-  //TODO: figureout how to build out this test without using BuildContext
+  testWidgets('when model created and deleteEntry called, then true returned', (tester) async {
+    // Arrange - Setup
 
-  // test('when model created and deleteEntry called, then true returned', () {
-  //   // Arrange - Setup
-  //   getAndRegisterService<AppRouter>(AppRouter());
+    getAndRegisterService<ToastService>(ToastService());
 
-  //   getAndRegisterService<ToastService>(ToastService());
+    var model = getModel();
 
-  //   var model = getModel();
+    // Act
+    dynamic result;
+    await tester.pumpWidget(
+      TestingWrapper(
+        Scaffold(
+          body: Builder(
+            builder: (context) {
+              () async {
+                result = await model.deleteEntry(testEntry.entryId);
+              }();
+              return const Placeholder();
+            },
+          ),
+        ),
+      ),
+    );
 
-  //   // Act
-  //   model.deleteEntry(testEntry.entryId);
+    // Assert - Result
+    var actual = result;
 
-  //   // Assert - Result
+    var expected = true;
 
-  //   // expect(actual, expected);
-  // });
+    expect(actual, expected);
+  });
 }
