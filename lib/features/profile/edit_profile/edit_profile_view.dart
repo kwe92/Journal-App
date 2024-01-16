@@ -58,7 +58,7 @@ class EditProfileView extends StatelessWidget {
                             child: Column(
                               children: [
                                 TextFormField(
-                                  readOnly: model.readOnly,
+                                  readOnly: model.isReadOnly,
                                   controller: model.firstNameController,
                                   textCapitalization: TextCapitalization.words,
                                   onChanged: model.setFirstName,
@@ -70,14 +70,14 @@ class EditProfileView extends StatelessWidget {
                                   decoration: InputDecoration(
                                     hintText: 'Enter First Name',
                                     labelText: 'First Name',
-                                    suffixIcon: model.firstNameController.text.isNotEmpty && model.readOnly == false
+                                    suffixIcon: model.firstNameController.text.isNotEmpty && model.isReadOnly == false
                                         ? ConditionalClearIcon(controller: model.firstNameController)
                                         : null,
                                   ),
                                 ),
                                 gap24,
                                 TextFormField(
-                                  readOnly: model.readOnly,
+                                  readOnly: model.isReadOnly,
                                   controller: model.lastNameController,
                                   textCapitalization: TextCapitalization.words,
                                   onChanged: model.setLastName,
@@ -89,14 +89,14 @@ class EditProfileView extends StatelessWidget {
                                   decoration: InputDecoration(
                                     hintText: 'Enter Last Name',
                                     labelText: 'Last Name',
-                                    suffixIcon: model.lastNameController.text.isNotEmpty && model.readOnly == false
+                                    suffixIcon: model.lastNameController.text.isNotEmpty && model.isReadOnly == false
                                         ? ConditionalClearIcon(controller: model.lastNameController)
                                         : null,
                                   ),
                                 ),
                                 gap24,
                                 TextFormField(
-                                  readOnly: model.readOnly,
+                                  readOnly: model.isReadOnly,
                                   controller: model.emailController,
                                   onChanged: model.setEmail,
                                   autofillHints: const [AutofillHints.email],
@@ -104,7 +104,7 @@ class EditProfileView extends StatelessWidget {
                                   decoration: InputDecoration(
                                     hintText: 'Enter Email',
                                     labelText: 'Email',
-                                    suffixIcon: model.emailController.text.isNotEmpty && model.readOnly == false
+                                    suffixIcon: model.emailController.text.isNotEmpty && model.isReadOnly == false
                                         ? ConditionalClearIcon(controller: model.emailController)
                                         : null,
                                   ),
@@ -133,7 +133,7 @@ class EditProfileView extends StatelessWidget {
                                       hintText: 'Enter Phone Number',
                                       // text prefixing user input
                                       prefixText: '(+1) ',
-                                      suffixIcon: model.phoneNumberController.text.isNotEmpty && model.readOnly == false
+                                      suffixIcon: model.phoneNumberController.text.isNotEmpty && model.isReadOnly == false
                                           ? ConditionalClearIcon(controller: model.phoneNumberController)
                                           : null),
                                 ),
@@ -141,7 +141,7 @@ class EditProfileView extends StatelessWidget {
                                 SelectableButton(
                                   onPressed: () async {
                                     // if text fields are read only unlock them all
-                                    if (model.readOnly) {
+                                    if (model.isReadOnly) {
                                       model.setReadOnly(false);
                                     } else {
                                       debugPrint('identical info${model.isIdenticalInfo}');
@@ -167,7 +167,7 @@ class EditProfileView extends StatelessWidget {
                                       }
                                     }
                                   },
-                                  label: model.readOnly ? "Edit" : "Update",
+                                  label: model.isReadOnly ? "Edit" : "Update",
                                 ),
                                 gap24,
                               ],

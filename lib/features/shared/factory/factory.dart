@@ -7,41 +7,37 @@ class AbstractFactory {
   AbstractFactory._();
 
   static BaseUser createUser({
-    // TODO: use a record instead on a slew of parameters | reduce the arity
     required UserType userType,
     String? firstName,
     String? lastName,
     String? email,
     String? phoneNumber,
     String? password,
-  }) {
-    // TODO: review returning switch statements with shorter syntax
-    return switch (userType) {
-      UserType.curentUser => User(
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          phoneNumber: phoneNumber,
-          password: password,
-        ),
-      UserType.updatedUser => UpdatedUser(
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          phoneNumber: phoneNumber,
-        )
-    };
-  }
+  }) =>
+      switch (userType) {
+        UserType.curentUser => User(
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phoneNumber: phoneNumber,
+            password: password,
+          ),
+        UserType.updatedUser => UpdatedUser(
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phoneNumber: phoneNumber,
+          )
+      };
 
   static BaseUser createUserFromJson({
     required UserType userType,
     required Map<String, dynamic> json,
-  }) {
-    return switch (userType) {
-      UserType.curentUser => User.fromJSON(json),
-      UserType.updatedUser => UpdatedUser.fromJSON(json),
-    };
-  }
+  }) =>
+      switch (userType) {
+        UserType.curentUser => User.fromJSON(json),
+        UserType.updatedUser => UpdatedUser.fromJSON(json),
+      };
 }
 
 enum UserType {
