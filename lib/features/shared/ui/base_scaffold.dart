@@ -33,6 +33,7 @@ class BaseScaffold extends StatelessWidget {
                 boxShadow: [CommonBoxShadow()],
               ),
               child: AppBar(
+                scrolledUnderElevation: 0,
                 title: Text(
                   title,
                   style: moodColor != null ? titleLargeStyle.copyWith(foreground: Paint()..color = moodColor!) : titleLargeStyle,
