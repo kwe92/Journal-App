@@ -6,6 +6,7 @@ import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/filter_button.dart';
+import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/journal/ui/widget/mood_type_counter.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
@@ -46,53 +47,67 @@ class JournalView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 0, top: 8.0, right: 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                MoodTypeCounter(moodType: MoodType.awesome.text, moodCount: model.awesomeCount),
-                                MoodTypeCounter(moodType: MoodType.happy.text, moodCount: model.happyCount),
-                                MoodTypeCounter(moodType: MoodType.okay.text, moodCount: model.okayCount),
-                                MoodTypeCounter(moodType: MoodType.bad.text, moodCount: model.badCount),
-                                MoodTypeCounter(moodType: MoodType.terrible.text, moodCount: model.terribleCount),
-                              ],
+                    Expanded(
+                      child: NestedScrollView(
+                        floatHeaderSlivers: true,
+                        // MOOD COUNT
+                        headerSliverBuilder: (context, _) => [
+                          SliverAppBar(
+                            toolbarHeight: 32,
+                            scrolledUnderElevation: 0,
+                            automaticallyImplyLeading: false,
+                            // floating: required to make SliverAppBar snappable
+                            floating: true,
+                            // snap: required to make SliverAppBar snappable
+                            snap: true,
+                            title: Padding(
+                              padding: const EdgeInsets.only(left: 0, top: 8.0, right: 16),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        MoodTypeCounter(moodType: MoodType.awesome.text, moodCount: model.awesomeCount),
+                                        MoodTypeCounter(moodType: MoodType.happy.text, moodCount: model.happyCount),
+                                        MoodTypeCounter(moodType: MoodType.okay.text, moodCount: model.okayCount),
+                                        MoodTypeCounter(moodType: MoodType.bad.text, moodCount: model.badCount),
+                                        MoodTypeCounter(moodType: MoodType.terrible.text, moodCount: model.terribleCount),
+                                      ],
+                                    ),
+                                  ),
+                                  const FilterButton()
+                                ],
+                              ),
                             ),
                           ),
-                          const FilterButton()
+                          HideableSearchBar(searchController: model.searchController),
                         ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: ListView.builder(
-                          // used to center Text widget when there are no entries
-                          shrinkWrap: model.journalEntries.isEmpty ? true : false,
-                          itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
-                          itemBuilder: (BuildContext context, int i) {
-                            return model.journalEntries.isEmpty
-                                ? const Entry.opacity(
-                                    duration: Duration(milliseconds: 600),
-                                    child: Text(
-                                      "No entries, whats on your mind...",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: AppColors.lightGreen,
-                                        fontSize: 32,
-                                      ),
+                        body: Center(
+                          // JOURNAL ENTRIES
+                          child: model.journalEntries.isEmpty
+                              ? const Entry.opacity(
+                                  duration: Duration(milliseconds: 600),
+                                  child: Text(
+                                    "No entries, what's on your mind...",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: AppColors.lightGreen,
+                                      fontSize: 32,
                                     ),
-                                  )
-                                : Entry.opacity(
+                                  ),
+                                )
+                              : ListView.builder(
+                                  // used to center Text widget when there are no entries
+                                  itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
+                                  itemBuilder: (BuildContext context, int i) => Entry.opacity(
                                     duration: const Duration(milliseconds: 600),
                                     child: JournalEntryCard(
                                       index: i,
                                       journalEntry: model.journalEntries[i],
                                     ),
-                                  );
-                          },
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -104,9 +119,9 @@ class JournalView extends StatelessWidget {
             await appRouter.replace(SignInRoute());
           }),
           // BUTTON TO ADD NEW ENTRY
-          floatingActionButton: AddButton(onTap: () {
-            appRouter.push(const MoodRoute());
-          }),
+          floatingActionButton: AddButton(
+            onTap: () => appRouter.push(const MoodRoute()),
+          ),
         );
       },
     );

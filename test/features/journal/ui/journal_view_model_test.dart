@@ -281,7 +281,7 @@ void main() {
 
       await model.initialize();
 
-      model.setFilteredJournalEntries(MoodType.awesome.text);
+      model.setFilteredJournalEntries(MoodType.awesome.text, '');
 
       // Assert - Result
 
@@ -293,7 +293,7 @@ void main() {
 
       // Act
 
-      model.setFilteredJournalEntries(MoodType.happy.text);
+      model.setFilteredJournalEntries(MoodType.happy.text, '');
 
       // Assert - Result
 
@@ -305,7 +305,7 @@ void main() {
 
       // Act
 
-      model.setFilteredJournalEntries(MoodType.okay.text);
+      model.setFilteredJournalEntries(MoodType.okay.text, '');
 
       // Assert - Result
 
@@ -317,7 +317,7 @@ void main() {
 
       // Act
 
-      model.setFilteredJournalEntries(MoodType.bad.text);
+      model.setFilteredJournalEntries(MoodType.bad.text, '');
 
       // Assert - Result
 
@@ -329,7 +329,7 @@ void main() {
 
       // Act
 
-      model.setFilteredJournalEntries(MoodType.terrible.text);
+      model.setFilteredJournalEntries(MoodType.terrible.text, '');
 
       // Assert - Result
 
@@ -340,7 +340,7 @@ void main() {
       expect(actual, expected);
 
       // Act
-      model.setFilteredJournalEntries('all');
+      model.setFilteredJournalEntries('all', '');
 
       // Assert - Result
 

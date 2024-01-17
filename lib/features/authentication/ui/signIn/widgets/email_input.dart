@@ -18,14 +18,12 @@ class EmailInput extends ViewModelWidget<SignInViewModel> {
 
   @override
   Widget build(BuildContext context, SignInViewModel viewModel) {
-    // useTextEditingController: flutter hook that allows the use of TextEditingController's in a stateless widget
-
     return TextFormField(
       // move to next focus node
       textInputAction: TextInputAction.next,
       controller: emailController,
       focusNode: focus,
-      // commonly used hints | imforms the platform `Android, IOS and Web` of the text field type
+      // commonly used hints | informs the platform `Android, IOS and Web` of the text field type
       autofillHints: const [AutofillHints.email],
       validator: stringService.emailIsValid,
       onChanged: viewModel.setEmail,
@@ -49,3 +47,6 @@ class EmailInput extends ViewModelWidget<SignInViewModel> {
 //   - minimize the amount of bolierplate code that a stateful widget would require
 //     to work with various controllers
 //   - enables the use of controllers within a stateful widget
+
+// useTextEditingController: flutter hook that allows the use of TextEditingController's in a stateless widget
+
