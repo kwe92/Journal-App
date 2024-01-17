@@ -1,14 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:entry/entry.dart';
+import 'package:flutter/rendering.dart';
 import 'package:journal_app/app/app_router.gr.dart';
-import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
-import 'package:journal_app/features/journal/ui/widget/filter_button.dart';
+import 'package:journal_app/features/journal/ui/widget/hideable_mood_count.dart';
 import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
-import 'package:journal_app/features/journal/ui/widget/mood_type_counter.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
@@ -25,9 +24,7 @@ class JournalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<JournalViewModel>.reactive(
       viewModelBuilder: () => JournalViewModel(),
-      onViewModelReady: (JournalViewModel model) async {
-        await model.initialize();
-      },
+      onViewModelReady: (JournalViewModel model) async => await model.initialize(),
       builder: (context, JournalViewModel model, child) {
         return BaseScaffold(
           // means Thoughts in french
@@ -52,36 +49,9 @@ class JournalView extends StatelessWidget {
                         floatHeaderSlivers: true,
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
-                          SliverAppBar(
-                            toolbarHeight: 32,
-                            scrolledUnderElevation: 0,
-                            automaticallyImplyLeading: false,
-                            // floating: required to make SliverAppBar snappable
-                            floating: true,
-                            // snap: required to make SliverAppBar snappable
-                            snap: true,
-                            title: Padding(
-                              padding: const EdgeInsets.only(left: 0, top: 8.0, right: 16),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        MoodTypeCounter(moodType: MoodType.awesome.text, moodCount: model.awesomeCount),
-                                        MoodTypeCounter(moodType: MoodType.happy.text, moodCount: model.happyCount),
-                                        MoodTypeCounter(moodType: MoodType.okay.text, moodCount: model.okayCount),
-                                        MoodTypeCounter(moodType: MoodType.bad.text, moodCount: model.badCount),
-                                        MoodTypeCounter(moodType: MoodType.terrible.text, moodCount: model.terribleCount),
-                                      ],
-                                    ),
-                                  ),
-                                  const FilterButton()
-                                ],
-                              ),
-                            ),
-                          ),
+                          const HideableMoodCount(),
                           HideableSearchBar(searchController: model.searchController),
+                          SliverToBoxAdapter(child: gap4),
                         ],
                         body: Center(
                           // JOURNAL ENTRIES
@@ -97,14 +67,24 @@ class JournalView extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : ListView.builder(
-                                  // used to center Text widget when there are no entries
-                                  itemCount: model.journalEntries.isEmpty ? 1 : model.journalEntries.length,
-                                  itemBuilder: (BuildContext context, int i) => Entry.opacity(
-                                    duration: const Duration(milliseconds: 600),
-                                    child: JournalEntryCard(
-                                      index: i,
-                                      journalEntry: model.journalEntries[i],
+                              // Hide FAB on Scroll
+                              : NotificationListener<UserScrollNotification>(
+                                  onNotification: (notification) {
+                                    if (userIsScrollingForward(notification)) {
+                                      showFab(model);
+                                    } else if (userIsScrollingDownward(notification)) {
+                                      doNotShowFab(model);
+                                    }
+                                    return true;
+                                  },
+                                  child: ListView.builder(
+                                    itemCount: model.journalEntries.length,
+                                    itemBuilder: (BuildContext context, int i) => Entry.opacity(
+                                      duration: const Duration(milliseconds: 600),
+                                      child: JournalEntryCard(
+                                        index: i,
+                                        journalEntry: model.journalEntries[i],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -113,17 +93,35 @@ class JournalView extends StatelessWidget {
                     ),
                   ],
                 ),
-          // Open menu to the side
+          // OPEN SIDE MENU
           drawer: SideMenu(logoutCallback: () async {
             await model.cleanResources();
             await appRouter.replace(SignInRoute());
           }),
-          // BUTTON TO ADD NEW ENTRY
-          floatingActionButton: AddButton(
-            onTap: () => appRouter.push(const MoodRoute()),
-          ),
+          //ADD NEW ENTRY BUTTON
+          floatingActionButton: model.isFabVisible
+              ? AddButton(
+                  onTap: () => appRouter.push(const MoodRoute()),
+                )
+              : null,
         );
       },
     );
+  }
+
+  bool userIsScrollingForward(UserScrollNotification notification) {
+    return notification.direction == ScrollDirection.forward ? true : false;
+  }
+
+  bool userIsScrollingDownward(UserScrollNotification notification) {
+    return notification.direction == ScrollDirection.reverse;
+  }
+
+  void showFab(JournalViewModel model) {
+    if (!model.isFabVisible) model.setFabVisibility(true);
+  }
+
+  void doNotShowFab(JournalViewModel model) {
+    if (model.isFabVisible) model.setFabVisibility(false);
   }
 }

@@ -18,11 +18,15 @@ class JournalViewModel extends ReactiveViewModel {
 
   String _query = '';
 
+  bool _isFabVisible = true;
+
   List<JournalEntry> get journalEntries => _journalEntries;
 
   String get currentMoodTypeFilter => _currentMoodTypeFilter;
 
   String get query => _query;
+
+  bool get isFabVisible => _isFabVisible;
 
   int get awesomeCount {
     return _getMoodCountByMoodType(MoodType.awesome.text);
@@ -80,6 +84,11 @@ class JournalViewModel extends ReactiveViewModel {
 
     _journalEntries = _fiterJournalEntries(currentMoodTypeFilter, '');
 
+    notifyListeners();
+  }
+
+  setFabVisibility(bool isVisible) {
+    _isFabVisible = isVisible;
     notifyListeners();
   }
 
