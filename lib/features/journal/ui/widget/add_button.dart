@@ -16,12 +16,6 @@ class AddButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(
-          left: 32,
-          top: 32,
-          right: 32,
-          bottom: 56,
-        ),
         width: size,
         height: size,
         decoration: const BoxDecoration(
