@@ -22,7 +22,7 @@ class FilterButton extends ViewModelWidget<JournalViewModel> {
         ),
         onChanged: (String? value) {
           model.setDropdownValue(value!);
-          viewModel.setFilteredJournalEntries(value);
+          viewModel.setFilteredJournalEntries(value, viewModel.query);
         },
         items: <DropdownMenuItem<String>>[
           ...FilterButtonModel.dropdownOptions.map<DropdownMenuItem<String>>(
