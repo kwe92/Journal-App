@@ -8,8 +8,6 @@ import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:stacked/stacked.dart';
 
 class JournalViewModel extends ReactiveViewModel {
-  //TODO: should searchController go in viewmodel to keep View Widget const? | should be consistent throughout the app
-
   final searchController = TextEditingController();
 
   List<JournalEntry> _journalEntries = [];

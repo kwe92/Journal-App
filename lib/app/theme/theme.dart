@@ -16,7 +16,6 @@ class AppTheme {
         textSelectionTheme: textSelectionTheme,
         // change selectionHandleColor on IOS
         cupertinoOverrideTheme: const CupertinoThemeData(
-          // primaryColor: AppColors.mainThemeColor,
           primaryColor: Colors.black54,
         ),
         textButtonTheme: textButtonTheme,

@@ -43,9 +43,4 @@ class MoodService {
 
     return moodData.color;
   }
-
-  // TODO: Where is this being called? | remove not used...
-  MapEntry<String, MoodRecord> getMoodByIndex(int index) {
-    return moods[index];
-  }
 }
