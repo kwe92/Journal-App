@@ -33,7 +33,7 @@ void main() {
 
       // Act - Finders
 
-      final textFinder = find.text("No entries, whats on your mind...");
+      final textFinder = find.text("No entries, what's on your mind...");
 
       final addButtonFinder = find.byType(AddButton);
 
