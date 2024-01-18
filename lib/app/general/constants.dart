@@ -28,11 +28,9 @@ enum MoodType {
   const MoodType(this.text);
 }
 
-// TODO: rename to MoodTypeFilterOptions and add 'all' string?
-/// the set of available moods a user can be in when writing a journal entry.
-class StaticMoodType {
-  const StaticMoodType._();
-
+class MoodTypeFilterOptions {
+  const MoodTypeFilterOptions._();
+  static const String all = 'all';
   static const String awesome = "Awesome";
   static const String happy = "Happy";
   static const String okay = "Okay";

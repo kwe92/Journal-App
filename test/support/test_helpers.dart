@@ -200,11 +200,11 @@ MoodService getAndRegisterMoodServiceMock(String moodType, double imageSize) {
 
   // stub mocked methods and properties...
   when(service.getMoodColorByType(moodType)).thenReturn(switch (moodType) {
-    StaticMoodType.awesome => AppColors.moodAwesome,
-    StaticMoodType.happy => AppColors.moodHappy,
-    StaticMoodType.okay => AppColors.moodOkay,
-    StaticMoodType.bad => AppColors.moodBad,
-    StaticMoodType.terrible => AppColors.moodTerrible,
+    MoodTypeFilterOptions.awesome => AppColors.moodAwesome,
+    MoodTypeFilterOptions.happy => AppColors.moodHappy,
+    MoodTypeFilterOptions.okay => AppColors.moodOkay,
+    MoodTypeFilterOptions.bad => AppColors.moodBad,
+    MoodTypeFilterOptions.terrible => AppColors.moodTerrible,
     String() => AppColors.moodAwesome,
   });
 
