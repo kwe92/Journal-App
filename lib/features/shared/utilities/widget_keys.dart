@@ -1,5 +1,3 @@
-// TODO: move all widget keys here
-
 import 'package:flutter/material.dart';
 
 class WidgetKey {

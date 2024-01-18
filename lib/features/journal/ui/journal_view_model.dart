@@ -8,13 +8,11 @@ import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:stacked/stacked.dart';
 
 class JournalViewModel extends ReactiveViewModel {
-  //TODO: should searchController go in viewmodel to keep View Widget const? | should be consistent throughout the app
-
   final searchController = TextEditingController();
 
   List<JournalEntry> _journalEntries = [];
 
-  String _currentMoodTypeFilter = 'all';
+  String _currentMoodTypeFilter = MoodTypeFilterOptions.all;
 
   String _query = '';
 
@@ -76,7 +74,7 @@ class JournalViewModel extends ReactiveViewModel {
   void clearQueryFromFilteredEntries() {
     _clearQuery();
 
-    if (currentMoodTypeFilter == 'all') {
+    if (currentMoodTypeFilter == MoodTypeFilterOptions.all) {
       _journalEntries = journalEntryService.journalEntries;
       notifyListeners();
       return;
@@ -105,57 +103,55 @@ class JournalViewModel extends ReactiveViewModel {
 
   /// Filter journal entries by mood type and query.
   void setFilteredJournalEntries(String moodType, String query) {
-    const all = 'all';
-
     switch (moodType) {
-      case all:
-        _setCurrentMoodTypeFilter(all);
+      case MoodTypeFilterOptions.all:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.all);
         _journalEntries =
             journalEntryService.journalEntries.where((entry) => entry.content.toLowerCase().contains(query.toLowerCase())).toList();
         notifyListeners();
         break;
 
-      // used StaticMoodType as I could not use the MoodType enum for some reason
-      case StaticMoodType.awesome:
-        _setCurrentMoodTypeFilter(StaticMoodType.awesome);
+      // used MoodTypeFilterOptions as I could not use the MoodType enum for some reason
+      case MoodTypeFilterOptions.awesome:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.awesome);
 
-        _journalEntries = _fiterJournalEntries(StaticMoodType.awesome, query);
-
-        notifyListeners();
-
-        break;
-
-      case StaticMoodType.happy:
-        _setCurrentMoodTypeFilter(StaticMoodType.happy);
-
-        _journalEntries = _fiterJournalEntries(StaticMoodType.happy, query);
+        _journalEntries = _fiterJournalEntries(MoodTypeFilterOptions.awesome, query);
 
         notifyListeners();
 
         break;
 
-      case StaticMoodType.okay:
-        _setCurrentMoodTypeFilter(StaticMoodType.okay);
+      case MoodTypeFilterOptions.happy:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.happy);
 
-        _journalEntries = _fiterJournalEntries(StaticMoodType.okay, query);
-
-        notifyListeners();
-
-        break;
-
-      case StaticMoodType.bad:
-        _setCurrentMoodTypeFilter(StaticMoodType.bad);
-
-        _journalEntries = _fiterJournalEntries(StaticMoodType.bad, query);
+        _journalEntries = _fiterJournalEntries(MoodTypeFilterOptions.happy, query);
 
         notifyListeners();
 
         break;
 
-      case StaticMoodType.terrible:
-        _setCurrentMoodTypeFilter(StaticMoodType.terrible);
+      case MoodTypeFilterOptions.okay:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.okay);
 
-        _journalEntries = _fiterJournalEntries(StaticMoodType.terrible, query);
+        _journalEntries = _fiterJournalEntries(MoodTypeFilterOptions.okay, query);
+
+        notifyListeners();
+
+        break;
+
+      case MoodTypeFilterOptions.bad:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.bad);
+
+        _journalEntries = _fiterJournalEntries(MoodTypeFilterOptions.bad, query);
+
+        notifyListeners();
+
+        break;
+
+      case MoodTypeFilterOptions.terrible:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.terrible);
+
+        _journalEntries = _fiterJournalEntries(MoodTypeFilterOptions.terrible, query);
 
         notifyListeners();
 

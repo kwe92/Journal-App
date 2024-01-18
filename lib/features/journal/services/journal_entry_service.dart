@@ -26,17 +26,15 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
       HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
     });
 
-    // deserialize response body `string representation of json` into List or hashMap, depends on how backend sends response
     final Map<String, dynamic> reponseBody = jsonDecode(response.body);
 
-    // TODO: down-cast using List.from
     final List<dynamic>? responseData = reponseBody["data"];
 
     if (responseData != null) {
-      journalEntries = responseData.map((entry) => JournalEntry.fromJSON(entry)).toList().sorted(
-            // sort by decending udated date
-            (entryA, entryB) => entryB.updatedAt.compareTo(entryA.updatedAt),
-          );
+      // down-cast deserialized dynamic array
+      final List<Map<String, dynamic>> domainData = List.from(responseData);
+
+      journalEntries = sortByUpdatedDate(domainData);
     } else {
       journalEntries = [];
     }
@@ -89,5 +87,19 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     });
 
     return response;
+  }
+
+  List<JournalEntry> sortByUpdatedDate(List<Map<String, dynamic>> entries, [bool asc = false]) {
+    if (asc) {
+      return entries.map((entry) => JournalEntry.fromJSON(entry)).toList().sorted(
+            // sort by decending udated date
+            (entryA, entryB) => entryA.updatedAt.compareTo(entryB.updatedAt),
+          );
+    } else {
+      return entries.map((entry) => JournalEntry.fromJSON(entry)).toList().sorted(
+            // sort by decending udated date
+            (entryA, entryB) => entryB.updatedAt.compareTo(entryA.updatedAt),
+          );
+    }
   }
 }

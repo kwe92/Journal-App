@@ -20,8 +20,6 @@ class EditProfileViewModel extends ReactiveViewModel {
 
   // Mutable Variables
 
-  // TODO: refactor to isReadOnly
-
   bool _isReadOnly = true;
 
   String? _updatedFirstName;

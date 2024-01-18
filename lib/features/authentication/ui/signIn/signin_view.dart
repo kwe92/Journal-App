@@ -36,7 +36,6 @@ class SignInView extends StatelessWidget {
                     // TODO: temp key for testing | remove later
                     key: GlobalObjectKey('find-widget'),
 
-                    // TODO: check if the initial splash screen and this bellow image are the same size on smaller devices
                     height: MediaQuery.of(context).size.height / 7.875,
                     decoration: BoxDecoration(
                       image: DecorationImage(
