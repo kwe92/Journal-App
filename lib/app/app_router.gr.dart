@@ -8,33 +8,34 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i11;
-import 'package:flutter/material.dart' as _i12;
+import 'package:auto_route/auto_route.dart' as _i12;
+import 'package:flutter/material.dart' as _i13;
 import 'package:journal_app/features/addEntry/ui/add_entry_view.dart' as _i1;
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view.dart'
-    as _i6;
+    as _i7;
 import 'package:journal_app/features/authentication/ui/signIn/signin_view.dart'
-    as _i9;
-import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dart'
     as _i10;
-import 'package:journal_app/features/entry/ui/entry_view.dart' as _i3;
-import 'package:journal_app/features/farewell/farewell_view.dart' as _i4;
-import 'package:journal_app/features/journal/ui/journal_view.dart' as _i5;
-import 'package:journal_app/features/mood/ui/mood_view.dart' as _i7;
+import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dart'
+    as _i11;
+import 'package:journal_app/features/calendar/ui/calendar_view.dart' as _i2;
+import 'package:journal_app/features/entry/ui/entry_view.dart' as _i4;
+import 'package:journal_app/features/farewell/farewell_view.dart' as _i5;
+import 'package:journal_app/features/journal/ui/journal_view.dart' as _i6;
+import 'package:journal_app/features/mood/ui/mood_view.dart' as _i8;
 import 'package:journal_app/features/profile/edit_profile/edit_profile_view.dart'
-    as _i2;
+    as _i3;
 import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view.dart'
-    as _i8;
-import 'package:journal_app/features/shared/models/journal_entry.dart' as _i13;
+    as _i9;
+import 'package:journal_app/features/shared/models/journal_entry.dart' as _i14;
 
-abstract class $AppRouter extends _i11.RootStackRouter {
+abstract class $AppRouter extends _i12.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i11.PageFactory> pagesMap = {
+  final Map<String, _i12.PageFactory> pagesMap = {
     AddEntryRoute.name: (routeData) {
       final args = routeData.argsAs<AddEntryRouteArgs>();
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.AddEntryView(
           moodType: args.moodType,
@@ -42,68 +43,78 @@ abstract class $AppRouter extends _i11.RootStackRouter {
         ),
       );
     },
-    EditProfileRoute.name: (routeData) {
-      return _i11.AutoRoutePage<dynamic>(
+    CalendarRoute.name: (routeData) {
+      final args = routeData.argsAs<CalendarRouteArgs>();
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.EditProfileView(),
+        child: _i2.CalendarView(
+          focusedDay: args.focusedDay,
+          key: args.key,
+        ),
+      );
+    },
+    EditProfileRoute.name: (routeData) {
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.EditProfileView(),
       );
     },
     EntryRoute.name: (routeData) {
       final args = routeData.argsAs<EntryRouteArgs>();
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.EntryView(
+        child: _i4.EntryView(
           entry: args.entry,
           key: args.key,
         ),
       );
     },
     FarewellRoute.name: (routeData) {
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.FarewellView(),
+        child: const _i5.FarewellView(),
       );
     },
     JournalRoute.name: (routeData) {
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.JournalView(),
+        child: const _i6.JournalView(),
       );
     },
     MemberInfoRoute.name: (routeData) {
       final args = routeData.argsAs<MemberInfoRouteArgs>(
           orElse: () => const MemberInfoRouteArgs());
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i6.MemberInfoView(key: args.key),
+        child: _i7.MemberInfoView(key: args.key),
       );
     },
     MoodRoute.name: (routeData) {
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.MoodView(),
+        child: const _i8.MoodView(),
       );
     },
     ProfileSettingsRoute.name: (routeData) {
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.ProfileSettingsView(),
+        child: const _i9.ProfileSettingsView(),
       );
     },
     SignInRoute.name: (routeData) {
       final args = routeData.argsAs<SignInRouteArgs>(
           orElse: () => const SignInRouteArgs());
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i9.SignInView(key: args.key),
+        child: _i10.SignInView(key: args.key),
       );
     },
     SignUpRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpRouteArgs>(
           orElse: () => const SignUpRouteArgs());
-      return _i11.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i10.SignUpView(key: args.key),
+        child: _i11.SignUpView(key: args.key),
       );
     },
   };
@@ -111,11 +122,11 @@ abstract class $AppRouter extends _i11.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddEntryView]
-class AddEntryRoute extends _i11.PageRouteInfo<AddEntryRouteArgs> {
+class AddEntryRoute extends _i12.PageRouteInfo<AddEntryRouteArgs> {
   AddEntryRoute({
     required String moodType,
-    _i12.Key? key,
-    List<_i11.PageRouteInfo>? children,
+    _i13.Key? key,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           AddEntryRoute.name,
           args: AddEntryRouteArgs(
@@ -127,8 +138,8 @@ class AddEntryRoute extends _i11.PageRouteInfo<AddEntryRouteArgs> {
 
   static const String name = 'AddEntryRoute';
 
-  static const _i11.PageInfo<AddEntryRouteArgs> page =
-      _i11.PageInfo<AddEntryRouteArgs>(name);
+  static const _i12.PageInfo<AddEntryRouteArgs> page =
+      _i12.PageInfo<AddEntryRouteArgs>(name);
 }
 
 class AddEntryRouteArgs {
@@ -139,7 +150,7 @@ class AddEntryRouteArgs {
 
   final String moodType;
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   @override
   String toString() {
@@ -148,9 +159,47 @@ class AddEntryRouteArgs {
 }
 
 /// generated route for
-/// [_i2.EditProfileView]
-class EditProfileRoute extends _i11.PageRouteInfo<void> {
-  const EditProfileRoute({List<_i11.PageRouteInfo>? children})
+/// [_i2.CalendarView]
+class CalendarRoute extends _i12.PageRouteInfo<CalendarRouteArgs> {
+  CalendarRoute({
+    required DateTime focusedDay,
+    _i13.Key? key,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
+          CalendarRoute.name,
+          args: CalendarRouteArgs(
+            focusedDay: focusedDay,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CalendarRoute';
+
+  static const _i12.PageInfo<CalendarRouteArgs> page =
+      _i12.PageInfo<CalendarRouteArgs>(name);
+}
+
+class CalendarRouteArgs {
+  const CalendarRouteArgs({
+    required this.focusedDay,
+    this.key,
+  });
+
+  final DateTime focusedDay;
+
+  final _i13.Key? key;
+
+  @override
+  String toString() {
+    return 'CalendarRouteArgs{focusedDay: $focusedDay, key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i3.EditProfileView]
+class EditProfileRoute extends _i12.PageRouteInfo<void> {
+  const EditProfileRoute({List<_i12.PageRouteInfo>? children})
       : super(
           EditProfileRoute.name,
           initialChildren: children,
@@ -158,16 +207,16 @@ class EditProfileRoute extends _i11.PageRouteInfo<void> {
 
   static const String name = 'EditProfileRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i3.EntryView]
-class EntryRoute extends _i11.PageRouteInfo<EntryRouteArgs> {
+/// [_i4.EntryView]
+class EntryRoute extends _i12.PageRouteInfo<EntryRouteArgs> {
   EntryRoute({
-    required _i13.JournalEntry entry,
-    _i12.Key? key,
-    List<_i11.PageRouteInfo>? children,
+    required _i14.JournalEntry entry,
+    _i13.Key? key,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           EntryRoute.name,
           args: EntryRouteArgs(
@@ -179,8 +228,8 @@ class EntryRoute extends _i11.PageRouteInfo<EntryRouteArgs> {
 
   static const String name = 'EntryRoute';
 
-  static const _i11.PageInfo<EntryRouteArgs> page =
-      _i11.PageInfo<EntryRouteArgs>(name);
+  static const _i12.PageInfo<EntryRouteArgs> page =
+      _i12.PageInfo<EntryRouteArgs>(name);
 }
 
 class EntryRouteArgs {
@@ -189,9 +238,9 @@ class EntryRouteArgs {
     this.key,
   });
 
-  final _i13.JournalEntry entry;
+  final _i14.JournalEntry entry;
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   @override
   String toString() {
@@ -200,9 +249,9 @@ class EntryRouteArgs {
 }
 
 /// generated route for
-/// [_i4.FarewellView]
-class FarewellRoute extends _i11.PageRouteInfo<void> {
-  const FarewellRoute({List<_i11.PageRouteInfo>? children})
+/// [_i5.FarewellView]
+class FarewellRoute extends _i12.PageRouteInfo<void> {
+  const FarewellRoute({List<_i12.PageRouteInfo>? children})
       : super(
           FarewellRoute.name,
           initialChildren: children,
@@ -210,13 +259,13 @@ class FarewellRoute extends _i11.PageRouteInfo<void> {
 
   static const String name = 'FarewellRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.JournalView]
-class JournalRoute extends _i11.PageRouteInfo<void> {
-  const JournalRoute({List<_i11.PageRouteInfo>? children})
+/// [_i6.JournalView]
+class JournalRoute extends _i12.PageRouteInfo<void> {
+  const JournalRoute({List<_i12.PageRouteInfo>? children})
       : super(
           JournalRoute.name,
           initialChildren: children,
@@ -224,15 +273,15 @@ class JournalRoute extends _i11.PageRouteInfo<void> {
 
   static const String name = 'JournalRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.MemberInfoView]
-class MemberInfoRoute extends _i11.PageRouteInfo<MemberInfoRouteArgs> {
+/// [_i7.MemberInfoView]
+class MemberInfoRoute extends _i12.PageRouteInfo<MemberInfoRouteArgs> {
   MemberInfoRoute({
-    _i12.Key? key,
-    List<_i11.PageRouteInfo>? children,
+    _i13.Key? key,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           MemberInfoRoute.name,
           args: MemberInfoRouteArgs(key: key),
@@ -241,14 +290,14 @@ class MemberInfoRoute extends _i11.PageRouteInfo<MemberInfoRouteArgs> {
 
   static const String name = 'MemberInfoRoute';
 
-  static const _i11.PageInfo<MemberInfoRouteArgs> page =
-      _i11.PageInfo<MemberInfoRouteArgs>(name);
+  static const _i12.PageInfo<MemberInfoRouteArgs> page =
+      _i12.PageInfo<MemberInfoRouteArgs>(name);
 }
 
 class MemberInfoRouteArgs {
   const MemberInfoRouteArgs({this.key});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   @override
   String toString() {
@@ -257,9 +306,9 @@ class MemberInfoRouteArgs {
 }
 
 /// generated route for
-/// [_i7.MoodView]
-class MoodRoute extends _i11.PageRouteInfo<void> {
-  const MoodRoute({List<_i11.PageRouteInfo>? children})
+/// [_i8.MoodView]
+class MoodRoute extends _i12.PageRouteInfo<void> {
+  const MoodRoute({List<_i12.PageRouteInfo>? children})
       : super(
           MoodRoute.name,
           initialChildren: children,
@@ -267,13 +316,13 @@ class MoodRoute extends _i11.PageRouteInfo<void> {
 
   static const String name = 'MoodRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.ProfileSettingsView]
-class ProfileSettingsRoute extends _i11.PageRouteInfo<void> {
-  const ProfileSettingsRoute({List<_i11.PageRouteInfo>? children})
+/// [_i9.ProfileSettingsView]
+class ProfileSettingsRoute extends _i12.PageRouteInfo<void> {
+  const ProfileSettingsRoute({List<_i12.PageRouteInfo>? children})
       : super(
           ProfileSettingsRoute.name,
           initialChildren: children,
@@ -281,15 +330,15 @@ class ProfileSettingsRoute extends _i11.PageRouteInfo<void> {
 
   static const String name = 'ProfileSettingsRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.SignInView]
-class SignInRoute extends _i11.PageRouteInfo<SignInRouteArgs> {
+/// [_i10.SignInView]
+class SignInRoute extends _i12.PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
-    _i12.Key? key,
-    List<_i11.PageRouteInfo>? children,
+    _i13.Key? key,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           SignInRoute.name,
           args: SignInRouteArgs(key: key),
@@ -298,14 +347,14 @@ class SignInRoute extends _i11.PageRouteInfo<SignInRouteArgs> {
 
   static const String name = 'SignInRoute';
 
-  static const _i11.PageInfo<SignInRouteArgs> page =
-      _i11.PageInfo<SignInRouteArgs>(name);
+  static const _i12.PageInfo<SignInRouteArgs> page =
+      _i12.PageInfo<SignInRouteArgs>(name);
 }
 
 class SignInRouteArgs {
   const SignInRouteArgs({this.key});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   @override
   String toString() {
@@ -314,11 +363,11 @@ class SignInRouteArgs {
 }
 
 /// generated route for
-/// [_i10.SignUpView]
-class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
+/// [_i11.SignUpView]
+class SignUpRoute extends _i12.PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
-    _i12.Key? key,
-    List<_i11.PageRouteInfo>? children,
+    _i13.Key? key,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           SignUpRoute.name,
           args: SignUpRouteArgs(key: key),
@@ -327,14 +376,14 @@ class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
 
   static const String name = 'SignUpRoute';
 
-  static const _i11.PageInfo<SignUpRouteArgs> page =
-      _i11.PageInfo<SignUpRouteArgs>(name);
+  static const _i12.PageInfo<SignUpRouteArgs> page =
+      _i12.PageInfo<SignUpRouteArgs>(name);
 }
 
 class SignUpRouteArgs {
   const SignUpRouteArgs({this.key});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   @override
   String toString() {
