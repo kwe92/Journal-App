@@ -15,6 +15,10 @@ typedef JournalEntries = List<JournalEntry>;
 
 /// handles all C.R.U.D API calls for journal entries based on the currently authenticated and logged in user.
 class JournalEntryService extends ApiService with ListenableServiceMixin {
+  DateTime get maxDate => getMaxDate(journalEntries);
+
+  DateTime? get minDate => getMinDates(journalEntries);
+
   JournalEntries journalEntries = [];
 
   Future<http.Response> getAllEntries() async {
@@ -102,4 +106,8 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
           );
     }
   }
+
+  DateTime getMaxDate(List<JournalEntry> entries) => entries.reduce((a, b) => a.createdAt.isAfter(b.createdAt) ? a : b).createdAt;
+
+  DateTime? getMinDates(List<JournalEntry> entries) => entries.reduce((a, b) => b.createdAt.isAfter(a.createdAt) ? a : b).createdAt;
 }
