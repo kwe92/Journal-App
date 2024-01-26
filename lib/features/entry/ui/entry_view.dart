@@ -30,7 +30,8 @@ class EntryView extends StatelessWidget {
       builder: (context, EntryviewModel model, _) {
         return BaseScaffold(
           moodColor: model.moodColor,
-          title: entry.dateString,
+          // title: entry.dateString,
+          title: "Manifesté",
           leading: CustomBackButton(
             color: model.moodColor,
             onPressed: () {
@@ -117,7 +118,7 @@ class EntryView extends StatelessWidget {
                     // retrieve deletion response from user
                     final bool deleteContinued = await model.continueDelete(context, model.moodColor!);
 
-                    debugPrint('Should delete entry: $deleteContinued');
+                    debugPrint('should delete entry: $deleteContinued');
 
                     if (deleteContinued) {
                       final bool statusOk = await model.deleteEntry(entry.entryId);

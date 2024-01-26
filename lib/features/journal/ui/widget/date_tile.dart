@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/app_router.gr.dart';
+
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 class DateTile extends StatelessWidget {
   final DateTime updatedAt;
+  final VoidCallback? onPressed;
 
-  const DateTile({required this.updatedAt, super.key});
+  const DateTile({
+    required this.updatedAt,
+    this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-        onTap: () async => await appRouter.push(
-          CalendarRoute(
-            focusedDay: updatedAt,
-          ),
-        ),
+        onTap: onPressed,
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.dateTileBackgroundColor,
