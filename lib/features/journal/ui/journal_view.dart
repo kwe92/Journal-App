@@ -9,6 +9,7 @@ import 'package:journal_app/features/journal/ui/widget/hideable_mood_count.dart'
 import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -78,15 +79,23 @@ class JournalView extends StatelessWidget {
                                     return true;
                                   },
                                   child: ListView.builder(
-                                    itemCount: model.journalEntries.length,
-                                    itemBuilder: (BuildContext context, int i) => Entry.opacity(
-                                      duration: const Duration(milliseconds: 600),
-                                      child: JournalEntryCard(
-                                        index: i,
-                                        journalEntry: model.journalEntries[i],
-                                      ),
-                                    ),
-                                  ),
+                                      itemCount: model.journalEntries.length,
+                                      itemBuilder: (BuildContext context, int i) {
+                                        final JournalEntry entry = model.journalEntries[i];
+
+                                        return Entry.opacity(
+                                          duration: const Duration(milliseconds: 600),
+                                          child: JournalEntryCard(
+                                            onDateTilePressed: () async => await appRouter.push(
+                                              CalendarRoute(
+                                                focusedDay: entry.updatedAt,
+                                              ),
+                                            ),
+                                            index: i,
+                                            journalEntry: entry,
+                                          ),
+                                        );
+                                      }),
                                 ),
                         ),
                       ),
