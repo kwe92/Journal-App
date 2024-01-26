@@ -60,9 +60,19 @@ class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
         );
 }
 
-class _FakeStreamedResponse_1 extends _i1.SmartFake
+class _FakeDateTime_1 extends _i1.SmartFake implements DateTime {
+  _FakeDateTime_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeStreamedResponse_2 extends _i1.SmartFake
     implements _i2.StreamedResponse {
-  _FakeStreamedResponse_1(
+  _FakeStreamedResponse_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -71,8 +81,8 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
         );
 }
 
-class _FakeMood_2 extends _i1.SmartFake implements _i3.Mood {
-  _FakeMood_2(
+class _FakeMood_3 extends _i1.SmartFake implements _i3.Mood {
+  _FakeMood_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -81,8 +91,8 @@ class _FakeMood_2 extends _i1.SmartFake implements _i3.Mood {
         );
 }
 
-class _FakeColor_3 extends _i1.SmartFake implements _i4.Color {
-  _FakeColor_3(
+class _FakeColor_4 extends _i1.SmartFake implements _i4.Color {
+  _FakeColor_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -91,9 +101,9 @@ class _FakeColor_3 extends _i1.SmartFake implements _i4.Color {
         );
 }
 
-class _FakeImageProvider_4<T extends Object> extends _i1.SmartFake
+class _FakeImageProvider_5<T extends Object> extends _i1.SmartFake
     implements _i5.ImageProvider<T> {
-  _FakeImageProvider_4(
+  _FakeImageProvider_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -102,8 +112,8 @@ class _FakeImageProvider_4<T extends Object> extends _i1.SmartFake
         );
 }
 
-class _FakeFuture_5<T1> extends _i1.SmartFake implements _i6.Future<T1> {
-  _FakeFuture_5(
+class _FakeFuture_6<T1> extends _i1.SmartFake implements _i6.Future<T1> {
+  _FakeFuture_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -515,6 +525,19 @@ class MockJournalEntryService extends _i1.Mock
       );
 
   @override
+  DateTime get maxDate => (super.noSuchMethod(
+        Invocation.getter(#maxDate),
+        returnValue: _FakeDateTime_1(
+          this,
+          Invocation.getter(#maxDate),
+        ),
+        returnValueForMissingStub: _FakeDateTime_1(
+          this,
+          Invocation.getter(#maxDate),
+        ),
+      ) as DateTime);
+
+  @override
   String get bearerPrefix => (super.noSuchMethod(
         Invocation.getter(#bearerPrefix),
         returnValue: _i8.dummyValue<String>(
@@ -664,6 +687,38 @@ class MockJournalEntryService extends _i1.Mock
         returnValue: <_i11.JournalEntry>[],
         returnValueForMissingStub: <_i11.JournalEntry>[],
       ) as List<_i11.JournalEntry>);
+
+  @override
+  DateTime getMaxDate(List<_i11.JournalEntry>? entries) => (super.noSuchMethod(
+        Invocation.method(
+          #getMaxDate,
+          [entries],
+        ),
+        returnValue: _FakeDateTime_1(
+          this,
+          Invocation.method(
+            #getMaxDate,
+            [entries],
+          ),
+        ),
+        returnValueForMissingStub: _FakeDateTime_1(
+          this,
+          Invocation.method(
+            #getMaxDate,
+            [entries],
+          ),
+        ),
+      ) as DateTime);
+
+  @override
+  DateTime? getMinDates(List<_i11.JournalEntry>? entries) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getMinDates,
+          [entries],
+        ),
+        returnValueForMissingStub: null,
+      ) as DateTime?);
 
   @override
   _i6.Future<_i2.Response> get(
@@ -1185,7 +1240,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [request],
         ),
         returnValue:
-            _i6.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_1(
+            _i6.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_2(
           this,
           Invocation.method(
             #send,
@@ -1193,7 +1248,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           ),
         )),
         returnValueForMissingStub:
-            _i6.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_1(
+            _i6.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_2(
           this,
           Invocation.method(
             #send,
@@ -1243,7 +1298,7 @@ class MockMoodService extends _i1.Mock implements _i18.MoodService {
             imageSize,
           ],
         ),
-        returnValue: _FakeMood_2(
+        returnValue: _FakeMood_3(
           this,
           Invocation.method(
             #createMoodByType,
@@ -1253,7 +1308,7 @@ class MockMoodService extends _i1.Mock implements _i18.MoodService {
             ],
           ),
         ),
-        returnValueForMissingStub: _FakeMood_2(
+        returnValueForMissingStub: _FakeMood_3(
           this,
           Invocation.method(
             #createMoodByType,
@@ -1271,14 +1326,14 @@ class MockMoodService extends _i1.Mock implements _i18.MoodService {
           #getMoodColorByType,
           [moodType],
         ),
-        returnValue: _FakeColor_3(
+        returnValue: _FakeColor_4(
           this,
           Invocation.method(
             #getMoodColorByType,
             [moodType],
           ),
         ),
-        returnValueForMissingStub: _FakeColor_3(
+        returnValueForMissingStub: _FakeColor_4(
           this,
           Invocation.method(
             #getMoodColorByType,
@@ -1470,11 +1525,11 @@ class MockImageService extends _i1.Mock implements _i21.ImageService {
   @override
   _i5.ImageProvider<Object> get mindful01 => (super.noSuchMethod(
         Invocation.getter(#mindful01),
-        returnValue: _FakeImageProvider_4<Object>(
+        returnValue: _FakeImageProvider_5<Object>(
           this,
           Invocation.getter(#mindful01),
         ),
-        returnValueForMissingStub: _FakeImageProvider_4<Object>(
+        returnValueForMissingStub: _FakeImageProvider_5<Object>(
           this,
           Invocation.getter(#mindful01),
         ),
@@ -1492,11 +1547,11 @@ class MockImageService extends _i1.Mock implements _i21.ImageService {
   @override
   _i5.ImageProvider<Object> get mindful02 => (super.noSuchMethod(
         Invocation.getter(#mindful02),
-        returnValue: _FakeImageProvider_4<Object>(
+        returnValue: _FakeImageProvider_5<Object>(
           this,
           Invocation.getter(#mindful02),
         ),
-        returnValueForMissingStub: _FakeImageProvider_4<Object>(
+        returnValueForMissingStub: _FakeImageProvider_5<Object>(
           this,
           Invocation.getter(#mindful02),
         ),
@@ -1514,11 +1569,11 @@ class MockImageService extends _i1.Mock implements _i21.ImageService {
   @override
   _i5.ImageProvider<Object> get mindful03 => (super.noSuchMethod(
         Invocation.getter(#mindful03),
-        returnValue: _FakeImageProvider_4<Object>(
+        returnValue: _FakeImageProvider_5<Object>(
           this,
           Invocation.getter(#mindful03),
         ),
-        returnValueForMissingStub: _FakeImageProvider_4<Object>(
+        returnValueForMissingStub: _FakeImageProvider_5<Object>(
           this,
           Invocation.getter(#mindful03),
         ),
@@ -1556,14 +1611,14 @@ class MockImageService extends _i1.Mock implements _i21.ImageService {
           #getRandomMindfulImage,
           [],
         ),
-        returnValue: _FakeImageProvider_4<Object>(
+        returnValue: _FakeImageProvider_5<Object>(
           this,
           Invocation.method(
             #getRandomMindfulImage,
             [],
           ),
         ),
-        returnValueForMissingStub: _FakeImageProvider_4<Object>(
+        returnValueForMissingStub: _FakeImageProvider_5<Object>(
           this,
           Invocation.method(
             #getRandomMindfulImage,
@@ -2042,7 +2097,7 @@ class MockToastService extends _i1.Mock implements _i23.ToastService {
               ),
               (T v) => _i6.Future<T>.value(v),
             ) ??
-            _FakeFuture_5<T>(
+            _FakeFuture_6<T>(
               this,
               Invocation.method(
                 #popupMenu,
@@ -2067,7 +2122,7 @@ class MockToastService extends _i1.Mock implements _i23.ToastService {
               ),
               (T v) => _i6.Future<T>.value(v),
             ) ??
-            _FakeFuture_5<T>(
+            _FakeFuture_6<T>(
               this,
               Invocation.method(
                 #popupMenu,
@@ -2102,7 +2157,7 @@ class MockToastService extends _i1.Mock implements _i23.ToastService {
               ),
               (T v) => _i6.Future<T>.value(v),
             ) ??
-            _FakeFuture_5<T>(
+            _FakeFuture_6<T>(
               this,
               Invocation.method(
                 #deleteAccountPopupMenu,
@@ -2121,7 +2176,7 @@ class MockToastService extends _i1.Mock implements _i23.ToastService {
               ),
               (T v) => _i6.Future<T>.value(v),
             ) ??
-            _FakeFuture_5<T>(
+            _FakeFuture_6<T>(
               this,
               Invocation.method(
                 #deleteAccountPopupMenu,

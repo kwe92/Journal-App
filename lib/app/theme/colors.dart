@@ -42,4 +42,6 @@ class AppColors {
   static final dateTileBackgroundColor = const Color(0xff807c7c).withOpacity(0.10);
 
   static const dateTileColor = Color(0xff807c7c);
+
+  static const calendarMarkerColor = Color(0xFF3F301D);
 }

@@ -55,6 +55,7 @@ dependencies:
   flutter_portal: ^1.1.4
   mockito: ^5.4.4
   device_preview: ^1.1.0
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:
