@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/widgets.dart';
+import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -19,10 +20,6 @@ class CalendarViewModel extends ChangeNotifier {
   DateTime? _rangeStart;
 
   DateTime? _rangeEnd;
-
-  bool _isLoading = false;
-
-  bool get isLoading => _isLoading;
 
   List<JournalEntry> get selectedEvents => _selectedEvents;
 
@@ -46,11 +43,6 @@ class CalendarViewModel extends ChangeNotifier {
     _selectedDay = _focusedDay;
 
     _selectedEvents = getEventsForDay(_selectedDay!);
-  }
-
-  void setIsLoading(bool loading) {
-    _isLoading = loading;
-    notifyListeners();
   }
 
   void setSelectedEvents(List<JournalEntry> selectedEvents) {
@@ -97,7 +89,7 @@ class CalendarViewModel extends ChangeNotifier {
 
   List<JournalEntry> getEventsForRange(DateTime start, DateTime end) {
     // Implementation example
-    final days = daysInRange(start, end);
+    final days = timeService.daysInRange(start, end);
 
     return [
       for (final d in days) ...getEventsForDay(d),
@@ -137,13 +129,5 @@ class CalendarViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-// TODO: add to utility functions
-  /// Returns a list of [DateTime] objects from [first] to [last], inclusive.
-  List<DateTime> daysInRange(DateTime first, DateTime last) {
-    final dayCount = last.difference(first).inDays + 1;
-    return List.generate(
-      dayCount,
-      (index) => DateTime.utc(first.year, first.month, first.day + index),
-    );
-  }
+  Mood createMoodByType(String moodType) => moodService.createMoodByType(moodType);
 }
