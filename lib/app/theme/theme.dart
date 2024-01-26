@@ -24,43 +24,41 @@ class AppTheme {
       );
 
   /// return main button theme in specified color
-  static OutlinedButtonThemeData customOutlinedButtonThemeData(Color? backgroundColor) {
-    return OutlinedButtonThemeData(
-      style: mainButtonStyle.copyWith(
-        backgroundColor: resolver(
-          (states) => backgroundColor ?? AppColors.mainThemeColor,
+  static OutlinedButtonThemeData customOutlinedButtonThemeData(Color? backgroundColor) => OutlinedButtonThemeData(
+        style: mainButtonStyle.copyWith(
+          backgroundColor: resolver(
+            (states) => backgroundColor ?? AppColors.mainThemeColor,
+          ),
         ),
-      ),
-    );
-  }
+      );
+  static TextSelectionThemeData getTextSelectionThemeData(Color moodColor) => textSelectionTheme.copyWith(
+        // TextFormField cursor color
+        cursorColor: moodColor,
 
-  static TextSelectionThemeData getTextSelectionThemeData(Color moodColor) {
-    return textSelectionTheme.copyWith(
-      // TextFormField cursor color
-      cursorColor: moodColor,
-
-      // text highlight color
-      selectionColor: moodColor.withOpacity(0.15),
-    );
-  }
+        // text highlight color
+        selectionColor: moodColor.withOpacity(0.15),
+      );
 
   // TODO: not changing dynamically | research why | seems to be implemented correctly
-  static NoDefaultCupertinoThemeData getCupertinoOverrideTheme(Color moodColor) {
-    return CupertinoThemeData(
-      // change selectionHandleColor on IOS
-      primaryColor: moodColor,
-    );
-  }
+  static NoDefaultCupertinoThemeData getCupertinoOverrideTheme(Color moodColor) => CupertinoThemeData(
+        // change selectionHandleColor on IOS
+        primaryColor: moodColor,
+      );
 }
 
 const AppBarTheme appBarTheme = AppBarTheme(
   backgroundColor: Colors.white,
 );
 
-final TextTheme textTheme = TextTheme(
-  // App Bar Title styling
-  titleLarge: titleLargeStyle,
-  bodyMedium: const TextStyle(
+const TextTheme textTheme = TextTheme(
+  // App Bar Title && Calendar Body styling
+  // titleLarge: titleLargeStyle,
+  titleLarge: TextStyle(
+    // foreground: Paint()..color = AppColors.mainThemeColor,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  ),
+  bodyMedium: TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w500,
   ),
@@ -167,6 +165,4 @@ final mainButtonStyle = ButtonStyle(
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
-MaterialStateProperty<T> resolver<T>(MaterialPropertyResolver<T> statesCallback) {
-  return MaterialStateProperty.resolveWith(statesCallback);
-}
+MaterialStateProperty<T> resolver<T>(MaterialPropertyResolver<T> statesCallback) => MaterialStateProperty.resolveWith(statesCallback);
