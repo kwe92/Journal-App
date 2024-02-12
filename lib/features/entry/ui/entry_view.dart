@@ -102,7 +102,15 @@ class EntryView extends StatelessWidget {
                       if (statusOk) {
                         debugPrint("updated entry");
 
-                        appRouter.replace(const JournalRoute());
+                        // appRouter.replace(const JournalRoute());
+
+                        await appRouter.replace(ScaffoldWithNavigationRoute());
+                        // TODO: implement Navigator
+                        // await Navigator.of(context).pushReplacement(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const ScaffoldWithNavigation(),
+                        //   ),
+                        // );
                       }
                     }
                   },
@@ -126,7 +134,7 @@ class EntryView extends StatelessWidget {
                       if (statusOk) {
                         debugPrint('entry deleted successfully');
 
-                        appRouter.replace(const JournalRoute());
+                        await appRouter.replace(ScaffoldWithNavigationRoute());
                       }
                     }
                   },
