@@ -9,7 +9,6 @@ import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
-import 'package:journal_app/features/shared/services/scaffold_navigation_controller.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
@@ -33,7 +32,6 @@ Future<void> configureDependencies() async {
   locator.registerSingleton<TimeService>(TimeService());
   locator.registerSingleton<ImageService>(ImageService());
   locator.registerSingleton(MoodService());
-  locator.registerSingleton<ScaffoldNavigationController>(ScaffoldNavigationController());
   locator.registerSingleton<ZenQuotesApiService>(ZenQuotesApiService());
 
   // Persistent Storage Services

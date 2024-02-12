@@ -87,7 +87,7 @@ class AddEntryView extends StatelessWidget {
                       );
 
                       if (statusOk) {
-                        await appRouter.replace(ScaffoldWithNavigationRoute());
+                        await appRouter.replace(NavigationRoute());
                       }
                     }
                   },

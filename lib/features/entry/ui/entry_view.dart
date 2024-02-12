@@ -104,7 +104,7 @@ class EntryView extends StatelessWidget {
 
                         // appRouter.replace(const JournalRoute());
 
-                        await appRouter.replace(ScaffoldWithNavigationRoute());
+                        await appRouter.replace(NavigationRoute());
                         // TODO: implement Navigator
                         // await Navigator.of(context).pushReplacement(
                         //   MaterialPageRoute(
@@ -134,7 +134,7 @@ class EntryView extends StatelessWidget {
                       if (statusOk) {
                         debugPrint('entry deleted successfully');
 
-                        await appRouter.replace(ScaffoldWithNavigationRoute());
+                        await appRouter.replace(NavigationRoute());
                       }
                     }
                   },

@@ -13,24 +13,18 @@ import 'dart:ui' as _i16;
 import 'package:auto_route/auto_route.dart' as _i13;
 import 'package:flutter/material.dart' as _i14;
 import 'package:journal_app/features/addEntry/ui/add_entry_view.dart' as _i1;
-import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view.dart'
-    as _i7;
-import 'package:journal_app/features/authentication/ui/signIn/signin_view.dart'
-    as _i11;
-import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dart'
-    as _i12;
+import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view.dart' as _i7;
+import 'package:journal_app/features/authentication/ui/signIn/signin_view.dart' as _i11;
+import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dart' as _i12;
 import 'package:journal_app/features/calendar/ui/calendar_view.dart' as _i2;
 import 'package:journal_app/features/entry/ui/entry_view.dart' as _i4;
 import 'package:journal_app/features/farewell/farewell_view.dart' as _i5;
 import 'package:journal_app/features/journal/ui/journal_view.dart' as _i6;
 import 'package:journal_app/features/mood/ui/mood_view.dart' as _i8;
-import 'package:journal_app/features/profile/edit_profile/edit_profile_view.dart'
-    as _i3;
-import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view.dart'
-    as _i9;
+import 'package:journal_app/features/profile/edit_profile/edit_profile_view.dart' as _i3;
+import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view.dart' as _i10;
 import 'package:journal_app/features/shared/models/journal_entry.dart' as _i15;
-import 'package:journal_app/features/shared/scaffold_with_navigation.dart'
-    as _i10;
+import 'package:journal_app/features/shared/ui/navigation_view.dart' as _i9;
 
 abstract class $AppRouter extends _i13.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -86,8 +80,7 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       );
     },
     MemberInfoRoute.name: (routeData) {
-      final args = routeData.argsAs<MemberInfoRouteArgs>(
-          orElse: () => const MemberInfoRouteArgs());
+      final args = routeData.argsAs<MemberInfoRouteArgs>(orElse: () => const MemberInfoRouteArgs());
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i7.MemberInfoView(key: args.key),
@@ -99,34 +92,31 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: const _i8.MoodView(),
       );
     },
-    ProfileSettingsRoute.name: (routeData) {
+    NavigationRoute.name: (routeData) {
+      final args = routeData.argsAs<NavigationRouteArgs>(orElse: () => const NavigationRouteArgs());
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.ProfileSettingsView(),
-      );
-    },
-    ScaffoldWithNavigationRoute.name: (routeData) {
-      final args = routeData.argsAs<ScaffoldWithNavigationRouteArgs>(
-          orElse: () => const ScaffoldWithNavigationRouteArgs());
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i10.ScaffoldWithNavigationView(
+        child: _i9.NavigationView(
           backgroundColor: args.backgroundColor,
           key: args.key,
         ),
       );
     },
+    ProfileSettingsRoute.name: (routeData) {
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i10.ProfileSettingsView(),
+      );
+    },
     SignInRoute.name: (routeData) {
-      final args = routeData.argsAs<SignInRouteArgs>(
-          orElse: () => const SignInRouteArgs());
+      final args = routeData.argsAs<SignInRouteArgs>(orElse: () => const SignInRouteArgs());
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i11.SignInView(key: args.key),
       );
     },
     SignUpRoute.name: (routeData) {
-      final args = routeData.argsAs<SignUpRouteArgs>(
-          orElse: () => const SignUpRouteArgs());
+      final args = routeData.argsAs<SignUpRouteArgs>(orElse: () => const SignUpRouteArgs());
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i12.SignUpView(key: args.key),
@@ -153,8 +143,7 @@ class AddEntryRoute extends _i13.PageRouteInfo<AddEntryRouteArgs> {
 
   static const String name = 'AddEntryRoute';
 
-  static const _i13.PageInfo<AddEntryRouteArgs> page =
-      _i13.PageInfo<AddEntryRouteArgs>(name);
+  static const _i13.PageInfo<AddEntryRouteArgs> page = _i13.PageInfo<AddEntryRouteArgs>(name);
 }
 
 class AddEntryRouteArgs {
@@ -191,8 +180,7 @@ class CalendarRoute extends _i13.PageRouteInfo<CalendarRouteArgs> {
 
   static const String name = 'CalendarRoute';
 
-  static const _i13.PageInfo<CalendarRouteArgs> page =
-      _i13.PageInfo<CalendarRouteArgs>(name);
+  static const _i13.PageInfo<CalendarRouteArgs> page = _i13.PageInfo<CalendarRouteArgs>(name);
 }
 
 class CalendarRouteArgs {
@@ -243,8 +231,7 @@ class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
 
   static const String name = 'EntryRoute';
 
-  static const _i13.PageInfo<EntryRouteArgs> page =
-      _i13.PageInfo<EntryRouteArgs>(name);
+  static const _i13.PageInfo<EntryRouteArgs> page = _i13.PageInfo<EntryRouteArgs>(name);
 }
 
 class EntryRouteArgs {
@@ -305,8 +292,7 @@ class MemberInfoRoute extends _i13.PageRouteInfo<MemberInfoRouteArgs> {
 
   static const String name = 'MemberInfoRoute';
 
-  static const _i13.PageInfo<MemberInfoRouteArgs> page =
-      _i13.PageInfo<MemberInfoRouteArgs>(name);
+  static const _i13.PageInfo<MemberInfoRouteArgs> page = _i13.PageInfo<MemberInfoRouteArgs>(name);
 }
 
 class MemberInfoRouteArgs {
@@ -335,44 +321,28 @@ class MoodRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.ProfileSettingsView]
-class ProfileSettingsRoute extends _i13.PageRouteInfo<void> {
-  const ProfileSettingsRoute({List<_i13.PageRouteInfo>? children})
-      : super(
-          ProfileSettingsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ProfileSettingsRoute';
-
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i10.ScaffoldWithNavigationView]
-class ScaffoldWithNavigationRoute
-    extends _i13.PageRouteInfo<ScaffoldWithNavigationRouteArgs> {
-  ScaffoldWithNavigationRoute({
+/// [_i9.NavigationView]
+class NavigationRoute extends _i13.PageRouteInfo<NavigationRouteArgs> {
+  NavigationRoute({
     _i16.Color? backgroundColor,
     _i14.Key? key,
     List<_i13.PageRouteInfo>? children,
   }) : super(
-          ScaffoldWithNavigationRoute.name,
-          args: ScaffoldWithNavigationRouteArgs(
+          NavigationRoute.name,
+          args: NavigationRouteArgs(
             backgroundColor: backgroundColor,
             key: key,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'ScaffoldWithNavigationRoute';
+  static const String name = 'NavigationRoute';
 
-  static const _i13.PageInfo<ScaffoldWithNavigationRouteArgs> page =
-      _i13.PageInfo<ScaffoldWithNavigationRouteArgs>(name);
+  static const _i13.PageInfo<NavigationRouteArgs> page = _i13.PageInfo<NavigationRouteArgs>(name);
 }
 
-class ScaffoldWithNavigationRouteArgs {
-  const ScaffoldWithNavigationRouteArgs({
+class NavigationRouteArgs {
+  const NavigationRouteArgs({
     this.backgroundColor,
     this.key,
   });
@@ -383,8 +353,22 @@ class ScaffoldWithNavigationRouteArgs {
 
   @override
   String toString() {
-    return 'ScaffoldWithNavigationRouteArgs{backgroundColor: $backgroundColor, key: $key}';
+    return 'NavigationRouteArgs{backgroundColor: $backgroundColor, key: $key}';
   }
+}
+
+/// generated route for
+/// [_i10.ProfileSettingsView]
+class ProfileSettingsRoute extends _i13.PageRouteInfo<void> {
+  const ProfileSettingsRoute({List<_i13.PageRouteInfo>? children})
+      : super(
+          ProfileSettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileSettingsRoute';
+
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
@@ -401,8 +385,7 @@ class SignInRoute extends _i13.PageRouteInfo<SignInRouteArgs> {
 
   static const String name = 'SignInRoute';
 
-  static const _i13.PageInfo<SignInRouteArgs> page =
-      _i13.PageInfo<SignInRouteArgs>(name);
+  static const _i13.PageInfo<SignInRouteArgs> page = _i13.PageInfo<SignInRouteArgs>(name);
 }
 
 class SignInRouteArgs {
@@ -430,8 +413,7 @@ class SignUpRoute extends _i13.PageRouteInfo<SignUpRouteArgs> {
 
   static const String name = 'SignUpRoute';
 
-  static const _i13.PageInfo<SignUpRouteArgs> page =
-      _i13.PageInfo<SignUpRouteArgs>(name);
+  static const _i13.PageInfo<SignUpRouteArgs> page = _i13.PageInfo<SignUpRouteArgs>(name);
 }
 
 class SignUpRouteArgs {
