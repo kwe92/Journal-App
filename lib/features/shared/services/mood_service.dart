@@ -38,6 +38,8 @@ class MoodService {
     return mood;
   }
 
+  // TODO: Refactor moodType to  ModeType Enum
+
   Color getMoodColorByType(String moodType) {
     final MoodRecord moodData = _moodsData[moodType]!;
 
