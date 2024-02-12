@@ -19,5 +19,6 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: EditProfileRoute.page),
         AutoRoute(page: FarewellRoute.page),
         AutoRoute(page: CalendarRoute.page),
+        AutoRoute(page: ScaffoldWithNavigationRoute.page),
       ];
 }
