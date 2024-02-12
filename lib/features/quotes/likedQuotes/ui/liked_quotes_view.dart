@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
 import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
@@ -14,11 +15,11 @@ class LikedQuotesView extends StatelessWidget {
     final model = context.watch<LikedQuotesViewModel>();
 
     return Scaffold(
-      backgroundColor: const Color(0xff131b24),
+      backgroundColor: AppColors.darkGrey1,
       appBar: model.likedQuotes.isNotEmpty
           ? AppBar(
               scrolledUnderElevation: 0.0,
-              backgroundColor: const Color(0xff131b24),
+              backgroundColor: AppColors.darkGrey1,
               title: Container(
                 height: 52,
                 width: 52,
@@ -48,10 +49,7 @@ class LikedQuotesView extends StatelessWidget {
                     width: 300,
                     child: SvgPicture.asset(
                       "assets/images/lotus-flower-bloom.svg",
-                      // TODO: find a pink color you like
                       color: Colors.pink[100],
-                      // color: Color(0xffe7bfd9),
-
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -70,7 +68,7 @@ class LikedQuotesView extends StatelessWidget {
                     bottom: model.likedQuotes.length - 1 == index ? 24 : 0,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xff1d2530),
+                    color: AppColors.darkGrey0,
                     borderRadius: const BorderRadius.all(
                       Radius.circular(16),
                     ),

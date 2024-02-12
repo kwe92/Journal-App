@@ -1,18 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_model.dart';
-import 'package:journal_app/features/shared/services/scaffold_navigation_controller.dart';
-import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/ui/navigation_view_model.dart';
 import 'package:provider/provider.dart';
 
-// TODO: needs to be renamed to something more intuitive
-
 @RoutePage()
-class ScaffoldWithNavigationView extends StatelessWidget {
+class NavigationView extends StatelessWidget {
   final Color? backgroundColor;
 
-  const ScaffoldWithNavigationView({
+  const NavigationView({
     this.backgroundColor,
     super.key,
   });
@@ -21,8 +19,8 @@ class ScaffoldWithNavigationView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: scaffoldNavigationController,
+        ChangeNotifierProvider(
+          create: (context) => NavigationViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => RandomQuotesViewModel(),
@@ -32,10 +30,10 @@ class ScaffoldWithNavigationView extends StatelessWidget {
         ),
       ],
       builder: (context, _) {
-        final model = context.watch<ScaffoldNavigationController>();
+        final model = context.watch<NavigationViewModel>();
 
         return Scaffold(
-          backgroundColor: backgroundColor ?? const Color(0xff131b24),
+          backgroundColor: backgroundColor ?? AppColors.darkGrey1,
           body: Center(
             child: model.widgetOptions[model.selectedIndex],
           ),
@@ -47,7 +45,7 @@ class ScaffoldWithNavigationView extends StatelessWidget {
                 hoverColor: Colors.transparent,
               ),
               child: BottomNavigationBar(
-                backgroundColor: const Color(0xff131b24),
+                backgroundColor: AppColors.darkGrey1,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(Icons.book_online_rounded),

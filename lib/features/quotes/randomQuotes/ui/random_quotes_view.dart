@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
 import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
@@ -40,7 +41,7 @@ class RandomQuotesView extends StatelessWidget {
                               scaleX: 1.0625,
                               child: SvgPicture.asset(
                                 "assets/images/quotes-background-image.svg",
-                                color: const Color(0xff1d2530),
+                                color: AppColors.darkGrey1,
                               ),
                             ),
                           ),

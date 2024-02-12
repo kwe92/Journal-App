@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 /// all colors used throughout the application
 class AppColors {
   const AppColors._();
-  static const offGrey = Color(0xff445D67);
 
-  // static const offGrey = lightGreen;
+  static const darkGrey0 = Color(0xff1d2530);
+
+  static const darkGrey1 = Color(0xff131b24);
+
+  static const offGrey = Color(0xff445D67);
 
   static const offWhite = Color(0xffF5F5F5);
 
@@ -16,8 +19,6 @@ class AppColors {
   static const orange0 = Color(0xfff45e49);
 
   static const blueGrey0 = Color(0xff545F68);
-
-  // static const journalBackground = Color(0xff00d2ff);
 
   static const journalBackground = Color(0xffffffff);
 

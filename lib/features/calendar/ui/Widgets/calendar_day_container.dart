@@ -18,7 +18,7 @@ class CalendarDayContainer extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.mainThemeColor,
           borderRadius: BorderRadius.all(
-            !isRange ? const Radius.circular(6) : const Radius.circular(34 / 2),
+            !isRange ? const Radius.circular(8) : const Radius.circular(34 / 2),
           ),
         ),
         child: Center(
