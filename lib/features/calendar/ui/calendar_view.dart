@@ -61,7 +61,9 @@ class CalendarView extends StatelessWidget {
                           markerMargin: const EdgeInsets.symmetric(horizontal: 0.5),
                           rangeHighlightColor: AppColors.mainThemeColor.withOpacity(0.25),
                           markerDecoration: const BoxDecoration(
-                            color: AppColors.calendarMarkerColor,
+                            // color: AppColors.calendarMarkerColor,
+                            color: Color(0xff087fd0),
+
                             shape: BoxShape.circle,
                           ),
                           todayTextStyle: const TextStyle(color: Colors.black),

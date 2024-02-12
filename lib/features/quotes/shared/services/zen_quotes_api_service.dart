@@ -32,8 +32,6 @@ class ZenQuotesApiService extends ApiService with ChangeNotifier {
           }()
       ];
 
-      print(quotes);
-
       notifyListeners();
     }
   }

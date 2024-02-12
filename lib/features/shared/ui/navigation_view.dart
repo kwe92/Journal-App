@@ -6,8 +6,6 @@ import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_m
 import 'package:journal_app/features/shared/ui/navigation_view_model.dart';
 import 'package:provider/provider.dart';
 
-// TODO: needs to be renamed to something more intuitive
-
 @RoutePage()
 class NavigationView extends StatelessWidget {
   final Color? backgroundColor;

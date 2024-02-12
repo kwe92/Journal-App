@@ -49,10 +49,7 @@ class LikedQuotesView extends StatelessWidget {
                     width: 300,
                     child: SvgPicture.asset(
                       "assets/images/lotus-flower-bloom.svg",
-                      // TODO: find a pink color you like
                       color: Colors.pink[100],
-                      // color: Color(0xffe7bfd9),
-
                       fit: BoxFit.cover,
                     ),
                   ),
