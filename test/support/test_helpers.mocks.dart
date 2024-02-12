@@ -1516,6 +1516,23 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
           ),
         ),
       ) as String);
+
+  @override
+  List<DateTime> daysInRange(
+    DateTime? first,
+    DateTime? last,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #daysInRange,
+          [
+            first,
+            last,
+          ],
+        ),
+        returnValue: <DateTime>[],
+        returnValueForMissingStub: <DateTime>[],
+      ) as List<DateTime>);
 }
 
 /// A class which mocks [ImageService].
