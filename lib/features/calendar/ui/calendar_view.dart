@@ -119,7 +119,10 @@ class CalendarView extends StatelessWidget {
                   ],
                   body: ListView.builder(
                     itemCount: model.selectedEvents.length,
-                    itemBuilder: (context, index) => JournalEntryCard(index: index, journalEntry: model.selectedEvents[index]),
+                    itemBuilder: (context, index) => JournalEntryCard(
+                      index: index,
+                      journalEntry: model.selectedEvents[index],
+                    ),
                   ),
                 ),
               ),

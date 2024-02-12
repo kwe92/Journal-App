@@ -43,6 +43,9 @@ class CalendarViewModel extends ChangeNotifier {
     _selectedDay = _focusedDay;
 
     _selectedEvents = getEventsForDay(_selectedDay!);
+
+    // TODO: remove, added for testing
+    debugPrint("_selectedEvents:$_selectedEvents");
   }
 
   void setSelectedEvents(List<JournalEntry> selectedEvents) {
