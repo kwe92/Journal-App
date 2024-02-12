@@ -6,8 +6,10 @@ import 'package:journal_app/features/authentication/services/image_service.dart'
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
+import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
+import 'package:journal_app/features/shared/services/scaffold_navigation_controller.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
@@ -65,4 +67,12 @@ SharedPreferences get prefs {
 
 FlutterSecureStorage get storage {
   return locator.get<FlutterSecureStorage>();
+}
+
+ScaffoldNavigationController get scaffoldNavigationController {
+  return locator.get<ScaffoldNavigationController>();
+}
+
+ZenQuotesApiService get zenQuotesApiService {
+  return locator.get<ZenQuotesApiService>();
 }
