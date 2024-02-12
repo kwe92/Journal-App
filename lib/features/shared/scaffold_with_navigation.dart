@@ -6,6 +6,8 @@ import 'package:journal_app/features/shared/services/scaffold_navigation_control
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:provider/provider.dart';
 
+// TODO: needs to be renamed to something more intuitive
+
 @RoutePage()
 class ScaffoldWithNavigationView extends StatelessWidget {
   final Color? backgroundColor;
