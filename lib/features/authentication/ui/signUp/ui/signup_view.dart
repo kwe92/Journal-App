@@ -109,7 +109,7 @@ class SignUpView extends StatelessWidget {
                                   model.setShowRequirements(passwordFocus.hasFocus);
                                 });
                                 // remove member info view and navigate to journal view
-                                appRouter.replace(const JournalRoute());
+                                await appRouter.replace(ScaffoldWithNavigationRoute());
                               }
                             }
                           },

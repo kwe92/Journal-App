@@ -105,6 +105,7 @@ class JournalView extends StatelessWidget {
           // OPEN SIDE MENU
           drawer: SideMenu(logoutCallback: () async {
             await model.cleanResources();
+            // TODO: implement Navigator
             await appRouter.replace(SignInRoute());
           }),
           //ADD NEW ENTRY BUTTON
