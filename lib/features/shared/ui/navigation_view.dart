@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_model.dart';
 import 'package:journal_app/features/shared/ui/navigation_view_model.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +16,7 @@ class NavigationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: could refactor to use StackedView model architecture for navigation vie and random quotes view...
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -24,9 +24,6 @@ class NavigationView extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => RandomQuotesViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LikedQuotesViewModel(),
         ),
       ],
       builder: (context, _) {

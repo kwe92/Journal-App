@@ -39,7 +39,11 @@ enum Endpoint {
 
   // User Endpoints
   deleteAccount("/api/delete-account"),
-  updateUserInfo("/api/update-user-info");
+  updateUserInfo("/api/update-user-info"),
+
+  // Liked Quotes Endpoints
+  likedQuotes("/api/liked-quotes"),
+  deleteLikedQuote("/api/delete-liked-quote/");
 
   final String path;
 
