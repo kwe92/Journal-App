@@ -1,9 +1,16 @@
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonSerializable()
 abstract class Quote {
-  final String author;
-  final String quote;
+  int? id;
+  String author;
+  String quote;
+
+  @JsonKey(name: "is_liked")
   bool isLiked;
 
   Quote({
+    this.id,
     required this.author,
     required this.quote,
     required this.isLiked,
