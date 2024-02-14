@@ -6,6 +6,8 @@ import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+// TODO: implement a clear data method as selecting a range over multiple months is causing an error
+
 class CalendarViewModel extends ChangeNotifier {
   late List<JournalEntry> _selectedEvents;
 
