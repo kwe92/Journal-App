@@ -27,6 +27,11 @@ class RandomQuotesViewModel extends BaseViewModel {
   Future<void> setLikedForQuote(Quote quote) async {
     quote.isLiked = !quote.isLiked;
 
+    notifyListeners();
+
+    // allows user to see heart animation filled before quote is removed from the list of quotes
+    await Future.delayed(const Duration(milliseconds: 250));
+
     zenQuotesApiService.quotes.remove(quote);
 
     notifyListeners();
