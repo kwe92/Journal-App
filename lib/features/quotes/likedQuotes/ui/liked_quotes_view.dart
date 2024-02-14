@@ -2,126 +2,72 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
-import 'package:journal_app/features/quotes/shared/utils/functions.dart';
-import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
-import 'package:journal_app/features/quotes/shared/widgets/share_button.dart';
-import 'package:provider/provider.dart';
+import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quote_card.dart';
+import 'package:stacked/stacked.dart';
 
 class LikedQuotesView extends StatelessWidget {
   const LikedQuotesView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<LikedQuotesViewModel>();
-
-    return Scaffold(
-      backgroundColor: AppColors.darkGrey1,
-      appBar: model.likedQuotes.isNotEmpty
-          ? AppBar(
-              scrolledUnderElevation: 0.0,
-              backgroundColor: AppColors.darkGrey1,
-              title: Container(
-                height: 52,
-                width: 52,
-                margin: const EdgeInsets.only(bottom: 16),
-                child: SvgPicture.asset(
-                  "assets/images/lotus-flower-bloom.svg",
-                  color: Colors.pink[100],
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
-          : null,
-      body: model.likedQuotes.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Find your inspiration...",
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 300,
-                    width: 300,
+    return ViewModelBuilder.reactive(
+      // ! I think the view model is being created every time the widget is injected into the widget tree causeing extra backend calls | change notifier in Navigation view maybe a better option
+      viewModelBuilder: () => LikedQuotesViewModel(),
+      // TODO: REDUCE BACK END CALLS | maybe refactor back to change notifier as there are too many backend calls, every time this widget is selected a backend csall is made
+      onViewModelReady: (model) async => await model.initialize(),
+      builder: (context, model, _) {
+        return Scaffold(
+          backgroundColor: AppColors.darkGrey1,
+          appBar: model.likedQuotes.isNotEmpty
+              ? AppBar(
+                  scrolledUnderElevation: 0.0,
+                  backgroundColor: AppColors.darkGrey1,
+                  title: Container(
+                    height: 52,
+                    width: 52,
+                    margin: const EdgeInsets.only(bottom: 16),
                     child: SvgPicture.asset(
                       "assets/images/lotus-flower-bloom.svg",
                       color: Colors.pink[100],
                       fit: BoxFit.cover,
                     ),
                   ),
-                ],
-              ),
-            )
-          : ListView.builder(
-              itemCount: model.likedQuotes.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  margin: EdgeInsets.only(
-                    left: 24,
-                    top: !(index == 0) ? 24 : 0,
-                    right: 24,
-                    bottom: model.likedQuotes.length - 1 == index ? 24 : 0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.darkGrey0,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(16),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0, 2),
-                        color: Colors.black.withOpacity(0.15),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                      ),
-                    ],
-                  ),
+                )
+              : null,
+          body: model.likedQuotes.isEmpty
+              ? Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        model.likedQuotes[index].quote,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
+                      const Text(
+                        "Find your inspiration...",
+                        style: TextStyle(
                           fontSize: 24,
                           color: Colors.white,
                         ),
                       ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ShareButton(
-                            size: 26.0,
-                            contentToShare: shareQuote(model.likedQuotes[index]),
-                          ),
-                          Text(
-                            model.likedQuotes[index].author,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          FavoriteButton(
-                            onPressed: () => model.setLikedForQuote(model.likedQuotes[index]),
-                            size: 26,
-                            isLiked: model.likedQuotes[index].isLiked,
-                          ),
-                        ],
+                      SizedBox(
+                        height: 300,
+                        width: 300,
+                        child: SvgPicture.asset(
+                          "assets/images/lotus-flower-bloom.svg",
+                          color: Colors.pink[100],
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ],
                   ),
-                );
-              },
-            ),
+                )
+              : ListView.builder(
+                  itemCount: model.likedQuotes.length,
+                  itemBuilder: (context, index) {
+                    return LikedQuoteCard(
+                      index: index,
+                    );
+                  },
+                ),
+        );
+      },
     );
   }
 }
