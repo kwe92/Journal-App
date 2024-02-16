@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/calendar/ui/Widgets/calendar_day_container.dart';
+import 'package:journal_app/features/calendar/ui/Widgets/hideable_mood_count_calendar.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
@@ -116,12 +118,14 @@ class CalendarView extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const HideableMoodCountCalendar(),
+                    SliverToBoxAdapter(child: gap6),
                   ],
                   body: ListView.builder(
-                    itemCount: model.selectedEvents.length,
+                    itemCount: model.filteredSelectedEvents.length,
                     itemBuilder: (context, index) => JournalEntryCard(
                       index: index,
-                      journalEntry: model.selectedEvents[index],
+                      journalEntry: model.filteredSelectedEvents[index],
                     ),
                   ),
                 ),
