@@ -1,15 +1,19 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/widgets.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 // TODO: implement a clear data method as selecting a range over multiple months is causing an error
+// TODO: maybe implementation can be shortened
 
 class CalendarViewModel extends ChangeNotifier {
   late List<JournalEntry> _selectedEvents;
+
+  List<JournalEntry> _filteredSelectedEvents = [];
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
@@ -22,6 +26,12 @@ class CalendarViewModel extends ChangeNotifier {
   DateTime? _rangeStart;
 
   DateTime? _rangeEnd;
+
+  // List<JournalEntry> _filteredSelectedEvents = [];
+
+  String _currentMoodTypeFilter = MoodTypeFilterOptions.all;
+
+  String _query = '';
 
   List<JournalEntry> get selectedEvents => _selectedEvents;
 
@@ -39,6 +49,32 @@ class CalendarViewModel extends ChangeNotifier {
 
   DateTime get minDate => journalEntryService.minDate ?? DateTime.now();
 
+  List<JournalEntry> get filteredSelectedEvents => _filteredSelectedEvents;
+
+  String get currentMoodTypeFilter => _currentMoodTypeFilter;
+
+  String get query => _query;
+
+  int get awesomeCount {
+    return _getMoodCountByMoodType(MoodType.awesome.text);
+  }
+
+  int get happyCount {
+    return _getMoodCountByMoodType(MoodType.happy.text);
+  }
+
+  int get okayCount {
+    return _getMoodCountByMoodType(MoodType.okay.text);
+  }
+
+  int get badCount {
+    return _getMoodCountByMoodType(MoodType.bad.text);
+  }
+
+  int get terribleCount {
+    return _getMoodCountByMoodType(MoodType.terrible.text);
+  }
+
   void initialize(DateTime focusedDay) {
     _focusedDay = focusedDay;
 
@@ -46,12 +82,18 @@ class CalendarViewModel extends ChangeNotifier {
 
     _selectedEvents = getEventsForDay(_selectedDay!);
 
-    // TODO: remove, added for testing
-    debugPrint("_selectedEvents:$_selectedEvents");
+    _filteredSelectedEvents = _selectedEvents;
+
+    notifyListeners();
+
+    debugPrint("_filteredSelectedEvents:$_filteredSelectedEvents");
   }
 
   void setSelectedEvents(List<JournalEntry> selectedEvents) {
     _selectedEvents = selectedEvents;
+
+    _filteredSelectedEvents = selectedEvents;
+
     notifyListeners();
   }
 
@@ -110,6 +152,8 @@ class CalendarViewModel extends ChangeNotifier {
       _rangeSelectionMode = RangeSelectionMode.toggledOff;
 
       _selectedEvents = getEventsForDay(selectedDay);
+
+      _filteredSelectedEvents = _selectedEvents;
     }
 
     notifyListeners();
@@ -125,14 +169,96 @@ class CalendarViewModel extends ChangeNotifier {
     // `start` or `end` could be null
     if (start != null && end != null) {
       _selectedEvents = getEventsForRange(start, end);
+      _filteredSelectedEvents = _selectedEvents;
     } else if (start != null) {
       _selectedEvents = getEventsForDay(start);
+      _filteredSelectedEvents = _selectedEvents;
     } else if (end != null) {
       _selectedEvents = getEventsForDay(end);
+      _filteredSelectedEvents = _selectedEvents;
     }
 
     notifyListeners();
   }
 
   Mood createMoodByType(String moodType) => moodService.createMoodByType(moodType);
+
+  /// Filter journal entries by mood type and query.
+  void setFilteredJournalEntries(String moodType, String query) {
+    switch (moodType) {
+      case MoodTypeFilterOptions.all:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.all);
+        _filteredSelectedEvents = _selectedEvents.where((entry) => entry.content.toLowerCase().contains(query.toLowerCase())).toList();
+        notifyListeners();
+        break;
+
+      // used MoodTypeFilterOptions as I could not use the MoodType enum for some reason
+      case MoodTypeFilterOptions.awesome:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.awesome);
+
+        _filteredSelectedEvents = _fiterJournalEntries(MoodTypeFilterOptions.awesome, query);
+
+        notifyListeners();
+
+        break;
+
+      case MoodTypeFilterOptions.happy:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.happy);
+
+        _filteredSelectedEvents = _fiterJournalEntries(MoodTypeFilterOptions.happy, query);
+
+        notifyListeners();
+
+        break;
+
+      case MoodTypeFilterOptions.okay:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.okay);
+
+        _filteredSelectedEvents = _fiterJournalEntries(MoodTypeFilterOptions.okay, query);
+
+        notifyListeners();
+
+        break;
+
+      case MoodTypeFilterOptions.bad:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.bad);
+
+        _filteredSelectedEvents = _fiterJournalEntries(MoodTypeFilterOptions.bad, query);
+
+        notifyListeners();
+
+        break;
+
+      case MoodTypeFilterOptions.terrible:
+        _setCurrentMoodTypeFilter(MoodTypeFilterOptions.terrible);
+
+        _filteredSelectedEvents = _fiterJournalEntries(MoodTypeFilterOptions.terrible, query);
+
+        notifyListeners();
+
+        break;
+    }
+  }
+
+  void _setCurrentMoodTypeFilter(String moodType) {
+    _currentMoodTypeFilter = moodType;
+    notifyListeners();
+  }
+
+  int _getMoodCountByMoodType(String moodType) {
+    return _selectedEvents.where((entry) => entry.moodType == moodType).length;
+  }
+
+  List<JournalEntry> _fiterJournalEntries(String moodType, String query) {
+    return _selectedEvents
+        .where((entry) => entry.moodType == moodType && entry.content.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
+
+  /// Create [Mood] instance by mood type.
+  Mood createMood(String moodType, double? imageSize) {
+    final Mood mood = moodService.createMoodByType(moodType, imageSize);
+
+    return mood;
+  }
 }
