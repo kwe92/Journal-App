@@ -1,7 +1,11 @@
 import "package:flutter/material.dart";
 import "package:journal_app/app/theme/colors.dart";
 import "package:journal_app/app/theme/theme.dart";
+import "package:journal_app/features/shared/services/app_mode_service.dart";
 import "package:journal_app/features/shared/utilities/common_box_shadow.dart";
+import "package:provider/provider.dart";
+
+// TODO: refactor multiple calls to context.watch<AppModeService>().isLightMode throughout the app
 
 class BaseScaffold extends StatelessWidget {
   final String title;
@@ -11,6 +15,7 @@ class BaseScaffold extends StatelessWidget {
   final Widget? leading;
   final Widget? floatingActionButton;
   final Drawer? drawer;
+  final Color? backgroundColor;
 
   const BaseScaffold({
     required this.title,
@@ -20,12 +25,15 @@ class BaseScaffold extends StatelessWidget {
     this.actions,
     this.floatingActionButton,
     this.drawer,
+    this.backgroundColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) => SafeArea(
         child: Scaffold(
+          backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(56),
             child: Container(
@@ -33,6 +41,7 @@ class BaseScaffold extends StatelessWidget {
                 boxShadow: [CommonBoxShadow()],
               ),
               child: AppBar(
+                backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey0,
                 scrolledUnderElevation: 0,
                 title: Text(
                   title,

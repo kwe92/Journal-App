@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/general/constants.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/calendar/ui/Widgets/filter_button_calendar.dart';
 import 'package:journal_app/features/calendar/ui/Widgets/mood_type_counter_calendar.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class HideableMoodCountCalendar extends ViewModelWidget<CalendarViewModel> {
@@ -11,6 +14,7 @@ class HideableMoodCountCalendar extends ViewModelWidget<CalendarViewModel> {
   @override
   Widget build(BuildContext context, CalendarViewModel viewModel) {
     return SliverAppBar(
+      backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
       toolbarHeight: 32,
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: false,

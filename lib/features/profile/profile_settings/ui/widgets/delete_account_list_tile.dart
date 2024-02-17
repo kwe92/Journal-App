@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view_model.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
@@ -15,12 +17,12 @@ class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
       child: Container(
         height: 90,
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: const BoxDecoration(
-          color: AppColors.offWhite,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: context.watch<AppModeService>().isLightMode ? AppColors.offWhite : AppColors.darkGrey0,
+          borderRadius: const BorderRadius.all(
             Radius.circular(16),
           ),
-          boxShadow: [CommonBoxShadow()],
+          boxShadow: const [CommonBoxShadow()],
         ),
         child: Row(
           children: [
@@ -40,7 +42,7 @@ class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
                   'Delete this account and all associated data.',
                   style: TextStyle(
                     fontSize: 10,
-                    color: AppColors.offGrey.withOpacity(0.85),
+                    color: context.watch<AppModeService>().isLightMode ? AppColors.offGrey.withOpacity(0.85) : Colors.white,
                   ),
                 ),
               ],

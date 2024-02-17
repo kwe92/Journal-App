@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/mood/ui/mood_view_model.dart';
 import 'package:journal_app/features/mood/ui/widgets/cancel_button.dart';
 import 'package:journal_app/features/mood/ui/widgets/mood_card.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -22,6 +25,7 @@ class MoodView extends StatelessWidget {
       builder: (context, MoodViewModel model, _) {
         return SafeArea(
           child: Scaffold(
+            backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

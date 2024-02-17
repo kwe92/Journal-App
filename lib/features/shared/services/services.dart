@@ -8,6 +8,7 @@ import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart';
 import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
@@ -75,4 +76,8 @@ ZenQuotesApiService get zenQuotesApiService {
 
 LikedQuotesService get likedQuotesService {
   return locator.get<LikedQuotesService>();
+}
+
+AppModeService get appModeService {
+  return locator.get<AppModeService>();
 }

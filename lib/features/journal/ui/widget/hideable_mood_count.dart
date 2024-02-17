@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/general/constants.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/filter_button.dart';
 import 'package:journal_app/features/journal/ui/widget/mood_type_counter.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class HideableMoodCount extends ViewModelWidget<JournalViewModel> {
@@ -11,6 +14,7 @@ class HideableMoodCount extends ViewModelWidget<JournalViewModel> {
   @override
   Widget build(BuildContext context, JournalViewModel viewModel) {
     return SliverAppBar(
+      backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
       toolbarHeight: 32,
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: false,
