@@ -1,27 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:provider/provider.dart';
+
+// TODO: Refactor dark mode to work better with color scheme functionality
 
 // main application theme
 class AppTheme {
   const AppTheme._();
 
-  static ThemeData getTheme() => ThemeData(
-        // default Scaffold color is somewhat off white
-        scaffoldBackgroundColor: Colors.white,
-        useMaterial3: true,
-        appBarTheme: appBarTheme,
-        textTheme: textTheme,
-        inputDecorationTheme: inputTheme,
-        textSelectionTheme: textSelectionTheme,
-        // change selectionHandleColor on IOS
-        cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: Colors.black54,
-        ),
-        textButtonTheme: textButtonTheme,
-        outlinedButtonTheme: mainButtonTheme,
-        snackBarTheme: snackBarTheme,
-      );
+  static ThemeData getTheme(BuildContext context) {
+    return ThemeData(
+      colorScheme: context.watch<AppModeService>().isLightMode
+          ? const ColorScheme.light()
+          : const ColorScheme.dark(
+              background: AppColors.darkGrey1,
+            ),
+      // default Scaffold color is somewhat off white
+      scaffoldBackgroundColor: Colors.white,
+      useMaterial3: true,
+      appBarTheme: appBarTheme,
+      textTheme: textTheme,
+      inputDecorationTheme: inputTheme,
+      textSelectionTheme: textSelectionTheme,
+      // change selectionHandleColor on IOS
+      cupertinoOverrideTheme: const CupertinoThemeData(
+        primaryColor: Colors.black54,
+      ),
+      textButtonTheme: textButtonTheme,
+      outlinedButtonTheme: mainButtonTheme,
+      snackBarTheme: snackBarTheme,
+    );
+  }
 
   /// return main button theme in specified color
   static OutlinedButtonThemeData customOutlinedButtonThemeData(Color? backgroundColor) => OutlinedButtonThemeData(
