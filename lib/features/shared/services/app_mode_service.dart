@@ -12,30 +12,38 @@ class AppModeService extends ChangeNotifier {
   }
 
   Future<void> initialize() async {
-    final hasAppModeSet = await storage.containsKey(key: PrefKeys.appMode);
+    final bool isLightModeSet = await storage.containsKey(key: PrefKeys.appMode);
 
-    if (!hasAppModeSet) {
-      _isLightMode = true;
-      notifyListeners();
+    !isLightModeSet ? await _setInitialLightModeOption() : await _getLightModeOptionFromStorage();
+  }
 
-      await storage.write(key: PrefKeys.appMode, value: _isLightMode.toString());
+  Future<void> _setInitialLightModeOption() async {
+    setLightMode(true);
 
-      return;
-    }
+    await _writeLightModeOptionToStorage(_isLightMode.toString());
+  }
 
+  Future<void> _getLightModeOptionFromStorage() async {
     final isLightMode = await storage.read(key: PrefKeys.appMode);
 
-    _isLightMode = (isLightMode!.toLowerCase() == "true");
-
-    notifyListeners();
-    debugPrint("_isLightMode: $_isLightMode");
+    setLightMode((isLightMode!.toLowerCase() == "true"));
   }
 
   Future<void> switchMode() async {
-    _isLightMode = !_isLightMode;
-    await storage.write(key: PrefKeys.appMode, value: _isLightMode.toString());
+    setLightMode(!_isLightMode);
+
+    await _writeLightModeOptionToStorage(_isLightMode.toString());
+  }
+
+  void setLightMode(bool isLightMode) {
+    _isLightMode = isLightMode;
+
     debugPrint("_isLightMode: $_isLightMode");
 
     notifyListeners();
+  }
+
+  Future<void> _writeLightModeOptionToStorage(String value) async {
+    await storage.write(key: PrefKeys.appMode, value: value);
   }
 }
