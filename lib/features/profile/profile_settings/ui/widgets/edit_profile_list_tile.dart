@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileListTile extends StatelessWidget {
   final String userFullName;
@@ -16,24 +18,25 @@ class EditProfileListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appModeModel = context.watch<AppModeService>();
     return GestureDetector(
       onTap: () => appRouter.push(const EditProfileRoute()),
       child: Container(
         height: 90,
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: const BoxDecoration(
-          color: AppColors.offWhite,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: appModeModel.isLightMode ? AppColors.offWhite : AppColors.darkGrey0,
+          borderRadius: const BorderRadius.all(
             Radius.circular(16),
           ),
-          boxShadow: [CommonBoxShadow()],
+          boxShadow: const [CommonBoxShadow()],
         ),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.offGrey.withOpacity(0.25),
+                color: appModeModel.isLightMode ? AppColors.offGrey.withOpacity(0.25) : Colors.white,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(16),
                 ),
@@ -60,7 +63,7 @@ class EditProfileListTile extends StatelessWidget {
                   userEmail,
                   style: TextStyle(
                     fontSize: 10,
-                    color: AppColors.offGrey.withOpacity(0.85),
+                    color: appModeModel.isLightMode ? AppColors.offGrey.withOpacity(0.85) : Colors.white,
                   ),
                 ),
               ],

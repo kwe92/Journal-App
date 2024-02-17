@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view_model.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -45,6 +48,7 @@ class MemberInfoView extends StatelessWidget {
       builder: (BuildContext context, MemberInfoViewModel model, _) {
         return SafeArea(
           child: Scaffold(
+            backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
             body: SizedBox(
               width: double.maxFinite,
               height: double.maxFinite,

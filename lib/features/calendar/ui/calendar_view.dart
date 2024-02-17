@@ -7,8 +7,10 @@ import 'package:journal_app/features/calendar/ui/Widgets/hideable_mood_count_cal
 import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -33,6 +35,7 @@ class CalendarView extends StatelessWidget {
                   floatHeaderSlivers: true,
                   headerSliverBuilder: (context, _) => [
                     SliverAppBar(
+                      backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
                       toolbarHeight: MediaQuery.of(context).size.height / 2.5,
                       scrolledUnderElevation: 0,
                       automaticallyImplyLeading: false,
@@ -41,14 +44,23 @@ class CalendarView extends StatelessWidget {
                       title: TableCalendar<JournalEntry>(
                         rowHeight: 42,
                         daysOfWeekHeight: 24,
-                        headerStyle: const HeaderStyle(
-                          formatButtonPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                        headerStyle: HeaderStyle(
+                          leftChevronIcon: Icon(
+                            Icons.chevron_left,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                          rightChevronIcon: Icon(
+                            Icons.chevron_right,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                          formatButtonPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                           formatButtonTextStyle: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black,
+                            // color: Colors.black,
+                            color: Theme.of(context).colorScheme.onBackground,
                           ),
-                          formatButtonDecoration: BoxDecoration(
+                          formatButtonDecoration: const BoxDecoration(
                             border: Border.fromBorderSide(
                               BorderSide(color: AppColors.mainThemeColor, width: 2),
                             ),
@@ -63,12 +75,10 @@ class CalendarView extends StatelessWidget {
                           markerMargin: const EdgeInsets.symmetric(horizontal: 0.5),
                           rangeHighlightColor: AppColors.mainThemeColor.withOpacity(0.25),
                           markerDecoration: const BoxDecoration(
-                            // color: AppColors.calendarMarkerColor,
                             color: Color(0xff087fd0),
-
                             shape: BoxShape.circle,
                           ),
-                          todayTextStyle: const TextStyle(color: Colors.black),
+                          todayTextStyle: TextStyle(color: Theme.of(context).colorScheme.onBackground),
                           todayDecoration: const BoxDecoration(
                             color: Colors.transparent,
                             shape: BoxShape.circle,

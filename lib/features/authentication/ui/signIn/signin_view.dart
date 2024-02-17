@@ -2,11 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/email_input.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/password_input.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -34,7 +37,7 @@ class SignInView extends StatelessWidget {
                 body: Center(
                   child: Container(
                     // TODO: temp key for testing | remove later
-                    key: GlobalObjectKey('find-widget'),
+                    key: const GlobalObjectKey('find-widget'),
 
                     height: MediaQuery.of(context).size.height / 7.875,
                     decoration: BoxDecoration(
@@ -49,6 +52,7 @@ class SignInView extends StatelessWidget {
               )
             : SafeArea(
                 child: Scaffold(
+                  backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
                   body: SizedBox(
                     width: double.maxFinite,
                     height: double.maxFinite,
@@ -68,7 +72,10 @@ class SignInView extends StatelessWidget {
                           padding: EdgeInsets.only(left: 16.0),
                           child: Text(
                             "Log-in",
-                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         gap12,

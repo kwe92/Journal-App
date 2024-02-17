@@ -10,11 +10,13 @@ import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart'
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -31,6 +33,17 @@ class JournalView extends StatelessWidget {
           // means Thoughts in french
           title: "Pensées",
           actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: IconButton(
+                onPressed: () async {
+                  await context.read<AppModeService>().switchMode();
+                },
+                icon: Icon(
+                  context.watch<AppModeService>().isLightMode ? Icons.wb_sunny_outlined : Icons.mode_night_outlined,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: ProfileIcon(
