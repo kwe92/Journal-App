@@ -10,9 +10,10 @@ QuoteImp _$QuoteImpFromJson(Map<String, dynamic> json) => QuoteImp(
       author: json['author'] as String,
       quote: json['quote'] as String,
       isLiked: json['is_liked'] as bool,
-    );
+    )..id = json['id'] as int?;
 
 Map<String, dynamic> _$QuoteImpToJson(QuoteImp instance) => <String, dynamic>{
+      'id': instance.id,
       'author': instance.author,
       'quote': instance.quote,
       'is_liked': instance.isLiked,

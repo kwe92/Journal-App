@@ -1,13 +1,8 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view.dart';
-import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
-import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
-import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../support/test_data.dart';

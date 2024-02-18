@@ -4,10 +4,12 @@ import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/profile/profile_settings/ui/delete_profile_dialog_view.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
+import 'package:provider/provider.dart';
 
 /// Service for displaying user feedback upon success or failure of some event.
 /// Info boxes displayed include toasts, snackbars, banners and other temporary infomation popup boxes.
@@ -50,12 +52,16 @@ class ToastService {
             context: context,
             builder: (context) {
               return SimpleDialog(
+                backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+                surfaceTintColor: Colors.white,
                 titlePadding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
                 contentPadding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
                 title: Text(
                   parameters.title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, foreground: Paint()..color = AppColors.blueGrey0),
+                  style: TextStyle(
+                      fontSize: 18,
+                      foreground: Paint()..color = context.watch<AppModeService>().isLightMode ? AppColors.blueGrey0 : Colors.white),
                 ),
                 children: [
                   if (parameters.content != null) ...[

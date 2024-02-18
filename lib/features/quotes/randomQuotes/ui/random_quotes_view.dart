@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
@@ -12,6 +14,7 @@ const style = TextStyle(
   fontSize: 26,
 );
 
+@RoutePage()
 class RandomQuotesView extends StatelessWidget {
   const RandomQuotesView({super.key});
 
@@ -19,11 +22,7 @@ class RandomQuotesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<RandomQuotesViewModel>();
     return model.isBusy
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: Colors.purple,
-            ),
-          )
+        ? circleLoader
         : PageView.builder(
             scrollDirection: Axis.vertical,
             itemCount: model.quotes.length,
