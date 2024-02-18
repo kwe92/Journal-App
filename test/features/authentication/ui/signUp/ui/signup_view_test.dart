@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/widgets/email_sign_up.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
+import 'package:provider/provider.dart';
 import '../../../../../support/test_helpers.dart';
 
 void main() {
-  Future<void> pumpView(WidgetTester tester) => tester.pumpWidget(
-        TestingWrapper.portal(
-          SignUpView(),
-        ),
-      );
+  Future<void> pumpView(WidgetTester tester) async {
+    await tester.pumpWidget(
+      ChangeNotifierProvider.value(
+        value: appModeService,
+        builder: (context, child) {
+          return TestingWrapper.portal(
+            SignUpView(),
+          );
+        },
+      ),
+    );
+  }
+
   group('SignUpView', () {
     setUp(() async {
       await registerSharedServices();
@@ -22,6 +34,11 @@ void main() {
     });
 
     testWidgets("When the Sign Up view opens, Sign-up text, TextFormField's and continue button visible - ", (tester) async {
+      getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
+      getAndRegisterService<AppModeService>(AppModeService());
+
+      appModeService.setLightMode(true);
+
       await pumpView(tester);
 
       // Finders
@@ -41,6 +58,11 @@ void main() {
     });
 
     testWidgets('When the password field gains focus, then password requirements popup appears', (tester) async {
+      getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
+      getAndRegisterService<AppModeService>(AppModeService());
+
+      appModeService.setLightMode(true);
+
       await pumpView(tester);
 
       // Finders

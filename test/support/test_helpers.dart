@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:journal_app/app/app_router.dart';
@@ -27,6 +28,7 @@ import 'package:journal_app/features/shared/utilities/string_extensions.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:provider/provider.dart';
 import 'test_data.dart';
 import 'test_helpers.mocks.dart';
 
@@ -436,4 +438,40 @@ class TestingWrapper extends StatelessWidget {
                 child: Material(child: child),
               ),
       );
+}
+
+Future<void> pumpView<T extends ChangeNotifier>(
+  WidgetTester tester, {
+  required Widget view,
+  T? viewModel,
+}) async {
+  await tester.pumpWidget(
+    TestingWrapper_v2<T>(
+      view: view,
+      viewModel: viewModel,
+    ),
+  );
+}
+
+class TestingWrapper_v2<T extends ChangeNotifier> extends StatelessWidget {
+  final Widget view;
+  final T? viewModel;
+  const TestingWrapper_v2({
+    required this.view,
+    this.viewModel,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      scaffoldMessengerKey: WidgetKey.rootScaffoldMessengerKey,
+      home: viewModel != null
+          ? ChangeNotifierProvider<T>(
+              create: (context) => viewModel!,
+              builder: (context, _) => view,
+            )
+          : view,
+    );
+  }
 }
