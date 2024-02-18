@@ -1,13 +1,12 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journal_app/app/app_router.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view.dart';
-import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
-import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
-import 'package:journal_app/features/shared/ui/base_scaffold.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../support/test_data.dart';
@@ -15,10 +14,25 @@ import '../../../support/test_helpers.dart';
 
 void main() {
   group("CalendarView - ", () {
-    late final DateTime focusedDay;
+    final DateTime focusedDay = DateTime.now();
+
+    Future<void> pumpView(WidgetTester tester) async {
+      await tester.pumpWidget(
+        ChangeNotifierProvider.value(
+          value: appModeService,
+          builder: (context, child) {
+            return TestingWrapper.portal(
+              CalendarView(
+                focusedDay: focusedDay,
+              ),
+            );
+          },
+        ),
+      );
+    }
+
     setUpAll(() async {
       await registerSharedServices();
-      focusedDay = DateTime.now();
     });
 
     testWidgets("when calender focused, then correct events are selected", (tester) async {
@@ -27,14 +41,13 @@ void main() {
       getAndRegisterService<MoodService>(MoodService());
       getAndRegisterService<TimeService>(TimeService());
 
+      getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
+      getAndRegisterService<AppModeService>(AppModeService());
+
+      appModeService.setLightMode(true);
+
       // Act
-      await tester.pumpWidget(
-        TestingWrapper(
-          CalendarView(
-            focusedDay: focusedDay,
-          ),
-        ),
-      );
+      await pumpView(tester);
 
       await tester.pumpAndSettle();
 

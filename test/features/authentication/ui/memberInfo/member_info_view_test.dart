@@ -1,18 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/ui/memberInfo/member_info_view.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../support/test_helpers.dart';
 
 void main() {
   Future<void> pumpView(WidgetTester tester) async {
     await tester.pumpWidget(
-      TestingWrapper.portal(
-        MemberInfoView(),
+      ChangeNotifierProvider.value(
+        value: appModeService,
+        builder: (context, child) {
+          return TestingWrapper.portal(
+            MemberInfoView(),
+          );
+        },
       ),
     );
   }
@@ -30,6 +39,12 @@ void main() {
 
     testWidgets("When the MemberInfoView opens, Sign-up text, TextFormField's, and continue button visible", (tester) async {
       FlutterError.onError = ignoreOverflowErrors;
+
+      getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
+
+      getAndRegisterService<AppModeService>(AppModeService());
+
+      appModeService.setLightMode(true);
 
       await pumpView(tester);
 
@@ -57,6 +72,12 @@ void main() {
 
     testWidgets('when fields are empty and continue button pressed, then navigation does not happen', (tester) async {
       FlutterError.onError = ignoreOverflowErrors;
+
+      getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
+
+      getAndRegisterService<AppModeService>(AppModeService());
+
+      appModeService.setLightMode(true);
 
       await pumpView(tester);
 

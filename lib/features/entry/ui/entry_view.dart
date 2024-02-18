@@ -55,7 +55,6 @@ class EntryView extends StatelessWidget {
                 dayOfWeekByName: model.dayOfWeekByName,
                 timeOfDay: model.timeOfDay,
                 continentalTime: model.continentalTime,
-                // TODO: check if this abitrary number 1.65 actually works on smaller screens
                 height: MediaQuery.of(context).size.height / 1.65,
                 child: Form(
                   child: Theme(
@@ -102,15 +101,7 @@ class EntryView extends StatelessWidget {
                       if (statusOk) {
                         debugPrint("updated entry");
 
-                        // appRouter.replace(const JournalRoute());
-
                         await appRouter.replace(NavigationRoute());
-                        // TODO: implement Navigator
-                        // await Navigator.of(context).pushReplacement(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const ScaffoldWithNavigation(),
-                        //   ),
-                        // );
                       }
                     }
                   },

@@ -18,13 +18,14 @@ class DeleteProfileDialogView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLightMode = context.watch<AppModeService>().isLightMode;
     return ViewModelBuilder<DeleteProfileDialogViewModel>.reactive(
       viewModelBuilder: () => DeleteProfileDialogViewModel(),
       builder: (BuildContext context, DeleteProfileDialogViewModel model, _) {
         const style00 = TextStyle(fontSize: 12);
 
         return SimpleDialog(
-          backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+          backgroundColor: isLightMode ? Colors.white : AppColors.darkGrey1,
           surfaceTintColor: Colors.white,
           titlePadding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
           contentPadding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
@@ -33,7 +34,7 @@ class DeleteProfileDialogView extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,
-              foreground: Paint()..color = context.watch<AppModeService>().isLightMode ? AppColors.blueGrey0 : Colors.white,
+              foreground: Paint()..color = isLightMode ? AppColors.blueGrey0 : Colors.white,
             ),
           ),
           children: [

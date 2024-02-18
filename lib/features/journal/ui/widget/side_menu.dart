@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -30,21 +31,22 @@ class SideMenu extends Drawer {
                     ),
                   ),
                   const Spacer(),
+                  SplashableListTileButton(
+                    onTap: () async => await appRouter.push(CalendarRoute(focusedDay: DateTime.now())),
+                    leadingIcon: const Icon(Icons.calendar_month_outlined),
+                    content: "Calendar",
+                  ),
+                  SplashableListTileButton(
+                    onTap: () async => await appRouter.push(const ProfileSettingsRoute()),
+                    leadingIcon: const Icon(Icons.person_outline),
+                    content: "Profile",
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    child:
-                        // Use InkWell combined with Ink to respond to
-                        // user touch events and provide visual fedback
-                        InkWell(
+                    child: SplashableListTileButton(
                       onTap: logoutCallback,
-                      splashColor: AppColors.splashColor,
-                      highlightColor: AppColors.splashColor,
-                      child: Ink(
-                        child: const ListTile(
-                          leading: Icon(Icons.logout),
-                          title: Text("Logout"),
-                        ),
-                      ),
+                      leadingIcon: const Icon(Icons.logout),
+                      content: "Logout",
                     ),
                   ),
                 ],
@@ -53,4 +55,33 @@ class SideMenu extends Drawer {
           ],
         ),
       );
+}
+
+class SplashableListTileButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final Icon leadingIcon;
+  final String content;
+  const SplashableListTileButton({
+    required this.onTap,
+    required this.leadingIcon,
+    required this.content,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Use InkWell combined with Ink to respond to
+    // user touch events and provide visual fedback
+    return InkWell(
+      onTap: onTap,
+      splashColor: AppColors.splashColor,
+      highlightColor: AppColors.splashColor,
+      child: Ink(
+        child: ListTile(
+          leading: leadingIcon,
+          title: Text(content),
+        ),
+      ),
+    );
+  }
 }

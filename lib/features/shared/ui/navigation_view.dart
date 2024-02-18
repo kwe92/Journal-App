@@ -16,7 +16,6 @@ class NavigationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: could refactor to use StackedView model architecture for navigation vie and random quotes view...
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

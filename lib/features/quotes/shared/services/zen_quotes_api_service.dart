@@ -25,7 +25,6 @@ class ZenQuotesApiService extends ApiService with ChangeNotifier {
 
       quotes = [
         for (Map<String, dynamic> quote in jsonDecode(response.body))
-          // TODO: Implement an actual liked functionality
           () {
             quote.addAll({"is_liked": false});
             return QuoteImp.fromJSON(quote);

@@ -10,7 +10,6 @@ import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  // TODO: ensure that the AppModeService is being watched properly
   WidgetsFlutterBinding.ensureInitialized();
 
   // disable landscape mode

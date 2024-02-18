@@ -7,6 +7,8 @@ import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class MoodTypeCounterCalendar extends ViewModelWidget<CalendarViewModel> {
@@ -32,8 +34,8 @@ class MoodTypeCounterCalendar extends ViewModelWidget<CalendarViewModel> {
         moodType == MoodType.terrible.text ? gap2 : gap4,
         Text(
           "$moodCount",
-          style: const TextStyle(
-            color: AppColors.offGrey,
+          style: TextStyle(
+            color: context.watch<AppModeService>().isLightMode ? AppColors.offGrey : Colors.white,
             fontSize: 12,
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:journal_app/app/theme/colors.dart';
@@ -5,6 +6,7 @@ import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_mod
 import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quote_card.dart';
 import 'package:stacked/stacked.dart';
 
+@RoutePage()
 class LikedQuotesView extends StatelessWidget {
   const LikedQuotesView({super.key});
 
