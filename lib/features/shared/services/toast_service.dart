@@ -51,8 +51,9 @@ class ToastService {
     return await showDialog(
             context: context,
             builder: (context) {
+              final isLightMode = context.watch<AppModeService>().isLightMode;
               return SimpleDialog(
-                backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+                backgroundColor: isLightMode ? Colors.white : AppColors.darkGrey1,
                 surfaceTintColor: Colors.white,
                 titlePadding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
                 contentPadding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
@@ -60,8 +61,9 @@ class ToastService {
                   parameters.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 18,
-                      foreground: Paint()..color = context.watch<AppModeService>().isLightMode ? AppColors.blueGrey0 : Colors.white),
+                    fontSize: 18,
+                    foreground: Paint()..color = isLightMode ? AppColors.blueGrey0 : Colors.white,
+                  ),
                 ),
                 children: [
                   if (parameters.content != null) ...[

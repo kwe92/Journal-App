@@ -446,17 +446,17 @@ Future<void> pumpView<T extends ChangeNotifier>(
   T? viewModel,
 }) async {
   await tester.pumpWidget(
-    TestingWrapper_v2<T>(
+    TestingWrapperv2<T>(
       view: view,
       viewModel: viewModel,
     ),
   );
 }
 
-class TestingWrapper_v2<T extends ChangeNotifier> extends StatelessWidget {
+class TestingWrapperv2<T extends ChangeNotifier> extends StatelessWidget {
   final Widget view;
   final T? viewModel;
-  const TestingWrapper_v2({
+  const TestingWrapperv2({
     required this.view,
     this.viewModel,
     super.key,

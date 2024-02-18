@@ -12,13 +12,15 @@ class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
 
   @override
   Widget build(BuildContext context, ProfileSettingsViewModel viewModel) {
+    final isLightMode = context.watch<AppModeService>().isLightMode;
+
     return GestureDetector(
       onTap: () async => await viewModel.deleteAccountPopupMenu(context),
       child: Container(
         height: 90,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: context.watch<AppModeService>().isLightMode ? AppColors.offWhite : AppColors.darkGrey0,
+          color: isLightMode ? AppColors.offWhite : AppColors.darkGrey0,
           borderRadius: const BorderRadius.all(
             Radius.circular(16),
           ),
@@ -42,7 +44,7 @@ class DeleteAccountListTile extends ViewModelWidget<ProfileSettingsViewModel> {
                   'Delete this account and all associated data.',
                   style: TextStyle(
                     fontSize: 10,
-                    color: context.watch<AppModeService>().isLightMode ? AppColors.offGrey.withOpacity(0.85) : Colors.white,
+                    color: isLightMode ? AppColors.offGrey.withOpacity(0.85) : Colors.white,
                   ),
                 ),
               ],

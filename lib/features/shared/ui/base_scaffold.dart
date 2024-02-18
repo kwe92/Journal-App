@@ -5,8 +5,6 @@ import "package:journal_app/features/shared/services/app_mode_service.dart";
 import "package:journal_app/features/shared/utilities/common_box_shadow.dart";
 import "package:provider/provider.dart";
 
-// TODO: refactor multiple calls to context.watch<AppModeService>().isLightMode throughout the app
-
 class BaseScaffold extends StatelessWidget {
   final String title;
   final Widget body;
@@ -30,39 +28,42 @@ class BaseScaffold extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-        child: Scaffold(
-          backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+  Widget build(BuildContext context) {
+    final isLightMode = context.watch<AppModeService>().isLightMode;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: isLightMode ? Colors.white : AppColors.darkGrey1,
 
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(56),
-            child: Container(
-              decoration: const BoxDecoration(
-                boxShadow: [CommonBoxShadow()],
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(56),
+          child: Container(
+            decoration: const BoxDecoration(
+              boxShadow: [CommonBoxShadow()],
+            ),
+            child: AppBar(
+              backgroundColor: isLightMode ? Colors.white : AppColors.darkGrey0,
+              scrolledUnderElevation: 0,
+              title: Text(
+                title,
+                style: moodColor != null ? titleLargeStyle.copyWith(foreground: Paint()..color = moodColor!) : titleLargeStyle,
               ),
-              child: AppBar(
-                backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey0,
-                scrolledUnderElevation: 0,
-                title: Text(
-                  title,
-                  style: moodColor != null ? titleLargeStyle.copyWith(foreground: Paint()..color = moodColor!) : titleLargeStyle,
-                ),
-                centerTitle: true,
-                iconTheme: IconThemeData(
-                  color: moodColor ?? AppColors.mainThemeColor,
-                  size: 30,
-                ),
-                leading: leading,
-                actions: actions,
+              centerTitle: true,
+              iconTheme: IconThemeData(
+                color: moodColor ?? AppColors.mainThemeColor,
+                size: 30,
               ),
+              leading: leading,
+              actions: actions,
             ),
           ),
-          body: body,
-          floatingActionButton: floatingActionButton,
-          // drawer automatically displays hamburger icon
-          drawer: drawer,
         ),
-      );
+        body: body,
+        floatingActionButton: floatingActionButton,
+        // drawer automatically displays hamburger icon
+        drawer: drawer,
+      ),
+    );
+  }
 }
 
 
