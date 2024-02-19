@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/calendar/ui/Widgets/filter_button_calendar.dart';
-import 'package:journal_app/features/calendar/ui/Widgets/mood_type_counter_calendar.dart';
-import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
+import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:journal_app/features/shared/ui/filter_button.dart';
+import 'package:journal_app/features/shared/ui/mood_type_counter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-class HideableMoodCountCalendar extends ViewModelWidget<CalendarViewModel> {
-  const HideableMoodCountCalendar({super.key});
+class HideableMoodCount<T extends MoodMixin> extends ViewModelWidget<T> {
+  const HideableMoodCount({super.key});
 
   @override
-  Widget build(BuildContext context, CalendarViewModel viewModel) {
+  Widget build(BuildContext context, T viewModel) {
     return SliverAppBar(
       backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
       toolbarHeight: 32,
@@ -30,15 +30,15 @@ class HideableMoodCountCalendar extends ViewModelWidget<CalendarViewModel> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  MoodTypeCounterCalendar(moodType: MoodType.awesome.text, moodCount: viewModel.awesomeCount),
-                  MoodTypeCounterCalendar(moodType: MoodType.happy.text, moodCount: viewModel.happyCount),
-                  MoodTypeCounterCalendar(moodType: MoodType.okay.text, moodCount: viewModel.okayCount),
-                  MoodTypeCounterCalendar(moodType: MoodType.bad.text, moodCount: viewModel.badCount),
-                  MoodTypeCounterCalendar(moodType: MoodType.terrible.text, moodCount: viewModel.terribleCount),
+                  MoodTypeCounter<T>(moodType: MoodType.awesome.text, moodCount: viewModel.awesomeCount),
+                  MoodTypeCounter<T>(moodType: MoodType.happy.text, moodCount: viewModel.happyCount),
+                  MoodTypeCounter<T>(moodType: MoodType.okay.text, moodCount: viewModel.okayCount),
+                  MoodTypeCounter<T>(moodType: MoodType.bad.text, moodCount: viewModel.badCount),
+                  MoodTypeCounter<T>(moodType: MoodType.terrible.text, moodCount: viewModel.terribleCount),
                 ],
               ),
             ),
-            const FilterButtonCalendar()
+            FilterButton<T>()
           ],
         ),
       ),

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/calendar/ui/Widgets/calendar_day_container.dart';
-import 'package:journal_app/features/calendar/ui/Widgets/hideable_mood_count_calendar.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
+import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -128,7 +128,7 @@ class CalendarView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const HideableMoodCountCalendar(),
+                    const HideableMoodCount<CalendarViewModel>(),
                     SliverToBoxAdapter(child: gap6),
                   ],
                   body: ListView.builder(

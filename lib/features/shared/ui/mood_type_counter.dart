@@ -5,13 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-class MoodTypeCounter extends ViewModelWidget<JournalViewModel> {
+class MoodTypeCounter<T extends MoodMixin> extends ViewModelWidget<T> {
   final String moodType;
   final int moodCount;
 
@@ -22,7 +22,7 @@ class MoodTypeCounter extends ViewModelWidget<JournalViewModel> {
   });
 
   @override
-  Widget build(BuildContext context, JournalViewModel viewModel) {
+  Widget build(BuildContext context, T viewModel) {
     final Mood mood = viewModel.createMood(moodType, 20);
     return Row(
       children: [

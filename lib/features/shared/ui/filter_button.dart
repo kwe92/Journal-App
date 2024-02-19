@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/filter_button_model.dart';
+import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:stacked/stacked.dart';
 
-class FilterButtonCalendar extends ViewModelWidget<CalendarViewModel> {
-  const FilterButtonCalendar({super.key});
+class FilterButton<T extends MoodMixin> extends ViewModelWidget<T> {
+  const FilterButton({super.key});
 
   @override
-  Widget build(BuildContext context, CalendarViewModel viewModel) {
+  Widget build(BuildContext context, T viewModel) {
     return ViewModelBuilder<FilterButtonModel>.reactive(
       viewModelBuilder: () => FilterButtonModel(),
       builder: (context, FilterButtonModel model, _) => DropdownButton<String>(

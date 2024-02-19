@@ -3,11 +3,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CalendarViewModel extends ChangeNotifier {
+class CalendarViewModel extends ChangeNotifier with MoodMixin {
   late List<JournalEntry> _selectedEvents;
 
   List<JournalEntry> _filteredSelectedEvents = [];
@@ -50,27 +51,8 @@ class CalendarViewModel extends ChangeNotifier {
 
   String get currentMoodTypeFilter => _currentMoodTypeFilter;
 
+  @override
   String get query => _query;
-
-  int get awesomeCount {
-    return _getMoodCountByMoodType(MoodType.awesome.text);
-  }
-
-  int get happyCount {
-    return _getMoodCountByMoodType(MoodType.happy.text);
-  }
-
-  int get okayCount {
-    return _getMoodCountByMoodType(MoodType.okay.text);
-  }
-
-  int get badCount {
-    return _getMoodCountByMoodType(MoodType.bad.text);
-  }
-
-  int get terribleCount {
-    return _getMoodCountByMoodType(MoodType.terrible.text);
-  }
 
   void initialize(DateTime focusedDay) {
     _focusedDay = focusedDay;
@@ -181,6 +163,7 @@ class CalendarViewModel extends ChangeNotifier {
   Mood createMoodByType(String moodType) => moodService.createMoodByType(moodType);
 
   /// Filter journal entries by mood type and query.
+  @override
   void setFilteredJournalEntries(String moodType, String query) {
     switch (moodType) {
       case MoodTypeFilterOptions.all:
@@ -242,7 +225,8 @@ class CalendarViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _getMoodCountByMoodType(String moodType) {
+  @override
+  int getMoodCountByMoodType(String moodType) {
     return _selectedEvents.where((entry) => entry.moodType == moodType).length;
   }
 
@@ -250,12 +234,5 @@ class CalendarViewModel extends ChangeNotifier {
     return _selectedEvents
         .where((entry) => entry.moodType == moodType && entry.content.toLowerCase().contains(query.toLowerCase()))
         .toList();
-  }
-
-  /// Create [Mood] instance by mood type.
-  Mood createMood(String moodType, double? imageSize) {
-    final Mood mood = moodService.createMoodByType(moodType, imageSize);
-
-    return mood;
   }
 }
