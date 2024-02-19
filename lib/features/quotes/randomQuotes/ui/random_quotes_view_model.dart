@@ -18,8 +18,6 @@ class RandomQuotesViewModel extends BaseViewModel {
       await likedQuotesService.getAllQuotes();
       await getRandomQuotes();
     }());
-
-    debugPrint("\n\nQuotes from RandomQuotesViewModel: $quotes");
   }
 
   Future<void> getRandomQuotes() async => zenQuotesApiService.fetchRandomQuotes();
