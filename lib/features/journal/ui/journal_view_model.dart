@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/general/constants.dart';
-import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
+import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:stacked/stacked.dart';
 
-class JournalViewModel extends ReactiveViewModel {
+class JournalViewModel extends ReactiveViewModel with MoodMixin {
   final searchController = TextEditingController();
 
   List<JournalEntry> _journalEntries = [];
@@ -22,29 +22,10 @@ class JournalViewModel extends ReactiveViewModel {
 
   String get currentMoodTypeFilter => _currentMoodTypeFilter;
 
+  @override
   String get query => _query;
 
   bool get isFabVisible => _isFabVisible;
-
-  int get awesomeCount {
-    return _getMoodCountByMoodType(MoodType.awesome.text);
-  }
-
-  int get happyCount {
-    return _getMoodCountByMoodType(MoodType.happy.text);
-  }
-
-  int get okayCount {
-    return _getMoodCountByMoodType(MoodType.okay.text);
-  }
-
-  int get badCount {
-    return _getMoodCountByMoodType(MoodType.bad.text);
-  }
-
-  int get terribleCount {
-    return _getMoodCountByMoodType(MoodType.terrible.text);
-  }
 
   BaseUser? get currentUser => userService.currentUser;
 
@@ -90,18 +71,12 @@ class JournalViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  /// Create [Mood] instance by mood type.
-  Mood createMood(String moodType, double? imageSize) {
-    final Mood mood = moodService.createMoodByType(moodType, imageSize);
-
-    return mood;
-  }
-
   Future<void> cleanResources() async {
     await ResourceCleanUp.clean();
   }
 
   /// Filter journal entries by mood type and query.
+  @override
   void setFilteredJournalEntries(String moodType, String query) {
     switch (moodType) {
       case MoodTypeFilterOptions.all:
@@ -174,7 +149,8 @@ class JournalViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  int _getMoodCountByMoodType(String moodType) {
+  @override
+  int getMoodCountByMoodType(String moodType) {
     return journalEntryService.journalEntries.where((entry) => entry.moodType == moodType).length;
   }
 
