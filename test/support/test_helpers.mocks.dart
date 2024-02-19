@@ -23,6 +23,11 @@ import 'package:journal_app/features/entry/models/updated_entry.dart' as _i13;
 import 'package:journal_app/features/journal/services/journal_entry_service.dart'
     as _i10;
 import 'package:journal_app/features/mood/models/mood.dart' as _i3;
+import 'package:journal_app/features/quotes/shared/models/quote.dart' as _i26;
+import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart'
+    as _i25;
+import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart'
+    as _i27;
 import 'package:journal_app/features/shared/abstractions/base_user.dart' as _i9;
 import 'package:journal_app/features/shared/models/journal_entry.dart' as _i11;
 import 'package:journal_app/features/shared/models/new_entry.dart' as _i12;
@@ -2208,6 +2213,626 @@ class MockToastService extends _i1.Mock implements _i23.ToastService {
         Invocation.method(
           #unfocusAll,
           [context],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [LikedQuotesService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockLikedQuotesService extends _i1.Mock
+    implements _i25.LikedQuotesService {
+  @override
+  List<_i26.Quote> get likedQuotes => (super.noSuchMethod(
+        Invocation.getter(#likedQuotes),
+        returnValue: <_i26.Quote>[],
+        returnValueForMissingStub: <_i26.Quote>[],
+      ) as List<_i26.Quote>);
+
+  @override
+  String get bearerPrefix => (super.noSuchMethod(
+        Invocation.getter(#bearerPrefix),
+        returnValue: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#bearerPrefix),
+        ),
+        returnValueForMissingStub: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#bearerPrefix),
+        ),
+      ) as String);
+
+  @override
+  Map<String, String> get headers => (super.noSuchMethod(
+        Invocation.getter(#headers),
+        returnValue: <String, String>{},
+        returnValueForMissingStub: <String, String>{},
+      ) as Map<String, String>);
+
+  @override
+  String get host => (super.noSuchMethod(
+        Invocation.getter(#host),
+        returnValue: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#host),
+        ),
+        returnValueForMissingStub: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#host),
+        ),
+      ) as String);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i6.Future<_i2.Response> addQuote(_i26.Quote? quote) => (super.noSuchMethod(
+        Invocation.method(
+          #addQuote,
+          [quote],
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #addQuote,
+            [quote],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #addQuote,
+            [quote],
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> getAllQuotes() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllQuotes,
+          [],
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #getAllQuotes,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #getAllQuotes,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> deleteLikedQuote(int? quoteId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteLikedQuote,
+          [quoteId],
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #deleteLikedQuote,
+            [quoteId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #deleteLikedQuote,
+            [quoteId],
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> get(
+    String? endpoint, {
+    String? tempHost,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #get,
+          [endpoint],
+          {
+            #tempHost: tempHost,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #get,
+            [endpoint],
+            {
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #get,
+            [endpoint],
+            {
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> post(
+    String? endpoint, {
+    required dynamic body,
+    String? tempHost,
+    Map<String, String>? baseHeaders,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #post,
+          [endpoint],
+          {
+            #body: body,
+            #tempHost: tempHost,
+            #baseHeaders: baseHeaders,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #post,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #baseHeaders: baseHeaders,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #post,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #baseHeaders: baseHeaders,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> put(
+    String? endpoint, {
+    required dynamic body,
+    String? tempHost,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #put,
+          [endpoint],
+          {
+            #body: body,
+            #tempHost: tempHost,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #put,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #put,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> delete(
+    String? endpoint, {
+    dynamic body,
+    String? tempHost,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #delete,
+          [endpoint],
+          {
+            #body: body,
+            #tempHost: tempHost,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #delete,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #delete,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ZenQuotesApiService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockZenQuotesApiService extends _i1.Mock
+    implements _i27.ZenQuotesApiService {
+  @override
+  List<_i26.Quote> get quotes => (super.noSuchMethod(
+        Invocation.getter(#quotes),
+        returnValue: <_i26.Quote>[],
+        returnValueForMissingStub: <_i26.Quote>[],
+      ) as List<_i26.Quote>);
+
+  @override
+  set quotes(List<_i26.Quote>? _quotes) => super.noSuchMethod(
+        Invocation.setter(
+          #quotes,
+          _quotes,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  Map<String, String> get headers => (super.noSuchMethod(
+        Invocation.getter(#headers),
+        returnValue: <String, String>{},
+        returnValueForMissingStub: <String, String>{},
+      ) as Map<String, String>);
+
+  @override
+  String get host => (super.noSuchMethod(
+        Invocation.getter(#host),
+        returnValue: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#host),
+        ),
+        returnValueForMissingStub: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#host),
+        ),
+      ) as String);
+
+  @override
+  String get bearerPrefix => (super.noSuchMethod(
+        Invocation.getter(#bearerPrefix),
+        returnValue: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#bearerPrefix),
+        ),
+        returnValueForMissingStub: _i8.dummyValue<String>(
+          this,
+          Invocation.getter(#bearerPrefix),
+        ),
+      ) as String);
+
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  _i6.Future<void> fetchRandomQuotes() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchRandomQuotes,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i2.Response> get(
+    String? endpoint, {
+    String? tempHost,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #get,
+          [endpoint],
+          {
+            #tempHost: tempHost,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #get,
+            [endpoint],
+            {
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #get,
+            [endpoint],
+            {
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> post(
+    String? endpoint, {
+    required dynamic body,
+    String? tempHost,
+    Map<String, String>? baseHeaders,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #post,
+          [endpoint],
+          {
+            #body: body,
+            #tempHost: tempHost,
+            #baseHeaders: baseHeaders,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #post,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #baseHeaders: baseHeaders,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #post,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #baseHeaders: baseHeaders,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> put(
+    String? endpoint, {
+    required dynamic body,
+    String? tempHost,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #put,
+          [endpoint],
+          {
+            #body: body,
+            #tempHost: tempHost,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #put,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #put,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  _i6.Future<_i2.Response> delete(
+    String? endpoint, {
+    dynamic body,
+    String? tempHost,
+    Map<String, String>? extraHeaders,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #delete,
+          [endpoint],
+          {
+            #body: body,
+            #tempHost: tempHost,
+            #extraHeaders: extraHeaders,
+          },
+        ),
+        returnValue: _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #delete,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #delete,
+            [endpoint],
+            {
+              #body: body,
+              #tempHost: tempHost,
+              #extraHeaders: extraHeaders,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.Response>);
+
+  @override
+  void addListener(_i4.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(_i4.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
         ),
         returnValueForMissingStub: null,
       );

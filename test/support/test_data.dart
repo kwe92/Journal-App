@@ -1,4 +1,6 @@
 import 'package:journal_app/app/general/constants.dart';
+import 'package:journal_app/features/quotes/shared/models/liked_quote_imp.dart';
+import 'package:journal_app/features/quotes/shared/models/quote.dart';
 import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 
@@ -68,5 +70,55 @@ final List<JournalEntry> testEntries = [
     moodType: MoodType.okay.text,
     createdAt: DateTime.now().add(const Duration(days: -7)),
     updatedAt: DateTime.now().add(const Duration(days: -7)),
+  ),
+];
+
+final List<Quote> testLikedQuotes = [
+  // TODO: write quotes with author
+  LikedQuoteImp(
+    id: 1101,
+    userId: 1101,
+    author: 'a',
+    quote: 'a',
+    isLiked: true,
+  ),
+  LikedQuoteImp(
+    id: 1102,
+    userId: 1102,
+    author: 'b',
+    quote: 'b',
+    isLiked: true,
+  ),
+  LikedQuoteImp(
+    id: 1103,
+    userId: 1103,
+    author: 'c',
+    quote: 'c',
+    isLiked: true,
+  ),
+];
+
+final List<Quote> testQuotes = [
+  // TODO: write quotes with author
+  LikedQuoteImp(
+    id: 1104,
+    userId: 1104,
+    author: 'd',
+    quote: 'd',
+    isLiked: false,
+  ),
+  LikedQuoteImp(
+    id: 1105,
+    userId: 1105,
+    author: 'e',
+    quote: 'e',
+    isLiked: false,
+  ),
+  LikedQuoteImp(
+    id: 1106,
+    userId: 1106,
+    author: 'f',
+    quote: 'f ',
+    isLiked: false,
   ),
 ];

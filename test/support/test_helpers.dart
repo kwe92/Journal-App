@@ -15,6 +15,8 @@ import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart';
+import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
@@ -53,6 +55,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<ImageService>(),
   MockSpec<AuthService>(),
   MockSpec<ToastService>(),
+  MockSpec<LikedQuotesService>(),
+  MockSpec<ZenQuotesApiService>(),
 ])
 class MockRouter extends Mock implements AppRouter {}
 
@@ -351,6 +355,42 @@ ToastService getAndRegisterToastServiceMock(BuildContext context, [Color? color]
   ).thenAnswer((realInvocation) async => Future.value(true));
 
   locator.registerSingleton<ToastService>(service);
+
+  return service;
+}
+
+LikedQuotesService getAndRegisterLikedQuotesService() {
+  // remove service if exists
+  _removeRegistrationIfExists<LikedQuotesService>();
+
+  // mock service instantiation
+  final LikedQuotesService service = MockLikedQuotesService();
+
+  // mock class stubs
+  when(service.likedQuotes).thenReturn(testLikedQuotes);
+
+  when(service.getAllQuotes()).thenAnswer((_) => Future.value(Response('', 200)));
+
+  when(service.addQuote(testQuotes[0])).thenAnswer((_) => Future.value(Response('', 200)));
+
+  when(service.deleteLikedQuote(testLikedQuotes[0].id!)).thenAnswer((_) => Future.value(Response('', 200)));
+
+  // register mock to service locator
+  locator.registerSingleton<LikedQuotesService>(service);
+
+  return service;
+}
+
+ZenQuotesApiService getAndRegisterZenQuotesApiService() {
+  _removeRegistrationIfExists<ZenQuotesApiService>();
+
+  final ZenQuotesApiService service = MockZenQuotesApiService();
+
+  locator.registerSingleton(service);
+
+  when(service.quotes).thenReturn(testQuotes);
+
+  when(service.fetchRandomQuotes()).thenAnswer((_) => Future.value());
 
   return service;
 }
