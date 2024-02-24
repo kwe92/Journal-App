@@ -6,6 +6,7 @@ import 'package:journal_app/features/authentication/services/image_service.dart'
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
+import 'package:journal_app/features/meanings/shared/gemini_model_service.dart';
 import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart';
 import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
@@ -80,4 +81,8 @@ LikedQuotesService get likedQuotesService {
 
 AppModeService get appModeService {
   return locator.get<AppModeService>();
+}
+
+GeminiModelService get geminiModelService {
+  return locator.get<GeminiModelService>();
 }

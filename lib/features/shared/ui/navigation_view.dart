@@ -42,18 +42,23 @@ class NavigationView extends StatelessWidget {
               ),
               child: BottomNavigationBar(
                 backgroundColor: AppColors.darkGrey1,
+                type: BottomNavigationBarType.fixed,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(Icons.book_online_rounded),
-                    label: 'Journal',
+                    label: "Journal",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.article_outlined),
-                    label: 'Quotes',
+                    label: "Quotes",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.favorite_outline),
-                    label: 'Liked Quotes',
+                    label: "Liked Quotes",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.menu_book_rounded),
+                    label: "Meanings",
                   ),
                 ],
                 currentIndex: model.selectedIndex,
