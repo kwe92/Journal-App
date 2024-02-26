@@ -27,7 +27,7 @@ class PromptsView extends StatelessWidget {
                 forceElevated: true,
                 shadowColor: AppColors.darkGrey1.withOpacity(0.25),
                 surfaceTintColor: Colors.white,
-                backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+                backgroundColor: Theme.of(context).colorScheme.background,
                 title: Text(
                   promptText,
                   style: const TextStyle(fontSize: 24),

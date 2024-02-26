@@ -4,7 +4,6 @@ import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/deeper_meanings_view_model.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/widgets/prompt_card.dart';
 import 'package:journal_app/features/meanings/prompts/ui/prompts_view.dart';
-import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
 
 class DeeperMeaningsView extends StatelessWidget {
@@ -31,7 +30,7 @@ class DeeperMeaningsView extends StatelessWidget {
                   shadowColor: AppColors.darkGrey1.withOpacity(0.25),
                   surfaceTintColor: Colors.white,
                   automaticallyImplyLeading: false,
-                  backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+                  backgroundColor: Theme.of(context).colorScheme.background,
                   title: const Text(
                     "Deeper Meanings",
                     style: TextStyle(

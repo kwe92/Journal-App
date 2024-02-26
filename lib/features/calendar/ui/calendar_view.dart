@@ -6,11 +6,9 @@ import 'package:journal_app/features/calendar/ui/Widgets/calendar_day_container.
 import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
-import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -35,7 +33,7 @@ class CalendarView extends StatelessWidget {
                   floatHeaderSlivers: true,
                   headerSliverBuilder: (context, _) => [
                     SliverAppBar(
-                      backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+                      backgroundColor: Theme.of(context).colorScheme.background,
                       toolbarHeight: MediaQuery.of(context).size.height / 2.5,
                       scrolledUnderElevation: 0,
                       automaticallyImplyLeading: false,

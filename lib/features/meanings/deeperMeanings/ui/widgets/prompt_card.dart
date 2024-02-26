@@ -25,7 +25,7 @@ class PromptCard extends StatelessWidget {
               boxShadow: const [CommonBoxShadow()],
             ),
             child: SvgPicture.asset(
-              "/Users/kwe/WorkingWithGemini/working_with_gemini/assets/lotus-flower-bloom.svg",
+              "assets/images/lotus-flower-bloom.svg",
               // color: Colors.deepOrange[200],
               // color: Colors.deepPurple[200],
               // color: Colors.deepPurple[300],
