@@ -23,94 +23,92 @@ class MoodView extends StatelessWidget {
     return ViewModelBuilder<MoodViewModel>.reactive(
       viewModelBuilder: () => MoodViewModel(),
       builder: (context, MoodViewModel model, _) {
-        return SafeArea(
-          child: Scaffold(
-            backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                gap16,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CancelButton(onPressed: () {
-                      Navigator.of(context).pop();
-                    })
-                  ],
-                ),
-                gap8,
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          width: 200,
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Entry.opacity(
-                              duration: Duration(milliseconds: 600),
-                              child: Text(
-                                "How are you feeling today?",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.w700,
-                                ),
+        return Scaffold(
+          backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              gap16,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CancelButton(onPressed: () {
+                    Navigator.of(context).pop();
+                  })
+                ],
+              ),
+              gap8,
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 200,
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Entry.opacity(
+                            duration: Duration(milliseconds: 600),
+                            child: Text(
+                              "How are you feeling today?",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
                         ),
-                        gap36,
-                        Flexible(
-                            child: GridView.builder(
-                          itemCount: model.moods.length,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            // represents the width / height respectively
-                            childAspectRatio: (100 / 160),
-                          ),
-                          itemBuilder: (BuildContext context, int i) {
-                            return GestureDetector(
-                              onTap:
-                                  // anonymous closure that saves the state of the index integer above within its scope
-                                  () {
-                                // set selected mood
-                                model.setIndex(i);
-
-                                // set mood type to be sent to backend
-                                model.setMoodType(model.moods[i].moodText);
-                              },
-                              child: Entry.opacity(
-                                duration: const Duration(milliseconds: 600),
-                                child: MoodCard(
-                                  // determine if the card is currently selected or not
-                                  isSelected: model.selectedIndex == i ? true : false,
-                                  mood: model.moods[i],
-                                ),
-                              ),
-                            );
-                          },
-                        )),
-                        Entry.opacity(
-                          duration: const Duration(milliseconds: 600),
-                          child: SelectableButton(
-                              labelPadding: const EdgeInsets.symmetric(vertical: 16),
-                              onPressed: () {
-                                appRouter.push(AddEntryRoute(moodType: model.moodType));
-                              },
-                              label: "Continue"),
+                      ),
+                      gap36,
+                      Flexible(
+                          child: GridView.builder(
+                        itemCount: model.moods.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          // represents the width / height respectively
+                          childAspectRatio: (100 / 160),
                         ),
-                        const Gap(120)
-                      ],
-                    ),
+                        itemBuilder: (BuildContext context, int i) {
+                          return GestureDetector(
+                            onTap:
+                                // anonymous closure that saves the state of the index integer above within its scope
+                                () {
+                              // set selected mood
+                              model.setIndex(i);
+
+                              // set mood type to be sent to backend
+                              model.setMoodType(model.moods[i].moodText);
+                            },
+                            child: Entry.opacity(
+                              duration: const Duration(milliseconds: 600),
+                              child: MoodCard(
+                                // determine if the card is currently selected or not
+                                isSelected: model.selectedIndex == i ? true : false,
+                                mood: model.moods[i],
+                              ),
+                            ),
+                          );
+                        },
+                      )),
+                      Entry.opacity(
+                        duration: const Duration(milliseconds: 600),
+                        child: SelectableButton(
+                            labelPadding: const EdgeInsets.symmetric(vertical: 16),
+                            onPressed: () {
+                              appRouter.push(AddEntryRoute(moodType: model.moodType));
+                            },
+                            label: "Continue"),
+                      ),
+                      const Gap(120)
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

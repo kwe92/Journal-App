@@ -19,34 +19,32 @@ class ProfileSettingsView extends StatelessWidget {
     return ViewModelBuilder<ProfileSettingsViewModel>.reactive(
       viewModelBuilder: () => ProfileSettingsViewModel(),
       builder: (BuildContext context, ProfileSettingsViewModel model, _) {
-        return SafeArea(
-          child: BaseScaffold(
-            title: 'Profile',
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: ProfileIcon(
-                  userFirstName: model.currentUser?.firstName ?? "P",
+        return BaseScaffold(
+          title: 'Profile',
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: ProfileIcon(
+                userFirstName: model.currentUser?.firstName ?? "P",
+              ),
+            ),
+          ],
+          body: Padding(
+            padding: const EdgeInsets.only(left: 16.0, top: 18, right: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const _SectionHeader(headerText: 'Edit Profile'),
+                gap16,
+                EditProfileListTile(
+                  userFullName: model.userFullName,
+                  userEmail: model.userEmail,
                 ),
-              ),
-            ],
-            body: Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 18, right: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const _SectionHeader(headerText: 'Edit Profile'),
-                  gap16,
-                  EditProfileListTile(
-                    userFullName: model.userFullName,
-                    userEmail: model.userEmail,
-                  ),
-                  gap28,
-                  const _SectionHeader(headerText: 'Delete Profile'),
-                  gap16,
-                  const DeleteProfileSection(),
-                ],
-              ),
+                gap28,
+                const _SectionHeader(headerText: 'Delete Profile'),
+                gap16,
+                const DeleteProfileSection(),
+              ],
             ),
           ),
         );

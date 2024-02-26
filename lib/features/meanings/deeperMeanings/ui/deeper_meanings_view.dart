@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/route_navigation.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/deeper_meanings_view_model.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/widgets/prompt_card.dart';
 import 'package:journal_app/features/meanings/prompts/ui/prompts_view.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
 
 class DeeperMeaningsView extends StatelessWidget {
@@ -16,73 +18,58 @@ class DeeperMeaningsView extends StatelessWidget {
         create: (context) => DeeperMeaningsViewModel(),
         builder: (context, child) {
           final model = context.watch<DeeperMeaningsViewModel>();
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 62),
-                child: AnimatedOpacity(
-                  opacity: model.isVisible ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: const Text(
-                    "Deeper Meaning",
+
+          return AnimatedOpacity(
+            opacity: model.isVisible ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 500),
+            child: CustomScrollView(
+              slivers: [
+                // TODO: remove duplicated code
+                SliverAppBar(
+                  toolbarHeight: 56,
+                  forceElevated: true,
+                  shadowColor: AppColors.darkGrey1.withOpacity(0.25),
+                  surfaceTintColor: Colors.white,
+                  automaticallyImplyLeading: false,
+                  backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+                  title: const Text(
+                    "Deeper Meanings",
                     style: TextStyle(
                       // color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 20,
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: AnimatedOpacity(
-                  opacity: model.isVisible ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: GridView.builder(
-                      itemCount: model.prompts.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: (5 / 8),
-                      ),
-                      itemBuilder: (context, index) => PromptCard(
-                        onTap: () async {
-                          model.setVisibility(false);
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  sliver: SliverGrid.builder(
+                    itemCount: model.prompts.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      childAspectRatio: (5 / 8),
+                    ),
+                    itemBuilder: (context, index) => PromptCard(
+                      onTap: () async {
+                        model.setVisibility(false);
 
-                          await RouteNavigation.pushWithTransition(
-                            context,
-                            PromptsView(
-                              promptText: model.prompts[index],
-                            ),
-                          );
+                        await RouteNavigation.pushWithTransition(
+                          context,
+                          PromptsView(
+                            promptText: model.prompts[index],
+                          ),
+                        );
 
-                          model.setVisibility(true);
-                        },
-                        promptText: model.prompts[index],
-                      ),
+                        model.setVisibility(true);
+                      },
+                      promptText: model.prompts[index],
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
-
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 16),
-          //   child: GridView.builder(
-          //     itemCount: model.prompts.length,
-          //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //       crossAxisCount: 2,
-          //       crossAxisSpacing: 16,
-          //       mainAxisSpacing: 16,
-          //       childAspectRatio: (5 / 8),
-          //     ),
-          //     itemBuilder: (context, index) => PromptCard(
-          //       promptText: model.prompts[index],
-          //     ),
-          //   ),
-          // );
         },
       ),
     );

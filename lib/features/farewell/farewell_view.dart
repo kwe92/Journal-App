@@ -15,17 +15,15 @@ class FarewellView extends StatelessWidget {
       appRouter.replace(SignInRoute());
     }();
 
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: double.maxFinite,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: Image.asset(
-                'assets/images/fare-well-image.png',
-                fit: BoxFit.cover,
-              ).image,
-            ),
+    return Scaffold(
+      body: Container(
+        height: double.maxFinite,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: Image.asset(
+              'assets/images/fare-well-image.png',
+              fit: BoxFit.cover,
+            ).image,
           ),
         ),
       ),
