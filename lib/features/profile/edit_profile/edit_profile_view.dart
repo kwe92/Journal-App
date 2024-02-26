@@ -23,162 +23,160 @@ class EditProfileView extends StatelessWidget {
           viewModel.initialize();
         },
         builder: (BuildContext context, EditProfileViewModel model, _) {
-          return SafeArea(
-            child: BaseScaffold(
-              title: 'Edit Profile',
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: ProfileIcon(
-                    userFirstName: model.userFirstName,
-                    onPressed: () => appRouter.pop(),
+          return BaseScaffold(
+            title: 'Edit Profile',
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: ProfileIcon(
+                  userFirstName: model.userFirstName,
+                  onPressed: () => appRouter.pop(),
+                ),
+              ),
+            ],
+            body: Column(
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  height: MediaQuery.of(context).size.height / 3.125,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: model.mindfulImage!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                gap6,
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Form(
+                          key: model.formKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                readOnly: model.isReadOnly,
+                                controller: model.firstNameController,
+                                textCapitalization: TextCapitalization.words,
+                                onChanged: model.setFirstName,
+                                autofillHints: const [AutofillHints.familyName],
+                                validator: stringService.customStringValidator(
+                                  model.firstNameController.text,
+                                  configuration: const StringValidatorConfiguration(notEmpty: true),
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: 'Enter First Name',
+                                  labelText: 'First Name',
+                                  suffixIcon: model.firstNameController.text.isNotEmpty && model.isReadOnly == false
+                                      ? ConditionalClearIcon(controller: model.firstNameController)
+                                      : null,
+                                ),
+                              ),
+                              gap24,
+                              TextFormField(
+                                readOnly: model.isReadOnly,
+                                controller: model.lastNameController,
+                                textCapitalization: TextCapitalization.words,
+                                onChanged: model.setLastName,
+                                autofillHints: const [AutofillHints.familyName],
+                                validator: stringService.customStringValidator(
+                                  model.firstNameController.text,
+                                  configuration: const StringValidatorConfiguration(notEmpty: true),
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: 'Enter Last Name',
+                                  labelText: 'Last Name',
+                                  suffixIcon: model.lastNameController.text.isNotEmpty && model.isReadOnly == false
+                                      ? ConditionalClearIcon(controller: model.lastNameController)
+                                      : null,
+                                ),
+                              ),
+                              gap24,
+                              TextFormField(
+                                readOnly: model.isReadOnly,
+                                controller: model.emailController,
+                                onChanged: model.setEmail,
+                                autofillHints: const [AutofillHints.email],
+                                validator: stringService.emailIsValid,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter Email',
+                                  labelText: 'Email',
+                                  suffixIcon: model.emailController.text.isNotEmpty && model.isReadOnly == false
+                                      ? ConditionalClearIcon(controller: model.emailController)
+                                      : null,
+                                ),
+                              ),
+                              gap24,
+                              TextFormField(
+                                textInputAction: TextInputAction.next,
+                                controller: model.phoneNumberController,
+                                onChanged: model.setPhoneNumber,
+                                validator: stringService.customStringValidator(
+                                  model.phoneNumberController.text,
+                                  configuration: const StringValidatorConfiguration(
+                                    notEmpty: true,
+                                    includesOnlyNumbers: true,
+                                    includes12Characters: true,
+                                  ),
+                                ),
+                                autofillHints: const [AutofillHints.telephoneNumberNational],
+                                autovalidateMode: AutovalidateMode.disabled,
+                                keyboardType: const TextInputType.numberWithOptions(signed: true),
+                                inputFormatters: [
+                                  MaskedInputFormatter('###-###-####'),
+                                ],
+                                decoration: InputDecoration(
+                                    labelText: 'Phone Number',
+                                    hintText: 'Enter Phone Number',
+                                    // text prefixing user input
+                                    prefixText: '(+1) ',
+                                    suffixIcon: model.phoneNumberController.text.isNotEmpty && model.isReadOnly == false
+                                        ? ConditionalClearIcon(controller: model.phoneNumberController)
+                                        : null),
+                              ),
+                              gap24,
+                              SelectableButton(
+                                onPressed: () async {
+                                  // if text fields are read only unlock them all
+                                  if (model.isReadOnly) {
+                                    model.setReadOnly(false);
+                                  } else {
+                                    debugPrint('identical info${model.isIdenticalInfo}');
+                                    debugPrint('user phone number ${model.userPhoneNumber}');
+                                    debugPrint('updated user phone number ${model.updatedPhoneNumber}');
+
+                                    debugPrint('form key validation ${model.formKey.currentState!.validate()}');
+
+                                    if ((model.formKey.currentState?.validate() ?? false) && model.ready) {
+                                      if (model.isIdenticalInfo) {
+                                        model.clearControllers();
+                                        appRouter.pop();
+                                        return;
+                                      }
+                                      // attempt to update user info
+                                      final bool statusOk = await model.updateUserInfo();
+
+                                      if (statusOk) {
+                                        debugPrint("updated user info successfully");
+                                        model.clearControllers();
+                                        appRouter.pop();
+                                      }
+                                    }
+                                  }
+                                },
+                                label: model.isReadOnly ? "Edit" : "Update",
+                              ),
+                              gap24,
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
-              body: Column(
-                children: [
-                  Container(
-                    width: double.maxFinite,
-                    height: MediaQuery.of(context).size.height / 3.125,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: model.mindfulImage!,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  gap6,
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Form(
-                            key: model.formKey,
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  readOnly: model.isReadOnly,
-                                  controller: model.firstNameController,
-                                  textCapitalization: TextCapitalization.words,
-                                  onChanged: model.setFirstName,
-                                  autofillHints: const [AutofillHints.familyName],
-                                  validator: stringService.customStringValidator(
-                                    model.firstNameController.text,
-                                    configuration: const StringValidatorConfiguration(notEmpty: true),
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter First Name',
-                                    labelText: 'First Name',
-                                    suffixIcon: model.firstNameController.text.isNotEmpty && model.isReadOnly == false
-                                        ? ConditionalClearIcon(controller: model.firstNameController)
-                                        : null,
-                                  ),
-                                ),
-                                gap24,
-                                TextFormField(
-                                  readOnly: model.isReadOnly,
-                                  controller: model.lastNameController,
-                                  textCapitalization: TextCapitalization.words,
-                                  onChanged: model.setLastName,
-                                  autofillHints: const [AutofillHints.familyName],
-                                  validator: stringService.customStringValidator(
-                                    model.firstNameController.text,
-                                    configuration: const StringValidatorConfiguration(notEmpty: true),
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter Last Name',
-                                    labelText: 'Last Name',
-                                    suffixIcon: model.lastNameController.text.isNotEmpty && model.isReadOnly == false
-                                        ? ConditionalClearIcon(controller: model.lastNameController)
-                                        : null,
-                                  ),
-                                ),
-                                gap24,
-                                TextFormField(
-                                  readOnly: model.isReadOnly,
-                                  controller: model.emailController,
-                                  onChanged: model.setEmail,
-                                  autofillHints: const [AutofillHints.email],
-                                  validator: stringService.emailIsValid,
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter Email',
-                                    labelText: 'Email',
-                                    suffixIcon: model.emailController.text.isNotEmpty && model.isReadOnly == false
-                                        ? ConditionalClearIcon(controller: model.emailController)
-                                        : null,
-                                  ),
-                                ),
-                                gap24,
-                                TextFormField(
-                                  textInputAction: TextInputAction.next,
-                                  controller: model.phoneNumberController,
-                                  onChanged: model.setPhoneNumber,
-                                  validator: stringService.customStringValidator(
-                                    model.phoneNumberController.text,
-                                    configuration: const StringValidatorConfiguration(
-                                      notEmpty: true,
-                                      includesOnlyNumbers: true,
-                                      includes12Characters: true,
-                                    ),
-                                  ),
-                                  autofillHints: const [AutofillHints.telephoneNumberNational],
-                                  autovalidateMode: AutovalidateMode.disabled,
-                                  keyboardType: const TextInputType.numberWithOptions(signed: true),
-                                  inputFormatters: [
-                                    MaskedInputFormatter('###-###-####'),
-                                  ],
-                                  decoration: InputDecoration(
-                                      labelText: 'Phone Number',
-                                      hintText: 'Enter Phone Number',
-                                      // text prefixing user input
-                                      prefixText: '(+1) ',
-                                      suffixIcon: model.phoneNumberController.text.isNotEmpty && model.isReadOnly == false
-                                          ? ConditionalClearIcon(controller: model.phoneNumberController)
-                                          : null),
-                                ),
-                                gap24,
-                                SelectableButton(
-                                  onPressed: () async {
-                                    // if text fields are read only unlock them all
-                                    if (model.isReadOnly) {
-                                      model.setReadOnly(false);
-                                    } else {
-                                      debugPrint('identical info${model.isIdenticalInfo}');
-                                      debugPrint('user phone number ${model.userPhoneNumber}');
-                                      debugPrint('updated user phone number ${model.updatedPhoneNumber}');
-
-                                      debugPrint('form key validation ${model.formKey.currentState!.validate()}');
-
-                                      if ((model.formKey.currentState?.validate() ?? false) && model.ready) {
-                                        if (model.isIdenticalInfo) {
-                                          model.clearControllers();
-                                          appRouter.pop();
-                                          return;
-                                        }
-                                        // attempt to update user info
-                                        final bool statusOk = await model.updateUserInfo();
-
-                                        if (statusOk) {
-                                          debugPrint("updated user info successfully");
-                                          model.clearControllers();
-                                          appRouter.pop();
-                                        }
-                                      }
-                                    }
-                                  },
-                                  label: model.isReadOnly ? "Edit" : "Update",
-                                ),
-                                gap24,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
             ),
           );
         });
