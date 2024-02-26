@@ -46,171 +46,175 @@ class MemberInfoView extends StatelessWidget {
         lastNameController.text = model.lastName!;
       },
       builder: (BuildContext context, MemberInfoViewModel model, _) {
-        return Scaffold(
-          backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
-          body: SizedBox(
-            width: double.maxFinite,
-            height: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: double.maxFinite,
-                      height: MediaQuery.of(context).size.height / 3.125,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: model.mindfulImage!,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 75,
-                      height: 75,
-                      child: CustomBackButton(
-                        color: Colors.white,
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    )
-                  ],
-                ),
-                gap12,
-                const Padding(
-                  padding: EdgeInsets.only(left: 16.0),
-                  child: Text(
-                    "Sign-up",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
-                  ),
-                ),
-                gap12,
-                Expanded(
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Form(
-                          key: formKey,
-                          autovalidateMode: autoValidateMode,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 36.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextFormField(
-                                  key: WidgetKey.firstNameKey,
-                                  focusNode: firstNameFocus,
-                                  textInputAction: TextInputAction.next,
-                                  controller: firstNameController,
-                                  // capitalize word in text form field
-                                  textCapitalization: TextCapitalization.words,
-                                  autofillHints: const [AutofillHints.givenName],
-                                  onChanged: model.setFirstName,
-                                  onEditingComplete: () => lastNameFocus.requestFocus(),
-                                  validator: stringService.customStringValidator(
-                                    firstNameController.text,
-                                    configuration: const StringValidatorConfiguration(notEmpty: true),
-                                  ),
-                                  decoration: InputDecoration(
-                                    labelText: 'Legal First Name',
-                                    hintText: 'Enter Legal First Name',
-                                    suffixIcon:
-                                        firstNameController.text.isNotEmpty ? ConditionalClearIcon(controller: firstNameController) : null,
-                                  ),
-                                ),
-                                gap12,
-                                TextFormField(
-                                  key: WidgetKey.lastNameKey,
-                                  focusNode: lastNameFocus,
-                                  textInputAction: TextInputAction.next,
-                                  textCapitalization: TextCapitalization.words,
-                                  controller: lastNameController,
-                                  onChanged: model.setLastName,
-                                  onEditingComplete: () => phoneFocus.requestFocus(),
-                                  validator: stringService.customStringValidator(lastNameController.text,
-                                      configuration: const StringValidatorConfiguration(notEmpty: true)),
-                                  autofillHints: const [AutofillHints.familyName],
-                                  decoration: InputDecoration(
-                                    labelText: 'Legal Last Name',
-                                    hintText: 'Enter Legal Last Name',
-                                    suffixIcon:
-                                        lastNameController.text.isNotEmpty ? ConditionalClearIcon(controller: lastNameController) : null,
-                                  ),
-                                ),
-                                gap12,
-                                TextFormField(
-                                  key: WidgetKey.phoneNumberKey,
-                                  focusNode: phoneFocus,
-                                  textInputAction: TextInputAction.next,
-                                  controller: phoneNumberController,
-                                  onChanged: model.setPhoneNumber,
-                                  onEditingComplete: () => emailFocus.requestFocus(),
-                                  validator: stringService.customStringValidator(
-                                    phoneNumberController.text,
-                                    configuration: const StringValidatorConfiguration(
-                                      notEmpty: true,
-                                      includesOnlyNumbers: true,
-                                      includes12Characters: true,
-                                    ),
-                                  ),
-                                  autofillHints: const [AutofillHints.telephoneNumberNational],
-                                  autovalidateMode: AutovalidateMode.disabled,
-                                  keyboardType: const TextInputType.numberWithOptions(signed: true),
-                                  inputFormatters: [
-                                    MaskedInputFormatter('###-###-####'),
-                                  ],
-                                  decoration: InputDecoration(
-                                    labelText: 'Phone Number',
-                                    hintText: 'Enter Phone Number',
-                                    // text prefixing user input
-                                    prefixText: '(+1) ',
-                                    suffixIcon: phoneNumberController.text.isNotEmpty
-                                        ? ConditionalClearIcon(controller: phoneNumberController)
-                                        : null,
-                                  ),
-                                ),
-                                gap12,
-                                TextFormField(
-                                  key: WidgetKey.emailKey,
-                                  focusNode: emailFocus,
-                                  textInputAction: TextInputAction.done,
-                                  controller: emailController,
-                                  validator: stringService.emailIsValid,
-                                  autofillHints: const [AutofillHints.email],
-                                  onChanged: model.setEmail,
-                                  onEditingComplete: () => emailFocus.unfocus(),
-                                  decoration: InputDecoration(
-                                    labelText: 'Email Address',
-                                    hintText: 'Enter Email Address',
-                                    suffixIcon: emailController.text.isNotEmpty ? ConditionalClearIcon(controller: emailController) : null,
-                                  ),
-                                ),
-                                gap36,
-                                SelectableButton(
-                                  onPressed: () async {
-                                    if (formKey.currentState!.validate() && model.ready) {
-                                      // check email availability
-                                      final bool statusOk = await model.checkAvailableEmail(email: model.email!);
-
-                                      // continue to signup view if email available else show user an error snack bar
-                                      if (statusOk) {
-                                        appRouter.push(SignUpRoute());
-                                      }
-                                    }
-                                  },
-                                  label: "Continue",
-                                ),
-                                gap24,
-                              ],
-                            ),
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+            body: SizedBox(
+              width: double.maxFinite,
+              height: double.maxFinite,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        width: double.maxFinite,
+                        height: MediaQuery.of(context).size.height / 3.125,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: model.mindfulImage!,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
+                      SizedBox(
+                        width: 75,
+                        height: 75,
+                        child: CustomBackButton(
+                          color: Colors.white,
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      )
                     ],
                   ),
-                ),
-              ],
+                  gap12,
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      "Sign-up",
+                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  gap12,
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Form(
+                            key: formKey,
+                            autovalidateMode: autoValidateMode,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  TextFormField(
+                                    key: WidgetKey.firstNameKey,
+                                    focusNode: firstNameFocus,
+                                    textInputAction: TextInputAction.next,
+                                    controller: firstNameController,
+                                    // capitalize word in text form field
+                                    textCapitalization: TextCapitalization.words,
+                                    autofillHints: const [AutofillHints.givenName],
+                                    onChanged: model.setFirstName,
+                                    onEditingComplete: () => lastNameFocus.requestFocus(),
+                                    validator: stringService.customStringValidator(
+                                      firstNameController.text,
+                                      configuration: const StringValidatorConfiguration(notEmpty: true),
+                                    ),
+                                    decoration: InputDecoration(
+                                      labelText: 'Legal First Name',
+                                      hintText: 'Enter Legal First Name',
+                                      suffixIcon: firstNameController.text.isNotEmpty
+                                          ? ConditionalClearIcon(controller: firstNameController)
+                                          : null,
+                                    ),
+                                  ),
+                                  gap12,
+                                  TextFormField(
+                                    key: WidgetKey.lastNameKey,
+                                    focusNode: lastNameFocus,
+                                    textInputAction: TextInputAction.next,
+                                    textCapitalization: TextCapitalization.words,
+                                    controller: lastNameController,
+                                    onChanged: model.setLastName,
+                                    onEditingComplete: () => phoneFocus.requestFocus(),
+                                    validator: stringService.customStringValidator(lastNameController.text,
+                                        configuration: const StringValidatorConfiguration(notEmpty: true)),
+                                    autofillHints: const [AutofillHints.familyName],
+                                    decoration: InputDecoration(
+                                      labelText: 'Legal Last Name',
+                                      hintText: 'Enter Legal Last Name',
+                                      suffixIcon:
+                                          lastNameController.text.isNotEmpty ? ConditionalClearIcon(controller: lastNameController) : null,
+                                    ),
+                                  ),
+                                  gap12,
+                                  TextFormField(
+                                    key: WidgetKey.phoneNumberKey,
+                                    focusNode: phoneFocus,
+                                    textInputAction: TextInputAction.next,
+                                    controller: phoneNumberController,
+                                    onChanged: model.setPhoneNumber,
+                                    onEditingComplete: () => emailFocus.requestFocus(),
+                                    validator: stringService.customStringValidator(
+                                      phoneNumberController.text,
+                                      configuration: const StringValidatorConfiguration(
+                                        notEmpty: true,
+                                        includesOnlyNumbers: true,
+                                        includes12Characters: true,
+                                      ),
+                                    ),
+                                    autofillHints: const [AutofillHints.telephoneNumberNational],
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    keyboardType: const TextInputType.numberWithOptions(signed: true),
+                                    inputFormatters: [
+                                      MaskedInputFormatter('###-###-####'),
+                                    ],
+                                    decoration: InputDecoration(
+                                      labelText: 'Phone Number',
+                                      hintText: 'Enter Phone Number',
+                                      // text prefixing user input
+                                      prefixText: '(+1) ',
+                                      suffixIcon: phoneNumberController.text.isNotEmpty
+                                          ? ConditionalClearIcon(controller: phoneNumberController)
+                                          : null,
+                                    ),
+                                  ),
+                                  gap12,
+                                  TextFormField(
+                                    key: WidgetKey.emailKey,
+                                    focusNode: emailFocus,
+                                    textInputAction: TextInputAction.done,
+                                    controller: emailController,
+                                    validator: stringService.emailIsValid,
+                                    autofillHints: const [AutofillHints.email],
+                                    onChanged: model.setEmail,
+                                    onEditingComplete: () => emailFocus.unfocus(),
+                                    decoration: InputDecoration(
+                                      labelText: 'Email Address',
+                                      hintText: 'Enter Email Address',
+                                      suffixIcon:
+                                          emailController.text.isNotEmpty ? ConditionalClearIcon(controller: emailController) : null,
+                                    ),
+                                  ),
+                                  gap36,
+                                  SelectableButton(
+                                    onPressed: () async {
+                                      if (formKey.currentState!.validate() && model.ready) {
+                                        // check email availability
+                                        final bool statusOk = await model.checkAvailableEmail(email: model.email!);
+
+                                        // continue to signup view if email available else show user an error snack bar
+                                        if (statusOk) {
+                                          appRouter.push(SignUpRoute());
+                                        }
+                                      }
+                                    },
+                                    label: "Continue",
+                                  ),
+                                  gap24,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
