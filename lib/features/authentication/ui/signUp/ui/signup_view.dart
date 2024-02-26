@@ -2,14 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view_model.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/widgets/email_sign_up.dart';
-import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -44,7 +41,7 @@ class SignUpView extends StatelessWidget {
       builder: (context, SignUpViewModel model, _) {
         return SafeArea(
           child: Scaffold(
-            backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+            backgroundColor: Theme.of(context).colorScheme.background,
             body: SizedBox(
               width: double.maxFinite,
               height: double.maxFinite,

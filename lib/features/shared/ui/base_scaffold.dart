@@ -32,7 +32,7 @@ class BaseScaffold extends StatelessWidget {
     final isLightMode = context.watch<AppModeService>().isLightMode;
     // TODO figure out if there should be a safe area or not
     return Scaffold(
-      backgroundColor: isLightMode ? Colors.white : AppColors.darkGrey1,
+      backgroundColor: Theme.of(context).colorScheme.background,
 
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),

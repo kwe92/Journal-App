@@ -40,7 +40,7 @@ class RandomQuotesView extends StatelessWidget {
                               scaleX: 1.0625,
                               child: SvgPicture.asset(
                                 "assets/images/quotes-background-image.svg",
-                                color: AppColors.darkGrey1,
+                                color: AppColors.darkGrey0,
                               ),
                             ),
                           ),

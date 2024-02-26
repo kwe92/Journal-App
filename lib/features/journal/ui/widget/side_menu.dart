@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/colors.dart';
-import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-import 'package:provider/provider.dart';
 
 class SideMenu extends Drawer {
   final VoidCallback logoutCallback;
@@ -14,7 +12,7 @@ class SideMenu extends Drawer {
 
   @override
   Widget build(BuildContext context) => Drawer(
-        backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey1,
+        backgroundColor: Theme.of(context).colorScheme.background,
         surfaceTintColor: Colors.white,
         //CustomScrollView required to have Spacer / Expanded Widgets within a ListView
         child: CustomScrollView(

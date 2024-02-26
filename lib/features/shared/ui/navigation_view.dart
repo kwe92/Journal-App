@@ -30,6 +30,7 @@ class NavigationView extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: backgroundColor ?? AppColors.darkGrey1,
+          // backgroundColor: Theme.of(context).colorScheme.background,
           body: Center(
             child: model.widgetOptions[model.selectedIndex],
           ),
