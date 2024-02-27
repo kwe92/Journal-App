@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
 import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
 import 'package:journal_app/features/quotes/shared/widgets/share_button.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,6 +16,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
 
   @override
   Widget build(BuildContext context, LikedQuotesViewModel viewModel) {
+    final smallDevice = deviceSizeService.smallDevice;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       margin: EdgeInsets.only(
@@ -34,28 +37,28 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
           Text(
             viewModel.likedQuotes[index].quote,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 24,
+            style: TextStyle(
+              fontSize: !smallDevice ? 24 : 20,
               color: Colors.white,
             ),
           ),
-          const SizedBox(
-            height: 24,
-          ),
+          !smallDevice ? gap24 : gap4,
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ShareButton(
                 size: 26.0,
                 contentToShare: shareQuote(viewModel.likedQuotes[index]),
               ),
-              Text(
-                viewModel.likedQuotes[index].author,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
+              Expanded(
+                child: Text(
+                  viewModel.likedQuotes[index].author,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: !smallDevice ? 16 : 14,
+                    fontWeight: !smallDevice ? FontWeight.w800 : FontWeight.w700,
+                  ),
                 ),
               ),
               FavoriteButton(

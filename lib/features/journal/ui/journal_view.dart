@@ -27,7 +27,13 @@ class JournalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<JournalViewModel>.reactive(
       viewModelBuilder: () => JournalViewModel(),
-      onViewModelReady: (JournalViewModel model) async => await model.initialize(),
+      onViewModelReady: (JournalViewModel model) async {
+        await model.initialize();
+
+        model.searchNode.addListener(() {
+          model.searchNode.hasFocus ? model.setFabVisibility(false) : model.setFabVisibility(true);
+        });
+      },
       builder: (context, JournalViewModel model, child) {
         return BaseScaffold(
           // means Thoughts in french
@@ -64,20 +70,27 @@ class JournalView extends StatelessWidget {
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
                           const HideableMoodCount<JournalViewModel>(),
-                          HideableSearchBar(searchController: model.searchController),
+                          HideableSearchBar(
+                            searchNode: model.searchNode,
+                            searchController: model.searchController,
+                          ),
                           SliverToBoxAdapter(child: gap4),
                         ],
                         body: Center(
                           // JOURNAL ENTRIES
                           child: model.journalEntries.isEmpty
-                              ? const Entry.opacity(
-                                  duration: Duration(milliseconds: 600),
-                                  child: Text(
-                                    "No entries, what's on your mind...",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AppColors.lightGreen,
-                                      fontSize: 32,
+                              ? const Padding(
+                                  // TODO: ensure padding looks good on larger devices | bottom: 86.0 for small devices
+                                  padding: EdgeInsets.only(bottom: 86.0),
+                                  child: Entry.opacity(
+                                    duration: Duration(milliseconds: 600),
+                                    child: Text(
+                                      "No entries, what's on your mind...",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AppColors.lightGreen,
+                                        fontSize: 32,
+                                      ),
                                     ),
                                   ),
                                 )

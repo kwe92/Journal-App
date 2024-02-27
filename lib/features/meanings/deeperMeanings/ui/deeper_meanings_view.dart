@@ -1,3 +1,4 @@
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/route_navigation.dart';
 import 'package:journal_app/app/theme/colors.dart';
@@ -49,20 +50,23 @@ class DeeperMeaningsView extends StatelessWidget {
                       mainAxisSpacing: 16,
                       childAspectRatio: (5 / 8),
                     ),
-                    itemBuilder: (context, index) => PromptCard(
-                      onTap: () async {
-                        model.setVisibility(false);
+                    itemBuilder: (context, index) => Entry.opacity(
+                      duration: const Duration(milliseconds: 500),
+                      child: PromptCard(
+                        onTap: () async {
+                          model.setVisibility(false);
 
-                        await RouteNavigation.pushWithTransition(
-                          context,
-                          PromptsView(
-                            promptText: model.prompts[index],
-                          ),
-                        );
+                          await RouteNavigation.pushWithTransition(
+                            context,
+                            PromptsView(
+                              promptText: model.prompts[index],
+                            ),
+                          );
 
-                        model.setVisibility(true);
-                      },
-                      promptText: model.prompts[index],
+                          model.setVisibility(true);
+                        },
+                        promptText: model.prompts[index],
+                      ),
                     ),
                   ),
                 ),

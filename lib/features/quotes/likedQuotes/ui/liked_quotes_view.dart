@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:journal_app/app/theme/colors.dart';
@@ -27,10 +28,13 @@ class LikedQuotesView extends StatelessWidget {
                   title: Container(
                     height: 52,
                     width: 52,
-                    margin: const EdgeInsets.only(bottom: 16),
+                    // TODO: check if spacking looks good on bigger devices | was const EdgeInsets.only(bottom: 16),
+
+                    margin: const EdgeInsets.only(bottom: 16, top: 16),
                     child: SvgPicture.asset(
                       "assets/images/lotus-flower-bloom.svg",
-                      color: Colors.pink[100],
+                      // color: Colors.pink[100],
+                      color: AppColors.lotusColor,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -41,20 +45,29 @@ class LikedQuotesView extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Find your inspiration...",
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
+                      const Entry.offset(
+                        xOffset: 1000,
+                        yOffset: 0,
+                        duration: Duration(milliseconds: 500),
+                        child: Text(
+                          "Find your inspiration...",
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 300,
-                        width: 300,
-                        child: SvgPicture.asset(
-                          "assets/images/lotus-flower-bloom.svg",
-                          color: Colors.pink[100],
-                          fit: BoxFit.cover,
+                      Entry.opacity(
+                        duration: const Duration(milliseconds: 900),
+                        child: SizedBox(
+                          height: 300,
+                          width: 300,
+                          child: SvgPicture.asset(
+                            "assets/images/lotus-flower-bloom.svg",
+                            // color: Colors.pink[100],
+                            color: AppColors.lotusColor,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ],

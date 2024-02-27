@@ -62,7 +62,10 @@ class MoodCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 12.0),
               child: Text(
                 mood.moodText,
-                style: TextStyle(color: mood.moodColor),
+                style: TextStyle(
+                  color: mood.moodColor,
+                  fontSize: !deviceSizeService.smallDevice ? 18 : 14,
+                ),
               ),
             ),
           ],

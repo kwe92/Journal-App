@@ -39,6 +39,9 @@ class SignUpView extends StatelessWidget {
         });
       },
       builder: (context, SignUpViewModel model, _) {
+        final smallDevice = deviceSizeService.smallDevice;
+        ;
+
         return SafeArea(
           child: Scaffold(
             backgroundColor: Theme.of(context).colorScheme.background,
@@ -53,7 +56,8 @@ class SignUpView extends StatelessWidget {
                     children: [
                       Container(
                         width: double.maxFinite,
-                        height: 210,
+                        // height: 210,
+                        height: MediaQuery.of(context).size.height / (!smallDevice ? 3.125 : 3.5),
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: model.mindfulImage!,
@@ -71,52 +75,59 @@ class SignUpView extends StatelessWidget {
                       )
                     ],
                   ),
-                  gap12,
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
+                  !smallDevice ? gap12 : gap6,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
                       "Sign-up",
-                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                        fontSize: !smallDevice ? 32 : 24,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                  gap12,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 36.0),
-                    child: Column(
-                      children: [
-                        Form(
-                          key: formKey,
-                          child: EmailSignUp(
-                            emailController: emailController,
-                            passwordController: passwordController,
-                            confirmPasswordController: confirmPasswordController,
-                            emailFocus: emailFocus,
-                            passwordFocus: passwordFocus,
-                            confirmPasswordFocus: confirmPasswordFocus,
-                          ),
-                        ),
-                        gap36,
-                        SelectableButton(
-                          onPressed: () async {
-                            if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                              model.unfocusAll(context);
+                  !smallDevice ? gap12 : const SizedBox(),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: Column(
+                          children: [
+                            Form(
+                              key: formKey,
+                              child: EmailSignUp(
+                                emailController: emailController,
+                                passwordController: passwordController,
+                                confirmPasswordController: confirmPasswordController,
+                                emailFocus: emailFocus,
+                                passwordFocus: passwordFocus,
+                                confirmPasswordFocus: confirmPasswordFocus,
+                              ),
+                            ),
+                            !smallDevice ? gap36 : gap24,
+                            SelectableButton(
+                              onPressed: () async {
+                                if ((formKey.currentState?.validate() ?? false) && model.ready) {
+                                  model.unfocusAll(context);
 
-                              // upon successful validation sign the user up.
-                              final bool statusOk = await model.signupWithEmail(user: userService.tempUser!);
+                                  // upon successful validation sign the user up.
+                                  final bool statusOk = await model.signupWithEmail(user: userService.tempUser!);
 
-                              if (statusOk) {
-                                // remove added listeners
-                                passwordFocus.removeListener(() {
-                                  model.setShowRequirements(passwordFocus.hasFocus);
-                                });
-                                // remove member info view and navigate to journal view
-                                await appRouter.replace(NavigationRoute());
-                              }
-                            }
-                          },
-                          label: "Sign-up",
+                                  if (statusOk) {
+                                    // remove added listeners
+                                    passwordFocus.removeListener(() {
+                                      model.setShowRequirements(passwordFocus.hasFocus);
+                                    });
+                                    // remove member info view and navigate to journal view
+                                    await appRouter.replace(NavigationRoute());
+                                  }
+                                }
+                              },
+                              label: "Sign-up",
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],

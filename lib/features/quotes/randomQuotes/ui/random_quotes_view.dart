@@ -7,11 +7,13 @@ import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_m
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
 import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
 import 'package:journal_app/features/quotes/shared/widgets/share_button.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:provider/provider.dart';
 
 const style = TextStyle(
   color: Colors.white,
-  fontSize: 26,
+  // TODO: check if font size 24 looks good on larger device | was 26 on large devices
+  fontSize: 24,
 );
 
 @RoutePage()
@@ -21,6 +23,9 @@ class RandomQuotesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<RandomQuotesViewModel>();
+
+    final smallDevice = deviceSizeService.smallDevice;
+
     return model.isBusy
         ? circleLoader
         : PageView.builder(
@@ -31,7 +36,7 @@ class RandomQuotesView extends StatelessWidget {
                 children: [
                   Center(
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 2,
+                      height: MediaQuery.of(context).size.height / 1.5,
                       child: Stack(
                         children: [
                           Positioned.fill(
@@ -52,12 +57,14 @@ class RandomQuotesView extends StatelessWidget {
                                 child: Align(
                                   child: Text(
                                     model.quotes[index].quote,
-                                    style: style.copyWith(color: Colors.white.withOpacity(0.90)),
+                                    style: style.copyWith(
+                                      color: Colors.white.withOpacity(0.90),
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 18),
+                              !smallDevice ? gap18 : gap12,
                               Align(
                                 child: Text(
                                   "- ${model.quotes[index].author}",
@@ -74,7 +81,7 @@ class RandomQuotesView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 42),
+                    padding: EdgeInsets.only(bottom: !smallDevice ? 42 : 12),
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(

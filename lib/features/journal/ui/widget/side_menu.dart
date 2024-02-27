@@ -14,6 +14,7 @@ class SideMenu extends Drawer {
   Widget build(BuildContext context) => Drawer(
         backgroundColor: Theme.of(context).colorScheme.background,
         surfaceTintColor: Colors.white,
+        width: MediaQuery.of(context).size.width / 1.5,
         //CustomScrollView required to have Spacer / Expanded Widgets within a ListView
         child: CustomScrollView(
           slivers: [

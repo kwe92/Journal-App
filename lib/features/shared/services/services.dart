@@ -10,6 +10,7 @@ import 'package:journal_app/features/meanings/shared/gemini_model_service.dart';
 import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart';
 import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:journal_app/features/shared/services/device_size_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
@@ -85,4 +86,8 @@ AppModeService get appModeService {
 
 GeminiModelService get geminiModelService {
   return locator.get<GeminiModelService>();
+}
+
+DeviceSizeService get deviceSizeService {
+  return locator.get<DeviceSizeService>();
 }

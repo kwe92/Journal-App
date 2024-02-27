@@ -11,8 +11,9 @@ class AppTheme {
   const AppTheme._();
 
   static ThemeData getTheme(BuildContext context) {
+    bool isLightMode = context.watch<AppModeService>().isLightMode;
     return ThemeData(
-      colorScheme: context.watch<AppModeService>().isLightMode
+      colorScheme: isLightMode
           ? const ColorScheme.light()
           : const ColorScheme.dark(
               background: AppColors.darkGrey1,
@@ -30,7 +31,7 @@ class AppTheme {
       ),
       textButtonTheme: textButtonTheme,
       outlinedButtonTheme: mainButtonTheme,
-      snackBarTheme: snackBarTheme,
+      snackBarTheme: _snackBarTheme(isLightMode),
     );
   }
 
@@ -143,10 +144,17 @@ final deleteAccoutTextSelectionTheme = TextSelectionThemeData(
   selectionColor: AppColors.orange0.withOpacity(0.15),
 );
 
-const snackBarTheme = SnackBarThemeData(
-  backgroundColor: AppColors.offWhite,
-  contentTextStyle: snackBarTextStyle,
-);
+// const snackBarTheme = SnackBarThemeData(
+//   backgroundColor: AppColors.offWhite,
+//   contentTextStyle: snackBarTextStyle,
+// );
+
+SnackBarThemeData _snackBarTheme(bool isLightMode) {
+  return SnackBarThemeData(
+    backgroundColor: isLightMode ? Colors.white : AppColors.darkGrey0,
+    contentTextStyle: snackBarTextStyle,
+  );
+}
 
 const snackBarTextStyle = TextStyle(
   fontSize: 24,

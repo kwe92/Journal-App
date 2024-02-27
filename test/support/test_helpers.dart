@@ -21,6 +21,7 @@ import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/new_entry.dart';
+import 'package:journal_app/features/shared/services/device_size_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
@@ -67,6 +68,7 @@ Future<void> registerSharedServices() async {
   getAndRegisterUserServiceMock();
   getAndRegisterJournalEntryServiceMock();
   getAndRegisterTokenServiceMock();
+  getAndRegisterService<DeviceSizeService>(DeviceSizeService());
   // getAndRegisterMoodServiceMock();
 }
 
