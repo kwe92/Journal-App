@@ -9,6 +9,7 @@ import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
+import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:stacked/stacked.dart';
 
@@ -43,6 +44,8 @@ class MemberInfoView extends StatelessWidget {
         lastNameController.text = model.lastName!;
       },
       builder: (BuildContext context, MemberInfoViewModel model, _) {
+        final smallDevice = DeviceSize.isSmallDevice(context);
+
         return SafeArea(
           child: Scaffold(
             backgroundColor: Theme.of(context).colorScheme.background,
@@ -57,7 +60,7 @@ class MemberInfoView extends StatelessWidget {
                     children: [
                       Container(
                         width: double.maxFinite,
-                        height: MediaQuery.of(context).size.height / 3.125,
+                        height: MediaQuery.of(context).size.height / (!smallDevice ? 3.125 : 3.5),
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: model.mindfulImage!,
@@ -75,15 +78,18 @@ class MemberInfoView extends StatelessWidget {
                       )
                     ],
                   ),
-                  gap12,
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
+                  !smallDevice ? gap12 : gap6,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
                       "Sign-up",
-                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                        fontSize: !smallDevice ? 32 : 24,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                  gap12,
+                  !smallDevice ? gap12 : const SizedBox(),
                   Expanded(
                     child: CustomScrollView(
                       slivers: [
@@ -92,7 +98,7 @@ class MemberInfoView extends StatelessWidget {
                             key: formKey,
                             autovalidateMode: autoValidateMode,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 24.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -118,7 +124,7 @@ class MemberInfoView extends StatelessWidget {
                                           : null,
                                     ),
                                   ),
-                                  gap12,
+                                  !smallDevice ? gap12 : const SizedBox(),
                                   TextFormField(
                                     key: WidgetKey.lastNameKey,
                                     focusNode: lastNameFocus,
@@ -137,7 +143,7 @@ class MemberInfoView extends StatelessWidget {
                                           lastNameController.text.isNotEmpty ? ConditionalClearIcon(controller: lastNameController) : null,
                                     ),
                                   ),
-                                  gap12,
+                                  !smallDevice ? gap12 : const SizedBox(),
                                   TextFormField(
                                     key: WidgetKey.phoneNumberKey,
                                     focusNode: phoneFocus,
@@ -169,7 +175,7 @@ class MemberInfoView extends StatelessWidget {
                                           : null,
                                     ),
                                   ),
-                                  gap12,
+                                  !smallDevice ? gap12 : const SizedBox(),
                                   TextFormField(
                                     key: WidgetKey.emailKey,
                                     focusNode: emailFocus,
@@ -186,7 +192,7 @@ class MemberInfoView extends StatelessWidget {
                                           emailController.text.isNotEmpty ? ConditionalClearIcon(controller: emailController) : null,
                                     ),
                                   ),
-                                  gap36,
+                                  !smallDevice ? gap36 : gap24,
                                   SelectableButton(
                                     onPressed: () async {
                                       if (formKey.currentState!.validate() && model.ready) {
