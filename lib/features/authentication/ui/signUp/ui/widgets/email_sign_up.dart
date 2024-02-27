@@ -5,7 +5,6 @@ import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view_mod
 import 'package:journal_app/features/authentication/ui/signUp/ui/widgets/requirements_popup.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/custom_portal_target.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:stacked/stacked.dart';
 
@@ -29,7 +28,8 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
 
   @override
   Widget build(BuildContext context, SignUpViewModel viewModel) {
-    final smallDevice = DeviceSize.isSmallDevice(context);
+    final smallDevice = deviceSizeService.smallDevice;
+    ;
 
     return Column(
       children: [

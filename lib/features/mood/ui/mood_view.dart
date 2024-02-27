@@ -9,7 +9,6 @@ import 'package:journal_app/features/mood/ui/widgets/cancel_button.dart';
 import 'package:journal_app/features/mood/ui/widgets/mood_card.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -104,7 +103,7 @@ class MoodView extends StatelessWidget {
                               label: "Continue"),
                         ),
                         // TODO: check why we have a GAP 120 on larger devices
-                        !DeviceSize.isSmallDevice(context) ? const Gap(120) : const Gap(20),
+                        !deviceSizeService.smallDevice ? const Gap(120) : const Gap(20),
                       ],
                     ),
                   ),

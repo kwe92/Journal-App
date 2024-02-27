@@ -8,7 +8,6 @@ import 'package:journal_app/features/profile/profile_settings/ui/delete_profile_
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -23,7 +22,7 @@ class DeleteProfileDialogView extends StatelessWidget {
     return ViewModelBuilder<DeleteProfileDialogViewModel>.reactive(
       viewModelBuilder: () => DeleteProfileDialogViewModel(),
       builder: (BuildContext context, DeleteProfileDialogViewModel model, _) {
-        final smallDevice = DeviceSize.isSmallDevice(context);
+        final smallDevice = deviceSizeService.smallDevice;
 
         const style00 = TextStyle(fontSize: 12);
         return Scaffold(

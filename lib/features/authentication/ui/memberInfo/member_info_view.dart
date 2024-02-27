@@ -9,7 +9,6 @@ import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/ui/widgets/clear_icon.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:stacked/stacked.dart';
 
@@ -44,7 +43,7 @@ class MemberInfoView extends StatelessWidget {
         lastNameController.text = model.lastName!;
       },
       builder: (BuildContext context, MemberInfoViewModel model, _) {
-        final smallDevice = DeviceSize.isSmallDevice(context);
+        final smallDevice = deviceSizeService.smallDevice;
 
         return SafeArea(
           child: Scaffold(

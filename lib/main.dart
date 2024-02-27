@@ -52,11 +52,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      // TODO: remove all device size calls and retrieve the device size once when the app is opened
-      MaterialApp.router(
-        scaffoldMessengerKey: WidgetKey.rootScaffoldMessengerKey,
-        theme: AppTheme.getTheme(context),
-        routerConfig: appRouter.config(),
-      );
+  Widget build(BuildContext context) {
+    deviceSizeService.setSmallDevice(_isSmallDevice(context));
+    return MaterialApp.router(
+      scaffoldMessengerKey: WidgetKey.rootScaffoldMessengerKey,
+      theme: AppTheme.getTheme(context),
+      routerConfig: appRouter.config(),
+    );
+  }
+  // TODO: remove all device size calls and retrieve the device size once when the app is opened
 }
+
+bool _isSmallDevice(BuildContext context) => MediaQuery.of(context).size.height < 700 ? true : false;

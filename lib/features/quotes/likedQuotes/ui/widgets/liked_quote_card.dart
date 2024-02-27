@@ -5,8 +5,8 @@ import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_mod
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
 import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
 import 'package:journal_app/features/quotes/shared/widgets/share_button.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:stacked/stacked.dart';
 
 class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
@@ -16,7 +16,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
 
   @override
   Widget build(BuildContext context, LikedQuotesViewModel viewModel) {
-    final smallDevice = DeviceSize.isSmallDevice(context);
+    final smallDevice = deviceSizeService.smallDevice;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       margin: EdgeInsets.only(

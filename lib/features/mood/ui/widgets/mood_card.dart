@@ -7,7 +7,6 @@ import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:provider/provider.dart';
 
 class MoodCard extends StatelessWidget {
@@ -65,7 +64,7 @@ class MoodCard extends StatelessWidget {
                 mood.moodText,
                 style: TextStyle(
                   color: mood.moodColor,
-                  fontSize: !DeviceSize.isSmallDevice(context) ? 18 : 14,
+                  fontSize: !deviceSizeService.smallDevice ? 18 : 14,
                 ),
               ),
             ),

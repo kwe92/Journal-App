@@ -7,7 +7,6 @@ import 'package:journal_app/features/authentication/ui/signIn/widgets/email_inpu
 import 'package:journal_app/features/authentication/ui/signIn/widgets/password_input.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -27,7 +26,7 @@ class SignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint("height: ${MediaQuery.of(context).size.height}");
 
-    final smallDevice = DeviceSize.isSmallDevice(context);
+    final smallDevice = deviceSizeService.smallDevice;
 
     return ViewModelBuilder<SignInViewModel>.reactive(
       createNewViewModelOnInsert: true,

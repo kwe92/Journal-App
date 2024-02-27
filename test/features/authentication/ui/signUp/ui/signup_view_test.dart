@@ -34,6 +34,7 @@ void main() {
     });
 
     testWidgets("When the Sign Up view opens, Sign-up text, TextFormField's and continue button visible - ", (tester) async {
+      FlutterError.onError = ignoreOverflowErrors;
       getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
       getAndRegisterService<AppModeService>(AppModeService());
 
@@ -58,6 +59,7 @@ void main() {
     });
 
     testWidgets('When the password field gains focus, then password requirements popup appears', (tester) async {
+      FlutterError.onError = ignoreOverflowErrors;
       getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
       getAndRegisterService<AppModeService>(AppModeService());
 

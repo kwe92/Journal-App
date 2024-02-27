@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:provider/provider.dart';
 
 class FormContainer extends StatelessWidget {
@@ -26,7 +26,7 @@ class FormContainer extends StatelessWidget {
     return Container(
       height: height ?? MediaQuery.of(context).size.height / 1.5,
       width: double.maxFinite,
-      margin: EdgeInsets.symmetric(horizontal: 24, vertical: !DeviceSize.isSmallDevice(context) ? 32 : 24),
+      margin: EdgeInsets.symmetric(horizontal: 24, vertical: !deviceSizeService.smallDevice ? 32 : 24),
       decoration: BoxDecoration(
         // color: AppColors.offWhite,
         color: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey0,

@@ -7,7 +7,7 @@ import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_m
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
 import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
 import 'package:journal_app/features/quotes/shared/widgets/share_button.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:provider/provider.dart';
 
 const style = TextStyle(
@@ -24,7 +24,7 @@ class RandomQuotesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<RandomQuotesViewModel>();
 
-    final smallDevice = DeviceSize.isSmallDevice(context);
+    final smallDevice = deviceSizeService.smallDevice;
 
     return model.isBusy
         ? circleLoader
@@ -81,7 +81,7 @@ class RandomQuotesView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: !DeviceSize.isSmallDevice(context) ? 42 : 12),
+                    padding: EdgeInsets.only(bottom: !smallDevice ? 42 : 12),
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(

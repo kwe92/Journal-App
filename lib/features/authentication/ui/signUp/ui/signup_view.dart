@@ -7,7 +7,6 @@ import 'package:journal_app/features/authentication/ui/signUp/ui/widgets/email_s
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -40,7 +39,8 @@ class SignUpView extends StatelessWidget {
         });
       },
       builder: (context, SignUpViewModel model, _) {
-        final smallDevice = DeviceSize.isSmallDevice(context);
+        final smallDevice = deviceSizeService.smallDevice;
+        ;
 
         return SafeArea(
           child: Scaffold(

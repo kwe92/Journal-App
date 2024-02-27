@@ -9,7 +9,6 @@ import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:stacked/stacked.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -23,7 +22,7 @@ class CalendarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final smallDevice = DeviceSize.isSmallDevice(context);
+    final smallDevice = deviceSizeService.smallDevice;
 
     return ViewModelBuilder<CalendarViewModel>.reactive(
       viewModelBuilder: () => CalendarViewModel(),

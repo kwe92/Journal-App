@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
-import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:provider/provider.dart';
 
 class PromptCard extends StatelessWidget {
@@ -17,7 +17,7 @@ class PromptCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final smallDevice = DeviceSize.isSmallDevice(context);
+    final smallDevice = deviceSizeService.smallDevice;
 
     return GestureDetector(
       onTap: onTap,

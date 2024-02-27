@@ -12,7 +12,6 @@ import "package:journal_app/features/shared/ui/button/custom_back_button.dart";
 import "package:journal_app/features/shared/ui/button/selectable_button.dart";
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import "package:journal_app/features/shared/ui/widgets/profile_icon.dart";
-import "package:journal_app/features/shared/utilities/device_size.dart";
 import "package:stacked/stacked.dart";
 
 @RoutePage()
@@ -57,7 +56,7 @@ class EntryView extends StatelessWidget {
                   dayOfWeekByName: model.dayOfWeekByName,
                   timeOfDay: model.timeOfDay,
                   continentalTime: model.continentalTime,
-                  height: MediaQuery.of(context).size.height / (!DeviceSize.isSmallDevice(context) ? 1.65 : 1.875),
+                  height: MediaQuery.of(context).size.height / (!deviceSizeService.smallDevice ? 1.65 : 1.875),
                   child: Form(
                     child: Theme(
                       data: Theme.of(context).copyWith(
