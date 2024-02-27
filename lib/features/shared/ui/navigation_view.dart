@@ -55,7 +55,7 @@ class NavigationView extends StatelessWidget {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.favorite_outline),
-                    label: "Liked Quotes",
+                    label: "Favorite",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.menu_book_rounded),
