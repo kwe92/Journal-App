@@ -27,7 +27,9 @@ class LikedQuotesView extends StatelessWidget {
                   title: Container(
                     height: 52,
                     width: 52,
-                    margin: const EdgeInsets.only(bottom: 16),
+                    // TODO: check if spacking looks good on bigger devices | was const EdgeInsets.only(bottom: 16),
+
+                    margin: const EdgeInsets.only(bottom: 16, top: 16),
                     child: SvgPicture.asset(
                       "assets/images/lotus-flower-bloom.svg",
                       color: Colors.pink[100],

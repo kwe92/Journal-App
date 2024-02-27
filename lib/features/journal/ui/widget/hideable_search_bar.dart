@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
-import 'package:journal_app/features/shared/services/app_mode_service.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class HideableSearchBar extends ViewModelWidget<JournalViewModel> {
   final TextEditingController searchController;
+  final FocusNode searchNode;
 
-  const HideableSearchBar({required this.searchController, super.key});
+  const HideableSearchBar({
+    required this.searchController,
+    required this.searchNode,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, JournalViewModel viewModel) {
@@ -28,6 +30,7 @@ class HideableSearchBar extends ViewModelWidget<JournalViewModel> {
         ),
         // SEARCH BAR
         child: TextField(
+          focusNode: searchNode,
           controller: searchController,
           onChanged: viewModel.onQueryItems,
           decoration: InputDecoration(

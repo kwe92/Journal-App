@@ -7,6 +7,7 @@ import 'package:journal_app/features/authentication/ui/signIn/widgets/email_inpu
 import 'package:journal_app/features/authentication/ui/signIn/widgets/password_input.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
+import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -24,6 +25,10 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("height: ${MediaQuery.of(context).size.height}");
+
+    final smallDevice = DeviceSize.isSmallDevice(context);
+
     return ViewModelBuilder<SignInViewModel>.reactive(
       createNewViewModelOnInsert: true,
       viewModelBuilder: () => SignInViewModel(),
@@ -57,31 +62,32 @@ class SignInView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height / 3.125,
                           width: double.maxFinite,
+                          height: MediaQuery.of(context).size.height / (!smallDevice ? 3.125 : 3.5),
                           child: Image(
                             image: model.mindfulImage!,
                             fit: BoxFit.cover,
                           ),
                         ),
-                        gap24,
-                        const Padding(
-                          padding: EdgeInsets.only(left: 16.0),
+                        !smallDevice ? gap24 : gap12,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
                           child: Text(
                             "Log-in",
                             style: TextStyle(
-                              fontSize: 32,
+                              fontSize: !smallDevice ? 32 : 24,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
-                        gap12,
+                        !smallDevice ? gap24 : const SizedBox(),
                         Expanded(
+                          // TODO: Should the entire view be scrollable
                           child: SingleChildScrollView(
                             child: Form(
                               key: formKey,
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 24.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
@@ -90,12 +96,12 @@ class SignInView extends StatelessWidget {
                                       focus: emailFocus,
                                       nextFocus: passwordFocus,
                                     ),
-                                    gap16,
+                                    !smallDevice ? gap16 : gap4,
                                     PasswordInput(
                                       passwordController: passwordController,
                                       focus: passwordFocus,
                                     ),
-                                    gap12,
+                                    !smallDevice ? gap12 : gap4,
                                     TextButton(
                                       onPressed: () {},
                                       child: const Text(
@@ -103,7 +109,7 @@ class SignInView extends StatelessWidget {
                                         style: TextStyle(fontSize: 16),
                                       ),
                                     ),
-                                    gap16,
+                                    !smallDevice ? gap16 : gap4,
                                     SelectableButton(
                                         onPressed: () async {
                                           // focus email TextFormField if it is empty
@@ -124,7 +130,7 @@ class SignInView extends StatelessWidget {
                                           }
                                         },
                                         label: "Login"),
-                                    gap16,
+                                    !smallDevice ? gap16 : gap4,
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -156,6 +162,7 @@ class SignInView extends StatelessWidget {
     );
   }
 }
+
 
 // ImageProvider
 

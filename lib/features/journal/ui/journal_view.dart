@@ -27,7 +27,13 @@ class JournalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<JournalViewModel>.reactive(
       viewModelBuilder: () => JournalViewModel(),
-      onViewModelReady: (JournalViewModel model) async => await model.initialize(),
+      onViewModelReady: (JournalViewModel model) async {
+        await model.initialize();
+
+        model.searchNode.addListener(() {
+          model.searchNode.hasFocus ? model.setFabVisibility(false) : model.setFabVisibility(true);
+        });
+      },
       builder: (context, JournalViewModel model, child) {
         return BaseScaffold(
           // means Thoughts in french
@@ -64,7 +70,11 @@ class JournalView extends StatelessWidget {
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
                           const HideableMoodCount<JournalViewModel>(),
-                          HideableSearchBar(searchController: model.searchController),
+                          // TODO: add focus node
+                          HideableSearchBar(
+                            searchNode: model.searchNode,
+                            searchController: model.searchController,
+                          ),
                           SliverToBoxAdapter(child: gap4),
                         ],
                         body: Center(

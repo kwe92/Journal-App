@@ -8,6 +8,7 @@ import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:stacked/stacked.dart';
 
 class JournalViewModel extends ReactiveViewModel with MoodMixin {
+  final searchNode = FocusNode();
   final searchController = TextEditingController();
 
   List<JournalEntry> _journalEntries = [];

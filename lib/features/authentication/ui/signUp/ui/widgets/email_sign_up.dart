@@ -5,6 +5,7 @@ import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view_mod
 import 'package:journal_app/features/authentication/ui/signUp/ui/widgets/requirements_popup.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/custom_portal_target.dart';
+import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:stacked/stacked.dart';
 
@@ -28,6 +29,8 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
 
   @override
   Widget build(BuildContext context, SignUpViewModel viewModel) {
+    final smallDevice = DeviceSize.isSmallDevice(context);
+
     return Column(
       children: [
         TextFormField(
@@ -44,7 +47,7 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
             hintText: 'Enter Email Address',
           ),
         ),
-        gap12,
+        !smallDevice ? gap12 : gap4,
         CustomPortalTarget(
           isAnimated: true,
           // isVisible: determines the visibility of follower Widget
@@ -87,7 +90,7 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
             ),
           ),
         ),
-        gap12,
+        !smallDevice ? gap12 : gap4,
         TextFormField(
           key: WidgetKey.confirmPasswordKey,
           textInputAction: TextInputAction.done,

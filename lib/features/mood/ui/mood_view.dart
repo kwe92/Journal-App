@@ -9,6 +9,7 @@ import 'package:journal_app/features/mood/ui/widgets/cancel_button.dart';
 import 'package:journal_app/features/mood/ui/widgets/mood_card.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
+import 'package:journal_app/features/shared/utilities/device_size.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -61,37 +62,38 @@ class MoodView extends StatelessWidget {
                         ),
                         gap36,
                         Flexible(
-                            child: GridView.builder(
-                          itemCount: model.moods.length,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            // represents the width / height respectively
-                            childAspectRatio: (100 / 160),
-                          ),
-                          itemBuilder: (BuildContext context, int i) {
-                            return GestureDetector(
-                              onTap:
-                                  // anonymous closure that saves the state of the index integer above within its scope
-                                  () {
-                                // set selected mood
-                                model.setIndex(i);
+                          child: GridView.builder(
+                            itemCount: model.moods.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              // represents the width / height respectively
+                              childAspectRatio: (5 / 8),
+                            ),
+                            itemBuilder: (BuildContext context, int i) {
+                              return GestureDetector(
+                                onTap:
+                                    // anonymous closure that saves the state of the index integer above within its scope
+                                    () {
+                                  // set selected mood
+                                  model.setIndex(i);
 
-                                // set mood type to be sent to backend
-                                model.setMoodType(model.moods[i].moodText);
-                              },
-                              child: Entry.opacity(
-                                duration: const Duration(milliseconds: 600),
-                                child: MoodCard(
-                                  // determine if the card is currently selected or not
-                                  isSelected: model.selectedIndex == i ? true : false,
-                                  mood: model.moods[i],
+                                  // set mood type to be sent to backend
+                                  model.setMoodType(model.moods[i].moodText);
+                                },
+                                child: Entry.opacity(
+                                  duration: const Duration(milliseconds: 600),
+                                  child: MoodCard(
+                                    // determine if the card is currently selected or not
+                                    isSelected: model.selectedIndex == i ? true : false,
+                                    mood: model.moods[i],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        )),
+                              );
+                            },
+                          ),
+                        ),
                         Entry.opacity(
                           duration: const Duration(milliseconds: 600),
                           child: SelectableButton(
@@ -101,7 +103,8 @@ class MoodView extends StatelessWidget {
                               },
                               label: "Continue"),
                         ),
-                        const Gap(120)
+                        // TODO: check why we have a GAP 120 on larger devices
+                        !DeviceSize.isSmallDevice(context) ? const Gap(120) : const Gap(20),
                       ],
                     ),
                   ),
