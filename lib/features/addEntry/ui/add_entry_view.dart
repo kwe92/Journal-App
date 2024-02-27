@@ -44,56 +44,63 @@ class AddEntryView extends StatelessWidget {
             ),
           ),
         ],
-        body: Column(
-          children: [
-            FormContainer(
-              dayOfWeekByName: model.dayOfWeekByName,
-              timeOfDay: model.timeOfDay,
-              continentalTime: model.continentalTime,
-              child: Form(
-                key: formKey,
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                    textSelectionTheme: AppTheme.getTextSelectionThemeData(model.moodColor!),
-                    cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(model.moodColor!),
-                  ),
-                  child: TextFormField(
-                    // focus text field upon inital render
-                    autofocus: true,
-                    expands: true,
-                    maxLines: null,
-                    // automatically capitalize sentences for user
-                    textCapitalization: TextCapitalization.sentences,
-                    controller: newEntryController,
-                    decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
-                    onChanged: (value) => model.setContent(value),
-                    validator: stringService.customStringValidator(
-                      newEntryController.text,
-                      configuration: const StringValidatorConfiguration(notEmpty: true),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                FormContainer(
+                  dayOfWeekByName: model.dayOfWeekByName,
+                  timeOfDay: model.timeOfDay,
+                  continentalTime: model.continentalTime,
+                  child: Form(
+                    key: formKey,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textSelectionTheme: AppTheme.getTextSelectionThemeData(model.moodColor!),
+                        cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(model.moodColor!),
+                      ),
+                      child: TextFormField(
+                        // used to control the native keyboard option
+                        textInputAction: TextInputAction.done,
+                        // focus text field upon inital render
+                        autofocus: true,
+                        expands: true,
+                        maxLines: null,
+                        // automatically capitalize sentences for user
+                        textCapitalization: TextCapitalization.sentences,
+                        controller: newEntryController,
+                        decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
+                        onChanged: (value) => model.setContent(value),
+                        validator: stringService.customStringValidator(
+                          newEntryController.text,
+                          configuration: const StringValidatorConfiguration(notEmpty: true),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: SelectableButton(
-                  color: model.moodColor,
-                  onPressed: () async {
-                    if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                      final bool statusOk = await model.addEntry(
-                        moodType,
-                        model.content!,
-                      );
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: SelectableButton(
+                      color: model.moodColor,
+                      onPressed: () async {
+                        if ((formKey.currentState?.validate() ?? false) && model.ready) {
+                          final bool statusOk = await model.addEntry(
+                            moodType,
+                            model.content!,
+                          );
 
-                      if (statusOk) {
-                        await appRouter.replace(NavigationRoute());
-                      }
-                    }
-                  },
-                  label: "Add Entry"),
+                          if (statusOk) {
+                            await appRouter.replace(NavigationRoute());
+                          }
+                        }
+                      },
+                      label: "Add Entry"),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
