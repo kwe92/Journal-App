@@ -70,7 +70,6 @@ class JournalView extends StatelessWidget {
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
                           const HideableMoodCount<JournalViewModel>(),
-                          // TODO: add focus node
                           HideableSearchBar(
                             searchNode: model.searchNode,
                             searchController: model.searchController,
@@ -80,14 +79,18 @@ class JournalView extends StatelessWidget {
                         body: Center(
                           // JOURNAL ENTRIES
                           child: model.journalEntries.isEmpty
-                              ? const Entry.opacity(
-                                  duration: Duration(milliseconds: 600),
-                                  child: Text(
-                                    "No entries, what's on your mind...",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AppColors.lightGreen,
-                                      fontSize: 32,
+                              ? const Padding(
+                                  // TODO: ensure padding looks good on larger devices | bottom: 86.0 for small devices
+                                  padding: EdgeInsets.only(bottom: 86.0),
+                                  child: Entry.opacity(
+                                    duration: Duration(milliseconds: 600),
+                                    child: Text(
+                                      "No entries, what's on your mind...",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AppColors.lightGreen,
+                                        fontSize: 32,
+                                      ),
                                     ),
                                   ),
                                 )

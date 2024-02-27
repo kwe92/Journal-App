@@ -33,7 +33,7 @@ class PromptCard extends StatelessWidget {
             ),
             child: SvgPicture.asset(
               "assets/images/lotus-flower-bloom.svg",
-              color: Colors.deepPurpleAccent[100],
+              color: AppColors.lotusColor,
             ),
           ),
           Center(
@@ -46,8 +46,8 @@ class PromptCard extends StatelessWidget {
                     promptText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: !smallDevice ? 18 : 16,
-                      fontWeight: !smallDevice ? FontWeight.w800 : FontWeight.w800,
+                      fontSize: !smallDevice ? 18 : 14,
+                      fontWeight: !smallDevice ? FontWeight.w800 : FontWeight.w700,
                     ),
                   ),
                 ),
