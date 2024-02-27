@@ -109,5 +109,6 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
 
   DateTime getMaxDate(List<JournalEntry> entries) => entries.reduce((a, b) => a.createdAt.isAfter(b.createdAt) ? a : b).createdAt;
 
-  DateTime? getMinDates(List<JournalEntry> entries) => entries.reduce((a, b) => b.createdAt.isAfter(a.createdAt) ? a : b).createdAt;
+  DateTime? getMinDates(List<JournalEntry> entries) =>
+      entries.isNotEmpty ? entries.reduce((a, b) => b.createdAt.isAfter(a.createdAt) ? a : b).createdAt : DateTime.now();
 }
