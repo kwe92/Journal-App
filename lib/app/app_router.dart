@@ -15,9 +15,15 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(page: SignUpRoute.page),
         AutoRoute(page: JournalRoute.page),
-        AutoRoute(page: EntryRoute.page),
+        CustomRoute(
+          page: EntryRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+        ),
         AutoRoute(page: MemberInfoRoute.page),
-        AutoRoute(page: AddEntryRoute.page),
+        CustomRoute(
+          page: AddEntryRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+        ),
         CustomRoute(
           page: MoodRoute.page,
           transitionsBuilder: TransitionsBuilders.slideBottom,
