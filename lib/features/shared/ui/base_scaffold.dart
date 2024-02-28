@@ -30,7 +30,6 @@ class BaseScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLightMode = context.watch<AppModeService>().isLightMode;
-    // TODO figure out if there should be a safe area or not
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
 

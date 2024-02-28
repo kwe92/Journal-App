@@ -54,7 +54,7 @@ class JournalView extends StatelessWidget {
               padding: const EdgeInsets.only(right: 16.0),
               child: ProfileIcon(
                 userFirstName: model.currentUser?.firstName ?? "P",
-                onPressed: () => appRouter.push(const ProfileSettingsRoute()),
+                onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
               ),
             ),
           ],
@@ -80,7 +80,6 @@ class JournalView extends StatelessWidget {
                           // JOURNAL ENTRIES
                           child: model.journalEntries.isEmpty
                               ? const Padding(
-                                  // TODO: ensure padding looks good on larger devices | bottom: 86.0 for small devices
                                   padding: EdgeInsets.only(bottom: 86.0),
                                   child: Entry.opacity(
                                     duration: Duration(milliseconds: 600),
@@ -131,12 +130,13 @@ class JournalView extends StatelessWidget {
           // OPEN SIDE MENU
           drawer: SideMenu(logoutCallback: () async {
             await model.cleanResources();
+            await appRouter.pop();
             await appRouter.replace(SignInRoute());
           }),
           //ADD NEW ENTRY BUTTON
           floatingActionButton: model.isFabVisible
               ? AddButton(
-                  onTap: () => appRouter.push(const MoodRoute()),
+                  onTap: () async => await appRouter.push(const MoodRoute()),
                 )
               : null,
         );

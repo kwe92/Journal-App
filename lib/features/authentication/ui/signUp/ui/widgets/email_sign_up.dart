@@ -29,7 +29,6 @@ class EmailSignUp extends ViewModelWidget<SignUpViewModel> {
   @override
   Widget build(BuildContext context, SignUpViewModel viewModel) {
     final smallDevice = deviceSizeService.smallDevice;
-    ;
 
     return Column(
       children: [

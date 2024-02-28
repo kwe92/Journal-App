@@ -45,7 +45,7 @@ class EntryView extends StatelessWidget {
               child: ProfileIcon(
                 userFirstName: model.currentUser?.firstName ?? "P",
                 color: model.moodColor,
-                onPressed: () => appRouter.push(const ProfileSettingsRoute()),
+                onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
               ),
             ),
           ],

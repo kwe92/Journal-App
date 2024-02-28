@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quote_card.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -28,9 +29,7 @@ class LikedQuotesView extends StatelessWidget {
                   title: Container(
                     height: 52,
                     width: 52,
-                    // TODO: check if spacking looks good on bigger devices | was const EdgeInsets.only(bottom: 16),
-
-                    margin: const EdgeInsets.only(bottom: 16, top: 16),
+                    margin: EdgeInsets.only(bottom: !deviceSizeService.smallDevice ? 24 : 16, top: 16),
                     child: SvgPicture.asset(
                       "assets/images/lotus-flower-bloom.svg",
                       // color: Colors.pink[100],

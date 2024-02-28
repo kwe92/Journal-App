@@ -12,6 +12,8 @@ import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:stacked/stacked.dart';
 
+// TODO: Check timer conversion, as later in the day the journal entry gets set to the next day
+
 @RoutePage()
 class AddEntryView extends StatelessWidget {
   final String moodType;
@@ -40,7 +42,7 @@ class AddEntryView extends StatelessWidget {
             child: ProfileIcon(
               userFirstName: model.currentUser?.firstName ?? "P",
               color: model.moodColor,
-              onPressed: () => appRouter.push(const ProfileSettingsRoute()),
+              onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
             ),
           ),
         ],

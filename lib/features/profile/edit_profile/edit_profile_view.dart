@@ -23,6 +23,8 @@ class EditProfileView extends StatelessWidget {
           viewModel.initialize();
         },
         builder: (BuildContext context, EditProfileViewModel model, _) {
+          final bool smallDevice = deviceSizeService.smallDevice;
+
           return BaseScaffold(
             title: 'Edit Profile',
             actions: [
@@ -127,23 +129,19 @@ class EditProfileView extends StatelessWidget {
                                           ? ConditionalClearIcon(controller: model.phoneNumberController)
                                           : null),
                                 ),
-                                gap36,
+                                !smallDevice ? gap48 : gap36,
                                 SelectableButton(
                                   onPressed: () async {
                                     // if text fields are read only unlock them all
                                     if (model.isReadOnly) {
                                       model.setReadOnly(false);
                                     } else {
-                                      debugPrint('identical info${model.isIdenticalInfo}');
-                                      debugPrint('user phone number ${model.userPhoneNumber}');
-                                      debugPrint('updated user phone number ${model.updatedPhoneNumber}');
-
-                                      debugPrint('form key validation ${model.formKey.currentState!.validate()}');
+                                      debugPrint('identical info: ${model.isIdenticalInfo}');
 
                                       if ((model.formKey.currentState?.validate() ?? false) && model.ready) {
                                         if (model.isIdenticalInfo) {
                                           model.clearControllers();
-                                          appRouter.pop();
+                                          await appRouter.pop();
                                           return;
                                         }
                                         // attempt to update user info
@@ -159,7 +157,8 @@ class EditProfileView extends StatelessWidget {
                                   },
                                   label: model.isReadOnly ? "Edit" : "Update",
                                 ),
-                                gap24,
+                                // TODO: see if gap24 is needed on smaller views
+                                // gap24,
                               ],
                             ),
                           ),

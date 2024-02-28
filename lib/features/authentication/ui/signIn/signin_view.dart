@@ -5,6 +5,7 @@ import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/authentication/ui/signIn/signin_view_model.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/email_input.dart';
 import 'package:journal_app/features/authentication/ui/signIn/widgets/password_input.dart';
+import 'package:journal_app/features/authentication/ui/signIn/widgets/remember_me_section.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:stacked/stacked.dart';
@@ -19,13 +20,8 @@ class SignInView extends StatelessWidget {
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    debugPrint("height: ${MediaQuery.of(context).size.height}");
-
     final smallDevice = deviceSizeService.smallDevice;
 
     return ViewModelBuilder<SignInViewModel>.reactive(
@@ -81,7 +77,6 @@ class SignInView extends StatelessWidget {
                         ),
                         !smallDevice ? gap24 : const SizedBox(),
                         Expanded(
-                          // TODO: Should the entire view be scrollable
                           child: SingleChildScrollView(
                             child: Form(
                               key: formKey,
@@ -91,44 +86,52 @@ class SignInView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     EmailInput(
-                                      emailController: emailController,
+                                      emailController: model.emailController,
                                       focus: emailFocus,
                                       nextFocus: passwordFocus,
                                     ),
                                     !smallDevice ? gap16 : gap4,
                                     PasswordInput(
-                                      passwordController: passwordController,
+                                      passwordController: model.passwordController,
                                       focus: passwordFocus,
                                     ),
                                     !smallDevice ? gap12 : gap4,
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Forgot password?",
-                                        style: TextStyle(fontSize: 16),
-                                      ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const RememberMeSection(),
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: const Text(
+                                            "Forgot password?",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     !smallDevice ? gap16 : gap4,
                                     SelectableButton(
-                                        onPressed: () async {
-                                          // focus email TextFormField if it is empty
-                                          model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
+                                      onPressed: () async {
+                                        // focus email TextFormField if it is empty
+                                        model.email == null || model.email!.isEmpty ? emailFocus.requestFocus() : null;
 
-                                          if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                                            model.unfocusAll(context);
+                                        if ((formKey.currentState?.validate() ?? false) && model.ready) {
+                                          model.unfocusAll(context);
 
-                                            // check successful login
-                                            final bool statusOk = await model.signInWithEmail();
+                                          // check successful login
+                                          final bool statusOk = await model.signInWithEmail();
 
-                                            // if successful, login
-                                            if (statusOk) {
-                                              emailController.clear();
-                                              passwordController.clear();
-                                              await appRouter.push(NavigationRoute());
-                                            }
+                                          // if successful, login
+                                          if (statusOk) {
+                                            await model.handleEmailAndPasswordStorage();
+                                            model.emailController.clear();
+                                            model.passwordController.clear();
+                                            await appRouter.push(NavigationRoute());
                                           }
-                                        },
-                                        label: "Login"),
+                                        }
+                                      },
+                                      label: "Login",
+                                    ),
                                     !smallDevice ? gap16 : gap4,
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +141,7 @@ class SignInView extends StatelessWidget {
                                           style: TextStyle(fontSize: 14),
                                         ),
                                         TextButton(
-                                          onPressed: () => appRouter.push(MemberInfoRoute()),
+                                          onPressed: () async => await appRouter.push(MemberInfoRoute()),
                                           child: const Text(
                                             "Sign-up",
                                             style: TextStyle(fontSize: 14),
@@ -151,7 +154,7 @@ class SignInView extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -161,6 +164,11 @@ class SignInView extends StatelessWidget {
     );
   }
 }
+
+
+// Transform Widget | Geometrical Transfomations
+
+//   - 2-D (R2 Space) Translations (Positional Slides on X or Y axis) and Dilations (Scaling)
 
 
 // ImageProvider

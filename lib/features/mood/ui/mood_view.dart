@@ -97,13 +97,13 @@ class MoodView extends StatelessWidget {
                           duration: const Duration(milliseconds: 600),
                           child: SelectableButton(
                               labelPadding: const EdgeInsets.symmetric(vertical: 16),
-                              onPressed: () {
-                                appRouter.push(AddEntryRoute(moodType: model.moodType));
+                              onPressed: () async {
+                                await appRouter.push(AddEntryRoute(moodType: model.moodType));
                               },
                               label: "Continue"),
                         ),
-                        // TODO: check why we have a GAP 120 on larger devices
-                        !deviceSizeService.smallDevice ? const Gap(120) : const Gap(20),
+                        // TODO: check continue button height on various devices
+                        !deviceSizeService.smallDevice ? const Gap(110) : const Gap(20),
                       ],
                     ),
                   ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -69,6 +70,7 @@ Future<void> registerSharedServices() async {
   getAndRegisterJournalEntryServiceMock();
   getAndRegisterTokenServiceMock();
   getAndRegisterService<DeviceSizeService>(DeviceSizeService());
+  getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
   // getAndRegisterMoodServiceMock();
 }
 
