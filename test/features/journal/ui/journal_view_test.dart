@@ -59,7 +59,7 @@ void main() {
       expect(addButtonFinder, findsOneWidget);
     });
 
-    testWidgets('when view loaded  and add button pressed, then navigate to Mood View', (tester) async {
+    testWidgets('when view loaded and add button pressed, then navigate to Mood View', (tester) async {
       // Arrange - Setup
 
       getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());

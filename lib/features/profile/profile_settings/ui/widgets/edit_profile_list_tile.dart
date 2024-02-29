@@ -20,7 +20,7 @@ class EditProfileListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final appModeModel = context.watch<AppModeService>();
     return GestureDetector(
-      onTap: () => appRouter.push(const EditProfileRoute()),
+      onTap: () async => await appRouter.push(const EditProfileRoute()),
       child: Container(
         height: 90,
         padding: const EdgeInsets.symmetric(horizontal: 12),

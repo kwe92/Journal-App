@@ -60,7 +60,6 @@ class MyApp extends StatelessWidget {
       routerConfig: appRouter.config(),
     );
   }
-  // TODO: remove all device size calls and retrieve the device size once when the app is opened
 }
 
 bool _isSmallDevice(BuildContext context) => MediaQuery.of(context).size.height < 700 ? true : false;

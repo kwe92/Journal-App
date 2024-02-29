@@ -45,7 +45,7 @@ class JournalEntryCard extends StatelessWidget {
             height: 12,
           ),
           JournalContent(
-            onPressed: () => appRouter.push(
+            onPressed: () async => await appRouter.push(
               EntryRoute(entry: journalEntry),
             ),
             moodBackgroundColor: mood.moodColorBackground,

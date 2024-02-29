@@ -74,7 +74,6 @@ final List<JournalEntry> testEntries = [
 ];
 
 final List<Quote> testLikedQuotes = [
-  // TODO: write quotes with author
   LikedQuoteImp(
     id: 1101,
     userId: 1101,
@@ -99,7 +98,6 @@ final List<Quote> testLikedQuotes = [
 ];
 
 final List<Quote> testQuotes = [
-  // TODO: write quotes with author
   LikedQuoteImp(
     id: 1104,
     userId: 1104,

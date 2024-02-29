@@ -4,6 +4,8 @@ import 'package:journal_app/features/meanings/prompts/ui/prompts_view_model.dart
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
 
+// TODO: parse text so that the text is cleaner to read
+
 class PromptsView extends StatelessWidget {
   final String promptText;
   const PromptsView({

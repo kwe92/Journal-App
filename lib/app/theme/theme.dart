@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
 
-// TODO: Refactor dark mode to work better with color scheme functionality
-
 // main application theme
 class AppTheme {
   const AppTheme._();

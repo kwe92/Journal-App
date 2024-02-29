@@ -12,6 +12,8 @@ import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+// TODO: Fix spacing and ensure spacing looks good on small and lar devices
+
 class DeleteProfileDialogView extends StatelessWidget {
   final PopupMenuParameters parameters;
   const DeleteProfileDialogView({required this.parameters, super.key});
@@ -121,7 +123,7 @@ class DeleteProfileDialogView extends StatelessWidget {
 
                                           await model.cleanResources();
 
-                                          appRouter.pushAndPopUntil(const FarewellRoute(), predicate: (route) => false);
+                                          await appRouter.pushAndPopUntil(const FarewellRoute(), predicate: (route) => false);
                                         }
                                       }
                                     },

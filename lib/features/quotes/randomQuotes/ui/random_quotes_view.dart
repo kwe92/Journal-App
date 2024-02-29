@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 
 const style = TextStyle(
   color: Colors.white,
-  // TODO: check if font size 24 looks good on larger device | was 26 on large devices
   fontSize: 24,
 );
 

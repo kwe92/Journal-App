@@ -18,7 +18,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
   Widget build(BuildContext context, LikedQuotesViewModel viewModel) {
     final smallDevice = deviceSizeService.smallDevice;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       margin: EdgeInsets.only(
         left: 24,
         top: !(index == 0) ? 24 : 0,
@@ -47,7 +47,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ShareButton(
-                size: 26.0,
+                size: !smallDevice ? 36.0 : 26.0,
                 contentToShare: shareQuote(viewModel.likedQuotes[index]),
               ),
               Expanded(
@@ -63,7 +63,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
               ),
               FavoriteButton(
                 onPressed: () => viewModel.removeLikedQuote(viewModel.likedQuotes[index]),
-                size: 26,
+                size: !smallDevice ? 36.0 : 26.0,
                 isLiked: viewModel.likedQuotes[index].isLiked,
               ),
             ],

@@ -112,11 +112,15 @@ class CalendarView extends StatelessWidget {
                         rangeEndBuilder: (context, day, focusedDay) => CalendarDayContainer(day: day.day, isRange: true),
                         headerTitleBuilder: (context, day) => Padding(
                           padding: EdgeInsets.only(right: !smallDevice ? 0.0 : 8.0),
-                          child: FittedBox(
-                            child: Text(
-                              timeService.customDateString('MMM y', day),
-                            ),
-                          ),
+                          child: !smallDevice
+                              ? Text(
+                                  timeService.customDateString('MMM y', day),
+                                )
+                              : FittedBox(
+                                  child: Text(
+                                    timeService.customDateString('MMM y', day),
+                                  ),
+                                ),
                         ),
                         // prioritizedBuilder: (context, day, focusedDay) => Text(
                         //   '${day.day}',

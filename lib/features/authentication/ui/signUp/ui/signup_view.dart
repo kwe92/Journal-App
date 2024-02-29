@@ -40,7 +40,6 @@ class SignUpView extends StatelessWidget {
       },
       builder: (context, SignUpViewModel model, _) {
         final smallDevice = deviceSizeService.smallDevice;
-        ;
 
         return SafeArea(
           child: Scaffold(
