@@ -54,7 +54,7 @@ class PromptsView extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(24),
                               child: Text(
-                                model.promptTextResponse ?? "",
+                                parsePromptText(model.promptTextResponse) ?? "",
                                 style: const TextStyle(fontSize: 18),
                               ),
                             ),
@@ -70,8 +70,35 @@ class PromptsView extends StatelessWidget {
   }
 }
 
+String? parsePromptText(String? text) {
+  return text
+          ?.replaceAll(":**", ":\n")
+          .replaceAll("\n\n\n", "\n")
+          .replaceAll(":\n", ":")
+          .replaceAll(":\n", ":")
+          .replaceAll(":* **", ":\n* **")
+          // .replaceAll(":**", ":")
+          .replaceAll(":**", ": ")
+          .replaceAll(": ", ":")
+          .replaceAll(":", ": ")
+          .replaceAll(":*", ":\n\n-")
+          .replaceAll(": ", ":\n\n")
+          .replaceAll("* **", "\n")
+          .replaceAll("**", "")
+          .replaceAll("*", "\n-")
+          .replaceAll("\n\n\n", "\n")
+          .replaceAll(":\n-", ":\n\n`-")
 
-
+      // TODO: replace we | our | yourselves
+      // .replaceAllMapped("and", (match) => "")
+      // .replaceAll("we", "you")
+      // .replaceAll("We", "You")
+      // .replaceAll("our", "your")
+      // .replaceAll("Our", "Your")
+      // .replaceAll("yourselves", "yourself")
+      // .replaceAll("Yourselves", "Yourself")
+      ;
+}
 
 // Center(
 //                   child: Column(
