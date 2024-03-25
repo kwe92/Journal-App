@@ -35,6 +35,8 @@ class TimeService {
       (index) => DateTime.utc(first.year, first.month, first.day + index),
     );
   }
+
+  String removeTimeStamp(DateTime date) => DateFormat("yyyy-MM-dd").format(date);
 }
 
 

@@ -28,7 +28,7 @@ abstract mixin class MoodMixin {
     return getMoodCountByMoodType(MoodType.terrible.text);
   }
 
-  void setFilteredJournalEntries(String m, String q);
+  void setFilteredJournalEntries(String m, String q) {}
 
   int getMoodCountByMoodType(String moodType);
 

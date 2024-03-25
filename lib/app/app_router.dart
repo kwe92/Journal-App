@@ -38,5 +38,6 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(page: RandomQuotesRoute.page),
         AutoRoute(page: LikedQuotesRoute.page),
+        AutoRoute(page: AnalyticsRoute.page),
       ];
 }

@@ -139,7 +139,7 @@ class CalendarView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const HideableMoodCount<CalendarViewModel>(),
+                  HideableMoodCount<CalendarViewModel>(),
                   SliverToBoxAdapter(child: gap6),
                 ],
                 body: ListView.builder(

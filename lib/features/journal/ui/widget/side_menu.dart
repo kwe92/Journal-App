@@ -31,6 +31,11 @@ class SideMenu extends Drawer {
                   ),
                   const Spacer(),
                   SplashableListTileButton(
+                    onTap: () async => await appRouter.push(const AnalyticsRoute()),
+                    leadingIcon: const Icon(Icons.bar_chart_sharp),
+                    content: "Analytics",
+                  ),
+                  SplashableListTileButton(
                     onTap: () async => await appRouter.push(CalendarRoute(focusedDay: DateTime.now())),
                     leadingIcon: const Icon(Icons.calendar_month_outlined),
                     content: "Calendar",

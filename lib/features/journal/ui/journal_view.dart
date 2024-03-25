@@ -69,7 +69,7 @@ class JournalView extends StatelessWidget {
                         floatHeaderSlivers: true,
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
-                          const HideableMoodCount<JournalViewModel>(),
+                          HideableMoodCount<JournalViewModel>(),
                           HideableSearchBar(
                             searchNode: model.searchNode,
                             searchController: model.searchController,

@@ -6,7 +6,9 @@ import 'package:journal_app/features/shared/ui/mood_type_counter.dart';
 import 'package:stacked/stacked.dart';
 
 class HideableMoodCount<T extends MoodMixin> extends ViewModelWidget<T> {
-  const HideableMoodCount({super.key});
+  final bool showFilter;
+
+  const HideableMoodCount({this.showFilter = true, super.key});
 
   @override
   Widget build(BuildContext context, T viewModel) {
@@ -35,7 +37,7 @@ class HideableMoodCount<T extends MoodMixin> extends ViewModelWidget<T> {
                 ],
               ),
             ),
-            FilterButton<T>()
+            showFilter ? FilterButton<T>() : const SizedBox()
           ],
         ),
       ),
