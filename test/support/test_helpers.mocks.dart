@@ -1538,6 +1538,28 @@ class MockTimeService extends _i1.Mock implements _i20.TimeService {
         returnValue: <DateTime>[],
         returnValueForMissingStub: <DateTime>[],
       ) as List<DateTime>);
+
+  @override
+  String removeTimeStamp(DateTime? date) => (super.noSuchMethod(
+        Invocation.method(
+          #removeTimeStamp,
+          [date],
+        ),
+        returnValue: _i8.dummyValue<String>(
+          this,
+          Invocation.method(
+            #removeTimeStamp,
+            [date],
+          ),
+        ),
+        returnValueForMissingStub: _i8.dummyValue<String>(
+          this,
+          Invocation.method(
+            #removeTimeStamp,
+            [date],
+          ),
+        ),
+      ) as String);
 }
 
 /// A class which mocks [ImageService].

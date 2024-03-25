@@ -5,6 +5,8 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
 import 'package:stacked/stacked.dart';
 
+// TODO: change to background in dark mode
+
 class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
   const RequirementsPopup({super.key});
 
@@ -14,7 +16,7 @@ class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
         ? const SizedBox()
         : Container(
             width: MediaQuery.of(context).size.width / 1.2125,
-            height: MediaQuery.of(context).size.height / 2.9375,
+            height: MediaQuery.of(context).size.height / (!deviceSizeService.smallDevice ? 4.75 : 2.9375),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: const BoxDecoration(
               color: Colors.white,
