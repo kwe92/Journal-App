@@ -27,7 +27,15 @@ void main() async {
   // ensure token is removed from user device on app startup
   await tokenService.removeAccessTokenFromStorage();
 
+  await notificationService.initializeNotificationChannels();
+
+  // TODO: Only check the notification permissions if the user has not declined already
+  await notificationService.checkNotificationPermissions();
+
+  notificationService.setNotificationListeners();
+
   appRouter.push(SignInRoute());
+
   // appRouter.push(FarewellRoute());
 
   runApp(

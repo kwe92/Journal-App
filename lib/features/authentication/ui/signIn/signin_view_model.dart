@@ -51,7 +51,7 @@ class SignInViewModel extends ReactiveViewModel {
 
     mindfulImage = imageService.getRandomMindfulImage();
 
-    final bool isRememberMeSet = await storage.containsKey(key: _readMeKey);
+    final bool isRememberMeSet = await storageService.containsKey(key: _readMeKey);
 
     debugPrint("isRememberMeSet: $isRememberMeSet");
 
@@ -106,7 +106,7 @@ class SignInViewModel extends ReactiveViewModel {
   }
 
   Future<void> getMemberInfoFromStorage() async {
-    final remeberMeOption = await storage.read(key: _readMeKey);
+    final remeberMeOption = await storageService.read(key: _readMeKey);
 
     debugPrint("remeberMeOption: $remeberMeOption");
 
@@ -129,15 +129,15 @@ class SignInViewModel extends ReactiveViewModel {
   }
 
   Future<void> removeEmailAndPasswordFromStorage() async {
-    await storage.delete(key: _emailKey);
-    await storage.delete(key: _passwordKey);
+    await storageService.delete(key: _emailKey);
+    await storageService.delete(key: _passwordKey);
 
     debugPrint("removed email and password from storage.");
   }
 
   Future<void> readEmailAndPasswordFromStorage() async {
-    final localEmail = await storage.read(key: _emailKey);
-    final localPassword = await storage.read(key: _passwordKey);
+    final localEmail = await storageService.read(key: _emailKey);
+    final localPassword = await storageService.read(key: _passwordKey);
 
     if (localEmail != null && localPassword != null) {
       emailController.text = localEmail;
@@ -147,7 +147,7 @@ class SignInViewModel extends ReactiveViewModel {
     }
   }
 
-  Future<void> saveToStorage(String key, String value) async => await storage.write(key: key, value: value);
+  Future<void> saveToStorage(String key, String value) async => await storageService.write(key: key, value: value);
 
   /// Attempt to sign with provided email and password, returning true or false value for success or failure respectively.
   Future<bool> signInWithEmail() async {

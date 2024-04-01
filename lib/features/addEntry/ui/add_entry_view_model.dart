@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
@@ -67,6 +68,7 @@ class AddEntryViewModel extends ReactiveViewModel {
     if (statusOk) {
       clearContent();
       toastService.showSnackBar(message: "New journal entry added.");
+      await entryStreakCounter();
 
       return statusOk;
     }
@@ -77,4 +79,61 @@ class AddEntryViewModel extends ReactiveViewModel {
 
     return statusOk;
   }
+
+  // TODO: refactor as you have duplicate code and could be more efficient
+  Future<void> entryStreakCounter() async {
+    if (journalEntryService.journalEntries.isEmpty) {
+      await storageService.write(key: "streakCount", value: "1");
+
+      await notificationService.instance.createNotification(
+        content: NotificationContent(
+          id: 1,
+          channelKey: notificationService.channelKey,
+          title: "First entry of the day!",
+          body: "lets continue our daily practice and start a streak!",
+        ),
+      );
+      return;
+    }
+
+    final lastEnrtyDate = journalEntryService.maxDate;
+
+    debugPrint("journalEntryService.maxDate is today: ${userHasEnteredEntryToday(lastEnrtyDate)}");
+
+    if (!userHasEnteredEntryToday(lastEnrtyDate)) {
+      if (isConsecutiveEntry(lastEnrtyDate)) {
+        int streakCount = int.parse(await storageService.read(key: "streakCount") ?? "0");
+
+        streakCount++;
+
+        await storageService.write(key: "streakCount", value: streakCount.toString());
+
+        await notificationService.instance.createNotification(
+          content: NotificationContent(
+            id: 1,
+            channelKey: notificationService.channelKey,
+            title: "Consistency is key!",
+            body: "Congratulations you are on a $streakCount day streak!",
+          ),
+        );
+      } else {
+        await storageService.write(key: "streakCount", value: "1");
+
+        await notificationService.instance.createNotification(
+          content: NotificationContent(
+            id: 1,
+            channelKey: notificationService.channelKey,
+            title: "First entry of the day!",
+            body: "lets continue our daily practice and start a streak!",
+          ),
+        );
+      }
+    }
+  }
+
+  bool userHasEnteredEntryToday(DateTime date) {
+    return timeService.removeTimeStamp(date) == timeService.removeTimeStamp(DateTime.now());
+  }
+
+  bool isConsecutiveEntry(DateTime date) => (date.difference(DateTime.now()).inHours.abs() < 24);
 }
