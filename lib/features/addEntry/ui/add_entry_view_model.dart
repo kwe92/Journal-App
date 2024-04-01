@@ -80,54 +80,58 @@ class AddEntryViewModel extends ReactiveViewModel {
     return statusOk;
   }
 
-  // TODO: refactor as you have duplicate code and could be more efficient
   Future<void> entryStreakCounter() async {
     if (journalEntryService.journalEntries.isEmpty) {
-      await storageService.write(key: "streakCount", value: "1");
-
-      await notificationService.instance.createNotification(
-        content: NotificationContent(
-          id: 1,
-          channelKey: notificationService.channelKey,
-          title: "First entry of the day!",
-          body: "lets continue our daily practice and start a streak!",
-        ),
-      );
+      await setStreakCountToOne();
       return;
     }
 
     final lastEnrtyDate = journalEntryService.maxDate;
 
-    debugPrint("journalEntryService.maxDate is today: ${userHasEnteredEntryToday(lastEnrtyDate)}");
-
     if (!userHasEnteredEntryToday(lastEnrtyDate)) {
       if (isConsecutiveEntry(lastEnrtyDate)) {
-        int streakCount = int.parse(await storageService.read(key: "streakCount") ?? "0");
-
-        streakCount++;
-
-        await storageService.write(key: "streakCount", value: streakCount.toString());
-
-        await notificationService.instance.createNotification(
-          content: NotificationContent(
-            id: 1,
-            channelKey: notificationService.channelKey,
-            title: "Consistency is key!",
-            body: "Congratulations you are on a $streakCount day streak!",
-          ),
-        );
+        await notifyUserOfCurrentStreakCount();
       } else {
-        await storageService.write(key: "streakCount", value: "1");
-
-        await notificationService.instance.createNotification(
-          content: NotificationContent(
-            id: 1,
-            channelKey: notificationService.channelKey,
-            title: "First entry of the day!",
-            body: "lets continue our daily practice and start a streak!",
-          ),
-        );
+        await setStreakCountToOne();
       }
+    }
+  }
+
+  Future<void> setStreakCountToOne() async {
+    await storageService.write(key: "streakCount", value: "1");
+
+    try {
+      await notificationService.instance.createNotification(
+        content: NotificationContent(
+          id: 1, // TODO: figure out a way to generate unique id
+          channelKey: notificationService.channelKey,
+          title: "First entry of the day!",
+          body: "lets continue our daily practice and start a streak!",
+        ),
+      );
+    } catch (error) {
+      debugPrint("ERROR: notifyUserOfCurrentStreakCount: ${error.toString()}");
+    }
+  }
+
+  Future<void> notifyUserOfCurrentStreakCount() async {
+    int streakCount = int.parse(await storageService.read(key: "streakCount") ?? "0");
+
+    streakCount++;
+
+    await storageService.write(key: "streakCount", value: streakCount.toString());
+
+    try {
+      await notificationService.instance.createNotification(
+        content: NotificationContent(
+          id: 1,
+          channelKey: notificationService.channelKey,
+          title: "Consistency is key!",
+          body: "Congratulations you are on a $streakCount day streak!",
+        ),
+      );
+    } catch (error) {
+      debugPrint("ERROR: notifyUserOfCurrentStreakCount: ${error.toString()}");
     }
   }
 

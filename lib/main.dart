@@ -29,7 +29,6 @@ void main() async {
 
   await notificationService.initializeNotificationChannels();
 
-  // TODO: Only check the notification permissions if the user has not declined already
   await notificationService.checkNotificationPermissions();
 
   notificationService.setNotificationListeners();

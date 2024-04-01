@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/features/shared/services/services.dart';
 
 // TODO: edit comments
 
@@ -35,10 +36,23 @@ class NotificationService extends ChangeNotifier {
 
   // check if notifications are allowed and if not then request to allow notifications
   Future<void> checkNotificationPermissions() async {
-    bool isAllowedToSendNotification = await instance.isNotificationAllowed();
+    final String? hasSetNotificationPermissions = await storageService.read(key: "notification_permissions");
 
-    if (!isAllowedToSendNotification) {
-      instance.requestPermissionToSendNotifications();
+    print("hasSetNotificationPermissions: $hasSetNotificationPermissions");
+
+    if (hasSetNotificationPermissions == null) {
+      bool isNotificationPermissionGranted;
+
+      bool isAllowedToSendNotification = await instance.isNotificationAllowed();
+
+      if (!isAllowedToSendNotification) {
+        isNotificationPermissionGranted = await instance.requestPermissionToSendNotifications();
+
+        await storageService.write(
+          key: "notification_permissions",
+          value: isNotificationPermissionGranted.toString(),
+        );
+      }
     }
   }
 
