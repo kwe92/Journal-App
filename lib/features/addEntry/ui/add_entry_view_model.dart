@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
@@ -67,6 +68,7 @@ class AddEntryViewModel extends ReactiveViewModel {
     if (statusOk) {
       clearContent();
       toastService.showSnackBar(message: "New journal entry added.");
+      await entryStreakCounter();
 
       return statusOk;
     }
@@ -77,4 +79,65 @@ class AddEntryViewModel extends ReactiveViewModel {
 
     return statusOk;
   }
+
+  Future<void> entryStreakCounter() async {
+    if (journalEntryService.journalEntries.isEmpty) {
+      await setStreakCountToOne();
+      return;
+    }
+
+    final lastEnrtyDate = journalEntryService.maxDate;
+
+    if (!userHasEnteredEntryToday(lastEnrtyDate)) {
+      if (isConsecutiveEntry(lastEnrtyDate)) {
+        await notifyUserOfCurrentStreakCount();
+      } else {
+        await setStreakCountToOne();
+      }
+    }
+  }
+
+  Future<void> setStreakCountToOne() async {
+    await storageService.write(key: "streakCount", value: "1");
+
+    try {
+      await notificationService.instance.createNotification(
+        content: NotificationContent(
+          id: 1, // TODO: figure out a way to generate unique id
+          channelKey: notificationService.channelKey,
+          title: "First entry of the day!",
+          body: "lets continue our daily practice and start a streak!",
+        ),
+      );
+    } catch (error) {
+      debugPrint("ERROR: notifyUserOfCurrentStreakCount: ${error.toString()}");
+    }
+  }
+
+  Future<void> notifyUserOfCurrentStreakCount() async {
+    int streakCount = int.parse(await storageService.read(key: "streakCount") ?? "0");
+
+    streakCount++;
+
+    await storageService.write(key: "streakCount", value: streakCount.toString());
+
+    try {
+      await notificationService.instance.createNotification(
+        content: NotificationContent(
+          id: 1,
+          channelKey: notificationService.channelKey,
+          title: "Consistency is key!",
+          body: "Congratulations you are on a $streakCount day streak!",
+        ),
+      );
+    } catch (error) {
+      debugPrint("ERROR: notifyUserOfCurrentStreakCount: ${error.toString()}");
+    }
+  }
+
+  bool userHasEnteredEntryToday(DateTime date) {
+    return timeService.removeTimeStamp(date) == timeService.removeTimeStamp(DateTime.now());
+  }
+
+  bool isConsecutiveEntry(DateTime date) => (date.difference(DateTime.now()).inHours.abs() < 24);
 }

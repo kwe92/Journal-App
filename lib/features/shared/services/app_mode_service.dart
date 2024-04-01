@@ -12,7 +12,7 @@ class AppModeService extends ChangeNotifier {
   }
 
   Future<void> initialize() async {
-    final bool isLightModeSet = await storage.containsKey(key: PrefKeys.appMode);
+    final bool isLightModeSet = await storageService.containsKey(key: PrefKeys.appMode);
 
     !isLightModeSet ? await _setInitialLightModeOption() : await _getLightModeOptionFromStorage();
   }
@@ -24,7 +24,7 @@ class AppModeService extends ChangeNotifier {
   }
 
   Future<void> _getLightModeOptionFromStorage() async {
-    final isLightMode = await storage.read(key: PrefKeys.appMode);
+    final isLightMode = await storageService.read(key: PrefKeys.appMode);
 
     setLightMode((isLightMode!.toLowerCase() == "true"));
   }
@@ -44,6 +44,6 @@ class AppModeService extends ChangeNotifier {
   }
 
   Future<void> _writeLightModeOptionToStorage(String value) async {
-    await storage.write(key: PrefKeys.appMode, value: value);
+    await storageService.write(key: PrefKeys.appMode, value: value);
   }
 }

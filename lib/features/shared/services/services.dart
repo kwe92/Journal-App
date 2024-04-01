@@ -13,6 +13,7 @@ import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/device_size_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
+import 'package:journal_app/features/shared/services/notification_service.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
 import 'package:journal_app/features/shared/services/toast_service.dart';
@@ -68,7 +69,7 @@ SharedPreferences get prefs {
   return locator.get<SharedPreferences>();
 }
 
-FlutterSecureStorage get storage {
+FlutterSecureStorage get storageService {
   return locator.get<FlutterSecureStorage>();
 }
 
@@ -90,4 +91,8 @@ GeminiModelService get geminiModelService {
 
 DeviceSizeService get deviceSizeService {
   return locator.get<DeviceSizeService>();
+}
+
+NotificationService get notificationService {
+  return locator.get<NotificationService>();
 }

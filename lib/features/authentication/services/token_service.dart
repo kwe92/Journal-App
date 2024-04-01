@@ -18,18 +18,18 @@ class TokenService {
 
   /// saves access token to persistent storage with encrypted shared preferences.
   Future<void> saveAccessTokenToStorage(String token) async {
-    await storage.write(key: PrefKeys.accessToken, value: token);
+    await storageService.write(key: PrefKeys.accessToken, value: token);
     debugPrint("\njwt access token saved successfully!");
   }
 
   /// retrieve access token from storage.
   Future<String?> getAccessTokenFromStorage() async {
     try {
-      String? token = await storage.read(key: PrefKeys.accessToken);
+      String? token = await storageService.read(key: PrefKeys.accessToken);
       debugPrint("\n retrieved saved jwt access token: $token");
       return token;
     } on PlatformException {
-      await storage.deleteAll();
+      await storageService.deleteAll();
     }
 
     return null;
@@ -37,7 +37,7 @@ class TokenService {
 
   /// remove current access token from storage.
   Future<void> removeAccessTokenFromStorage() async {
-    await storage.delete(key: PrefKeys.accessToken);
+    await storageService.delete(key: PrefKeys.accessToken);
     debugPrint("\njwt access token deleted successfully!");
   }
 }
