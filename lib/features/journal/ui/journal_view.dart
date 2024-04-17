@@ -3,12 +3,12 @@ import 'package:entry/entry.dart';
 import 'package:flutter/rendering.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/features/journal/ui/journal_view_model.dart';
+import 'package:journal_app/features/journal/ui/journal_view_model_v2.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
-import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
@@ -25,16 +25,17 @@ class JournalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<JournalViewModel>.reactive(
-      viewModelBuilder: () => JournalViewModel(),
-      onViewModelReady: (JournalViewModel model) async {
+    return ViewModelBuilder<JournalViewModelV2>.reactive(
+      viewModelBuilder: () => JournalViewModelV2(),
+      onViewModelReady: (JournalViewModelV2 model) async {
         await model.initialize();
 
         model.searchNode.addListener(() {
           model.searchNode.hasFocus ? model.setFabVisibility(false) : model.setFabVisibility(true);
         });
       },
-      builder: (context, JournalViewModel model, child) {
+      fireOnViewModelReadyOnce: true,
+      builder: (context, JournalViewModelV2 model, _) {
         return BaseScaffold(
           // means Thoughts in french
           title: "Pensées",
@@ -69,7 +70,7 @@ class JournalView extends StatelessWidget {
                         floatHeaderSlivers: true,
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
-                          HideableMoodCount<JournalViewModel>(),
+                          const HideableMoodCount<JournalViewModelV2>(),
                           HideableSearchBar(
                             searchNode: model.searchNode,
                             searchController: model.searchController,
@@ -106,7 +107,7 @@ class JournalView extends StatelessWidget {
                                   child: ListView.builder(
                                       itemCount: model.journalEntries.length,
                                       itemBuilder: (BuildContext context, int i) {
-                                        final JournalEntry entry = model.journalEntries[i];
+                                        final JournalEntryV2 entry = model.journalEntries[i];
 
                                         return Entry.opacity(
                                           duration: const Duration(milliseconds: 600),
@@ -152,11 +153,11 @@ class JournalView extends StatelessWidget {
     return notification.direction == ScrollDirection.reverse;
   }
 
-  void showFab(JournalViewModel model) {
+  void showFab(JournalViewModelV2 model) {
     if (!model.isFabVisible) model.setFabVisibility(true);
   }
 
-  void doNotShowFab(JournalViewModel model) {
+  void doNotShowFab(JournalViewModelV2 model) {
     if (model.isFabVisible) model.setFabVisibility(false);
   }
 }
