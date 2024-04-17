@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
-import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
-import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class EntryviewModel extends ReactiveViewModel {
@@ -13,7 +10,7 @@ class EntryviewModel extends ReactiveViewModel {
 
   final FocusNode entryFocus = FocusNode();
 
-  final JournalEntry entry;
+  final JournalEntryV2 entry;
 
   String? _content;
 
@@ -72,55 +69,60 @@ class EntryviewModel extends ReactiveViewModel {
 
   /// update journal entry via API call to backend
   Future<bool> updateEntry() async {
-    final UpdatedEntry updatedEntry = UpdatedEntry(
-      entryId: entry.entryId,
-      content: content,
+    final JournalEntryV2 updatedEntry = JournalEntryV2(
+      entryID: entry.entryID,
+      content: content ?? '',
+      moodType: entry.moodType,
+      createdAt: entry.createdAt,
+      updatedAt: DateTime.now(),
     );
-    final Response response = await runBusyFuture(journalEntryService.updateEntry(updatedEntry));
 
-    // check status code and display a snack bar on success
+    await journalEntryServiceV2.updateEntry(updatedEntry);
 
-    final bool statusOk = ResponseHandler.checkStatusCode(response);
-
-    if (statusOk) {
-      clearContent();
-
-      toastService.showSnackBar(
-        message: "Updated journal entry successfully.",
-      );
-
-      return statusOk;
-    }
+    clearContent();
 
     toastService.showSnackBar(
-      message: ResponseHandler.getErrorMsg(response.body),
-      textColor: Colors.red,
+      message: "Updated journal entry successfully.",
     );
+    return true;
 
-    return statusOk;
+    // final UpdatedEntry updatedEntry = UpdatedEntry(
+    //   entryId: entry.entryID,
+    //   content: content,
+    // );
+    //   final Response response = await runBusyFuture(journalEntryService.updateEntry(updatedEntry));
+
+    //   // check status code and display a snack bar on success
+
+    //   final bool statusOk = ResponseHandler.checkStatusCode(response);
+
+    //   if (statusOk) {
+    // clearContent();
+
+    // toastService.showSnackBar(
+    //   message: "Updated journal entry successfully.",
+    // );
+
+    //     return statusOk;
+    //   }
+
+    //   toastService.showSnackBar(
+    //     message: ResponseHandler.getErrorMsg(response.body),
+    //     textColor: Colors.red,
+    //   );
+
+    //   return statusOk;
+    // }
   }
 
   /// delete journal entry via API call to backend
-  Future<bool> deleteEntry(int entryId) async {
-    final Response response = await runBusyFuture(journalEntryService.deleteEntry(entryId));
+  Future<bool> deleteEntry(JournalEntryV2 entry) async {
+    await runBusyFuture(journalEntryServiceV2.deleteEntry(entry));
 
-    // check status code and display a snack bar on success
+    clearContent();
+    toastService.showSnackBar(message: "Deleted journal entry successfully.");
 
-    final bool statusOk = ResponseHandler.checkStatusCode(response);
-
-    if (statusOk) {
-      clearContent();
-      toastService.showSnackBar(message: "Deleted journal entry successfully.");
-
-      return statusOk;
-    }
-
-    toastService.showSnackBar(
-      message: ResponseHandler.getErrorMsg(response.body),
-      textColor: Colors.red,
-    );
-
-    return statusOk;
+    return true;
   }
 
   /// popup menu warning the user of permanent entry deletion
@@ -140,6 +142,7 @@ class EntryviewModel extends ReactiveViewModel {
     );
   }
 }
+
 
 // DateTime.toLocal()
 

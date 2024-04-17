@@ -1,3 +1,3 @@
-import 'package:journal_app/features/quotes/shared/models/quote.dart';
+import 'package:journal_app/features/quotes/shared/models/liked_quote.dart';
 
-String shareQuote(Quote quote) => "${quote.quote}\n\n- ${quote.author}";
+String shareQuote(LikedQuote quote) => "${quote.quote}\n\n- ${quote.author}";

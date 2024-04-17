@@ -31,9 +31,11 @@ void main() async {
 
   await notificationService.checkNotificationPermissions();
 
+  await databaseService.initialize();
+
   notificationService.setNotificationListeners();
 
-  appRouter.push(SignInRoute());
+  appRouter.push(NavigationRoute());
 
   // appRouter.push(FarewellRoute());
 

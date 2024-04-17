@@ -3,7 +3,7 @@ import "package:journal_app/app/app_router.gr.dart";
 import "package:journal_app/app/resources/reusables.dart";
 import "package:journal_app/app/theme/theme.dart";
 import "package:journal_app/features/entry/ui/entry_view_model.dart";
-import 'package:journal_app/features/shared/models/journal_entry.dart';
+import "package:journal_app/features/shared/models/journal_entry_v2.dart";
 import "package:journal_app/features/shared/services/services.dart";
 import "package:journal_app/features/shared/services/string_service.dart";
 import "package:journal_app/features/shared/ui/base_scaffold.dart";
@@ -16,7 +16,7 @@ import "package:stacked/stacked.dart";
 
 @RoutePage()
 class EntryView extends StatelessWidget {
-  final JournalEntry entry;
+  final JournalEntryV2 entry;
 
   const EntryView({required this.entry, super.key});
 
@@ -122,7 +122,7 @@ class EntryView extends StatelessWidget {
                       debugPrint('should delete entry: $deleteContinued');
 
                       if (deleteContinued) {
-                        final bool statusOk = await model.deleteEntry(entry.entryId);
+                        final bool statusOk = await model.deleteEntry(entry);
 
                         if (statusOk) {
                           debugPrint('entry deleted successfully');

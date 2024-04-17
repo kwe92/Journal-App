@@ -33,7 +33,8 @@ import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view.dar
     as _i8;
 import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view.dart'
     as _i13;
-import 'package:journal_app/features/shared/models/journal_entry.dart' as _i18;
+import 'package:journal_app/features/shared/models/journal_entry_v2.dart'
+    as _i18;
 import 'package:journal_app/features/shared/ui/navigation_view.dart' as _i11;
 
 abstract class $AppRouter extends _i16.RootStackRouter {
@@ -265,7 +266,7 @@ class EditProfileRoute extends _i16.PageRouteInfo<void> {
 /// [_i5.EntryView]
 class EntryRoute extends _i16.PageRouteInfo<EntryRouteArgs> {
   EntryRoute({
-    required _i18.JournalEntry entry,
+    required _i18.JournalEntryV2 entry,
     _i17.Key? key,
     List<_i16.PageRouteInfo>? children,
   }) : super(
@@ -289,7 +290,7 @@ class EntryRouteArgs {
     this.key,
   });
 
-  final _i18.JournalEntry entry;
+  final _i18.JournalEntryV2 entry;
 
   final _i17.Key? key;
 

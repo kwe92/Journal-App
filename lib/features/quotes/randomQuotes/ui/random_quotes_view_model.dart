@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/features/quotes/shared/models/quote.dart';
+import 'package:journal_app/features/quotes/shared/models/liked_quote.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class RandomQuotesViewModel extends BaseViewModel {
   final pageController = PageController(viewportFraction: 1);
 
-  List<Quote> get quotes => _getQuotesThatAreNotLiked();
+  List<LikedQuote> get quotes => _getQuotesThatAreNotLiked();
 
   RandomQuotesViewModel() {
     initialize();
+
+    debugPrint("RandomQuotesViewModel initialized!!");
   }
 
   Future<void> initialize() async {
-    await runBusyFuture(() async {
-      await likedQuotesService.getAllQuotes();
-      await getRandomQuotes();
-    }());
+    setBusy(true);
+
+    await likedQuotesService.getAllQuotes();
+
+    await getRandomQuotes();
+
+    setBusy(false);
+    // await runBusyFuture(() async {
+
+    // }());
   }
 
   Future<void> getRandomQuotes() async => zenQuotesApiService.fetchRandomQuotes();
 
-  Future<void> setLikedForQuote(Quote quote) async {
+  Future<void> setLikedForQuote(LikedQuote quote) async {
     quote.isLiked = !quote.isLiked;
 
     notifyListeners();
@@ -37,30 +44,32 @@ class RandomQuotesViewModel extends BaseViewModel {
     await addQuote(quote);
   }
 
-  Future<void> addQuote(Quote quote) async {
-    final response = await likedQuotesService.addQuote(quote);
+  Future<void> addQuote(LikedQuote quote) async {
+    await likedQuotesService.addQuote(quote);
 
-    final statusOK = ResponseHandler.checkStatusCode(response);
+    //   final statusOK = ResponseHandler.checkStatusCode(response);
 
-    if (!statusOK) {
-      final err = ResponseHandler.getErrorMsg(response.body);
+    //   if (!statusOK) {
+    //     final err = ResponseHandler.getErrorMsg(response.body);
 
-      toastService.showSnackBar(message: err);
-    } else {
-      debugPrint("quote added successfully: $quote");
-    }
+    //     toastService.showSnackBar(message: err);
+    //   } else {
+    //     debugPrint("quote added successfully: $quote");
+    //   }
+    // }
   }
-}
 
-List<Quote> _getQuotesThatAreNotLiked() => zenQuotesApiService.quotes.where((quote) => !_isRandomQuoteInListOfLikedQuotes(quote)).toList();
+  List<LikedQuote> _getQuotesThatAreNotLiked() =>
+      zenQuotesApiService.quotes.where((quote) => !_isRandomQuoteInListOfLikedQuotes(quote)).toList();
 
-bool _isRandomQuoteInListOfLikedQuotes(Quote quote) {
-  for (var likedQuote in likedQuotesService.likedQuotes) {
-    if (quote.quote.toLowerCase() == likedQuote.quote.toLowerCase()) {
-      debugPrint("_isRandomQuoteInListOfLikedQuotes: found liked quote");
+  bool _isRandomQuoteInListOfLikedQuotes(LikedQuote quote) {
+    for (var likedQuote in likedQuotesService.likedQuotes) {
+      if (quote.quote.toLowerCase() == likedQuote.quote.toLowerCase()) {
+        debugPrint("_isRandomQuoteInListOfLikedQuotes: found liked quote");
 
-      return true;
+        return true;
+      }
     }
+    return false;
   }
-  return false;
 }

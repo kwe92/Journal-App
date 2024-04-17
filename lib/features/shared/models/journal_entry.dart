@@ -42,6 +42,14 @@ class JournalEntry {
 
   Map<String, dynamic> toJSON() => _$JournalEntryToJson(this);
 
+  Map<String, dynamic> toMap() => {
+        'id': entryId,
+        'content': content,
+        'mood_type': moodType,
+        'created_at': createdAt,
+        'updated_at': updatedAt,
+      };
+
   @override
   String toString() {
     return 'JournalEntry(uid: $uid, entryId: $entryId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';

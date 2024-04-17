@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:journal_app/features/quotes/shared/models/quote.dart';
-import 'package:journal_app/features/quotes/shared/models/quote_imp.dart';
+import 'package:journal_app/features/quotes/shared/models/liked_quote.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 
+// TODO: Use different quotes Model besies LikedQuote
+
 class ZenQuotesApiService extends ApiService with ChangeNotifier {
-  List<Quote> quotes = [];
+  List<LikedQuote> quotes = [];
 
   @override
   Map<String, String> get headers => {
@@ -20,14 +21,16 @@ class ZenQuotesApiService extends ApiService with ChangeNotifier {
   Future<void> fetchRandomQuotes() async {
     final response = await get(Endpoint.randomQuotes50.path);
 
+    print(response.body);
+
     if (response.statusCode == 200) {
-      // print(response.body);
+      print(response.body);
 
       quotes = [
         for (Map<String, dynamic> quote in jsonDecode(response.body))
           () {
             quote.addAll({"is_liked": false});
-            return QuoteImp.fromJSON(quote);
+            return LikedQuote.fromJsonApiCall(quote);
           }()
       ];
 
