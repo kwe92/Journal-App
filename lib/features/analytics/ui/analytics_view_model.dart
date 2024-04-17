@@ -6,7 +6,6 @@ import 'package:collection/collection.dart';
 import 'package:journal_app/features/analytics/models/weighted_mood.dart';
 import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,7 +19,7 @@ class AnalyticsViewModel extends BaseViewModel with MoodMixin {
   // List<WeightedMood> _weightedMoods = moodsService.weightedMoodData;
 
   List<WeightedMood> _weightedMoods = [
-    for (JournalEntryV2 entry in journalEntryServiceV2.journalEntries)
+    for (JournalEntry entry in journalEntryServiceV2.journalEntries)
       WeightedMood(
         mood: entry.moodType,
         createdAt: entry.createdAt,
@@ -58,7 +57,7 @@ class AnalyticsViewModel extends BaseViewModel with MoodMixin {
         _maxX = 7;
         _isMonthlyView = false;
         _weightedMoods = [
-          for (JournalEntry entry in journalEntryService.journalEntries)
+          for (JournalEntry entry in journalEntryServiceV2.journalEntries)
             WeightedMood(
               mood: entry.moodType,
               createdAt: entry.createdAt,
@@ -71,7 +70,7 @@ class AnalyticsViewModel extends BaseViewModel with MoodMixin {
         _maxX = 30;
         _isMonthlyView = true;
         _weightedMoods = [
-          for (JournalEntry entry in journalEntryService.journalEntries)
+          for (JournalEntry entry in journalEntryServiceV2.journalEntries)
             WeightedMood(
               mood: entry.moodType,
               createdAt: entry.createdAt,

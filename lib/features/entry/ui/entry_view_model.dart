@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:stacked/stacked.dart';
@@ -10,7 +10,7 @@ class EntryviewModel extends ReactiveViewModel {
 
   final FocusNode entryFocus = FocusNode();
 
-  final JournalEntryV2 entry;
+  final JournalEntry entry;
 
   String? _content;
 
@@ -69,7 +69,7 @@ class EntryviewModel extends ReactiveViewModel {
 
   /// update journal entry via API call to backend
   Future<bool> updateEntry() async {
-    final JournalEntryV2 updatedEntry = JournalEntryV2(
+    final JournalEntry updatedEntry = JournalEntry(
       entryID: entry.entryID,
       content: content ?? '',
       moodType: entry.moodType,
@@ -116,7 +116,7 @@ class EntryviewModel extends ReactiveViewModel {
   }
 
   /// delete journal entry via API call to backend
-  Future<bool> deleteEntry(JournalEntryV2 entry) async {
+  Future<bool> deleteEntry(JournalEntry entry) async {
     await runBusyFuture(journalEntryServiceV2.deleteEntry(entry));
 
     clearContent();

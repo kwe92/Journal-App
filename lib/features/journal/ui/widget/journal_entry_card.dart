@@ -5,12 +5,12 @@ import 'package:journal_app/features/journal/ui/widget/date_tile.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_content.dart';
 import 'package:journal_app/features/journal/ui/widget/mood_tile.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 class JournalEntryCard extends StatelessWidget {
   final int index;
-  final JournalEntryV2 journalEntry;
+  final JournalEntry journalEntry;
   final VoidCallback? onDateTilePressed;
 
   const JournalEntryCard({

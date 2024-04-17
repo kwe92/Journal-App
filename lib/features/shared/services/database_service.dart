@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -75,7 +74,7 @@ class DatabaseService extends ChangeNotifier {
 
     // await db.insert(
     //   table.entires,
-    //   JournalEntryV2(
+    //   JournalEntry(
     //     content: 'Begin, to begin is half the work let half still remain, again begin this and though wilt have finished.',
     //     moodType: 'Okay',
     //     createdAt: DateTime.now(),

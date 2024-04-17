@@ -8,7 +8,7 @@ import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
@@ -107,7 +107,7 @@ class JournalView extends StatelessWidget {
                                   child: ListView.builder(
                                       itemCount: model.journalEntries.length,
                                       itemBuilder: (BuildContext context, int i) {
-                                        final JournalEntryV2 entry = model.journalEntries[i];
+                                        final JournalEntry entry = model.journalEntries[i];
 
                                         return Entry.opacity(
                                           duration: const Duration(milliseconds: 600),

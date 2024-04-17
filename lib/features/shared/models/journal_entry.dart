@@ -7,11 +7,8 @@ part 'journal_entry.g.dart';
 /// domain model and DTO representing a journal entry
 @JsonSerializable()
 class JournalEntry {
-  @JsonKey(name: "user_id")
-  final int uid;
-
   @JsonKey(name: "id")
-  final int entryId;
+  int? entryID;
 
   final String content;
 
@@ -29,9 +26,8 @@ class JournalEntry {
   }
 
   /// Domain model and DTO for json serialization.
-  const JournalEntry({
-    required this.entryId,
-    required this.uid,
+  JournalEntry({
+    this.entryID,
     required this.content,
     required this.moodType,
     required this.createdAt,
@@ -42,16 +38,8 @@ class JournalEntry {
 
   Map<String, dynamic> toJSON() => _$JournalEntryToJson(this);
 
-  Map<String, dynamic> toMap() => {
-        'id': entryId,
-        'content': content,
-        'mood_type': moodType,
-        'created_at': createdAt,
-        'updated_at': updatedAt,
-      };
-
   @override
   String toString() {
-    return 'JournalEntry(uid: $uid, entryId: $entryId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
+    return 'JournalEntry(entryId: $entryID, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
   }
 }

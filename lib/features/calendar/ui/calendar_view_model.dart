@@ -4,14 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarViewModel extends ChangeNotifier with MoodMixin {
-  late List<JournalEntryV2> _selectedEvents;
+  late List<JournalEntry> _selectedEvents;
 
-  List<JournalEntryV2> _filteredSelectedEvents = [];
+  List<JournalEntry> _filteredSelectedEvents = [];
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
@@ -25,13 +25,13 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
 
   DateTime? _rangeEnd;
 
-  // List<JournalEntryV2> _filteredSelectedEvents = [];
+  // List<JournalEntry> _filteredSelectedEvents = [];
 
   String _currentMoodTypeFilter = MoodTypeFilterOptions.all;
 
   String _query = '';
 
-  List<JournalEntryV2> get selectedEvents => _selectedEvents;
+  List<JournalEntry> get selectedEvents => _selectedEvents;
 
   CalendarFormat get calendarFormat => _calendarFormat;
 
@@ -45,9 +45,9 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
 
   DateTime? get rangeEnd => _rangeEnd;
 
-  DateTime get minDate => journalEntryService.minDate ?? DateTime.now();
+  DateTime get minDate => journalEntryServiceV2.minDate ?? DateTime.now();
 
-  List<JournalEntryV2> get filteredSelectedEvents => _filteredSelectedEvents;
+  List<JournalEntry> get filteredSelectedEvents => _filteredSelectedEvents;
 
   String get currentMoodTypeFilter => _currentMoodTypeFilter;
 
@@ -68,7 +68,7 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
     debugPrint("_filteredSelectedEvents:$_filteredSelectedEvents");
   }
 
-  void setSelectedEvents(List<JournalEntryV2> selectedEvents) {
+  void setSelectedEvents(List<JournalEntry> selectedEvents) {
     _selectedEvents = selectedEvents;
 
     _filteredSelectedEvents = selectedEvents;
@@ -108,12 +108,12 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
 
   Color getColorByMoodType(String moodType) => moodService.getMoodColorByType(moodType);
 
-  List<JournalEntryV2> getEventsForDay(DateTime day) {
+  List<JournalEntry> getEventsForDay(DateTime day) {
     // Implementation example
     return journalEntryServiceV2.journalEntries.where((entry) => isSameDay(entry.updatedAt, day)).toList();
   }
 
-  List<JournalEntryV2> getEventsForRange(DateTime start, DateTime end) {
+  List<JournalEntry> getEventsForRange(DateTime start, DateTime end) {
     // Implementation example
     final days = timeService.daysInRange(start, end);
 
@@ -230,7 +230,7 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
     return _selectedEvents.where((entry) => entry.moodType == moodType).length;
   }
 
-  List<JournalEntryV2> _fiterJournalEntries(String moodType, String query) {
+  List<JournalEntry> _fiterJournalEntries(String moodType, String query) {
     return _selectedEvents
         .where((entry) => entry.moodType == moodType && entry.content.toLowerCase().contains(query.toLowerCase()))
         .toList();

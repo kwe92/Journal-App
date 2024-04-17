@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 /// Responsible for providing all C.R.U.D operations associated with journal entries.
@@ -7,21 +7,21 @@ import 'package:journal_app/features/shared/services/services.dart';
 class JournalEntryProvider {
   JournalEntryProvider._();
 
-  static Future<List<JournalEntryV2>> getAll() async {
+  static Future<List<JournalEntry>> getAll() async {
     final List<Map<String, dynamic>> result = await databaseService.db.query(databaseService.table.entires);
 
-    final List<JournalEntryV2> entries = [for (Map<String, dynamic> map in result) JournalEntryV2.fromJSON(map)];
+    final List<JournalEntry> entries = [for (Map<String, dynamic> map in result) JournalEntry.fromJSON(map)];
 
     return entries;
   }
 
-  static Future<int> insert(JournalEntryV2 entry) async {
+  static Future<int> insert(JournalEntry entry) async {
     final int entryID = await databaseService.db.insert(databaseService.table.entires, entry.toJSON());
 
     return entryID;
   }
 
-  static Future<void> edit(JournalEntryV2 entry) async {
+  static Future<void> edit(JournalEntry entry) async {
     await databaseService.db.update(
       databaseService.table.entires,
       entry.toJSON(),
@@ -32,7 +32,7 @@ class JournalEntryProvider {
     debugPrint('entry: ${entry.entryID} updated successfully in the database.');
   }
 
-  static Future<void> delete(JournalEntryV2 entry) async {
+  static Future<void> delete(JournalEntry entry) async {
     await databaseService.db.delete(
       databaseService.table.entires,
       where: 'id = ?',

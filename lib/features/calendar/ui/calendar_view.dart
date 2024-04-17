@@ -5,7 +5,7 @@ import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/calendar/ui/Widgets/calendar_day_container.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
@@ -42,7 +42,7 @@ class CalendarView extends StatelessWidget {
                     automaticallyImplyLeading: false,
                     floating: true,
                     snap: true,
-                    title: TableCalendar<JournalEntryV2>(
+                    title: TableCalendar<JournalEntry>(
                       rowHeight: 42,
                       daysOfWeekHeight: 24,
                       headerStyle: HeaderStyle(

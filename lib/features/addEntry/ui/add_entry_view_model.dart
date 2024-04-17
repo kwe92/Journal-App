@@ -1,7 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
@@ -56,7 +56,7 @@ class AddEntryViewModel extends ReactiveViewModel {
 
   /// attempt to add entry to the backend
   Future<bool> addEntry(String moodType, String content) async {
-    final newEntry = JournalEntryV2(
+    final newEntry = JournalEntry(
       content: content,
       moodType: moodType,
       createdAt: DateTime.now(),
@@ -75,12 +75,12 @@ class AddEntryViewModel extends ReactiveViewModel {
   }
 
   Future<void> entryStreakCounter() async {
-    if (journalEntryService.journalEntries.isEmpty) {
+    if (journalEntryServiceV2.journalEntries.isEmpty) {
       await setStreakCountToOne();
       return;
     }
 
-    final lastEnrtyDate = journalEntryService.maxDate;
+    final lastEnrtyDate = journalEntryServiceV2.maxDate;
 
     if (!userHasEnteredEntryToday(lastEnrtyDate)) {
       if (isConsecutiveEntry(lastEnrtyDate)) {

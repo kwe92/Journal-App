@@ -5,7 +5,6 @@ import 'package:journal_app/features/authentication/services/auth_service.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
-import 'package:journal_app/features/journal/services/journal_entry_service%20_v2.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/meanings/shared/gemini_model_service.dart';
 import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart';
@@ -37,12 +36,8 @@ AuthService get authService {
   return locator.get<AuthService>();
 }
 
-JournalEntryService get journalEntryService {
+JournalEntryService get journalEntryServiceV2 {
   return locator.get<JournalEntryService>();
-}
-
-JournalEntryServiceV2 get journalEntryServiceV2 {
-  return locator.get<JournalEntryServiceV2>();
 }
 
 StringService get stringService {

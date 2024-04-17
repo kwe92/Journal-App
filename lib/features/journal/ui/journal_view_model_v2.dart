@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
-import 'package:journal_app/features/shared/models/journal_entry_v2.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:stacked/stacked.dart';
@@ -11,7 +11,7 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
   final searchNode = FocusNode();
   final searchController = TextEditingController();
 
-  List<JournalEntryV2> _journalEntries = [];
+  List<JournalEntry> _journalEntries = [];
 
   String _currentMoodTypeFilter = MoodTypeFilterOptions.all;
 
@@ -19,7 +19,7 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
 
   bool _isFabVisible = true;
 
-  List<JournalEntryV2> get journalEntries => _journalEntries;
+  List<JournalEntry> get journalEntries => _journalEntries;
 
   String get currentMoodTypeFilter => _currentMoodTypeFilter;
 
@@ -157,7 +157,7 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
     return journalEntryServiceV2.journalEntries.where((entry) => entry.moodType == moodType).length;
   }
 
-  List<JournalEntryV2> _fiterJournalEntries(String moodType, String query) {
+  List<JournalEntry> _fiterJournalEntries(String moodType, String query) {
     return journalEntryServiceV2.journalEntries
         .where((entry) => entry.moodType == moodType && entry.content.toLowerCase().contains(query.toLowerCase()))
         .toList();
