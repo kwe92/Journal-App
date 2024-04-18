@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/quotes/shared/models/liked_quote.dart';
+import 'package:journal_app/features/quotes/shared/models/quote.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
 class RandomQuotesViewModel extends BaseViewModel {
   final pageController = PageController(viewportFraction: 1);
 
-  List<LikedQuote> get quotes => _getQuotesThatAreNotLiked();
+  List<Quote> get quotes => _getQuotesThatAreNotLiked();
 
   RandomQuotesViewModel() {
     initialize();
@@ -29,7 +30,7 @@ class RandomQuotesViewModel extends BaseViewModel {
 
   Future<void> getRandomQuotes() async => zenQuotesApiService.fetchRandomQuotes();
 
-  Future<void> setLikedForQuote(LikedQuote quote) async {
+  Future<void> setLikedForQuote(Quote quote) async {
     quote.isLiked = !quote.isLiked;
 
     notifyListeners();
@@ -44,25 +45,21 @@ class RandomQuotesViewModel extends BaseViewModel {
     await addQuote(quote);
   }
 
-  Future<void> addQuote(LikedQuote quote) async {
-    await likedQuotesService.addQuote(quote);
+  Future<void> addQuote(Quote quote) async {
+    final likedQuotes = LikedQuote(
+      author: quote.author,
+      quote: quote.quote,
+      isLiked: quote.isLiked,
+      createdAt: DateTime.now(),
+    );
 
-    //   final statusOK = ResponseHandler.checkStatusCode(response);
-
-    //   if (!statusOK) {
-    //     final err = ResponseHandler.getErrorMsg(response.body);
-
-    //     toastService.showSnackBar(message: err);
-    //   } else {
-    //     debugPrint("quote added successfully: $quote");
-    //   }
-    // }
+    await likedQuotesService.addQuote(likedQuotes);
   }
 
-  List<LikedQuote> _getQuotesThatAreNotLiked() =>
+  List<Quote> _getQuotesThatAreNotLiked() =>
       zenQuotesApiService.quotes.where((quote) => !_isRandomQuoteInListOfLikedQuotes(quote)).toList();
 
-  bool _isRandomQuoteInListOfLikedQuotes(LikedQuote quote) {
+  bool _isRandomQuoteInListOfLikedQuotes(Quote quote) {
     for (var likedQuote in likedQuotesService.likedQuotes) {
       if (quote.quote.toLowerCase() == likedQuote.quote.toLowerCase()) {
         debugPrint("_isRandomQuoteInListOfLikedQuotes: found liked quote");

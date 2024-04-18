@@ -1,40 +1,24 @@
-class LikedQuote {
-  int? id;
-  String author;
-  String quote;
-  bool isLiked;
+import 'package:journal_app/features/quotes/shared/models/quote.dart';
+
+class LikedQuote extends Quote {
   DateTime createdAt;
 
   LikedQuote({
-    required this.id,
-    required this.author,
-    required this.quote,
-    required this.isLiked,
+    super.id,
+    required super.author,
+    required super.quote,
+    required super.isLiked,
     required this.createdAt,
   });
 
-  factory LikedQuote.fromJSON(Map<String, dynamic> json) {
-    return LikedQuote(
-      id: json["id"] ?? 0,
-      author: json["author"] ?? "",
-      quote: json["quote"] ?? "",
-      isLiked: json["is_liked"] != null && json["is_liked"] == '0' ? false : true,
-
-      // isLiked: json["is_liked"] != null ? bool.parse(json["is_liked"]) : true,
-      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : DateTime.now(),
-    );
-  }
-
-  factory LikedQuote.fromJsonApiCall(Map<String, dynamic> json) {
-    return LikedQuote(
-      id: json["id"] ?? 0,
-      author: json["a"] ?? "",
-      quote: json["q"] ?? "",
-      isLiked: json["is_liked"],
-      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : DateTime.now(),
-    );
-  }
-
+  factory LikedQuote.fromJSON(Map<String, dynamic> json) => LikedQuote(
+        id: json["id"] ?? 0,
+        author: json["author"] ?? "",
+        quote: json["quote"] ?? "",
+        isLiked: json["is_liked"] != null && json["is_liked"] == '0' ? false : true,
+        createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : DateTime.now(),
+      );
+  @override
   Map<String, dynamic> toJSON() => {
         // 'id': id,
         'author': author,
