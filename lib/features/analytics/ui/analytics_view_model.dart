@@ -19,7 +19,7 @@ class AnalyticsViewModel extends BaseViewModel with MoodMixin {
   // List<WeightedMood> _weightedMoods = moodsService.weightedMoodData;
 
   List<WeightedMood> _weightedMoods = [
-    for (JournalEntry entry in journalEntryServiceV2.journalEntries)
+    for (JournalEntry entry in journalEntryService.journalEntries)
       WeightedMood(
         mood: entry.moodType,
         createdAt: entry.createdAt,
@@ -57,7 +57,7 @@ class AnalyticsViewModel extends BaseViewModel with MoodMixin {
         _maxX = 7;
         _isMonthlyView = false;
         _weightedMoods = [
-          for (JournalEntry entry in journalEntryServiceV2.journalEntries)
+          for (JournalEntry entry in journalEntryService.journalEntries)
             WeightedMood(
               mood: entry.moodType,
               createdAt: entry.createdAt,
@@ -70,7 +70,7 @@ class AnalyticsViewModel extends BaseViewModel with MoodMixin {
         _maxX = 30;
         _isMonthlyView = true;
         _weightedMoods = [
-          for (JournalEntry entry in journalEntryServiceV2.journalEntries)
+          for (JournalEntry entry in journalEntryService.journalEntries)
             WeightedMood(
               mood: entry.moodType,
               createdAt: entry.createdAt,

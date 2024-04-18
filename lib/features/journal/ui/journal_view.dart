@@ -3,7 +3,7 @@ import 'package:entry/entry.dart';
 import 'package:flutter/rendering.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
-import 'package:journal_app/features/journal/ui/journal_view_model_v2.dart';
+import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
@@ -25,9 +25,9 @@ class JournalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<JournalViewModelV2>.reactive(
-      viewModelBuilder: () => JournalViewModelV2(),
-      onViewModelReady: (JournalViewModelV2 model) async {
+    return ViewModelBuilder<JournalViewModel>.reactive(
+      viewModelBuilder: () => JournalViewModel(),
+      onViewModelReady: (JournalViewModel model) async {
         await model.initialize();
 
         model.searchNode.addListener(() {
@@ -35,7 +35,7 @@ class JournalView extends StatelessWidget {
         });
       },
       fireOnViewModelReadyOnce: true,
-      builder: (context, JournalViewModelV2 model, _) {
+      builder: (context, JournalViewModel model, _) {
         return BaseScaffold(
           // means Thoughts in french
           title: "Pensées",
@@ -70,7 +70,7 @@ class JournalView extends StatelessWidget {
                         floatHeaderSlivers: true,
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
-                          const HideableMoodCount<JournalViewModelV2>(),
+                          const HideableMoodCount<JournalViewModel>(),
                           HideableSearchBar(
                             searchNode: model.searchNode,
                             searchController: model.searchController,
@@ -153,11 +153,11 @@ class JournalView extends StatelessWidget {
     return notification.direction == ScrollDirection.reverse;
   }
 
-  void showFab(JournalViewModelV2 model) {
+  void showFab(JournalViewModel model) {
     if (!model.isFabVisible) model.setFabVisibility(true);
   }
 
-  void doNotShowFab(JournalViewModelV2 model) {
+  void doNotShowFab(JournalViewModel model) {
     if (model.isFabVisible) model.setFabVisibility(false);
   }
 }

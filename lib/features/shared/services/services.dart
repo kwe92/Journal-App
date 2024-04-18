@@ -36,7 +36,7 @@ AuthService get authService {
   return locator.get<AuthService>();
 }
 
-JournalEntryService get journalEntryServiceV2 {
+JournalEntryService get journalEntryService {
   return locator.get<JournalEntryService>();
 }
 

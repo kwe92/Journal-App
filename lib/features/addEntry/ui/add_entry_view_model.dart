@@ -63,7 +63,7 @@ class AddEntryViewModel extends ReactiveViewModel {
       updatedAt: DateTime.now(),
     );
 
-    await journalEntryServiceV2.addEntry(newEntry);
+    await journalEntryService.addEntry(newEntry);
 
     clearContent();
 
@@ -75,12 +75,12 @@ class AddEntryViewModel extends ReactiveViewModel {
   }
 
   Future<void> entryStreakCounter() async {
-    if (journalEntryServiceV2.journalEntries.isEmpty) {
+    if (journalEntryService.journalEntries.isEmpty) {
       await setStreakCountToOne();
       return;
     }
 
-    final lastEnrtyDate = journalEntryServiceV2.maxDate;
+    final lastEnrtyDate = journalEntryService.maxDate;
 
     if (!userHasEnteredEntryToday(lastEnrtyDate)) {
       if (isConsecutiveEntry(lastEnrtyDate)) {

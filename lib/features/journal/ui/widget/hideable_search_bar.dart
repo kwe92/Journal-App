@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/features/journal/ui/journal_view_model_v2.dart';
+import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:stacked/stacked.dart';
 
-class HideableSearchBar extends ViewModelWidget<JournalViewModelV2> {
+class HideableSearchBar extends ViewModelWidget<JournalViewModel> {
   final TextEditingController searchController;
   final FocusNode searchNode;
 
@@ -13,7 +13,7 @@ class HideableSearchBar extends ViewModelWidget<JournalViewModelV2> {
   });
 
   @override
-  Widget build(BuildContext context, JournalViewModelV2 viewModel) {
+  Widget build(BuildContext context, JournalViewModel viewModel) {
     return SliverAppBar(
       toolbarHeight: 65,
       scrolledUnderElevation: 0,

@@ -7,7 +7,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:stacked/stacked.dart';
 
-class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
+class JournalViewModel extends ReactiveViewModel with MoodMixin {
   final searchNode = FocusNode();
   final searchController = TextEditingController();
 
@@ -33,7 +33,7 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
   @override
   List<ListenableServiceMixin> get listenableServices => [
         userService,
-        journalEntryServiceV2,
+        journalEntryService,
       ];
 
   Future<void> initialize() async {
@@ -41,12 +41,12 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
       // TODO: remove Future.delayed | placed here for testing loading indicator
       await Future.delayed(const Duration(seconds: 1));
 
-      await journalEntryServiceV2.getAllEntries();
+      await journalEntryService.getAllEntries();
 
-      debugPrint("JournalViewModelV2: initialize called");
+      debugPrint("JournalViewModel: initialize called");
     }());
 
-    _journalEntries = journalEntryServiceV2.journalEntries;
+    _journalEntries = journalEntryService.journalEntries;
   }
 
   void onQueryItems(String query) {
@@ -59,7 +59,7 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
     _clearQuery();
 
     if (currentMoodTypeFilter == MoodTypeFilterOptions.all) {
-      _journalEntries = journalEntryServiceV2.journalEntries;
+      _journalEntries = journalEntryService.journalEntries;
       notifyListeners();
       return;
     }
@@ -85,7 +85,7 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
       case MoodTypeFilterOptions.all:
         _setCurrentMoodTypeFilter(MoodTypeFilterOptions.all);
         _journalEntries =
-            journalEntryServiceV2.journalEntries.where((entry) => entry.content.toLowerCase().contains(query.toLowerCase())).toList();
+            journalEntryService.journalEntries.where((entry) => entry.content.toLowerCase().contains(query.toLowerCase())).toList();
         notifyListeners();
         break;
 
@@ -154,11 +154,11 @@ class JournalViewModelV2 extends ReactiveViewModel with MoodMixin {
 
   @override
   int getMoodCountByMoodType(String moodType) {
-    return journalEntryServiceV2.journalEntries.where((entry) => entry.moodType == moodType).length;
+    return journalEntryService.journalEntries.where((entry) => entry.moodType == moodType).length;
   }
 
   List<JournalEntry> _fiterJournalEntries(String moodType, String query) {
-    return journalEntryServiceV2.journalEntries
+    return journalEntryService.journalEntries
         .where((entry) => entry.moodType == moodType && entry.content.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }

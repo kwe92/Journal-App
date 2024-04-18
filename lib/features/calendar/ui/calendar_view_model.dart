@@ -45,7 +45,7 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
 
   DateTime? get rangeEnd => _rangeEnd;
 
-  DateTime get minDate => journalEntryServiceV2.minDate ?? DateTime.now();
+  DateTime get minDate => journalEntryService.minDate ?? DateTime.now();
 
   List<JournalEntry> get filteredSelectedEvents => _filteredSelectedEvents;
 
@@ -110,7 +110,7 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
 
   List<JournalEntry> getEventsForDay(DateTime day) {
     // Implementation example
-    return journalEntryServiceV2.journalEntries.where((entry) => isSameDay(entry.updatedAt, day)).toList();
+    return journalEntryService.journalEntries.where((entry) => isSameDay(entry.updatedAt, day)).toList();
   }
 
   List<JournalEntry> getEventsForRange(DateTime start, DateTime end) {

@@ -77,7 +77,7 @@ class EntryviewModel extends ReactiveViewModel {
       updatedAt: DateTime.now(),
     );
 
-    await journalEntryServiceV2.updateEntry(updatedEntry);
+    await journalEntryService.updateEntry(updatedEntry);
 
     clearContent();
 
@@ -117,7 +117,7 @@ class EntryviewModel extends ReactiveViewModel {
 
   /// delete journal entry via API call to backend
   Future<bool> deleteEntry(JournalEntry entry) async {
-    await runBusyFuture(journalEntryServiceV2.deleteEntry(entry));
+    await runBusyFuture(journalEntryService.deleteEntry(entry));
 
     clearContent();
     toastService.showSnackBar(message: "Deleted journal entry successfully.");
