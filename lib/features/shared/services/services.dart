@@ -13,6 +13,7 @@ import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/database_service.dart';
 import 'package:journal_app/features/shared/services/device_size_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
+import 'package:journal_app/features/shared/services/image_picker_service.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/notification_service.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
@@ -100,4 +101,8 @@ NotificationService get notificationService {
 
 DatabaseService get databaseService {
   return locator.get<DatabaseService>();
+}
+
+ImagePickerService get imagePickerService {
+  return locator.get<ImagePickerService>();
 }

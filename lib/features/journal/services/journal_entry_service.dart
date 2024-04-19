@@ -23,7 +23,7 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     notifyListeners();
   }
 
-  Future<void> addEntry(JournalEntry newEntry) async {
+  Future<int> addEntry(JournalEntry newEntry) async {
     final entryID = await JournalEntryProvider.insert(newEntry);
 
     newEntry.entryID = entryID;
@@ -31,6 +31,8 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     _journalEntries.add(newEntry);
 
     notifyListeners();
+
+    return entryID;
   }
 
   // TODO: ensure proper functionality

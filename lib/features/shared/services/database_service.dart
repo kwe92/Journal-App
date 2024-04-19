@@ -10,7 +10,6 @@ typedef DatabaseTableNames = ({String entires, String likedQuotes, String images
 /// - database initialization, creation, and migration
 /// - providing an instance of the database
 /// - database opening and closing
-///
 class DatabaseService extends ChangeNotifier {
   late Database _db;
 

@@ -1,8 +1,12 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/models/photo.dart';
+import 'package:journal_app/features/shared/models/photo_provider.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
 
 class AddEntryViewModel extends ReactiveViewModel {
@@ -17,6 +21,22 @@ class AddEntryViewModel extends ReactiveViewModel {
   BaseUser? get currentUser => userService.currentUser;
 
   DateTime? now;
+
+  // ?---------new member variables for image selection
+
+  int _imageCounter = 0;
+
+  List<Photo> _photos = [];
+
+  List<String> _photoStrings = [];
+
+  Map<String, ImageProvider> _imagesMap = {};
+
+  List<ImageProvider> _images = [];
+
+  List<ImageProvider> get images => _images;
+
+  // ?---------end
 
   // computed variable based on content state updated with change notifier
   bool get ready {
@@ -48,12 +68,6 @@ class AddEntryViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  void clearContent() {
-    _content = null;
-
-    notifyListeners();
-  }
-
   /// attempt to add entry to the backend
   Future<bool> addEntry(String moodType, String content) async {
     final newEntry = JournalEntry(
@@ -63,9 +77,12 @@ class AddEntryViewModel extends ReactiveViewModel {
       updatedAt: DateTime.now(),
     );
 
-    await journalEntryService.addEntry(newEntry);
+    final noteID = await journalEntryService.addEntry(newEntry);
 
-    clearContent();
+    // insert images into database
+    await _insertImages(noteID);
+
+    _clearVariables();
 
     await entryStreakCounter();
 
@@ -129,9 +146,93 @@ class AddEntryViewModel extends ReactiveViewModel {
     }
   }
 
+  Future<void> pickImages() async {
+    // prompt user to select images
+
+    var (List<XFile> imageFiles, String error) = await imagePickerService.pickImages();
+
+    // check for error
+    if (error.isNotEmpty) {
+      toastService.showSnackBar(message: error.toString());
+      return;
+    }
+
+    // retrieve image providers to be displayed in the UI
+    final List<ImageProvider> imageProviders = imagePickerService.toImageProvider(imageFiles);
+
+    if ((_images.length + imageProviders.length) <= 9) {
+      // retrieve image String representations to be inserted into database
+      List<String> photoStrings = await imagePickerService.convertToString(imageFiles);
+
+      _photoStrings.addAll(photoStrings);
+
+      _imagesMap.addAll(
+        {
+          for (int i = 0; i < photoStrings.length; i++) '${photoStrings[i]}-$_imageCounter': imageProviders[i],
+        },
+      );
+
+      _imageCounter++;
+
+      _images.addAll(imageProviders);
+
+      notifyListeners();
+      return;
+    }
+  }
+
+  Future<void> _insertImages(int entryID) async {
+    _photos = [for (String imageString in _photoStrings) Photo(entryID: entryID, imageName: imageString)];
+
+    // insert Photo objects into database returning list of Photo id's
+    List<int> photoIds = await PhotoProvider.insert(_photos);
+
+    // assign each Photo it's respective unique id
+    _photos.forEachIndexed((int index, Photo photo) => photo.id = photoIds[index]);
+
+    debugPrint("Number of images added: ${_photos.length}");
+  }
+
+  void removeImage(ImageProvider image) {
+    _imagesMap.removeWhere(_removeImage(image));
+
+    notifyListeners();
+  }
+
+  bool Function(String, ImageProvider) _removeImage(ImageProvider image) {
+    return (key, imageProvider) {
+      final isMatchingImages = imageProvider == image;
+
+      if (isMatchingImages) {
+        String keyToRemove = key; // represents image name
+
+        String imageToRemove = keyToRemove.split('-')[0];
+
+        _images.remove(image);
+
+        _photoStrings.remove(imageToRemove);
+
+        debugPrint("image deleted!");
+      }
+
+      return isMatchingImages;
+    };
+  }
+
   bool userHasEnteredEntryToday(DateTime date) {
     return timeService.removeTimeStamp(date) == timeService.removeTimeStamp(DateTime.now());
   }
 
   bool isConsecutiveEntry(DateTime date) => (date.difference(DateTime.now()).inHours.abs() < 24);
+
+  void _clearVariables() {
+    _imageCounter = 0;
+    setContent('');
+    _photos = [];
+    _photoStrings = [];
+    _images = [];
+    _imagesMap = {};
+
+    notifyListeners();
+  }
 }

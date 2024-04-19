@@ -13,6 +13,7 @@ import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_servi
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/database_service.dart';
 import 'package:journal_app/features/shared/services/device_size_service.dart';
+import 'package:journal_app/features/shared/services/image_picker_service.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/notification_service.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
@@ -45,6 +46,7 @@ Future<void> configureDependencies() async {
   locator.registerSingleton<DeviceSizeService>(DeviceSizeService());
   locator.registerSingleton<NotificationService>(NotificationService());
   locator.registerSingleton<DatabaseService>(DatabaseService());
+  locator.registerSingleton<ImagePickerService>(ImagePickerService());
 
   // Persistent Storage Services
   locator.registerSingleton<SharedPreferences>(prefs);
