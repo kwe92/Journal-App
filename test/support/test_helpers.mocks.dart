@@ -24,6 +24,7 @@ import 'package:journal_app/features/journal/services/journal_entry_service.dart
 import 'package:journal_app/features/mood/models/mood.dart' as _i3;
 import 'package:journal_app/features/quotes/shared/models/liked_quote.dart'
     as _i24;
+import 'package:journal_app/features/quotes/shared/models/quote.dart' as _i26;
 import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart'
     as _i23;
 import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart'
@@ -2479,14 +2480,14 @@ class MockLikedQuotesService extends _i1.Mock
 class MockZenQuotesApiService extends _i1.Mock
     implements _i25.ZenQuotesApiService {
   @override
-  List<_i24.LikedQuote> get quotes => (super.noSuchMethod(
+  List<_i26.Quote> get quotes => (super.noSuchMethod(
         Invocation.getter(#quotes),
-        returnValue: <_i24.LikedQuote>[],
-        returnValueForMissingStub: <_i24.LikedQuote>[],
-      ) as List<_i24.LikedQuote>);
+        returnValue: <_i26.Quote>[],
+        returnValueForMissingStub: <_i26.Quote>[],
+      ) as List<_i26.Quote>);
 
   @override
-  set quotes(List<_i24.LikedQuote>? _quotes) => super.noSuchMethod(
+  set quotes(List<_i26.Quote>? _quotes) => super.noSuchMethod(
         Invocation.setter(
           #quotes,
           _quotes,

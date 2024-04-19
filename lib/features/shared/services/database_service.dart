@@ -3,24 +3,36 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+/// Record of all table names within the current database.
+typedef DatabaseTableNames = ({String entires, String likedQuotes, String images});
+
 /// Responsible for:
 /// - database initialization, creation, and migration
 /// - providing an instance of the database
 /// - database opening and closing
+///
 class DatabaseService extends ChangeNotifier {
   late Database _db;
+
+  /// Current database version number.
+  final int _databaseVersionNumber = 3;
+
   Database get db => _db;
 
   static const _databaseName = 'Journal_App_Data';
 
-  final ({String entires, String likedQuotes}) _table = (entires: "Entries", likedQuotes: "LikedQutes ");
+  final DatabaseTableNames _table = (
+    entires: "Entries",
+    likedQuotes: "LikedQutes ",
+    images: "Images",
+  );
 
-  ({String entires, String likedQuotes}) get table => _table;
+  DatabaseTableNames get table => _table;
 
   Future<void> initialize() async {
     final String path = await _getPath(_databaseName);
 
-    _db = await _openDatabase(1, path);
+    _db = await _openDatabase(_databaseVersionNumber, path);
 
     await _getCurrentSchemaInformation(db);
 
@@ -29,10 +41,10 @@ class DatabaseService extends ChangeNotifier {
 
   Future<Database> _openDatabase(int version, String path) async {
     return openDatabase(
-      version: version, // latest version 1
+      version: version,
       path,
       onCreate: _createDatabase,
-      // onUpgrade: _migrateDatabase,
+      onUpgrade: _migrateDatabase,
       onConfigure: _configureDatabase,
     );
   }
@@ -69,18 +81,6 @@ class DatabaseService extends ChangeNotifier {
     for (int i = 0; i < currentSchema.length; i++) {
       debugPrint('${currentSchema[i]['sql']}\n');
     }
-
-    // ! TODO: Remove, for testing purposes only
-
-    // await db.insert(
-    //   table.entires,
-    //   JournalEntry(
-    //     content: 'Begin, to begin is half the work let half still remain, again begin this and though wilt have finished.',
-    //     moodType: 'Okay',
-    //     createdAt: DateTime.now(),
-    //     updatedAt: DateTime.now(),
-    //   ).toJSON(),
-    // );
   }
 
   Future<void> _configureDatabase(Database db) async {
@@ -89,38 +89,67 @@ class DatabaseService extends ChangeNotifier {
   }
 
   Future<void> _migrateDatabase(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion == 2) {
-      // TODO: implement when you need to migreate the database
+    if (oldVersion == _databaseVersionNumber - 1) {
+      await _createImagesTable(db);
     }
   }
 
   Future<void> _createEntriesTable(Database db) async {
-    await db.execute('DROP TABLE IF EXISTS ${_table.entires}');
+    await db.execute('DROP TABLE IF EXISTS ${table.entires}');
 
     await db.execute(
       '''CREATE TABLE 
           ${_table.entires} (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            content TEXT,
-            mood_type TEXT,
-            created_at TEXT,
-            updated_at TEXT
+            ${DataType.primaryKey.name},
+            content ${DataType.string.name},
+            mood_type ${DataType.string.name},
+            created_at ${DataType.string.name},
+            updated_at ${DataType.string.name}
             )''',
     );
   }
 
   Future<void> _createLikedQuotesTable(Database db) async {
-    await db.execute('DROP TABLE IF EXISTS ${_table.likedQuotes}');
+    await db.execute('DROP TABLE IF EXISTS ${table.likedQuotes}');
 
     await db.execute(
       '''CREATE TABLE 
           ${_table.likedQuotes} (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            author TEXT,
-            quote TEXT,
-            is_liked TEXT,
-            created_at TEXT
+            ${DataType.primaryKey.name},
+            author ${DataType.string.name},
+            quote ${DataType.string.name},
+            is_liked ${DataType.string.name},
+            created_at ${DataType.string.name}
             )''',
     );
   }
+
+  Future<void> _createImagesTable(Database db) async {
+    await db.execute('DROP TABLE IF EXISTS ${table.images}');
+
+    await db.execute('''CREATE TABLE
+          ${_table.images} (
+            ${DataType.primaryKey.name},
+            entry_id ${DataType.integer.name},
+            image_name ${DataType.string.name},
+            FOREIGN KEY (entry_id) REFERENCES Entries(id) ON DELETE CASCADE
+          )
+''');
+  }
+}
+
+enum DataType {
+  integer('INTEGER'),
+  string('TEXT'),
+  blob('BLOB'),
+  real('REAL'),
+  numeric('NUMERIC'),
+  date('DATE'),
+  time('TIME'),
+  datetime('DATETIME'),
+  primaryKey('id INTEGER PRIMARY KEY AUTOINCREMENT');
+
+  final String name;
+
+  const DataType(this.name);
 }

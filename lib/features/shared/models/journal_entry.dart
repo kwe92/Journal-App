@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:journal_app/features/shared/models/photo.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 part 'journal_entry.g.dart';
@@ -9,6 +10,9 @@ part 'journal_entry.g.dart';
 class JournalEntry {
   @JsonKey(name: "id")
   int? entryID;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  List<Photo?> images;
 
   final String content;
 
@@ -30,6 +34,7 @@ class JournalEntry {
     this.entryID,
     required this.content,
     required this.moodType,
+    this.images = const [],
     required this.createdAt,
     required this.updatedAt,
   });
@@ -40,6 +45,6 @@ class JournalEntry {
 
   @override
   String toString() {
-    return 'JournalEntry(entryId: $entryID, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
+    return 'JournalEntry(entryID: $entryID, images: $images, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
   }
 }
