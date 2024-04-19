@@ -1,10 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
-import 'package:journal_app/features/shared/models/new_entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
 
 class AddEntryViewModel extends ReactiveViewModel {
@@ -58,26 +56,22 @@ class AddEntryViewModel extends ReactiveViewModel {
 
   /// attempt to add entry to the backend
   Future<bool> addEntry(String moodType, String content) async {
-    // instantiate new entry
-    final NewEntry newEntry = NewEntry(content: content, moodType: moodType);
-
-    final Response response = await runBusyFuture(journalEntryService.addEntry(newEntry));
-
-    final bool statusOk = ResponseHandler.checkStatusCode(response);
-
-    if (statusOk) {
-      clearContent();
-      toastService.showSnackBar(message: "New journal entry added.");
-      await entryStreakCounter();
-
-      return statusOk;
-    }
-    toastService.showSnackBar(
-      message: ResponseHandler.getErrorMsg(response.body),
-      textColor: Colors.red,
+    final newEntry = JournalEntry(
+      content: content,
+      moodType: moodType,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
 
-    return statusOk;
+    await journalEntryService.addEntry(newEntry);
+
+    clearContent();
+
+    await entryStreakCounter();
+
+    toastService.showSnackBar(message: "New journal entry added.");
+
+    return true;
   }
 
   Future<void> entryStreakCounter() async {

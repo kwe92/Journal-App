@@ -11,8 +11,6 @@ class QuoteImp extends Quote {
     required super.isLiked,
   });
 
-  // factory QuoteImp.fromJSON(Map<String, dynamic> json) => _$QuoteImpFromJson(json);
-
   factory QuoteImp.fromJSON(Map<String, dynamic> json) => QuoteImp(
         author: json["a"],
         quote: json["q"],

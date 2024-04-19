@@ -21,8 +21,6 @@ class ZenQuotesApiService extends ApiService with ChangeNotifier {
     final response = await get(Endpoint.randomQuotes50.path);
 
     if (response.statusCode == 200) {
-      // print(response.body);
-
       quotes = [
         for (Map<String, dynamic> quote in jsonDecode(response.body))
           () {

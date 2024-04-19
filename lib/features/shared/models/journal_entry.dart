@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:journal_app/features/shared/models/photo.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 part 'journal_entry.g.dart';
@@ -7,11 +8,11 @@ part 'journal_entry.g.dart';
 /// domain model and DTO representing a journal entry
 @JsonSerializable()
 class JournalEntry {
-  @JsonKey(name: "user_id")
-  final int uid;
-
   @JsonKey(name: "id")
-  final int entryId;
+  int? entryID;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  List<Photo?> images;
 
   final String content;
 
@@ -29,11 +30,11 @@ class JournalEntry {
   }
 
   /// Domain model and DTO for json serialization.
-  const JournalEntry({
-    required this.entryId,
-    required this.uid,
+  JournalEntry({
+    this.entryID,
     required this.content,
     required this.moodType,
+    this.images = const [],
     required this.createdAt,
     required this.updatedAt,
   });
@@ -44,6 +45,6 @@ class JournalEntry {
 
   @override
   String toString() {
-    return 'JournalEntry(uid: $uid, entryId: $entryId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
+    return 'JournalEntry(entryID: $entryID, images: $images, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, moodType: $moodType)';
   }
 }

@@ -1,13 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:collection/collection.dart';
-import 'package:http/http.dart' as http;
-import 'package:journal_app/features/entry/models/updated_entry.dart';
+import 'package:journal_app/features/shared/models/journal_entry_provider.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
-import 'package:journal_app/features/shared/models/new_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
-import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
 /// Entries: type alias for List of Entry.
@@ -15,82 +9,46 @@ typedef JournalEntries = List<JournalEntry>;
 
 /// handles all C.R.U.D API calls for journal entries based on the currently authenticated and logged in user.
 class JournalEntryService extends ApiService with ListenableServiceMixin {
-  DateTime get maxDate => getMaxDate(journalEntries);
+  DateTime get maxDate => getMaxDate(_journalEntries);
 
-  DateTime? get minDate => getMinDates(journalEntries);
+  DateTime? get minDate => getMinDates(_journalEntries);
 
-  JournalEntries journalEntries = [];
+  JournalEntries _journalEntries = [];
 
-  Future<http.Response> getAllEntries() async {
-    // get jwt from persistent storage
-    final accessToken = await tokenService.getAccessTokenFromStorage();
+  JournalEntries get journalEntries => _journalEntries;
 
-    // retrieve all entries based on access token
-    final http.Response response = await get(Endpoint.entries.path, extraHeaders: {
-      HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
-    });
-
-    final Map<String, dynamic> reponseBody = jsonDecode(response.body);
-
-    final List<dynamic>? responseData = reponseBody["data"];
-
-    if (responseData != null) {
-      // down-cast deserialized dynamic array
-      final List<Map<String, dynamic>> domainData = List.from(responseData);
-
-      journalEntries = sortByUpdatedDate(domainData);
-    } else {
-      journalEntries = [];
-    }
+  Future<void> getAllEntries() async {
+    _journalEntries = await JournalEntryProvider.getAll();
 
     notifyListeners();
-
-    return response;
   }
 
-  Future<http.Response> addEntry(NewEntry newEntry) async {
-    // retrieve jwt from persistent storage
-    final accessToken = await tokenService.getAccessTokenFromStorage();
+  Future<void> addEntry(JournalEntry newEntry) async {
+    final entryID = await JournalEntryProvider.insert(newEntry);
 
-    final http.Response response = await post(
-      Endpoint.entries.path,
-      extraHeaders: {
-        HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
-      },
-      body:
-          // serialize object into JSON string
-          jsonEncode(newEntry.toJSON()),
-    );
+    newEntry.entryID = entryID;
 
-    return response;
+    _journalEntries.add(newEntry);
+
+    notifyListeners();
   }
 
-  Future<http.Response> updateEntry(UpdatedEntry updatedEntry) async {
-    // retrieve jwt from persistent storage
-    final accessToken = await tokenService.getAccessTokenFromStorage();
+  // TODO: ensure proper functionality
+  Future<void> updateEntry(JournalEntry updatedEntry) async {
+    await JournalEntryProvider.edit(updatedEntry);
 
-    final http.Response response = await post(
-      "${Endpoint.updateEntry.path}${updatedEntry.entryId}",
-      extraHeaders: {
-        HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
-      },
-      body:
-          // serialize object into JSON string
-          jsonEncode(updatedEntry.toJSON()),
-    );
+    _journalEntries.removeWhere((entry) => entry.entryID == updatedEntry.entryID);
 
-    return response;
+    _journalEntries.add(updatedEntry);
+
+    notifyListeners();
   }
 
-  Future<http.Response> deleteEntry(int entryId) async {
-    // retrieve jwt from persistent storage
-    final accessToken = await tokenService.getAccessTokenFromStorage();
+  Future<void> deleteEntry(JournalEntry entry) async {
+    await JournalEntryProvider.delete(entry);
 
-    final http.Response response = await delete("${Endpoint.deleteEntry.path}$entryId", extraHeaders: {
-      HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
-    });
-
-    return response;
+    _journalEntries.remove(entry);
+    notifyListeners();
   }
 
   List<JournalEntry> sortByUpdatedDate(List<Map<String, dynamic>> entries, [bool asc = false]) {

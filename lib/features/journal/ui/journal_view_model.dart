@@ -42,6 +42,8 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
       await Future.delayed(const Duration(seconds: 1));
 
       await journalEntryService.getAllEntries();
+
+      debugPrint("JournalViewModel: initialize called");
     }());
 
     _journalEntries = journalEntryService.journalEntries;
@@ -161,30 +163,3 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
         .toList();
   }
 }
-
-// //TODO: why is getAllEntries implemented? where is it being used?
-
-//   /// Retrieve all journal entries for the currently authenticated user.
-//   Future<void> getAllEntries() async {
-//     final Response response = await journalEntryService.getAllEntries();
-
-//     final bool statusOk = ResponseHandler.checkStatusCode(response);
-
-//     if (statusOk) {
-//       final Map<String, dynamic> reponseBody = jsonDecode(response.body);
-
-//       try {
-//         final List<dynamic>? responseData = reponseBody["data"];
-//         if (responseData != null) return;
-//       } catch (error, stackTrace) {
-//         debugPrint("error in JournalViewModel getAllEntries: ${error.toString()}");
-
-//         toastService.showSnackBar(message: "An error occured retrieving your data.", textColor: Colors.red);
-//       }
-//       return;
-//     }
-//     toastService.showSnackBar(
-//       message: ResponseHandler.getErrorMsg(response.body),
-//       textColor: Colors.red,
-//     );
-//   }

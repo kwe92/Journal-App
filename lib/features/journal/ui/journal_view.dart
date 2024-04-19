@@ -34,7 +34,8 @@ class JournalView extends StatelessWidget {
           model.searchNode.hasFocus ? model.setFabVisibility(false) : model.setFabVisibility(true);
         });
       },
-      builder: (context, JournalViewModel model, child) {
+      fireOnViewModelReadyOnce: true,
+      builder: (context, JournalViewModel model, _) {
         return BaseScaffold(
           // means Thoughts in french
           title: "Pensées",
@@ -69,7 +70,7 @@ class JournalView extends StatelessWidget {
                         floatHeaderSlivers: true,
                         // MOOD COUNT
                         headerSliverBuilder: (context, _) => [
-                          HideableMoodCount<JournalViewModel>(),
+                          const HideableMoodCount<JournalViewModel>(),
                           HideableSearchBar(
                             searchNode: model.searchNode,
                             searchController: model.searchController,

@@ -122,7 +122,7 @@ class EntryView extends StatelessWidget {
                       debugPrint('should delete entry: $deleteContinued');
 
                       if (deleteContinued) {
-                        final bool statusOk = await model.deleteEntry(entry.entryId);
+                        final bool statusOk = await model.deleteEntry(entry);
 
                         if (statusOk) {
                           debugPrint('entry deleted successfully');

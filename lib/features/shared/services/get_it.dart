@@ -11,6 +11,7 @@ import 'package:journal_app/features/meanings/shared/gemini_model_service.dart';
 import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart';
 import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:journal_app/features/shared/services/database_service.dart';
 import 'package:journal_app/features/shared/services/device_size_service.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/notification_service.dart';
@@ -32,6 +33,7 @@ Future<void> configureDependencies() async {
   locator.registerSingleton<AuthService>(AuthService());
   locator.registerSingleton<TokenService>(TokenService());
   locator.registerSingleton<JournalEntryService>(JournalEntryService());
+
   locator.registerSingleton<StringService>(StringService());
   locator.registerSingleton<ToastService>(ToastService());
   locator.registerSingleton<TimeService>(TimeService());
@@ -42,6 +44,7 @@ Future<void> configureDependencies() async {
   locator.registerSingleton<GeminiModelService>(GeminiModelService());
   locator.registerSingleton<DeviceSizeService>(DeviceSizeService());
   locator.registerSingleton<NotificationService>(NotificationService());
+  locator.registerSingleton<DatabaseService>(DatabaseService());
 
   // Persistent Storage Services
   locator.registerSingleton<SharedPreferences>(prefs);
