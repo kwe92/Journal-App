@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/models/photo.dart';
@@ -77,10 +78,13 @@ class AddEntryViewModel extends ReactiveViewModel {
       updatedAt: DateTime.now(),
     );
 
-    final noteID = await journalEntryService.addEntry(newEntry);
+    final entryID = await journalEntryService.addEntry(newEntry);
 
+    newEntry.entryID = entryID;
     // insert images into database
-    await _insertImages(noteID);
+    await _insertImages(entryID);
+
+    newEntry.images = _photos;
 
     _clearVariables();
 
@@ -179,6 +183,8 @@ class AddEntryViewModel extends ReactiveViewModel {
       notifyListeners();
       return;
     }
+
+    toastService.showSnackBar(message: "Can not add more that 9 images to an entry.", textColor: AppColors.errorTextColor);
   }
 
   Future<void> _insertImages(int entryID) async {

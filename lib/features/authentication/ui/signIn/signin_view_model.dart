@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/response_handler.dart';
 import 'package:stacked/stacked.dart';
@@ -168,7 +169,7 @@ class SignInViewModel extends ReactiveViewModel {
 
     toastService.showSnackBar(
       message: ResponseHandler.getErrorMsg(response.body),
-      textColor: Colors.red,
+      textColor: AppColors.errorTextColor,
     );
 
     return statusOk;

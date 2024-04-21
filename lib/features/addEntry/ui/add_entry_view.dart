@@ -88,7 +88,6 @@ class AddEntryView extends StatelessWidget {
                     ),
                   ),
                 ),
-                // ! added image section
                 model.images.isNotEmpty
                     ? SizedBox(
                         height: model.images.length > 3 ? MediaQuery.of(context).size.height / 2.5 : MediaQuery.of(context).size.height / 4,
@@ -107,7 +106,6 @@ class AddEntryView extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-                // ! end
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(

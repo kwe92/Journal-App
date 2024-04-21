@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/ui/mixins/password_mixin.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -78,7 +79,7 @@ class SignUpViewModel extends ReactiveViewModel with PasswordMixin {
 
     toastService.showSnackBar(
       message: ResponseHandler.getErrorMsg(response.body),
-      textColor: Colors.red,
+      textColor: AppColors.errorTextColor,
     );
 
     return statusOk;

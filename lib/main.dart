@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/theme.dart';
+import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -33,6 +34,8 @@ void main() async {
 
   await databaseService.initialize();
 
+  await journalEntryService.getAllEntries();
+
   notificationService.setNotificationListeners();
 
   appRouter.push(NavigationRoute());
@@ -48,9 +51,14 @@ void main() async {
       builder: (context) =>
           // Portal Widget required at the root of the widget tree to use the PortalTarget Widget
           Portal(
-        child: ChangeNotifierProvider.value(
-          value: appModeService,
-          builder: (context, _) => const MyApp(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(value: appModeService),
+            ChangeNotifierProvider(create: (context) => JournalViewModel()),
+          ],
+          builder: (context, _) {
+            return const MyApp();
+          },
         ),
       ),
     ),

@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/models/photo.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
 /// Responsible for providing all C.R.U.D operations associated with journal entries.
@@ -11,6 +13,18 @@ class JournalEntryProvider {
     final List<Map<String, dynamic>> result = await databaseService.db.query(databaseService.table.entires);
 
     final List<JournalEntry> entries = [for (Map<String, dynamic> map in result) JournalEntry.fromJSON(map)];
+
+    final List<Map<String, dynamic>> imageResult = await databaseService.db.query(databaseService.table.images);
+
+    final List<Photo> images = [for (Map<String, dynamic> image in imageResult) Photo.fromJSON(image)];
+
+    final groupedImages = groupBy(images, (image) => image.entryID);
+
+    groupedImages.forEach((key, value) {
+      for (var entry in entries) {
+        entry.entryID == key ? entry.images = value : null;
+      }
+    });
 
     return entries;
   }

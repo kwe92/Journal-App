@@ -45,14 +45,6 @@ class SideMenu extends Drawer {
                     leadingIcon: const Icon(Icons.person_outline),
                     content: "Profile",
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: SplashableListTileButton(
-                      onTap: logoutCallback,
-                      leadingIcon: const Icon(Icons.logout),
-                      content: "Logout",
-                    ),
-                  ),
                 ],
               ),
             ),

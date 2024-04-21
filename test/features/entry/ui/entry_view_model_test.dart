@@ -113,7 +113,7 @@ void main() {
           body: Builder(
             builder: (context) {
               () async {
-                result = await model.updateEntry();
+                await model.updateEntry();
               }();
 
               return const Placeholder();
@@ -272,7 +272,7 @@ void main() {
           body: Builder(
             builder: (context) {
               () async {
-                result = await model.deleteEntry(testEntry.entryId);
+                result = await model.deleteEntry(testEntry.entryID);
               }();
               return const Placeholder();
             },

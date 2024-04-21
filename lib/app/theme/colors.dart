@@ -47,4 +47,6 @@ class AppColors {
   static const calendarMarkerColor = Color(0xFF3F301D);
 
   static final lotusColor = Colors.deepPurpleAccent[100];
+
+  static const errorTextColor = Colors.red;
 }
