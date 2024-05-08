@@ -3,6 +3,7 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
+import 'package:journal_app/features/shared/models/photo.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/resource_clean_up.dart';
 import 'package:stacked/stacked.dart';
@@ -36,17 +37,17 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
         journalEntryService,
       ];
 
-  Future<void> initialize() async {
-    await runBusyFuture(() async {
-      // TODO: remove Future.delayed | placed here for testing loading indicator
-      await Future.delayed(const Duration(seconds: 1));
+  JournalViewModel() {
+    initialize();
+  }
 
-      await journalEntryService.getAllEntries();
-
-      debugPrint("JournalViewModel: initialize called");
-    }());
-
+  void initialize() {
     _journalEntries = journalEntryService.journalEntries;
+
+    searchNode.addListener(() {
+      searchNode.hasFocus ? setFabVisibility(false) : setFabVisibility(true);
+    });
+    notifyListeners();
   }
 
   void onQueryItems(String query) {
@@ -73,6 +74,8 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
     _isFabVisible = isVisible;
     notifyListeners();
   }
+
+  List<ImageProvider> convertToImageProvider(List<Photo?> images) => imagePickerService.imageFromBase64String(images);
 
   Future<void> cleanResources() async {
     await ResourceCleanUp.clean();

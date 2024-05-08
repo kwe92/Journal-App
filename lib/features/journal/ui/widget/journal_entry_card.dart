@@ -22,6 +22,7 @@ class JournalEntryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: remove from view
     final Mood mood = moodService.createMoodByType(journalEntry.moodType, 20);
 
     return Container(
@@ -48,8 +49,8 @@ class JournalEntryCard extends StatelessWidget {
             onPressed: () async => await appRouter.push(
               EntryRoute(entry: journalEntry),
             ),
+            journalEntry: journalEntry,
             moodBackgroundColor: mood.moodColorBackground,
-            content: journalEntry.content,
           ),
         ],
       ),

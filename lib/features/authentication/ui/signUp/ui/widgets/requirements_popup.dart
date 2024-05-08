@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/resources/reusables.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/authentication/ui/signUp/ui/signup_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
@@ -81,7 +82,7 @@ class Requirement extends StatelessWidget {
         children: [
           Icon(
             isSatisfied ? Icons.check_box : Icons.warning_outlined,
-            color: isSatisfied ? Colors.green : Colors.red,
+            color: isSatisfied ? Colors.green : AppColors.errorTextColor,
           ),
           gap6,
           Flexible(

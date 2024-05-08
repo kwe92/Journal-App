@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/theme/colors.dart';
 
 class FavoriteButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -21,7 +22,7 @@ class FavoriteButton extends StatelessWidget {
       icon: Icon(
         isLiked ? Icons.favorite : Icons.favorite_outline,
         size: size,
-        color: Colors.red.withOpacity(0.60),
+        color: AppColors.errorTextColor.withOpacity(0.60),
       ),
     );
   }

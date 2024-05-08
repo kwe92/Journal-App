@@ -17,7 +17,8 @@ import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:provider/provider.dart';
-import 'package:stacked/stacked.dart';
+
+// !!!!! TODO: ensure the database is not queried every time the user scrolls
 
 @RoutePage()
 class JournalView extends StatelessWidget {
@@ -25,123 +26,112 @@ class JournalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<JournalViewModel>.reactive(
-      viewModelBuilder: () => JournalViewModel(),
-      onViewModelReady: (JournalViewModel model) async {
-        await model.initialize();
-
-        model.searchNode.addListener(() {
-          model.searchNode.hasFocus ? model.setFabVisibility(false) : model.setFabVisibility(true);
-        });
-      },
-      fireOnViewModelReadyOnce: true,
-      builder: (context, JournalViewModel model, _) {
-        return BaseScaffold(
-          // means Thoughts in french
-          title: "Pensées",
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: IconButton(
-                onPressed: () async {
-                  await context.read<AppModeService>().switchMode();
-                },
-                icon: Icon(
-                  context.watch<AppModeService>().isLightMode ? Icons.wb_sunny_outlined : Icons.mode_night_outlined,
-                ),
-              ),
+    final model = context.watch<JournalViewModel>();
+    return BaseScaffold(
+      // means Thoughts in french
+      title: "Pensées",
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: IconButton(
+            onPressed: () async {
+              await context.read<AppModeService>().switchMode();
+            },
+            icon: Icon(
+              context.watch<AppModeService>().isLightMode ? Icons.wb_sunny_outlined : Icons.mode_night_outlined,
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: ProfileIcon(
-                userFirstName: model.currentUser?.firstName ?? "P",
-                onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
-              ),
-            ),
-          ],
-          body: model.isBusy
-              ? circleLoader
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: NestedScrollView(
-                        floatHeaderSlivers: true,
-                        // MOOD COUNT
-                        headerSliverBuilder: (context, _) => [
-                          const HideableMoodCount<JournalViewModel>(),
-                          HideableSearchBar(
-                            searchNode: model.searchNode,
-                            searchController: model.searchController,
-                          ),
-                          SliverToBoxAdapter(child: gap4),
-                        ],
-                        body: Center(
-                          // JOURNAL ENTRIES
-                          child: model.journalEntries.isEmpty
-                              ? const Padding(
-                                  padding: EdgeInsets.only(bottom: 86.0),
-                                  child: Entry.opacity(
-                                    duration: Duration(milliseconds: 600),
-                                    child: Text(
-                                      "No entries, what's on your mind...",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: AppColors.lightGreen,
-                                        fontSize: 32,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              // Hide FAB on Scroll
-                              : NotificationListener<UserScrollNotification>(
-                                  onNotification: (notification) {
-                                    if (userIsScrollingForward(notification)) {
-                                      showFab(model);
-                                    } else if (userIsScrollingDownward(notification)) {
-                                      doNotShowFab(model);
-                                    }
-                                    return true;
-                                  },
-                                  child: ListView.builder(
-                                      itemCount: model.journalEntries.length,
-                                      itemBuilder: (BuildContext context, int i) {
-                                        final JournalEntry entry = model.journalEntries[i];
-
-                                        return Entry.opacity(
-                                          duration: const Duration(milliseconds: 600),
-                                          child: JournalEntryCard(
-                                            onDateTilePressed: () async => await appRouter.push(
-                                              CalendarRoute(
-                                                focusedDay: entry.updatedAt,
-                                              ),
-                                            ),
-                                            index: i,
-                                            journalEntry: entry,
-                                          ),
-                                        );
-                                      }),
-                                ),
-                        ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: ProfileIcon(
+            userFirstName: model.currentUser?.firstName ?? "P",
+            onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
+          ),
+        ),
+      ],
+      body: model.isBusy
+          ? circleLoader
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: NestedScrollView(
+                    floatHeaderSlivers: true,
+                    // MOOD COUNT
+                    headerSliverBuilder: (context, _) => [
+                      const HideableMoodCount<JournalViewModel>(),
+                      HideableSearchBar(
+                        searchNode: model.searchNode,
+                        searchController: model.searchController,
                       ),
+                      SliverToBoxAdapter(child: gap4),
+                    ],
+                    body: Center(
+                      // JOURNAL ENTRIES
+                      child: model.journalEntries.isEmpty
+                          ? const Padding(
+                              padding: EdgeInsets.only(bottom: 86.0),
+                              child: Entry.opacity(
+                                duration: Duration(milliseconds: 600),
+                                child: Text(
+                                  "No entries, what's on your mind...",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: AppColors.lightGreen,
+                                    fontSize: 32,
+                                  ),
+                                ),
+                              ),
+                            )
+                          // Hide FAB on Scroll
+                          : NotificationListener<UserScrollNotification>(
+                              // TODO: refactor FAB disapear on scroll as it is causing images to flash
+                              // onNotification: (notification) {
+                              //   if (userIsScrollingForward(notification)) {
+                              //     showFab(model);
+                              //   } else if (userIsScrollingDownward(notification)) {
+                              //     doNotShowFab(model);
+                              //   }
+                              //   return true;
+                              // },
+                              child: ListView.builder(
+                                  itemCount: model.journalEntries.length,
+                                  itemBuilder: (BuildContext context, int i) {
+                                    final JournalEntry entry = model.journalEntries[i];
+
+                                    return Entry.opacity(
+                                      duration: const Duration(milliseconds: 600),
+                                      child: JournalEntryCard(
+                                        onDateTilePressed: () async => await appRouter.push(
+                                          CalendarRoute(
+                                            focusedDay: entry.updatedAt,
+                                          ),
+                                        ),
+                                        index: i,
+                                        journalEntry: entry,
+                                      ),
+                                    );
+                                  }),
+                            ),
                     ),
-                  ],
+                  ),
                 ),
-          // OPEN SIDE MENU
-          drawer: SideMenu(logoutCallback: () async {
-            await model.cleanResources();
-            await appRouter.pop();
-            await appRouter.replace(SignInRoute());
-          }),
-          //ADD NEW ENTRY BUTTON
-          floatingActionButton: model.isFabVisible
-              ? AddButton(
-                  onTap: () async => await appRouter.push(const MoodRoute()),
-                )
-              : null,
-        );
-      },
+              ],
+            ),
+      // OPEN SIDE MENU
+      drawer: SideMenu(logoutCallback: () async {
+        await model.cleanResources();
+        await appRouter.pop();
+        await appRouter.replace(SignInRoute());
+      }),
+      //ADD NEW ENTRY BUTTON
+      floatingActionButton: model.isFabVisible
+          ? AddButton(
+              onTap: () async => await appRouter.push(const MoodRoute()),
+            )
+          : null,
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/utilities/string_extensions.dart';
@@ -156,7 +157,7 @@ class EditProfileViewModel extends ReactiveViewModel {
     if (!statusOk) {
       toastService.showSnackBar(
         message: ResponseHandler.getErrorMsg(response.body),
-        textColor: Colors.red,
+        textColor: AppColors.errorTextColor,
       );
 
       return statusOk;
