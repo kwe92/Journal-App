@@ -14,7 +14,7 @@ class DatabaseService extends ChangeNotifier {
   late Database _db;
 
   /// Current database version number.
-  final int _databaseVersionNumber = 3;
+  final int _databaseVersionNumber = 5;
 
   Database get db => _db;
 
