@@ -18,36 +18,10 @@ class LikedQuotesViewModel extends ReactiveViewModel {
     // remove quote from list of liked quotes
     likedQuotes.remove(quote);
 
-    // // delete the quote from the backend
-    // final response = await runBusyFuture(likedQuotesService.deleteLikedQuote(quote.id!));
-
-    // // check response status code
-    // final statusOK = ResponseHandler.checkStatusCode(response);
-
-    // // display error is status code is other than OK
-    // if (!statusOK) {
-    //   final err = ResponseHandler.getErrorMsg(response.body);
-
-    //   toastService.showSnackBar(message: err);
-    // } else {
-    //   debugPrint("quote deleted successfully");
-    // }
-
     notifyListeners();
   }
 
   Future<void> initialize() async {
     await runBusyFuture(likedQuotesService.getAllQuotes());
-
-    //   final statusOK = ResponseHandler.checkStatusCode(response);
-
-    //   if (!statusOK) {
-    //     final err = ResponseHandler.getErrorMsg(response.body);
-
-    //     debugPrint("error in LikedQuotesViewModel initialize method: $err");
-
-    //     toastService.showSnackBar(message: err);
-    //   }
-    // }
   }
 }

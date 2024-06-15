@@ -157,7 +157,8 @@ class AddEntryViewModel extends ReactiveViewModel {
 
     // check for error
     if (error.isNotEmpty) {
-      toastService.showSnackBar(message: error.toString());
+      toastService.showSnackBar(
+          message: error, textColor: AppColors.errorTextColor, duration: const Duration(seconds: 2, milliseconds: 500));
       return;
     }
 

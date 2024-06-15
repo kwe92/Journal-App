@@ -1,4 +1,5 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
 
@@ -24,7 +25,7 @@ class PromptsViewModel extends BaseViewModel {
     var err = await runBusyFuture(geminiModelService.generateContent(_content));
 
     if (err != null) {
-      toastService.showSnackBar(message: err);
+      toastService.showSnackBar(message: err, textColor: AppColors.errorTextColor);
     }
   }
 
