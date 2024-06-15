@@ -78,6 +78,8 @@ class AddEntryViewModel extends ReactiveViewModel {
       updatedAt: DateTime.now(),
     );
 
+    await entryStreakCounter();
+
     final entryID = await journalEntryService.addEntry(newEntry);
 
     newEntry.entryID = entryID;
@@ -87,8 +89,6 @@ class AddEntryViewModel extends ReactiveViewModel {
     newEntry.images = _photos;
 
     _clearVariables();
-
-    await entryStreakCounter();
 
     toastService.showSnackBar(message: "New journal entry added.");
 
