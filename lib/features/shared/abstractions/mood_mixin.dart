@@ -2,7 +2,6 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 
-// TODO: find a better name
 // could move more duplicated code from  JournalViewModel and CalendarViewModel to here
 
 abstract mixin class MoodMixin {

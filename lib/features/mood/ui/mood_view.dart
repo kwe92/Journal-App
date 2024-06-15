@@ -102,7 +102,6 @@ class MoodView extends StatelessWidget {
                               },
                               label: "Continue"),
                         ),
-                        // TODO: check continue button height on various devices
                         !deviceSizeService.smallDevice ? const Gap(110) : const Gap(20),
                       ],
                     ),
