@@ -77,7 +77,6 @@ class AddEntryViewModel extends ReactiveViewModel {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
-
     await entryStreakCounter();
 
     final entryID = await journalEntryService.addEntry(newEntry);
@@ -88,7 +87,7 @@ class AddEntryViewModel extends ReactiveViewModel {
 
     newEntry.images = _photos;
 
-    _clearVariables();
+    clearVariables();
 
     toastService.showSnackBar(message: "New journal entry added.");
 
@@ -232,7 +231,7 @@ class AddEntryViewModel extends ReactiveViewModel {
 
   bool isConsecutiveEntry(DateTime date) => (date.difference(DateTime.now()).inHours.abs() < 24);
 
-  void _clearVariables() {
+  void clearVariables() {
     _imageCounter = 0;
     setContent('');
     _photos = [];
