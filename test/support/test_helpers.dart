@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -13,15 +12,15 @@ import 'package:journal_app/features/authentication/services/auth_service.dart';
 import 'package:journal_app/features/authentication/services/image_service.dart';
 import 'package:journal_app/features/authentication/services/token_service.dart';
 import 'package:journal_app/features/authentication/services/user_service.dart';
-import 'package:journal_app/features/entry/models/updated_entry.dart';
 import 'package:journal_app/features/journal/services/journal_entry_service.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
+import 'package:journal_app/features/quotes/shared/models/liked_quote_provider.dart';
 import 'package:journal_app/features/quotes/shared/services/liked_quotes_service.dart';
 import 'package:journal_app/features/quotes/shared/services/zen_quotes_api_service.dart';
 import 'package:journal_app/features/shared/abstractions/base_user.dart';
 import 'package:journal_app/features/shared/factory/factory.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
-import 'package:journal_app/features/shared/models/new_entry.dart';
+import 'package:journal_app/features/shared/services/database_service.dart';
 import 'package:journal_app/features/shared/services/device_size_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
@@ -35,6 +34,8 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'test_data.dart';
 import 'test_helpers.mocks.dart';
+
+// TODO: SQL Database needs to be mocked properly
 
 // Generating Mock CLasses to be Stubbed
 
@@ -59,6 +60,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<ToastService>(),
   MockSpec<LikedQuotesService>(),
   MockSpec<ZenQuotesApiService>(),
+  MockSpec<DatabaseService>(),
+  MockSpec<LikedQuoteProvider>()
 ])
 class MockRouter extends Mock implements AppRouter {}
 
@@ -100,8 +103,10 @@ AppRouter getAndRegisterAppRouterMock() {
 
 JournalEntryService getAndRegisterJournalEntryServiceMock({
   List<JournalEntry> initialEntries = const [],
-  NewEntry newEntry = const NewEntry(moodType: '', content: ''),
+  JournalEntry? newEntry,
 }) {
+  newEntry ??= JournalEntry(entryID: 1, moodType: '', content: '', createdAt: DateTime.now(), updatedAt: DateTime.now());
+
   //  remove service if registered
   _removeRegistrationIfExists<JournalEntryService>();
 
@@ -110,7 +115,8 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
 
   final addedEntry = newEntry;
 
-  final updatedEntry = UpdatedEntry(entryId: testEntry.entryId, content: testEntry.content);
+  final updatedEntry =
+      JournalEntry(moodType: testEntry.moodType, content: testEntry.content, createdAt: DateTime.now(), updatedAt: DateTime.now());
 
   // instantiate mock service
   final JournalEntryService service = MockJournalEntryService();
@@ -119,27 +125,21 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
   when(service.journalEntries).thenReturn(loadedEntries);
 
   when(service.getAllEntries()).thenAnswer(
-    (_) async => Future.value(
-      Response('{"data":${loadedEntries.map((entry) => jsonEncode(entry.toJSON()))}}', 200),
-    ),
+    (_) async => Future.value(),
   );
 
   when(service.updateEntry(updatedEntry)).thenAnswer(
-    (_) async => Future.value(
-      Response('{"updated_entry":${jsonEncode(updatedEntry.toJSON())}', 200),
-    ),
+    (_) async => Future.value(),
   );
 
   when(service.addEntry(addedEntry)).thenAnswer(
     (_) async => Future.value(
-      Response('{"data": ${jsonEncode(addedEntry.toJSON())}}', 200),
+      addedEntry.entryID,
     ),
   );
 
-  when(service.deleteEntry(testEntry.entryId)).thenAnswer(
-    (_) async => Future.value(
-      Response('{"success": "entry deleted"}', 200),
-    ),
+  when(service.deleteEntry(addedEntry)).thenAnswer(
+    (_) async => Future.value(),
   );
 
   // register mocked service as singleton
@@ -377,7 +377,7 @@ LikedQuotesService getAndRegisterLikedQuotesService() {
 
   when(service.addQuote(testQuotes[0])).thenAnswer((_) => Future.value(Response('', 200)));
 
-  when(service.deleteLikedQuote(testLikedQuotes[0].id!)).thenAnswer((_) => Future.value(Response('', 200)));
+  when(service.deleteLikedQuote(testLikedQuotes[0])).thenAnswer((_) => Future.value());
 
   // register mock to service locator
   locator.registerSingleton<LikedQuotesService>(service);
@@ -395,6 +395,37 @@ ZenQuotesApiService getAndRegisterZenQuotesApiService() {
   when(service.quotes).thenReturn(testQuotes);
 
   when(service.fetchRandomQuotes()).thenAnswer((_) => Future.value());
+
+  return service;
+}
+
+DatabaseService getAndRegisterDatabaseService() {
+  // remove service if exists
+  _removeRegistrationIfExists<DatabaseService>();
+
+  // mock service instantiation
+  final DatabaseService service = MockDatabaseService();
+
+  // mock class stubs
+  when(service.initialize()).thenAnswer((_) => Future.value());
+
+  // register mock to service locator
+  locator.registerSingleton<DatabaseService>(service);
+
+  return service;
+}
+
+LikedQuoteProvider getAndRegisterLikedQuoteProvider() {
+  _removeRegistrationIfExists<LikedQuoteProvider>();
+
+  final LikedQuoteProvider service = MockLikedQuoteProvider();
+
+  // mock class stubs
+  // TODO: work on stubbing LikedQuoteProvider
+  // when(service.de).thenAnswer((_) => Future.value());
+
+  // register mock to service locator
+  locator.registerSingleton<LikedQuoteProvider>(service);
 
   return service;
 }
