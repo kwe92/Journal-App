@@ -7,7 +7,7 @@ part of 'journal_entry.dart';
 // **************************************************************************
 
 JournalEntry _$JournalEntryFromJson(Map<String, dynamic> json) => JournalEntry(
-      entryID: json['id'] as int?,
+      entryID: (json['id'] as num?)?.toInt(),
       content: json['content'] as String,
       moodType: json['mood_type'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),

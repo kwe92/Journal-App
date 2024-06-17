@@ -24,7 +24,6 @@ class DeeperMeaningsView extends StatelessWidget {
             duration: const Duration(milliseconds: 500),
             child: CustomScrollView(
               slivers: [
-                // TODO: remove duplicated code
                 SliverAppBar(
                   toolbarHeight: 56,
                   forceElevated: true,

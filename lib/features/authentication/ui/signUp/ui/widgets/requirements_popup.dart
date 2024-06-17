@@ -6,8 +6,7 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: change to background in dark mode
-
+// Deprecated Code
 class RequirementsPopup extends ViewModelWidget<SignUpViewModel> {
   const RequirementsPopup({super.key});
 

@@ -8,6 +8,7 @@ class PrefKeys {
 
   static const accessToken = "jwt";
   static const appMode = "app_mode";
+  static const notifPermissions = "notification_permissions";
 }
 
 /// MIME types used to transfer data between systems.

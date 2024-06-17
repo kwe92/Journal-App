@@ -16,7 +16,6 @@ class ImagePickerService {
 
     try {
       final List<XFile> pickedImageFile = await picker.getMultiImageWithOptions(
-        // TODO: review image options
         options: const MultiImagePickerOptions(
           imageOptions: ImageOptions(
             imageQuality: 50,
@@ -68,7 +67,6 @@ class ImagePickerService {
         {
           '${imageObjs[i]!.imageName}-$i': Image.memory(
             base64Decode(imageObjs[i]!.imageName),
-            // TODO: review
             fit: BoxFit.fill,
           ).image,
         },

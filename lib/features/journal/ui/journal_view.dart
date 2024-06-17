@@ -18,8 +18,6 @@ import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:provider/provider.dart';
 
-// !!!!! TODO: ensure the database is not queried every time the user scrolls
-
 @RoutePage()
 class JournalView extends StatelessWidget {
   const JournalView({super.key});

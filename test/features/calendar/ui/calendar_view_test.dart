@@ -1,8 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:journal_app/features/calendar/ui/calendar_view.dart';
+import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
+import 'package:journal_app/features/shared/services/image_picker_service.dart';
 import 'package:journal_app/features/shared/services/mood_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/time_service.dart';
@@ -14,6 +16,10 @@ import '../../../support/test_helpers.dart';
 
 void main() {
   group("CalendarView - ", () {
+    setUpAll(() async {
+      await registerSharedServices();
+    });
+
     final DateTime focusedDay = DateTime.now();
 
     Future<void> pumpView(WidgetTester tester) async {
@@ -22,18 +28,19 @@ void main() {
           value: appModeService,
           builder: (context, child) {
             return TestingWrapper.portal(
-              CalendarView(
-                focusedDay: focusedDay,
+              ChangeNotifierProvider(
+                create: (context) => JournalViewModel(),
+                builder: (context, child) {
+                  return CalendarView(
+                    focusedDay: focusedDay,
+                  );
+                },
               ),
             );
           },
         ),
       );
     }
-
-    setUpAll(() async {
-      await registerSharedServices();
-    });
 
     testWidgets("when calender focused, then correct events are selected", (tester) async {
       // Arrange - Setup
@@ -43,6 +50,8 @@ void main() {
 
       getAndRegisterService<FlutterSecureStorage>(const FlutterSecureStorage());
       getAndRegisterService<AppModeService>(AppModeService());
+
+      getAndRegisterService<ImagePickerService>(ImagePickerService());
 
       appModeService.setLightMode(true);
 

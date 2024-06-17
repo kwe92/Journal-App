@@ -1,8 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/shared/services/services.dart';
-
-// TODO: edit comments
 
 class NotificationService extends ChangeNotifier {
   final channelGroupKey = "basic_group_channel";
@@ -36,7 +35,7 @@ class NotificationService extends ChangeNotifier {
 
   // check if notifications are allowed and if not then request to allow notifications
   Future<void> checkNotificationPermissions() async {
-    final String? hasSetNotificationPermissions = await storageService.read(key: "notification_permissions");
+    final String? hasSetNotificationPermissions = await storageService.read(key: PrefKeys.notifPermissions);
 
     print("hasSetNotificationPermissions: $hasSetNotificationPermissions");
 
@@ -49,7 +48,7 @@ class NotificationService extends ChangeNotifier {
         isNotificationPermissionGranted = await instance.requestPermissionToSendNotifications();
 
         await storageService.write(
-          key: "notification_permissions",
+          key: PrefKeys.notifPermissions,
           value: isNotificationPermissionGranted.toString(),
         );
       }
