@@ -3,6 +3,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+// TODO: Create a stub for testing
+
 /// Record of all table names within the current database.
 typedef DatabaseTableNames = ({String entires, String likedQuotes, String images});
 
