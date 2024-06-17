@@ -37,8 +37,7 @@ import '../../../support/test_helpers.dart';
 
 // single entry
 final JournalEntry entry = JournalEntry(
-  entryId: 1,
-  uid: 1,
+  entryID: 1,
   content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
   moodType: MoodType.awesome.text,
   createdAt: DateTime.now(),
@@ -48,32 +47,28 @@ final JournalEntry entry = JournalEntry(
 // array of entries
 final List<JournalEntry> initialEntries = [
   JournalEntry(
-    entryId: 1,
-    uid: 1,
+    entryID: 1,
     content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
     moodType: MoodType.awesome.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
   JournalEntry(
-    entryId: 1,
-    uid: 1,
+    entryID: 2,
     content: 'compund intrst is the eighth wonder of the world',
     moodType: MoodType.awesome.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
   JournalEntry(
-    entryId: 1,
-    uid: 1,
+    entryID: 3,
     content: "the man who thinks he can and the man who thinks he can't are both right; which one are you?",
     moodType: MoodType.happy.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
   JournalEntry(
-    entryId: 1,
-    uid: 1,
+    entryID: 4,
     content: 'calmness is emptiness, emptiness is calmness.',
     moodType: MoodType.okay.text,
     createdAt: DateTime.now(),
@@ -111,7 +106,7 @@ void main() {
 
       /// Act
 
-      await model.initialize();
+      model.initialize();
 
       /// Assert - Result
 
@@ -135,7 +130,7 @@ void main() {
 
       /// Act
 
-      await model.initialize();
+      model.initialize();
 
       /// Assert - Result
 
@@ -179,7 +174,7 @@ void main() {
 
       /// Act
 
-      await model.initialize();
+      model.initialize();
 
       /// Assert - Result
 
@@ -260,7 +255,7 @@ void main() {
 
       // Act
 
-      await model.cleanResources();
+      model.cleanResources();
 
       // Assert - Result
 
@@ -279,7 +274,7 @@ void main() {
 
       // Act
 
-      await model.initialize();
+      model.initialize();
 
       model.setFilteredJournalEntries(MoodType.awesome.text, '');
 
