@@ -130,6 +130,7 @@ class AddEntryView extends StatelessWidget {
               backgroundColor: model.moodColor,
               children: [
                 CustomToolTip(
+                  backgroundColor: model.moodColor,
                   message: 'Save and exit',
                   child: ActionButton(
                     backgroundColor: model.moodColor,
@@ -152,6 +153,7 @@ class AddEntryView extends StatelessWidget {
                   ),
                 ),
                 CustomToolTip(
+                  backgroundColor: model.moodColor,
                   message: 'Add image',
                   child: ActionButton(
                     backgroundColor: model.moodColor,
