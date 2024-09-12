@@ -1,22 +1,26 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/app_router.gr.dart';
-import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/addEntry/ui/add_entry_view_model.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
-import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
+import 'package:journal_app/features/shared/ui/button/expandingFab/action_button.dart';
+import 'package:journal_app/features/shared/ui/button/expandingFab/controllers/expandable_fab_controller.dart';
+import 'package:journal_app/features/shared/ui/button/expandingFab/expandable_fab.dart';
 import 'package:journal_app/features/shared/ui/widgets/centered_loader.dart';
+import 'package:journal_app/features/shared/ui/widgets/custom_tool_tip.dart';
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import 'package:journal_app/features/shared/ui/widgets/image_layout.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: Check timer conversion, as later in the day the journal entry gets set to the next day
+//!! TODO: Check timer conversion, as later in the day the journal entry gets set to the next day
 
+@immutable
 @RoutePage()
 class AddEntryView extends StatelessWidget {
   final String moodType;
@@ -25,133 +29,154 @@ class AddEntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController newEntryController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     return ViewModelBuilder<AddEntryViewModel>.reactive(
-      viewModelBuilder: () => AddEntryViewModel(),
-      onViewModelReady: (AddEntryViewModel model) => model.initialize(moodType, DateTime.now()),
-      builder: (BuildContext context, AddEntryViewModel model, _) => BaseScaffold(
-        moodColor: model.moodColor,
-        // Manifested in french
-        title: "Manifesté",
-        leading: CustomBackButton(
-          color: model.moodColor,
-          onPressed: () => appRouter.pop(),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: ProfileIcon(
-              userFirstName: model.currentUser?.firstName ?? "P",
+        viewModelBuilder: () => AddEntryViewModel(),
+        onViewModelReady: (AddEntryViewModel model) => model.initialize(moodType),
+        builder: (BuildContext context, AddEntryViewModel model, _) {
+          final expandableFabController = context.read<ExpandableFabController>();
+
+          return BaseScaffold(
+            moodColor: model.moodColor,
+            // Manifested in french
+            title: "Manifesté",
+            leading: CustomBackButton(
               color: model.moodColor,
-              onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
+              onPressed: appRouter.pop,
             ),
-          ),
-        ],
-        body: Stack(children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  FormContainer(
-                    dayOfWeekByName: model.dayOfWeekByName,
-                    timeOfDay: model.timeOfDay,
-                    continentalTime: model.continentalTime,
-                    height: model.images.isEmpty
-                        ? null
-                        : model.images.length < 4
-                            ? MediaQuery.of(context).size.height / 2.5
-                            : MediaQuery.of(context).size.height / 3.75,
-                    child: Form(
-                      key: formKey,
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          textSelectionTheme: AppTheme.getTextSelectionThemeData(model.moodColor!),
-                          cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(model.moodColor!),
-                        ),
-                        child: TextFormField(
-                          // used to control the native keyboard option
-                          textInputAction: TextInputAction.done,
-                          // focus text field upon inital render
-                          autofocus: true,
-                          expands: true,
-                          maxLines: null,
-                          // automatically capitalize sentences for user
-                          textCapitalization: TextCapitalization.sentences,
-                          controller: newEntryController,
-                          decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
-                          onChanged: (value) => model.setContent(value),
-                          validator: stringService.customStringValidator(
-                            newEntryController.text,
-                            configuration: const StringValidatorConfiguration(notEmpty: true),
-                          ),
-                        ),
-                      ),
-                    ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: ProfileIcon(
+                  userFirstName: model.currentUser?.firstName ?? "P",
+                  color: model.moodColor,
+                  onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
+                ),
+              ),
+            ],
+            body: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24,
+                    top: 16,
+                    right: 24,
+                    bottom: 32,
                   ),
-                  model.images.isNotEmpty
-                      ? SizedBox(
-                          height:
-                              model.images.length > 3 ? MediaQuery.of(context).size.height / 2.5 : MediaQuery.of(context).size.height / 4,
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 24,
-                                right: 24,
-                                top: 6,
-                                bottom: 24,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: FormContainer(
+                          dayOfWeekByName: model.dayOfWeekByName,
+                          timeOfDay: model.timeOfDay,
+                          continentalTime: model.continentalTime,
+                          child: Form(
+                            key: formKey,
+                            child: Theme(
+                              data: Theme.of(context).copyWith(
+                                textSelectionTheme: AppTheme.getTextSelectionThemeData(model.moodColor!),
+                                cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(model.moodColor!),
                               ),
-                              child: SingleChildScrollView(
-                                child: ImageLayout(removeImageCallback: model.removeImage, images: model.images),
+                              child: TextFormField(
+                                // used to control the native keyboard option
+                                textInputAction: TextInputAction.done,
+                                // focus text field upon inital render
+                                autofocus: true,
+                                expands: true,
+                                maxLines: null,
+                                // automatically capitalize sentences for user
+                                textCapitalization: TextCapitalization.sentences,
+                                controller: model.newEntryController,
+                                decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
+                                onChanged: model.setContent,
+                                validator: stringService.customStringValidator(
+                                  model.newEntryController.text,
+                                  configuration: const StringValidatorConfiguration(notEmpty: true),
+                                ),
                               ),
                             ),
                           ),
-                        )
-                      : const SizedBox(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      children: [
-                        SelectableButton(
-                          color: !model.isBusy ? model.moodColor : AppColors.offGrey,
-                          onPressed: () async => await model.pickImages(),
-                          label: "Add Image",
                         ),
-                        const SizedBox(height: 16),
-                        SelectableButton(
-                          color: model.moodColor,
-                          onPressed: () async {
-                            if ((formKey.currentState?.validate() ?? false) && model.ready) {
-                              final bool statusOk = await model.addEntry(
-                                moodType,
-                                model.content!,
-                              );
-
-                              if (statusOk) {
-                                await appRouter.replace(NavigationRoute());
-                              }
-                            }
-                          },
-                          label: "Add Entry",
-                        ),
-                      ],
-                    ),
+                      ),
+                      model.images.isNotEmpty
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 12,
+                                  bottom: 12,
+                                ),
+                                child: SingleChildScrollView(
+                                  child: ImageLayout(
+                                    removeImageCallback: model.removeImage,
+                                    images: model.images,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                if (model.isBusy) CenteredLoader(color: model.moodColor!)
+              ],
             ),
-          ),
-          if (model.isBusy) CenteredLoader(color: model.moodColor!)
-        ]),
-      ),
-    );
+
+            floatingActionButton: ExpandableFab(
+              distance: 96.0,
+              angleInDegrees: 16.0,
+              step: 60.0,
+              backgroundColor: model.moodColor,
+              children: [
+                CustomToolTip(
+                  message: 'Save and exit',
+                  child: ActionButton(
+                    backgroundColor: model.moodColor,
+                    icon: const Icon(
+                      Icons.check,
+                    ),
+                    onPressed: () async {
+                      expandableFabController.toggle();
+                      if ((formKey.currentState?.validate() ?? false) && model.ready) {
+                        final bool statusOk = await model.addEntry(
+                          moodType,
+                          model.content!,
+                        );
+
+                        if (statusOk) {
+                          await appRouter.replace(NavigationRoute());
+                        }
+                      }
+                    },
+                  ),
+                ),
+                CustomToolTip(
+                  message: 'Add image',
+                  child: ActionButton(
+                    backgroundColor: model.moodColor,
+                    icon: const Icon(
+                      Icons.insert_photo,
+                    ),
+                    onPressed: !model.isBusy
+                        ? () async {
+                            expandableFabController.toggle();
+                            await model.pickImages();
+                          }
+                        : null,
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
 
 // Infinitly Long TextField
 
 //   - set TextField parameters:
+
 //       ~ expands: true
+
 //       ~ maxLines: null
