@@ -7,6 +7,7 @@ import 'package:journal_app/features/journal/ui/journal_view_model.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/ui/button/expandingFab/controllers/expandable_fab_controller.dart';
 import 'package:journal_app/features/shared/utilities/load_env_variables.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:provider/provider.dart';
@@ -53,8 +54,15 @@ void main() async {
           Portal(
         child: MultiProvider(
           providers: [
-            ChangeNotifierProvider.value(value: appModeService),
-            ChangeNotifierProvider(create: (context) => JournalViewModel()),
+            ChangeNotifierProvider.value(
+              value: appModeService,
+            ),
+            ChangeNotifierProvider(
+              create: (context) => JournalViewModel(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => ExpandableFabController(initialOpen: false),
+            )
           ],
           builder: (context, _) {
             return const MyApp();
