@@ -9,44 +9,63 @@ import 'package:provider/provider.dart';
 
 @immutable
 class ExpandableFab extends StatelessWidget {
-  final bool? initialOpen;
-
   final double distance;
 
   final List<Widget> children;
 
+  final Color? backgroundColor;
+
+  final bool? initialOpen;
+
+  final double? angleInDegrees;
+
+  final double? step;
+
   const ExpandableFab({
     required this.distance,
     required this.children,
+    this.backgroundColor,
     this.initialOpen,
+    this.angleInDegrees,
+    this.step,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => ExpandableFabController(initialOpen: false),
-      builder: (BuildContext context, Widget? _) {
-        final controller = context.read<ExpandableFabController>();
+    return Builder(
+      builder: (BuildContext context) {
+        final controller = context.watch<ExpandableFabController>();
         return SizedBox.expand(
-          child: Stack(
-            alignment: Alignment.bottomRight,
-            clipBehavior: Clip.none,
-            children: [
-              const CloseExpandingFab(),
-              ...[
-                for (var i = 0, angleInDegrees = 0.0, count = children.length, step = 90.0 / (count - 1);
-                    i < count;
-                    i++, angleInDegrees += step)
-                  ExpandingActionButton(
-                    directionInDegrees: angleInDegrees,
-                    maxDistance: distance,
-                    progress: controller.expandAnimation,
-                    child: children[i],
-                  ),
+          child: GestureDetector(
+            behavior: controller.open ? HitTestBehavior.translucent : null,
+            onTap: controller.open ? controller.toggle : null,
+            child: Stack(
+              alignment: Alignment.bottomRight,
+              clipBehavior: Clip.none,
+              children: [
+                CloseExpandingFab(
+                  backgroundColor: backgroundColor,
+                ),
+                ...[
+                  for (var i = 0,
+                          angleInDegrees = this.angleInDegrees ?? 0.0,
+                          count = children.length,
+                          step = this.step ?? 90.0 / (count - 1);
+                      i < count;
+                      i++, angleInDegrees += step)
+                    ExpandingActionButton(
+                      directionInDegrees: angleInDegrees,
+                      maxDistance: distance,
+                      progress: controller.expandAnimation,
+                      child: children[i],
+                    ),
+                ],
+                OpenExpandingFab(
+                  backgroundColor: backgroundColor,
+                ),
               ],
-              const OpenExpandingFab(),
-            ],
+            ),
           ),
         );
       },
