@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 
-//!! TODO: Change background color
-
 @immutable
 class ActionButton extends StatelessWidget {
   final Widget icon;
   final VoidCallback? onPressed;
+  final Color? backgroundColor;
 
   const ActionButton({
     required this.icon,
     this.onPressed,
+    this.backgroundColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
+      color: backgroundColor,
       elevation: 4,
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: theme.colorScheme.onSecondary,
+        color: Colors.black,
       ),
     );
   }
