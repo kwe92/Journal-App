@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/ui/button/expandingFab/controllers/expandable_fab_controller.dart';
 import 'package:provider/provider.dart';
 
-//!! TODO: Change background color | add barrier if use clicks outside the buttons to close
-
 @immutable
 class CloseExpandingFab extends StatelessWidget {
-  const CloseExpandingFab({super.key});
+  final Color? backgroundColor;
+
+  const CloseExpandingFab({
+    this.backgroundColor,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class CloseExpandingFab extends StatelessWidget {
       child: Center(
         // creates a circular button with a box shadow
         child: Material(
-          color: AppColors.lotusColor,
+          color: backgroundColor,
           shape: const CircleBorder(),
           // achieve a smoother look for circles
           clipBehavior: Clip.antiAlias,
@@ -29,11 +31,11 @@ class CloseExpandingFab extends StatelessWidget {
           // add splash effect with InkWell
           child: InkWell(
             onTap: controller.toggle,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: Colors.black,
               ),
             ),
           ),

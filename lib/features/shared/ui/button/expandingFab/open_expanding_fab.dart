@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/ui/button/expandingFab/controllers/expandable_fab_controller.dart';
 import 'package:provider/provider.dart';
 
-//!! TODO: Change background color
-
 /// a button that scales up and down, fading in and out respectively
 @immutable
 class OpenExpandingFab extends StatelessWidget {
-  const OpenExpandingFab({super.key});
+  final Color? backgroundColor;
+  const OpenExpandingFab({
+    this.backgroundColor,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +35,12 @@ class OpenExpandingFab extends StatelessWidget {
           duration: const Duration(milliseconds: 250),
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           child: FloatingActionButton(
+            backgroundColor: backgroundColor,
             onPressed: controller.toggle,
-            child: const Icon(Icons.create),
+            child: const Icon(
+              Icons.create,
+              color: Colors.black,
+            ),
           ),
         ),
       ),
