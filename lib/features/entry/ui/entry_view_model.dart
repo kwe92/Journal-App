@@ -12,8 +12,10 @@ import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
 
-class EntryviewModel extends ReactiveViewModel {
+class EntryViewModel extends ReactiveViewModel {
   final TextEditingController entryController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   final FocusNode entryFocus = FocusNode();
 
@@ -59,7 +61,7 @@ class EntryviewModel extends ReactiveViewModel {
 
   BaseUser? get currentUser => _currentUser;
 
-  EntryviewModel({required this.entry});
+  EntryViewModel({required this.entry});
 
 // required override for ReactiveViewModel to react to changes in a service
   @override
