@@ -18,6 +18,8 @@ import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:provider/provider.dart';
 
+//!! TODO: Ensure that the entries are in decending order by date
+
 @RoutePage()
 class JournalView extends StatelessWidget {
   const JournalView({super.key});

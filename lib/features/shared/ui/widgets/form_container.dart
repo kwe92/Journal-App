@@ -9,28 +9,19 @@ class FormContainer extends StatelessWidget {
   final String dayOfWeekByName;
   final String timeOfDay;
   final int continentalTime;
-  final double? height;
 
   const FormContainer({
     required this.dayOfWeekByName,
     required this.timeOfDay,
     required this.continentalTime,
     required this.child,
-    this.height,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height ?? MediaQuery.of(context).size.height / 1.5,
-      width: double.maxFinite,
-      // TODO: check spacing now on small devices due to adding images
-      // margin: EdgeInsets.symmetric(horizontal: 24, vertical: !deviceSizeService.smallDevice ? 32 : 24),
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-
       decoration: BoxDecoration(
-        // color: AppColors.offWhite,
         color: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey0,
         borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),

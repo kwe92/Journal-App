@@ -10,20 +10,16 @@ import 'package:journal_app/features/shared/services/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
 
+//!! TODO: Should the notification methods be moved to the notification service?
+
 class AddEntryViewModel extends ReactiveViewModel {
+  final TextEditingController newEntryController = TextEditingController();
+
   String? _content;
 
   Color? _moodColor;
 
-  String? get content => _content;
-
-  Color? get moodColor => _moodColor;
-
-  BaseUser? get currentUser => userService.currentUser;
-
   DateTime? now;
-
-  // ?---------new member variables for image selection
 
   int _imageCounter = 0;
 
@@ -35,9 +31,13 @@ class AddEntryViewModel extends ReactiveViewModel {
 
   List<ImageProvider> _images = [];
 
-  List<ImageProvider> get images => _images;
+  String? get content => _content;
 
-  // ?---------end
+  Color? get moodColor => _moodColor;
+
+  BaseUser? get currentUser => userService.currentUser;
+
+  List<ImageProvider> get images => _images;
 
   // computed variable based on content state updated with change notifier
   bool get ready {
@@ -57,11 +57,11 @@ class AddEntryViewModel extends ReactiveViewModel {
         userService,
       ];
 
-  void initialize(String moodType, DateTime dateTime) {
+  void initialize(String moodType) {
     // set the theme for the view to the color of the mood type
     _moodColor = moodService.getMoodColorByType(moodType);
 
-    now = dateTime;
+    now = DateTime.now();
   }
 
   void setContent(String text) {
@@ -239,7 +239,6 @@ class AddEntryViewModel extends ReactiveViewModel {
     _photoStrings = [];
     _images = [];
     _imagesMap = {};
-
     notifyListeners();
   }
 }
