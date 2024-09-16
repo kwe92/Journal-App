@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
+import 'package:journal_app/features/entry/ui/entry_view.dart';
 import 'package:journal_app/features/journal/ui/widget/date_tile.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_content.dart';
 import 'package:journal_app/features/journal/ui/widget/mood_tile.dart';
 import 'package:journal_app/features/mood/models/mood.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/ui/widgets/open_container_wrapper.dart';
 
 class JournalEntryCard extends StatelessWidget {
   final int index;
@@ -44,12 +45,12 @@ class JournalEntryCard extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          JournalContent(
-            onPressed: () async => await appRouter.push(
-              EntryRoute(entry: journalEntry),
+          OpenContainerWrapper(
+            closedChild: JournalContent(
+              journalEntry: journalEntry,
+              moodBackgroundColor: mood.moodColorBackground,
             ),
-            journalEntry: journalEntry,
-            moodBackgroundColor: mood.moodColorBackground,
+            openChild: EntryView(entry: journalEntry),
           ),
         ],
       ),
