@@ -1,10 +1,11 @@
+import 'package:animations/animations.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/route_navigation.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/deeper_meanings_view_model.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/widgets/prompt_card.dart';
 import 'package:journal_app/features/meanings/prompts/ui/prompts_view.dart';
+import 'package:journal_app/features/shared/ui/widgets/custom_page_route_builder.dart';
 import 'package:provider/provider.dart';
 
 class DeeperMeaningsView extends StatelessWidget {
@@ -54,14 +55,14 @@ class DeeperMeaningsView extends StatelessWidget {
                       child: PromptCard(
                         onTap: () async {
                           model.setVisibility(false);
-
-                          await RouteNavigation.pushWithTransition(
-                            context,
-                            PromptsView(
-                              promptText: model.prompts[index],
+                          await Navigator.of(context).push(
+                            CustomPageRouteBuilder.sharedAxisTransition(
+                              transitionType: SharedAxisTransitionType.scaled,
+                              pageBuilder: (_, __, ___) => PromptsView(
+                                promptText: model.prompts[index],
+                              ),
                             ),
                           );
-
                           model.setVisibility(true);
                         },
                         promptText: model.prompts[index],

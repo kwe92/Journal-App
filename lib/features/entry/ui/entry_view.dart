@@ -11,7 +11,9 @@ import "package:journal_app/features/shared/ui/button/custom_back_button.dart";
 import "package:journal_app/features/shared/ui/button/expandingFab/action_button.dart";
 import "package:journal_app/features/shared/ui/button/expandingFab/controllers/expandable_fab_controller.dart";
 import "package:journal_app/features/shared/ui/button/expandingFab/expandable_fab.dart";
+import "package:journal_app/features/shared/ui/navigation_view.dart";
 import "package:journal_app/features/shared/ui/widgets/centered_loader.dart";
+import "package:journal_app/features/shared/ui/widgets/custom_page_route_builder.dart";
 import "package:journal_app/features/shared/ui/widgets/custom_tool_tip.dart";
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
 import "package:journal_app/features/shared/ui/widgets/image_layout.dart";
@@ -134,14 +136,13 @@ class EntryView extends StatelessWidget {
                     expandableFabController.toggle();
                     // if the content is identical do not call backend and pop route
                     if (model.isIdenticalContent) {
-                      appRouter.pop();
+                      Navigator.of(context).pop();
                       return;
                     }
 
                     if (model.formKey.currentState?.validate() ?? false) {
                       await model.updateEntry();
-
-                      await appRouter.replace(NavigationRoute());
+                      Navigator.of(context).pop();
                     }
                   },
                 ),
@@ -185,9 +186,12 @@ class EntryView extends StatelessWidget {
                       final bool statusOk = await model.deleteEntry(entry);
 
                       if (statusOk) {
-                        debugPrint('entry deleted successfully');
-
-                        await appRouter.replace(NavigationRoute());
+                        await Navigator.of(context).pushReplacement(
+                          CustomPageRouteBuilder.sharedAxisTransition(
+                            transitionDuration: const Duration(milliseconds: 800),
+                            pageBuilder: (_, __, ___) => const NavigationView(),
+                          ),
+                        );
                       }
                     }
                   },

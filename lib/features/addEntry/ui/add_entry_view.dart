@@ -10,6 +10,7 @@ import 'package:journal_app/features/shared/ui/button/custom_back_button.dart';
 import 'package:journal_app/features/shared/ui/button/expandingFab/action_button.dart';
 import 'package:journal_app/features/shared/ui/button/expandingFab/controllers/expandable_fab_controller.dart';
 import 'package:journal_app/features/shared/ui/button/expandingFab/expandable_fab.dart';
+import 'package:journal_app/features/shared/ui/navigation_view.dart';
 import 'package:journal_app/features/shared/ui/widgets/centered_loader.dart';
 import 'package:journal_app/features/shared/ui/widgets/custom_tool_tip.dart';
 import 'package:journal_app/features/shared/ui/widgets/form_container.dart';
@@ -146,7 +147,7 @@ class AddEntryView extends StatelessWidget {
                         );
 
                         if (statusOk) {
-                          await appRouter.replace(NavigationRoute());
+                          await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const NavigationView()));
                         }
                       }
                     },

@@ -1,14 +1,16 @@
+import 'package:animations/animations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/resources/reusables.dart';
+import 'package:journal_app/features/addEntry/ui/add_entry_view.dart';
 import 'package:journal_app/features/mood/ui/mood_view_model.dart';
 import 'package:journal_app/features/mood/ui/widgets/cancel_button.dart';
 import 'package:journal_app/features/mood/ui/widgets/mood_card.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
+import 'package:journal_app/features/shared/ui/widgets/custom_page_route_builder.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -98,7 +100,14 @@ class MoodView extends StatelessWidget {
                           child: SelectableButton(
                               labelPadding: const EdgeInsets.symmetric(vertical: 16),
                               onPressed: () async {
-                                await appRouter.push(AddEntryRoute(moodType: model.moodType));
+                                await Navigator.of(context).push(
+                                  CustomPageRouteBuilder.sharedAxisTransition(
+                                    transitionType: SharedAxisTransitionType.scaled,
+                                    pageBuilder: (_, __, ___) => AddEntryView(
+                                      moodType: model.moodType,
+                                    ),
+                                  ),
+                                );
                               },
                               label: "Continue"),
                         ),
