@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
 
+//!! TODO: refactor light and dark mode
+
 // main application theme
 class AppTheme {
   const AppTheme._();
