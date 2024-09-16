@@ -8,6 +8,7 @@ import 'package:journal_app/features/journal/ui/widget/add_button.dart';
 import 'package:journal_app/features/journal/ui/widget/hideable_search_bar.dart';
 import 'package:journal_app/features/journal/ui/widget/journal_entry_card.dart';
 import 'package:journal_app/features/journal/ui/widget/side_menu.dart';
+import 'package:journal_app/features/mood/ui/mood_view.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
@@ -15,6 +16,7 @@ import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/ui/hideable_mood_count.dart';
+import 'package:journal_app/features/shared/ui/widgets/open_container_wrapper.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:provider/provider.dart';
 
@@ -128,8 +130,13 @@ class JournalView extends StatelessWidget {
       }),
       //ADD NEW ENTRY BUTTON
       floatingActionButton: model.isFabVisible
-          ? AddButton(
-              onTap: () async => await appRouter.push(const MoodRoute()),
+          ? const OpenContainerWrapper(
+              closedShape: RoundedRectangleBorder(),
+              openElevation: 0,
+              middleColor: Colors.transparent,
+              closedColor: Colors.transparent,
+              closedChild: AddButton(size: 64),
+              openChild: MoodView(),
             )
           : null,
     );
