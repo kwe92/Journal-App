@@ -21,4 +21,5 @@ echo $(dart run build_runner build --delete-conflicting-outputs)
 # bellow the shebang construct type:
 
 #   - prefix with echo and wrap the string you want to execute in your terminal with parenthesis preceded by $
+
 #   - echo $(the_string_you_wish_to_run_as_a_terminal_command_with_the_underscores)
