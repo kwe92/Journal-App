@@ -44,7 +44,10 @@ class EntryView extends StatelessWidget {
           title: "Manifesté",
           leading: CustomBackButton(
             color: model.moodColor,
-            onPressed: appRouter.pop,
+            onPressed: () {
+              model.cancelEdit();
+              appRouter.pop();
+            },
           ),
           actions: [
             Padding(
