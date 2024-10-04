@@ -12,6 +12,8 @@ import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
 
+// TODO: Refactor how images are handled
+
 class EntryViewModel extends ReactiveViewModel {
   final TextEditingController entryController = TextEditingController();
 
@@ -81,23 +83,6 @@ class EntryViewModel extends ReactiveViewModel {
 
   void setContent(String text) {
     _content = text.trim();
-    notifyListeners();
-  }
-
-  void clearContent() {
-    _content = null;
-
-    _imageCounter = 0;
-
-    _imagesMap = {};
-
-    _imagesToDelete = [];
-
-    _updatedPhotoStrings = [];
-    _images = [];
-
-    _photos = [];
-
     notifyListeners();
   }
 
@@ -257,6 +242,24 @@ class EntryViewModel extends ReactiveViewModel {
 
   void cancelEdit() {
     entry.images = [...entry.images, ..._imagesToDelete];
+    notifyListeners();
+  }
+
+  void clearContent() {
+    _content = null;
+
+    _imageCounter = 0;
+
+    _imagesMap = {};
+
+    _imagesToDelete = [];
+
+    _updatedPhotoStrings = [];
+
+    _images = [];
+
+    _photos = [];
+
     notifyListeners();
   }
 }
