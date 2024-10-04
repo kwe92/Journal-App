@@ -8,8 +8,6 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:ui' as _i19;
-
 import 'package:auto_route/auto_route.dart' as _i16;
 import 'package:flutter/material.dart' as _i17;
 import 'package:journal_app/features/addEntry/ui/add_entry_view.dart' as _i1;
@@ -116,14 +114,9 @@ abstract class $AppRouter extends _i16.RootStackRouter {
       );
     },
     NavigationRoute.name: (routeData) {
-      final args = routeData.argsAs<NavigationRouteArgs>(
-          orElse: () => const NavigationRouteArgs());
       return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i11.NavigationView(
-          backgroundColor: args.backgroundColor,
-          key: args.key,
-        ),
+        child: const _i11.NavigationView(),
       );
     },
     ProfileSettingsRoute.name: (routeData) {
@@ -386,40 +379,16 @@ class MoodRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.NavigationView]
-class NavigationRoute extends _i16.PageRouteInfo<NavigationRouteArgs> {
-  NavigationRoute({
-    _i19.Color? backgroundColor,
-    _i17.Key? key,
-    List<_i16.PageRouteInfo>? children,
-  }) : super(
+class NavigationRoute extends _i16.PageRouteInfo<void> {
+  const NavigationRoute({List<_i16.PageRouteInfo>? children})
+      : super(
           NavigationRoute.name,
-          args: NavigationRouteArgs(
-            backgroundColor: backgroundColor,
-            key: key,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'NavigationRoute';
 
-  static const _i16.PageInfo<NavigationRouteArgs> page =
-      _i16.PageInfo<NavigationRouteArgs>(name);
-}
-
-class NavigationRouteArgs {
-  const NavigationRouteArgs({
-    this.backgroundColor,
-    this.key,
-  });
-
-  final _i19.Color? backgroundColor;
-
-  final _i17.Key? key;
-
-  @override
-  String toString() {
-    return 'NavigationRouteArgs{backgroundColor: $backgroundColor, key: $key}';
-  }
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
