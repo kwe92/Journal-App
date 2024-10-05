@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:journal_app/features/shared/models/journal_entry_provider.dart';
 import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
@@ -20,6 +19,8 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
   Future<void> getAllEntries() async {
     _journalEntries = await JournalEntryProvider.getAll();
 
+    _sortEntriesByUpdatedDate();
+
     notifyListeners();
   }
 
@@ -29,6 +30,8 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     newEntry.entryID = entryID;
 
     _journalEntries.add(newEntry);
+
+    _sortEntriesByUpdatedDate();
 
     notifyListeners();
 
@@ -53,17 +56,17 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     notifyListeners();
   }
 
-  List<JournalEntry> sortByUpdatedDate(List<Map<String, dynamic>> entries, [bool asc = false]) {
+  void _sortEntriesByUpdatedDate([bool asc = false]) {
     if (asc) {
-      return entries.map((entry) => JournalEntry.fromJSON(entry)).toList().sorted(
-            // sort by decending udated date
-            (entryA, entryB) => entryA.updatedAt.compareTo(entryB.updatedAt),
-          );
+      _journalEntries.sort(
+        // sort by ascending udated date
+        (entryA, entryB) => entryA.updatedAt.compareTo(entryB.updatedAt),
+      );
     } else {
-      return entries.map((entry) => JournalEntry.fromJSON(entry)).toList().sorted(
-            // sort by decending udated date
-            (entryA, entryB) => entryB.updatedAt.compareTo(entryA.updatedAt),
-          );
+      _journalEntries.sort(
+        // sort by decending udated date
+        (entryA, entryB) => entryB.updatedAt.compareTo(entryA.updatedAt),
+      );
     }
   }
 
