@@ -4,7 +4,9 @@ import 'package:journal_app/features/shared/ui/widgets/image_row.dart';
 
 class ImageLayout extends StatelessWidget {
   final void Function(ImageProvider image)? removeImageCallback;
+
   final List<ImageProvider> images;
+
   const ImageLayout({
     required this.images,
     this.removeImageCallback,

@@ -5,7 +5,6 @@ import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/app/theme/theme.dart';
 import 'package:journal_app/features/profile/profile_settings/ui/delete_profile_dialog_view.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
-import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/button/selectable_button.dart';
 import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
@@ -83,7 +82,7 @@ class ToastService {
                                   children: [
                                     SelectableButton(
                                       color: AppColors.offGrey,
-                                      onPressed: () => appRouter.pop(buttonOption.value),
+                                      onPressed: () => Navigator.of(context).pop(buttonOption.value),
                                       label: buttonOption.key,
                                     ),
                                     gap12,
@@ -91,7 +90,7 @@ class ToastService {
                                 )
                               : SelectableButton(
                                   color: color,
-                                  onPressed: () => appRouter.pop(buttonOption.value),
+                                  onPressed: () => Navigator.of(context).pop(buttonOption.value),
                                   label: buttonOption.key,
                                 );
                         }).toList()
