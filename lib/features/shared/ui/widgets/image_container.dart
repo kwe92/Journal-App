@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/theme/colors.dart';
 
 class ImageContainer extends StatelessWidget {
   final ImageProvider image;
@@ -32,17 +31,36 @@ class ImageContainer extends StatelessWidget {
             ),
           ),
           removeImageCallback != null
-              ? IconButton(
-                  onPressed: () => removeImageCallback!(image),
-                  icon: const Icon(
-                    Icons.close,
-                    size: 26,
-                    weight: 600,
-                    color: AppColors.mainThemeColor,
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 6, top: 6),
+                  child: _RemoveImageButton(
+                    onPressed: () => removeImageCallback!(image),
                   ),
                 )
               : const SizedBox(),
         ],
+      ),
+    );
+  }
+}
+
+class _RemoveImageButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  const _RemoveImageButton({required this.onPressed, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const shape = CircleBorder();
+    return Material(
+      shape: shape,
+      color: Colors.red,
+      child: InkWell(
+        customBorder: shape,
+        onTap: onPressed,
+        child: const Icon(
+          Icons.close,
+          color: Colors.white,
+        ),
       ),
     );
   }

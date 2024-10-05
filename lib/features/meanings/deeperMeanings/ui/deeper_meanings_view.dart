@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/deeper_meanings_view_model.dart';
 import 'package:journal_app/features/meanings/deeperMeanings/ui/widgets/prompt_card.dart';
@@ -26,17 +27,19 @@ class DeeperMeaningsView extends StatelessWidget {
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  // causes background color to look faded if not set to 0
+                  scrolledUnderElevation: 0,
                   toolbarHeight: 56,
                   forceElevated: true,
                   shadowColor: AppColors.darkGrey1.withOpacity(0.25),
                   surfaceTintColor: Colors.white,
                   automaticallyImplyLeading: false,
-                  backgroundColor: Theme.of(context).colorScheme.background,
-                  title: const Text(
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  title: Text(
                     "Deeper Meanings",
                     style: TextStyle(
-                      // color: Colors.white,
                       fontSize: 20,
+                      fontFamily: FontFamily.playwrite.name,
                     ),
                   ),
                 ),

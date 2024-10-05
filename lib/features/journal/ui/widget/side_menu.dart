@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/app_router.gr.dart';
 import 'package:journal_app/app/theme/colors.dart';
+import 'package:journal_app/features/analytics/ui/analytics_view.dart';
+import 'package:journal_app/features/calendar/ui/calendar_view.dart';
+import 'package:journal_app/features/profile/profile_settings/ui/profile_settings_view.dart';
 import 'package:journal_app/features/shared/services/services.dart';
+import 'package:journal_app/features/shared/ui/widgets/custom_page_route_builder.dart';
 
 class SideMenu extends Drawer {
-  final VoidCallback logoutCallback;
-
-  SideMenu({required this.logoutCallback, super.key});
+  SideMenu({super.key});
 
   final image = imageService.getRandomMindfulImage();
 
   @override
   Widget build(BuildContext context) => Drawer(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        surfaceTintColor: Colors.white,
+        // causes background color to look faded if not set to 0
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: const RoundedRectangleBorder(),
         width: MediaQuery.of(context).size.width / 1.5,
         //CustomScrollView required to have Spacer / Expanded Widgets within a ListView
         child: CustomScrollView(
@@ -31,19 +34,32 @@ class SideMenu extends Drawer {
                   ),
                   const Spacer(),
                   SplashableListTileButton(
-                    onTap: () async => await appRouter.push(const AnalyticsRoute()),
+                    onTap: () async => await Navigator.of(context).push(
+                      CustomPageRouteBuilder.sharedAxisTransition(
+                        transitionDuration: const Duration(milliseconds: 800),
+                        pageBuilder: (_, __, ___) => const AnalyticsView(),
+                      ),
+                    ),
                     leadingIcon: const Icon(Icons.bar_chart_sharp),
                     content: "Analytics",
                   ),
                   SplashableListTileButton(
-                    onTap: () async => await appRouter.push(CalendarRoute(focusedDay: DateTime.now())),
+                    onTap: () async => await Navigator.of(context).push(
+                      CustomPageRouteBuilder.sharedAxisTransition(
+                        transitionDuration: const Duration(milliseconds: 800),
+                        pageBuilder: (_, __, ___) => CalendarView(focusedDay: DateTime.now()),
+                      ),
+                    ),
                     leadingIcon: const Icon(Icons.calendar_month_outlined),
                     content: "Calendar",
                   ),
                   SplashableListTileButton(
-                    onTap: () async => await appRouter.push(const ProfileSettingsRoute()),
-                    leadingIcon: const Icon(Icons.person_outline),
-                    content: "Profile",
+                    onTap: () async => await Navigator.of(context).push(
+                      CustomPageRouteBuilder.sharedAxisTransition(
+                          transitionDuration: const Duration(milliseconds: 800), pageBuilder: (_, __, ___) => const ProfileSettingsView()),
+                    ),
+                    leadingIcon: const Icon(Icons.settings),
+                    content: "Settings",
                   ),
                 ],
               ),

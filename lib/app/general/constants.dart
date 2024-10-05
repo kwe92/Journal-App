@@ -1,5 +1,5 @@
-// All of the constants used throughout the applicaton
-// All classes implemented in this module should not have the ability to be instantiated
+// All of the constants used throughout the applicaton i.e. (Classes with only static fields and Enumerations)
+// All classes implemented in this module should be const and not have the ability to be instantiated
 // using ClassName._() creates a private named constructor to prevent instantiation
 
 /// shared preference keys.
@@ -48,4 +48,12 @@ class MoodImagePath {
   static const String moodOkay = "assets/images/meh_face.svg";
   static const String moodBad = "assets/images/sad_face.svg";
   static const String moodTerrible = "assets/images/aweful_face.svg";
+}
+
+enum FontFamily {
+  playwrite('Playwrite Deutschland Grundschrift');
+
+  final String name;
+
+  const FontFamily(this.name);
 }

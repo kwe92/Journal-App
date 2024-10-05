@@ -35,7 +35,7 @@ class JournalEntryProvider {
     return entryID;
   }
 
-  static Future<void> edit(JournalEntry entry) async {
+  static Future<void> update(JournalEntry entry) async {
     await databaseService.db.update(
       databaseService.table.entires,
       entry.toJSON(),

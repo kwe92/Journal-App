@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
-
-//!! TODO: refactor light and dark mode
 
 // main application theme
 class AppTheme {
@@ -13,11 +12,9 @@ class AppTheme {
   static ThemeData getTheme(BuildContext context) {
     bool isLightMode = context.watch<AppModeService>().isLightMode;
     return ThemeData(
-      colorScheme: isLightMode
-          ? const ColorScheme.light()
-          : const ColorScheme.dark(
-              background: AppColors.darkGrey1,
-            ),
+      colorScheme:
+          isLightMode ? const ColorScheme.light() : ColorScheme.fromSeed(seedColor: AppColors.darkGrey1, brightness: Brightness.dark),
+      // ColorScheme.dark(background: AppColors.darkGrey1)
       // default Scaffold color is somewhat off white
       scaffoldBackgroundColor: Colors.white,
       useMaterial3: true,
@@ -32,7 +29,38 @@ class AppTheme {
       textButtonTheme: textButtonTheme,
       outlinedButtonTheme: mainButtonTheme,
       snackBarTheme: _snackBarTheme(isLightMode),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        unselectedItemColor: Colors.blue,
+        unselectedLabelStyle: isLightMode
+            ? TextStyle(
+                foreground: _paint(AppColors.offGrey),
+              )
+            : null,
+        selectedLabelStyle: isLightMode
+            ? TextStyle(
+                foreground: _paint(AppColors.mainThemeColor),
+              )
+            : null,
+        selectedIconTheme: isLightMode
+            ? const IconThemeData(
+                color: AppColors.mainThemeColor,
+              )
+            : null,
+        unselectedIconTheme: isLightMode
+            ? const IconThemeData(
+                color: AppColors.offGrey,
+              )
+            : null,
+      ),
     );
+  }
+
+  static Paint _paint(Color color) {
+    final paint = Paint();
+
+    paint.color = color;
+
+    return paint;
   }
 
   /// return main button theme in specified color
@@ -76,10 +104,16 @@ const TextTheme textTheme = TextTheme(
   ),
 );
 
+const labelStyle = TextStyle(
+  fontSize: 12,
+  fontWeight: FontWeight.w600,
+);
+
 final titleLargeStyle = TextStyle(
   foreground: Paint()..color = AppColors.mainThemeColor,
   fontSize: 28,
   fontWeight: FontWeight.w700,
+  fontFamily: FontFamily.playwrite.name,
 );
 
 final TextButtonThemeData textButtonTheme = TextButtonThemeData(
@@ -184,4 +218,4 @@ final mainButtonStyle = ButtonStyle(
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
-MaterialStateProperty<T> resolver<T>(MaterialPropertyResolver<T> statesCallback) => MaterialStateProperty.resolveWith(statesCallback);
+WidgetStateProperty<T> resolver<T>(T Function(Set<WidgetState>) statesCallback) => WidgetStateProperty.resolveWith(statesCallback);

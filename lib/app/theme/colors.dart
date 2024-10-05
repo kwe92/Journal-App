@@ -49,4 +49,6 @@ class AppColors {
   static final lotusColor = Colors.deepPurpleAccent[100];
 
   static const errorTextColor = Colors.red;
+
+  static const heartColor = Colors.red;
 }

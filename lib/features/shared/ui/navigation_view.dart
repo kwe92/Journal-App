@@ -1,16 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_model.dart';
 import 'package:journal_app/features/shared/ui/navigation_view_model.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
 class NavigationView extends StatelessWidget {
-  final Color? backgroundColor;
-
   const NavigationView({
-    this.backgroundColor,
     super.key,
   });
 
@@ -29,8 +25,7 @@ class NavigationView extends StatelessWidget {
         final model = context.watch<NavigationViewModel>();
 
         return Scaffold(
-          backgroundColor: backgroundColor ?? AppColors.darkGrey1,
-          // backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: Center(
             child: model.widgetOptions[model.selectedIndex],
           ),
@@ -42,7 +37,6 @@ class NavigationView extends StatelessWidget {
                 hoverColor: Colors.transparent,
               ),
               child: BottomNavigationBar(
-                backgroundColor: AppColors.darkGrey1,
                 type: BottomNavigationBarType.fixed,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(

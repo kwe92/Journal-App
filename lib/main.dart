@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -11,12 +13,16 @@ import 'package:journal_app/features/shared/ui/button/expandingFab/controllers/e
 import 'package:journal_app/features/shared/utilities/load_env_variables.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
 import 'package:provider/provider.dart';
+import 'package:rive/rive.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // disable landscape mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // when using RiveFile.import then RiveFile.initialize() should be called manually.
+  unawaited(RiveFile.initialize());
 
   await loadEnvVariables();
 
@@ -39,7 +45,7 @@ void main() async {
 
   notificationService.setNotificationListeners();
 
-  appRouter.push(NavigationRoute());
+  appRouter.push(const NavigationRoute());
 
   // appRouter.push(FarewellRoute());
 

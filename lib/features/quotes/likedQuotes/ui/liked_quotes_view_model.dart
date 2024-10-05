@@ -9,6 +9,8 @@ class LikedQuotesViewModel extends ReactiveViewModel {
   @override
   List<ListenableServiceMixin> get listenableServices => [likedQuotesService];
 
+  Future<void> initialize() async => await runBusyFuture(likedQuotesService.getAllQuotes());
+
   Future<void> removeLikedQuote(LikedQuote quote) async {
     // set liked to false
     quote.isLiked = !quote.isLiked;
@@ -19,9 +21,5 @@ class LikedQuotesViewModel extends ReactiveViewModel {
     likedQuotes.remove(quote);
 
     notifyListeners();
-  }
-
-  Future<void> initialize() async {
-    await runBusyFuture(likedQuotesService.getAllQuotes());
   }
 }

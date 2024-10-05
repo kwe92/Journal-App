@@ -12,75 +12,31 @@ class LikedQuotesService extends ApiService with ListenableServiceMixin {
 
   Future<void> addQuote(LikedQuote quote) async {
     await LikedQuoteProvider.insert(quote);
+
     _likedQuotes.add(quote);
+
+    _sortQuotes();
+
     notifyListeners();
-
-    // // retrieve jwt from persistent storage
-    // final accessToken = await tokenService.getAccessTokenFromStorage();
-
-    // final http.Response response = await post(
-    //   Endpoint.likedQuotes.path,
-    //   extraHeaders: {
-    //     HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
-    //   },
-    //   body:
-    //       // serialize object into JSON string
-    //       jsonEncode(quote.toJSON()),
-    // );
-
-    // return response;
   }
 
   Future<void> getAllQuotes() async {
     _likedQuotes = await LikedQuoteProvider.getAll();
 
+    _sortQuotes();
+
     notifyListeners();
 
-    debugPrint("\n\n\n_likedQuotes: $_likedQuotes");
-    // // get jwt from persistent storage
-    // final accessToken = await tokenService.getAccessTokenFromStorage();
-
-    // // retrieve all entries based on access token
-    // final http.Response response = await get(Endpoint.likedQuotes.path, extraHeaders: {
-    //   HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
-    // });
-
-    // final Map<String, dynamic> reponseBody = jsonDecode(response.body);
-
-    // final List<dynamic>? responseData = reponseBody["data"];
-
-    // if (responseData != null) {
-    //   // down-cast deserialized dynamic array
-    //   final List<Map<String, dynamic>> domainData = List.from(responseData);
-
-    //   // debugPrint("responseData: $responseData");
-
-    //   _likedQuotes = [for (var quote in domainData) LikedQuoteImp.fromJSON(quote)];
-
-    //   debugPrint("\n\n\n_likedQuotes: $_likedQuotes");
-    // } else {
-    //   _likedQuotes = [];
-    // }
-
-    // notifyListeners();
-
-    // return response;
+    debugPrint("\nliked quotes: $_likedQuotes");
   }
 
   Future<void> deleteLikedQuote(LikedQuote quote) async {
     await LikedQuoteProvider.delete(quote);
-    ;
+
     _likedQuotes.remove(quote);
 
     notifyListeners();
-
-    // // retrieve jwt from persistent storage
-    // final accessToken = await tokenService.getAccessTokenFromStorage();
-
-    // final http.Response response = await delete("${Endpoint.deleteLikedQuote.path}$quoteId", extraHeaders: {
-    //   HttpHeaders.authorizationHeader: "$bearerPrefix $accessToken",
-    // });
-
-    // return response;
   }
+
+  void _sortQuotes() => _likedQuotes.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 }

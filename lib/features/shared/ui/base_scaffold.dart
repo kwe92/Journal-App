@@ -1,9 +1,7 @@
 import "package:flutter/material.dart";
 import "package:journal_app/app/theme/colors.dart";
 import "package:journal_app/app/theme/theme.dart";
-import "package:journal_app/features/shared/services/app_mode_service.dart";
 import "package:journal_app/features/shared/utilities/common_box_shadow.dart";
-import "package:provider/provider.dart";
 
 class BaseScaffold extends StatelessWidget {
   final String title;
@@ -29,9 +27,8 @@ class BaseScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLightMode = context.watch<AppModeService>().isLightMode;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
 
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
@@ -40,7 +37,7 @@ class BaseScaffold extends StatelessWidget {
             boxShadow: [CommonBoxShadow()],
           ),
           child: AppBar(
-            backgroundColor: isLightMode ? Colors.white : AppColors.darkGrey0,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             scrolledUnderElevation: 0,
             title: Text(
               title,

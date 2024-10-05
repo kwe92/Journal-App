@@ -22,7 +22,7 @@ class FavoriteButton extends StatelessWidget {
       icon: Icon(
         isLiked ? Icons.favorite : Icons.favorite_outline,
         size: size,
-        color: AppColors.errorTextColor.withOpacity(0.60),
+        color: AppColors.heartColor,
       ),
     );
   }

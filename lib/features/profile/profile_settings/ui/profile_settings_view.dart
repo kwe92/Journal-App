@@ -10,6 +10,7 @@ import 'package:journal_app/features/shared/ui/base_scaffold.dart';
 import 'package:journal_app/features/shared/ui/widgets/profile_icon.dart';
 import 'package:stacked/stacked.dart';
 
+//!! TODO: Refactor Profile View to Settings View
 @RoutePage()
 class ProfileSettingsView extends StatelessWidget {
   const ProfileSettingsView({super.key});

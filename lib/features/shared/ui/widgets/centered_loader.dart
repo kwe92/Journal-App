@@ -3,7 +3,7 @@ import 'package:journal_app/app/theme/colors.dart';
 
 class CenteredLoader extends StatelessWidget {
   final Color color;
-  const CenteredLoader({this.color = AppColors.lightGreen, super.key});
+  const CenteredLoader({this.color = AppColors.mainThemeColor, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:flutter/material.dart';
+
+// TODO: run app and check if changes broke things
 
 class OpenContainerWrapper extends StatelessWidget {
   final Widget closedChild;
@@ -12,6 +14,7 @@ class OpenContainerWrapper extends StatelessWidget {
   final Color? middleColor;
   final Color? openColor;
   final Color? closedColor;
+  final String? tooltip;
 
   const OpenContainerWrapper({
     required this.closedChild,
@@ -19,8 +22,9 @@ class OpenContainerWrapper extends StatelessWidget {
     this.middleColor,
     this.openColor,
     this.closedColor,
-    this.openElevation = 4,
+    this.openElevation = 0,
     this.closedElevation = 0,
+    this.tooltip = '',
     Duration? duration,
     ContainerTransitionType? transitionType,
     ShapeBorder? closedShape,
@@ -42,14 +46,19 @@ class OpenContainerWrapper extends StatelessWidget {
       transitionType: transitionType,
       transitionDuration: duration,
       openBuilder: (context, closedContainer) => openChild,
-      openColor: openColor ?? theme.colorScheme.background,
+      openColor: openColor ?? theme.colorScheme.surface,
       openElevation: openElevation,
       closedShape: closedShape,
       closedElevation: closedElevation,
-      closedColor: closedColor ?? theme.colorScheme.background,
-      closedBuilder: (context, openContainer) => InkWell(
-        onTap: openContainer.call, // closedBuilder should call the function that is passed in as an argument to open the container
-        child: closedChild,
+      closedColor: closedColor ?? theme.colorScheme.surface,
+      closedBuilder: (context, openContainer) =>
+          // TODO: Style Tooltip
+          Tooltip(
+        message: tooltip,
+        child: InkWell(
+          onTap: openContainer.call, // closedBuilder should call the function that is passed in as an argument to open the container
+          child: closedChild,
+        ),
       ),
     );
   }

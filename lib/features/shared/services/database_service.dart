@@ -16,7 +16,7 @@ class DatabaseService extends ChangeNotifier {
   late Database _db;
 
   /// Current database version number.
-  final int _databaseVersionNumber = 5;
+  static const int _databaseVersionNumber = 5;
 
   Database get db => _db;
 
@@ -24,7 +24,7 @@ class DatabaseService extends ChangeNotifier {
 
   final DatabaseTableNames _table = (
     entires: "Entries",
-    likedQuotes: "LikedQutes ",
+    likedQuotes: "LikedQutes",
     images: "Images",
   );
 
@@ -79,6 +79,7 @@ class DatabaseService extends ChangeNotifier {
     currentSchema.removeWhere((Map result) => result['sql'] == 'CREATE TABLE sqlite_sequence(name,seq)');
 
     debugPrint('Current Schema:\n');
+
     for (int i = 0; i < currentSchema.length; i++) {
       debugPrint('${currentSchema[i]['sql']}\n');
     }

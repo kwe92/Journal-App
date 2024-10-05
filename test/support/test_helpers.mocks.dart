@@ -630,23 +630,6 @@ class MockJournalEntryService extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  List<_i12.JournalEntry> sortByUpdatedDate(
-    List<Map<String, dynamic>>? entries, [
-    bool? asc = false,
-  ]) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #sortByUpdatedDate,
-          [
-            entries,
-            asc,
-          ],
-        ),
-        returnValue: <_i12.JournalEntry>[],
-        returnValueForMissingStub: <_i12.JournalEntry>[],
-      ) as List<_i12.JournalEntry>);
-
-  @override
   DateTime getMaxDate(List<_i12.JournalEntry>? entries) => (super.noSuchMethod(
         Invocation.method(
           #getMaxDate,
