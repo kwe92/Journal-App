@@ -14,25 +14,25 @@ class LikedQuotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ViewModelBuilder.reactive(
-      // ! I think the view model is being created every time the widget is injected into the widget tree causeing extra backend calls | change notifier in Navigation view maybe a better option
+      // ! I think the view model is being created every time the widget is injected into the widget tree causeing extra database calls | change notifier in Navigation view maybe a better option
       viewModelBuilder: () => LikedQuotesViewModel(),
-      // TODO: REDUCE BACK END CALLS | maybe refactor back to change notifier as there are too many backend calls, every time this widget is selected a backend csall is made
+      // TODO: REDUCE BACK END CALLS | maybe refactor back to change notifier as there are too many backend calls, every time this widget is selected a database call is made
       onViewModelReady: (model) async => await model.initialize(),
       builder: (context, model, _) {
         return Scaffold(
-          backgroundColor: AppColors.darkGrey1,
+          backgroundColor: theme.colorScheme.surface,
           appBar: model.likedQuotes.isNotEmpty
               ? AppBar(
                   scrolledUnderElevation: 0.0,
-                  backgroundColor: AppColors.darkGrey1,
+                  backgroundColor: theme.colorScheme.surface,
                   title: Container(
                     height: 52,
                     width: 52,
                     margin: EdgeInsets.only(bottom: !deviceSizeService.smallDevice ? 24 : 16, top: 16),
                     child: SvgPicture.asset(
                       "assets/images/lotus-flower-bloom.svg",
-                      // color: Colors.pink[100],
                       color: AppColors.lotusColor,
                       fit: BoxFit.cover,
                     ),
@@ -74,11 +74,7 @@ class LikedQuotesView extends StatelessWidget {
                 )
               : ListView.builder(
                   itemCount: model.likedQuotes.length,
-                  itemBuilder: (context, index) {
-                    return LikedQuoteCard(
-                      index: index,
-                    );
-                  },
+                  itemBuilder: (context, index) => LikedQuoteCard(index: index),
                 ),
         );
       },

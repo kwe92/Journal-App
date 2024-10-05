@@ -7,13 +7,9 @@ import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_m
 import 'package:journal_app/features/quotes/shared/utils/functions.dart';
 import 'package:journal_app/features/quotes/shared/widgets/favorite_button.dart';
 import 'package:journal_app/features/quotes/shared/widgets/share_button.dart';
+import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:provider/provider.dart';
-
-const style = TextStyle(
-  color: Colors.white,
-  fontSize: 24,
-);
 
 @RoutePage()
 class RandomQuotesView extends StatelessWidget {
@@ -21,6 +17,8 @@ class RandomQuotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const style = TextStyle(fontSize: 24);
+
     final model = context.watch<RandomQuotesViewModel>();
 
     final smallDevice = deviceSizeService.smallDevice;
@@ -34,17 +32,19 @@ class RandomQuotesView extends StatelessWidget {
               return Stack(
                 children: [
                   Center(
+                    // TODO: find out why this sized box is here
                     child: SizedBox(
                       height: MediaQuery.of(context).size.height / 1.5,
                       child: Stack(
                         children: [
                           Positioned.fill(
+                            // TODO: review scaleY and scaleX the numbers appear arbitrary
                             child: Transform.scale(
                               scaleY: 1.325,
                               scaleX: 1.0625,
                               child: SvgPicture.asset(
                                 "assets/images/quotes-background-image.svg",
-                                color: AppColors.darkGrey0,
+                                color: AppColors.darkGrey0.withOpacity(context.read<AppModeService>().isLightMode ? 0.15 : 1),
                               ),
                             ),
                           ),
@@ -56,9 +56,7 @@ class RandomQuotesView extends StatelessWidget {
                                 child: Align(
                                   child: Text(
                                     model.quotes[index].quote,
-                                    style: style.copyWith(
-                                      color: Colors.white.withOpacity(0.90),
-                                    ),
+                                    style: style,
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
