@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:provider/provider.dart';
-
-//!! TODO: refactor light and dark mode
 
 // main application theme
 class AppTheme {
@@ -114,6 +113,7 @@ final titleLargeStyle = TextStyle(
   foreground: Paint()..color = AppColors.mainThemeColor,
   fontSize: 28,
   fontWeight: FontWeight.w700,
+  fontFamily: FontFamily.playwrite.name,
 );
 
 final TextButtonThemeData textButtonTheme = TextButtonThemeData(
@@ -218,4 +218,4 @@ final mainButtonStyle = ButtonStyle(
 );
 
 /// resolver: generic helper function to shorten the call to MaterialStateProperty.resolveWith
-MaterialStateProperty<T> resolver<T>(MaterialPropertyResolver<T> statesCallback) => MaterialStateProperty.resolveWith(statesCallback);
+WidgetStateProperty<T> resolver<T>(T Function(Set<WidgetState>) statesCallback) => WidgetStateProperty.resolveWith(statesCallback);
