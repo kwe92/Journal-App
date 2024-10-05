@@ -39,7 +39,7 @@ void main() async {
 
   notificationService.setNotificationListeners();
 
-  appRouter.push(NavigationRoute());
+  appRouter.push(const NavigationRoute());
 
   // appRouter.push(FarewellRoute());
 
