@@ -1,5 +1,4 @@
 import "package:auto_route/annotations.dart";
-import "package:journal_app/app/app_router.gr.dart";
 import "package:journal_app/app/theme/theme.dart";
 import "package:journal_app/features/entry/ui/entry_view_model.dart";
 import 'package:journal_app/features/shared/models/journal_entry.dart';
@@ -36,26 +35,28 @@ class EntryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<EntryViewModel>.reactive(
       viewModelBuilder: () => EntryViewModel(entry: entry),
-      onViewModelReady: (EntryViewModel model) => model.initialize(),
-      builder: (context, EntryViewModel model, _) {
+      onViewModelReady: (viewModel) => viewModel.initialize(),
+      builder: (context, viewModel, _) {
         final expandableFabController = context.read<ExpandableFabController>();
         return BaseScaffold(
-          moodColor: model.moodColor,
+          moodColor: viewModel.moodColor,
           title: "Manifesté",
           leading: CustomBackButton(
-            color: model.moodColor,
+            color: viewModel.moodColor,
             onPressed: () {
-              model.cancelEdit();
-              appRouter.pop();
+              viewModel.cancelEdit();
+              Navigator.of(context).pop();
             },
           ),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: ProfileIcon(
-                userFirstName: model.currentUser?.firstName ?? "P",
-                color: model.moodColor,
-                onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
+                userFirstName: viewModel.currentUser?.firstName ?? "P",
+                color: viewModel.moodColor,
+                onPressed: () {
+                  // await appRouter.push(const ProfileSettingsRoute())
+                },
               ),
             ),
           ],
@@ -73,35 +74,35 @@ class EntryView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: FormContainer(
-                        dayOfWeekByName: model.dayOfWeekByName,
-                        timeOfDay: model.timeOfDay,
-                        continentalTime: model.continentalTime,
+                        dayOfWeekByName: viewModel.dayOfWeekByName,
+                        timeOfDay: viewModel.timeOfDay,
+                        continentalTime: viewModel.continentalTime,
                         child: Form(
-                          key: model.formKey,
+                          key: viewModel.formKey,
                           child: Theme(
                             data: Theme.of(context).copyWith(
-                              textSelectionTheme: AppTheme.getTextSelectionThemeData(model.moodColor!),
-                              cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(model.moodColor!),
+                              textSelectionTheme: AppTheme.getTextSelectionThemeData(viewModel.moodColor!),
+                              cupertinoOverrideTheme: AppTheme.getCupertinoOverrideTheme(viewModel.moodColor!),
                             ),
                             child: TextFormField(
                               textInputAction: TextInputAction.done,
-                              controller: model.entryController,
-                              focusNode: model.entryFocus,
+                              controller: viewModel.entryController,
+                              focusNode: viewModel.entryFocus,
                               expands: true,
                               maxLines: null,
                               textCapitalization: TextCapitalization.sentences,
                               validator: stringService.customStringValidator(
-                                model.entryController.text,
+                                viewModel.entryController.text,
                                 configuration: const StringValidatorConfiguration(notEmpty: true),
                               ),
                               decoration: borderlessInput.copyWith(hintText: "What's on your mind...?"),
-                              onChanged: model.setContent,
+                              onChanged: viewModel.setContent,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    model.images.isNotEmpty
+                    viewModel.images.isNotEmpty
                         ? Center(
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -110,8 +111,8 @@ class EntryView extends StatelessWidget {
                               ),
                               child: SingleChildScrollView(
                                 child: ImageLayout(
-                                  removeImageCallback: model.markImageForDeletion,
-                                  images: model.images,
+                                  removeImageCallback: viewModel.markImageForDeletion,
+                                  images: viewModel.images,
                                 ),
                               ),
                             ),
@@ -120,60 +121,58 @@ class EntryView extends StatelessWidget {
                   ],
                 ),
               ),
-              if (model.isBusy) CenteredLoader(color: model.moodColor!)
+              if (viewModel.isBusy) CenteredLoader(color: viewModel.moodColor!)
             ],
           ),
           floatingActionButton: ExpandableFab(
-            backgroundColor: model.moodColor,
+            backgroundColor: viewModel.moodColor,
             distance: 106,
             children: [
               CustomToolTip(
-                backgroundColor: model.moodColor,
+                backgroundColor: viewModel.moodColor,
                 message: 'Save and exit',
                 child: ActionButton(
-                  backgroundColor: model.moodColor,
+                  backgroundColor: viewModel.moodColor,
                   icon: const Icon(
                     Icons.check,
                   ),
                   onPressed: () async {
                     expandableFabController.toggle();
                     // if the content is identical do not call backend and pop route
-                    if (model.isIdenticalContent) {
+                    if (viewModel.isIdenticalContent) {
                       Navigator.of(context).pop();
                       return;
                     }
 
-                    if (model.formKey.currentState?.validate() ?? false) {
-                      await model.updateEntry();
+                    if (viewModel.formKey.currentState?.validate() ?? false) {
+                      await viewModel.updateEntry();
                       Navigator.of(context).pop();
                     }
                   },
                 ),
               ),
               CustomToolTip(
-                backgroundColor: model.moodColor,
+                backgroundColor: viewModel.moodColor,
                 margin: const EdgeInsets.only(top: 0),
                 message: 'Add Image',
                 child: ActionButton(
-                  backgroundColor: model.moodColor,
-                  icon: const Icon(
-                    Icons.insert_photo,
-                  ),
-                  onPressed: !model.isBusy
+                  backgroundColor: viewModel.moodColor,
+                  icon: const Icon(Icons.insert_photo),
+                  onPressed: !viewModel.isBusy
                       ? () async {
                           expandableFabController.toggle();
 
-                          await model.pickImages();
+                          await viewModel.pickImages();
                         }
                       : null,
                 ),
               ),
               CustomToolTip(
-                backgroundColor: model.moodColor,
+                backgroundColor: viewModel.moodColor,
                 margin: const EdgeInsets.only(top: 0),
                 message: 'Delete',
                 child: ActionButton(
-                  backgroundColor: model.moodColor,
+                  backgroundColor: viewModel.moodColor,
                   icon: const Icon(
                     Icons.delete_forever,
                   ),
@@ -181,12 +180,12 @@ class EntryView extends StatelessWidget {
                     expandableFabController.toggle();
 
                     // retrieve deletion response from user
-                    final bool deleteContinued = await model.continueDelete(context, model.moodColor!);
+                    final bool deleteContinued = await viewModel.continueDelete(context, viewModel.moodColor!);
 
                     debugPrint('should delete entry: $deleteContinued');
 
                     if (deleteContinued) {
-                      final bool statusOk = await model.deleteEntry(entry);
+                      final bool statusOk = await viewModel.deleteEntry(entry);
 
                       if (statusOk) {
                         await Navigator.of(context).pushReplacement(
