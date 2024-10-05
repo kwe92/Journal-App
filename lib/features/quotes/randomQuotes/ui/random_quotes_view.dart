@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/randomQuotes/ui/random_quotes_view_model.dart';
@@ -17,7 +18,7 @@ class RandomQuotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const style = TextStyle(fontSize: 24);
+    final style = TextStyle(fontSize: 24, fontFamily: FontFamily.playwrite.name);
 
     final model = context.watch<RandomQuotesViewModel>();
 

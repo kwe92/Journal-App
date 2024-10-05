@@ -188,7 +188,7 @@ class EntryViewModel extends ReactiveViewModel {
   }
 
   Future<void> pickImages() async {
-    var (List<XFile> imageFiles, String error) = await imagePickerService.pickImages();
+    var (List<XFile> imageFiles, String error) = await runBusyFuture<(List<XFile>, String)>(imagePickerService.pickImages());
 
     // check for error
     if (error.isNotEmpty) {

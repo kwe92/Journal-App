@@ -17,7 +17,7 @@ class ShareButton extends StatelessWidget {
       icon: Icon(
         Icons.ios_share,
         size: size,
-        color: Colors.blue.withOpacity(0.60),
+        color: Colors.blue,
       ),
     );
   }
