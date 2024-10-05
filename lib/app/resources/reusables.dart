@@ -15,6 +15,4 @@ Gap gap28 = const Gap(28);
 Gap gap36 = const Gap(36);
 Gap gap48 = const Gap(48);
 
-Widget circleLoader = const Center(
-  child: CircularProgressIndicator(color: AppColors.lightGreen),
-);
+Widget circleLoader = const Center(child: CircularProgressIndicator(color: AppColors.mainThemeColor));
