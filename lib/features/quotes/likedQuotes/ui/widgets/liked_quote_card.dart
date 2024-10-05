@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
@@ -20,6 +21,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
   Widget build(BuildContext context, LikedQuotesViewModel viewModel) {
     final smallDevice = deviceSizeService.smallDevice;
     final isLightMode = context.read<AppModeService>().isLightMode;
+    final fontFamily = FontFamily.playwrite.name;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -41,6 +43,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: !smallDevice ? 24 : 20,
+              fontFamily: fontFamily,
             ),
           ),
           !smallDevice ? gap24 : gap4,
@@ -57,6 +60,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
                   style: TextStyle(
                     fontSize: !smallDevice ? 16 : 14,
                     fontWeight: !smallDevice ? FontWeight.w800 : FontWeight.w700,
+                    fontFamily: fontFamily,
                   ),
                 ),
               ),

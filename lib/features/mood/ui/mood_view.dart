@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/resources/reusables.dart';
 import 'package:journal_app/features/addEntry/ui/add_entry_view.dart';
 import 'package:journal_app/features/mood/ui/mood_view_model.dart';
@@ -44,18 +45,18 @@ class MoodView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          width: 200,
+                        SizedBox(
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Entry.opacity(
-                              duration: Duration(milliseconds: 600),
+                              duration: const Duration(milliseconds: 600),
                               child: Text(
                                 "How are you feeling today?",
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 26,
                                   fontWeight: FontWeight.w700,
+                                  fontFamily: FontFamily.playwrite.name,
                                 ),
                               ),
                             ),
