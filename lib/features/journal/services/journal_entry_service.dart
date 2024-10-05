@@ -38,13 +38,14 @@ class JournalEntryService extends ApiService with ListenableServiceMixin {
     return entryID;
   }
 
-  // TODO: ensure proper functionality
   Future<void> updateEntry(JournalEntry updatedEntry) async {
-    await JournalEntryProvider.edit(updatedEntry);
+    await JournalEntryProvider.update(updatedEntry);
 
     _journalEntries.removeWhere((entry) => entry.entryID == updatedEntry.entryID);
 
     _journalEntries.add(updatedEntry);
+
+    _sortEntriesByUpdatedDate();
 
     notifyListeners();
   }
