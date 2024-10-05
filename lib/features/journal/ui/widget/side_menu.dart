@@ -13,8 +13,10 @@ class SideMenu extends Drawer {
 
   @override
   Widget build(BuildContext context) => Drawer(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        surfaceTintColor: Colors.white,
+        // causes background color to look faded if not set to 0
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: const RoundedRectangleBorder(),
         width: MediaQuery.of(context).size.width / 1.5,
         //CustomScrollView required to have Spacer / Expanded Widgets within a ListView
         child: CustomScrollView(
