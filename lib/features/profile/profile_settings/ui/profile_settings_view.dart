@@ -21,7 +21,7 @@ class ProfileSettingsView extends StatelessWidget {
       viewModelBuilder: () => ProfileSettingsViewModel(),
       builder: (BuildContext context, ProfileSettingsViewModel model, _) {
         return BaseScaffold(
-          title: 'Profile',
+          title: 'Settings',
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
