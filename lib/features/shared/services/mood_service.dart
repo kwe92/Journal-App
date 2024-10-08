@@ -6,21 +6,31 @@ import 'package:journal_app/features/shared/records/mood_record.dart';
 
 /// Encapsulates all data associated with mood type and provides methods for retrieving various mood data.
 class MoodService {
-  static const double commonDefaultSize = 50.0;
+  static const _commonDefaultSize = 50.0;
 
-  static const double moodAwesomeDefaultSize = 40.0;
+  static const _moodAwesomeDefaultSize = 40.0;
 
-  static const double moodTerribleDefaultSize = 70.0;
+  static const _moodTerribleDefaultSize = 70.0;
 
-  static final Map<String, MoodRecord> _moodsData = {
-    MoodType.awesome.text: (color: AppColors.moodAwesome, imagePath: MoodImagePath.moodAwesome, defaultSize: moodAwesomeDefaultSize),
-    MoodType.happy.text: (color: AppColors.moodHappy, imagePath: MoodImagePath.moodHappy, defaultSize: commonDefaultSize),
-    MoodType.okay.text: (color: AppColors.moodOkay, imagePath: MoodImagePath.moodOkay, defaultSize: commonDefaultSize),
-    MoodType.bad.text: (color: AppColors.moodBad, imagePath: MoodImagePath.moodBad, defaultSize: commonDefaultSize),
-    MoodType.terrible.text: (color: AppColors.moodTerrible, imagePath: MoodImagePath.moodTerrible, defaultSize: moodTerribleDefaultSize),
+  static final _moodsData = {
+    MoodType.awesome.text: (color: AppColors.moodAwesome, imagePath: MoodImagePath.moodAwesome, defaultSize: _moodAwesomeDefaultSize),
+    MoodType.happy.text: (color: AppColors.moodHappy, imagePath: MoodImagePath.moodHappy, defaultSize: _commonDefaultSize),
+    MoodType.okay.text: (color: AppColors.moodOkay, imagePath: MoodImagePath.moodOkay, defaultSize: _commonDefaultSize),
+    MoodType.bad.text: (color: AppColors.moodBad, imagePath: MoodImagePath.moodBad, defaultSize: _commonDefaultSize),
+    MoodType.terrible.text: (color: AppColors.moodTerrible, imagePath: MoodImagePath.moodTerrible, defaultSize: _moodTerribleDefaultSize),
   };
 
-  final List<MapEntry<String, MoodRecord>> moods = _moodsData.entries.toList();
+  static final _moodsEntries = _moodsData.entries.toList();
+
+  final moods = _moodsEntries
+      .map(
+        (moodData) => Mood(
+            moodColor: moodData.value.color,
+            moodImagePath: moodData.value.imagePath,
+            imageSize: moodData.value.defaultSize,
+            moodText: moodData.key),
+      )
+      .toList();
 
   // abstractions provided to make accessing mood data easier
 
