@@ -22,74 +22,62 @@ class MoodView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MoodViewModel>.reactive(
       viewModelBuilder: () => MoodViewModel(),
-      builder: (context, MoodViewModel model, _) {
+      builder: (context, viewModel, _) {
         return SafeArea(
           child: Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 gap16,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CancelButton(onPressed: () {
-                      Navigator.of(context).pop();
-                    })
-                  ],
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: CancelButton(onPressed: () => Navigator.of(context).pop()),
                 ),
-                gap8,
+                gap16,
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 32),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Entry.opacity(
-                              duration: const Duration(milliseconds: 600),
-                              child: Text(
-                                "How are you feeling today?",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: FontFamily.playwrite.name,
-                                ),
-                              ),
+                        Entry.opacity(
+                          duration: const Duration(milliseconds: 600),
+                          child: Text(
+                            "How are you feeling today?",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: FontFamily.playwrite.name,
                             ),
                           ),
                         ),
-                        gap36,
+                        gap48,
                         Flexible(
                           child: GridView.builder(
-                            itemCount: model.moods.length,
+                            itemCount: viewModel.moods.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
                               crossAxisSpacing: 16,
-                              mainAxisSpacing: 16,
+                              mainAxisSpacing: 24,
                               // represents the width / height respectively
                               childAspectRatio: (5 / 8),
                             ),
-                            itemBuilder: (BuildContext context, int i) {
+                            itemBuilder: (context, i) {
                               return GestureDetector(
                                 onTap:
                                     // anonymous closure that saves the state of the index integer above within its scope
                                     () {
                                   // set selected mood
-                                  model.setIndex(i);
+                                  viewModel.setIndex(i);
 
-                                  // set mood type to be sent to backend
-                                  model.setMoodType(model.moods[i].moodText);
+                                  viewModel.setMoodType(viewModel.moods[i].moodText);
                                 },
                                 child: Entry.opacity(
                                   duration: const Duration(milliseconds: 600),
                                   child: MoodCard(
                                     // determine if the card is currently selected or not
-                                    isSelected: model.selectedIndex == i ? true : false,
-                                    mood: model.moods[i],
+                                    isSelected: viewModel.selectedIndex == i ? true : false,
+                                    mood: viewModel.moods[i],
                                   ),
                                 ),
                               );
@@ -105,14 +93,14 @@ class MoodView extends StatelessWidget {
                                   CustomPageRouteBuilder.sharedAxisTransition(
                                     transitionType: SharedAxisTransitionType.scaled,
                                     pageBuilder: (_, __, ___) => AddEntryView(
-                                      moodType: model.moodType,
+                                      moodType: viewModel.moodType,
                                     ),
                                   ),
                                 );
                               },
                               label: "Continue"),
                         ),
-                        !deviceSizeService.smallDevice ? const Gap(110) : const Gap(20),
+                        !deviceSizeService.smallDevice ? const Gap(48) : const Gap(20),
                       ],
                     ),
                   ),
@@ -135,6 +123,6 @@ class MoodView extends StatelessWidget {
 
 //    - controls GridView.builder children layout
 
-// Flexible wapping in Flex, Row or Column Widgets for GridView.builder
+// Flexible wrapping in Flex, Row or Column Widgets for GridView.builder
 
 //   - to insure height or width is not unbound
