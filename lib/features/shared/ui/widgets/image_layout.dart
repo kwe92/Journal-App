@@ -15,7 +15,7 @@ class ImageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("ImageLayout images.length: ${images.length}");
+    // debugPrint("ImageLayout images.length: ${images.length}");
     return images.length == 1
         ? SizedBox(
             height: 180,
