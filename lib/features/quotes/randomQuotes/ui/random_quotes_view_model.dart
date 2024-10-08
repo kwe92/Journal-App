@@ -11,7 +11,11 @@ class RandomQuotesViewModel extends BaseViewModel {
 
   Artboard? _riveArtBoard;
 
+  SMITrigger? _likeTrigger;
+
   Artboard? get riveArtBoard => _riveArtBoard;
+
+  SMITrigger? get likeTrigger => _likeTrigger;
 
   List<Quote> get quotes => _getQuotesThatAreNotLiked();
 
@@ -22,24 +26,32 @@ class RandomQuotesViewModel extends BaseViewModel {
   }
 
   Future<void> initialize() async {
-    setBusy(true);
+    try {
+      setBusy(true);
 
-    await likedQuotesService.getAllQuotes();
+      // run all futures concurrently waiting for them all to complete, the process takes as long as the longest running future
+      await Future.wait([
+        likedQuotesService.getAllQuotes(),
+        getRandomQuotes(),
+        loadRiveHeart(),
+      ], eagerError: true);
 
-    await getRandomQuotes();
-
-    setBusy(false);
+      setBusy(false);
+    } catch (err, _) {
+      debugPrint('ERROR - RandomQuotesViewModel.initialize:\n${err.toString()}');
+      setBusy(false);
+    }
   }
 
   Future<void> getRandomQuotes() async => zenQuotesApiService.fetchRandomQuotes();
 
   Future<void> setLikedForQuote(Quote quote) async {
+    toogleLikeQuote();
+
     quote.isLiked = !quote.isLiked;
 
-    notifyListeners();
-
-    // allows user to see heart animation filled before quote is removed from the list of quotes
-    await Future.delayed(const Duration(milliseconds: 250));
+    // allows user to see heart animation before quote is removed from the list of quotes
+    await Future.delayed(const Duration(milliseconds: 350));
 
     zenQuotesApiService.quotes.remove(quote);
 
@@ -65,7 +77,7 @@ class RandomQuotesViewModel extends BaseViewModel {
   bool _isRandomQuoteInListOfLikedQuotes(Quote quote) {
     for (var likedQuote in likedQuotesService.likedQuotes) {
       if (quote.quote.toLowerCase() == likedQuote.quote.toLowerCase()) {
-        debugPrint("_isRandomQuoteInListOfLikedQuotes: found liked quote");
+        // debugPrint("_isRandomQuoteInListOfLikedQuotes: found liked quote");
 
         return true;
       }
@@ -73,7 +85,12 @@ class RandomQuotesViewModel extends BaseViewModel {
     return false;
   }
 
-  // !!TODO: add rive animation
+  void toogleLikeQuote() {
+    _likeTrigger?.value = true;
+
+    // debugPrint('quote liked successfully: ${_likeTrigger?.value}\n');
+  }
+
   Future<void> loadRiveHeart() async {
     await rootBundle.load('assets/rive/animated_heart.riv').then((data) async {
       try {
@@ -113,6 +130,8 @@ class RandomQuotesViewModel extends BaseViewModel {
             debugPrint('input type: ${input.runtimeType}');
             debugPrint('input value: ${input.value}\n');
           }
+
+          _likeTrigger = controller.getTriggerInput('like');
 
           // update artboard variable for this widget
 
