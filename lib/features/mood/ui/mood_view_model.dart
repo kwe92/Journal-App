@@ -14,17 +14,7 @@ class MoodViewModel extends BaseViewModel {
 
   int get selectedIndex => _selectedIndex;
 
-  List<Mood> get moods => moodService.moods
-      .map(
-        (moodData) => Mood(
-            moodColor: moodData.value.color,
-            moodImagePath: moodData.value.imagePath,
-            imageSize: moodData.value.defaultSize,
-            moodText: moodData.key),
-      )
-      .toList();
-
-  // List<MapEntry<String, MoodRecord>> get moods => moodService.moods;
+  List<Mood> get moods => moodService.moods;
 
   void setIndex(int index) {
     _selectedIndex = index;
