@@ -9,12 +9,12 @@ import '../../../../support/test_helpers.dart';
 void main() {
   SignInViewModel getModel() => SignInViewModel();
 
-  group('SignInViewModel - ', () {
-    setUp(() async {
-      await registerSharedServices();
-      getAndRegisterImageServiceMock();
-    });
+  setUpAll(() async {
+    await registerSharedServices();
+    getAndRegisterImageServiceMock();
+  });
 
+  group('SignInViewModel - ', () {
     testWidgets('when model initialized, then image created and loading state set to false', (tester) async {
       // Arrange - Setup
 
