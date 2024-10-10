@@ -8,9 +8,10 @@ import '../../../../support/test_helpers.dart';
 
 void main() {
   ProfileSettingsViewModel getModel() => ProfileSettingsViewModel();
-  group('ProfileSettingsViewModel - ', () {
-    setUp(() async => registerSharedServices());
 
+  setUpAll(() async => registerSharedServices());
+
+  group('ProfileSettingsViewModel - ', () {
     test(
         'when model created currentUser, userFullName, and userEmail called, then created currentUser, userFullName, and userEmail matches currently authenticated user info',
         () {

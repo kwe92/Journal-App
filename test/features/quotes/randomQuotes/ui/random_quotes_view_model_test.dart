@@ -5,14 +5,14 @@ import '../../../../support/test_data.dart';
 import '../../../../support/test_helpers.dart';
 
 void main() {
-  group("RandomQuotesViewModel - ", () {
-    RandomQuotesViewModel getModel() => RandomQuotesViewModel();
-    setUpAll(() async {
-      await registerSharedServices();
-      getAndRegisterZenQuotesApiService();
-      getAndRegisterLikedQuotesService();
-    });
+  RandomQuotesViewModel getModel() => RandomQuotesViewModel();
 
+  setUpAll(() async {
+    await registerSharedServices();
+    getAndRegisterZenQuotesApiService();
+    getAndRegisterLikedQuotesService();
+  });
+  group("RandomQuotesViewModel - ", () {
     test("when model created and initialized, then quotes are populated", () async {
       // Arrange - Setup
 
