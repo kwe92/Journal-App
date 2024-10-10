@@ -14,15 +14,15 @@ import '../../../support/test_helpers.dart';
 void main() {
   CalendarViewModel getModel() => CalendarViewModel();
 
+  late final DateTime focusedDay;
+
+  setUpAll(() async {
+    await registerSharedServices();
+    getAndRegisterJournalEntryServiceMock(initialEntries: testEntries);
+    focusedDay = DateTime.now();
+  });
+
   group("CalendarViewModel - ", () {
-    late final DateTime focusedDay;
-
-    setUpAll(() async {
-      await registerSharedServices();
-      getAndRegisterJournalEntryServiceMock(initialEntries: testEntries);
-      focusedDay = DateTime.now();
-    });
-
     test("when model created and initialized, then selectedEvents, focusedDay, selectedDay set", () {
       // Arrange - Setup
 
