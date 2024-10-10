@@ -8,35 +8,21 @@ import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/services/string_service.dart';
 import 'package:journal_app/features/shared/utilities/widget_keys.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../support/test_helpers.dart';
 
 void main() {
-  Future<void> pumpView(WidgetTester tester) async {
-    await tester.pumpWidget(
-      ChangeNotifierProvider.value(
-        value: appModeService,
-        builder: (context, child) {
-          return TestingWrapper.portal(
-            MemberInfoView(),
-          );
-        },
-      ),
-    );
-  }
+  setUpAll(() async {
+    await registerSharedServices();
+
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    getAndRegisterService<ImageService>(ImageService());
+
+    getAndRegisterService<StringService>(StringService());
+  });
 
   group('MemberInfoView - ', () {
-    setUp(() async {
-      await registerSharedServices();
-
-      TestWidgetsFlutterBinding.ensureInitialized();
-
-      getAndRegisterService<ImageService>(ImageService());
-
-      getAndRegisterService<StringService>(StringService());
-    });
-
     testWidgets("When the MemberInfoView opens, Sign-up text, TextFormField's, and continue button visible", (tester) async {
       FlutterError.onError = ignoreOverflowErrors;
 
@@ -46,7 +32,11 @@ void main() {
 
       appModeService.setLightMode(true);
 
-      await pumpView(tester);
+      await pumpView(
+        tester,
+        view: MemberInfoView(),
+        changeNotifierValue: appModeService,
+      );
 
       // Finders
       final signUpFinder = find.text('Sign-up');
@@ -79,7 +69,11 @@ void main() {
 
       appModeService.setLightMode(true);
 
-      await pumpView(tester);
+      await pumpView(
+        tester,
+        view: MemberInfoView(),
+        changeNotifierValue: appModeService,
+      );
 
       // Finders
 
