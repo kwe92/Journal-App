@@ -80,25 +80,23 @@ void main() {
   /// returns ViewModel for this test
   JournalViewModel getModel() => JournalViewModel();
 
+  // registered setup function ran once before all tests
+  setUpAll(
+    () async {
+      // register required depenencies
+      await registerSharedServices();
+
+      // stub api call with Client
+      when(locator.get<Client>().get(
+            Uri.parse(testHost + Endpoint.entries.path),
+            headers: anyNamed('headers'),
+          )).thenAnswer(
+        (_) async => Response(('[${jsonEncode(entry.toJSON())}]'), 200),
+      );
+    },
+  );
+
   group('JournalViewModelTest - Setup', () {
-    // registered setup function ran once before all tests
-    setUpAll(
-      () async {
-        // register required depenencies
-        await registerSharedServices();
-
-        // stub api call with Client
-        when(
-          locator.get<Client>().get(
-                Uri.parse(testHost + Endpoint.entries.path),
-                headers: anyNamed('headers'),
-              ),
-        ).thenAnswer(
-          (_) async => Response(('[${jsonEncode(entry.toJSON())}]'), 200),
-        );
-      },
-    );
-
     test('when model is first created, journal entry list is empty', () async {
       /// Arrange - Setup
 
@@ -151,20 +149,6 @@ void main() {
 
   group('JournalViewModelTest - General', () {
     // registered setup function ran once before all tests
-    setUpAll(
-      () async {
-        await registerSharedServices();
-        when(
-          locator.get<Client>().get(
-                Uri.parse(testHost + Endpoint.entries.path),
-                headers: anyNamed('headers'),
-              ),
-        ).thenAnswer(
-          (_) async => Response(('[${jsonEncode(entry.toJSON())}]'), 200),
-        );
-      },
-    );
-
     test('when model created and journal entries loaded, getter methods return correct count by mood', () async {
       /// Arrange - Setup
 

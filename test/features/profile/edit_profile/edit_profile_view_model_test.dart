@@ -9,9 +9,9 @@ import '../../../support/test_helpers.dart';
 void main() {
   EditProfileViewModel getModel() => EditProfileViewModel();
 
-  group('EditProfileViewModel - ', () {
-    setUpAll(() async => await registerSharedServices());
+  setUpAll(() async => await registerSharedServices());
 
+  group('EditProfileViewModel - ', () {
     test(
         'when model created and initialize called, then mindfulImage, userFirstName, userLastName, userEmail, an userPhoneNumber are not null nor empty',
         () {

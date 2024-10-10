@@ -16,9 +16,9 @@ import '../../../support/test_helpers.dart';
 void main() {
   EntryViewModel getModel() => EntryViewModel(entry: testEntry);
 
-  group('EntryViewModel - ', () {
-    setUp(() async => await registerSharedServices());
+  setUpAll(() async => await registerSharedServices());
 
+  group('EntryViewModel - ', () {
     test('when model created and model initialize called, then content, entryController.text and moodColor are set', () {
       // Arrange - Setup
       getAndRegisterService<MoodService>(MoodService());

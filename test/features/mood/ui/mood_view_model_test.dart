@@ -9,11 +9,9 @@ import '../../../support/test_helpers.dart';
 void main() {
   MoodViewModel getModel() => MoodViewModel();
 
-  group('MoodViewModel - ', () {
-    setUpAll(() async {
-      await registerSharedServices();
-    });
+  setUpAll(() async => await registerSharedServices());
 
+  group('MoodViewModel - ', () {
     test('when model created and setIndex called, then the value used to set selectedIndex matches actual selectedIndex value', () {
       // Arrange - Setup
       final model = getModel();
