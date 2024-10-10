@@ -4,15 +4,14 @@ import '../../../../support/test_data.dart';
 import '../../../../support/test_helpers.dart';
 
 void main() {
+  LikedQuotesViewModel getModel() => LikedQuotesViewModel();
+
+  setUpAll(() async {
+    await registerSharedServices();
+    getAndRegisterZenQuotesApiService();
+    getAndRegisterLikedQuotesService();
+  });
   group("LikedQuotesViewModel - ", () {
-    LikedQuotesViewModel getModel() => LikedQuotesViewModel();
-
-    setUpAll(() async {
-      await registerSharedServices();
-      getAndRegisterZenQuotesApiService();
-      getAndRegisterLikedQuotesService();
-    });
-
     test("when model created and likedQuotes called, then the correct number of liked quotes are returned", () async {
       // Arrange - Setup
       final model = getModel();

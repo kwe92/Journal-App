@@ -15,32 +15,10 @@ import '../../../support/test_data.dart';
 import '../../../support/test_helpers.dart';
 
 void main() {
+  setUpAll(() async => await registerSharedServices());
+
   group("CalendarView - ", () {
-    setUpAll(() async {
-      await registerSharedServices();
-    });
-
     final DateTime focusedDay = DateTime.now();
-
-    Future<void> pumpView(WidgetTester tester) async {
-      await tester.pumpWidget(
-        ChangeNotifierProvider.value(
-          value: appModeService,
-          builder: (context, child) {
-            return TestingWrapper.portal(
-              ChangeNotifierProvider(
-                create: (context) => JournalViewModel(),
-                builder: (context, child) {
-                  return CalendarView(
-                    focusedDay: focusedDay,
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      );
-    }
 
     testWidgets("when calender focused, then correct events are selected", (tester) async {
       // Arrange - Setup
@@ -56,7 +34,14 @@ void main() {
       appModeService.setLightMode(true);
 
       // Act
-      await pumpView(tester);
+      await pumpView(
+        tester,
+        view: ChangeNotifierProvider(
+          create: (context) => JournalViewModel(),
+          builder: (context, child) => CalendarView(focusedDay: focusedDay),
+        ),
+        changeNotifierValue: appModeService,
+      );
 
       await tester.pumpAndSettle();
 

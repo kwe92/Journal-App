@@ -483,14 +483,15 @@ Future<void> _removeRegistrationIfExists<T extends Object>() async {
 /// Necessary because Scaffolds require MediaQuery ancestor widget (MaterialApp)
 /// https://stackoverflow.com/questions/48498709/widget-test-fails-with-no-mediaquery-widget-found
 class TestingWrapper extends StatelessWidget {
+  final Widget child;
+
+  final bool portal;
+
   const TestingWrapper(
     this.child, {
     super.key,
     this.portal = false,
   });
-
-  final Widget child;
-  final bool portal;
 
   const TestingWrapper.portal(
     this.child, {
@@ -519,11 +520,13 @@ Future<void> pumpView<T extends ChangeNotifier>(
   WidgetTester tester, {
   required Widget view,
   T? viewModel,
+  T? changeNotifierValue,
 }) async {
   await tester.pumpWidget(
     TestingWrapperv2<T>(
       view: view,
       viewModel: viewModel,
+      changeNotifierValue: changeNotifierValue,
     ),
   );
 }
@@ -531,22 +534,35 @@ Future<void> pumpView<T extends ChangeNotifier>(
 class TestingWrapperv2<T extends ChangeNotifier> extends StatelessWidget {
   final Widget view;
   final T? viewModel;
+  final T? changeNotifierValue;
+
   const TestingWrapperv2({
     required this.view,
     this.viewModel,
+    this.changeNotifierValue,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (viewModel != null && changeNotifierValue != null) {
+      throw Exception(
+          'You can only provide a viewModel or a changeNotifierValue but not both, as you can not create two ChangeNotifiers for one ChangeNotifierProvider.');
+    }
     return MaterialApp(
-      scaffoldMessengerKey: WidgetKey.rootScaffoldMessengerKey,
-      home: viewModel != null
-          ? ChangeNotifierProvider<T>(
-              create: (context) => viewModel!,
-              builder: (context, _) => view,
-            )
-          : view,
-    );
+        scaffoldMessengerKey: WidgetKey.rootScaffoldMessengerKey,
+        home: Portal(
+          child: viewModel != null
+              ? ChangeNotifierProvider<T>(
+                  create: (context) => viewModel!,
+                  builder: (context, _) => view,
+                )
+              : changeNotifierValue != null
+                  ? ChangeNotifierProvider<T>.value(
+                      value: changeNotifierValue!,
+                      builder: (context, child) => view,
+                    )
+                  : view,
+        ));
   }
 }

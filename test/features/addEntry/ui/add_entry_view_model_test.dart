@@ -13,27 +13,21 @@ import '../../../support/test_helpers.dart';
 void main() {
   /// returns ViewModel for this test
   AddEntryViewModel getModel() => AddEntryViewModel();
+
+  // registered setup function ran once before all tests
+  setUpAll(
+    () async {
+      // register required depenencies
+      await registerSharedServices();
+
+      // stub api call with Client
+      when(locator.get<Client>().post(
+            Uri.parse(testHost + Endpoint.entries.path),
+            headers: anyNamed('headers'),
+          )).thenAnswer((_) async => Response((''), 200));
+    },
+  );
   group('AddEntryViewModel - ', () {
-    // registered setup function ran once before all tests
-    setUpAll(
-      () async {
-        // register required depenencies
-        await registerSharedServices();
-
-        // TODO: do we even need this stubbed client call?
-        // stub api call with Client
-        when(
-          locator.get<Client>().post(
-                Uri.parse(testHost + Endpoint.entries.path),
-                headers: anyNamed('headers'),
-              ),
-        ).thenAnswer(
-          // TODO do i need to actually pass an updated entry json string
-          (_) async => Response((''), 200),
-        );
-      },
-    );
-
     test('when model is created and initialized, mood color is the correct color', () {
       // Arrange - Setup
 

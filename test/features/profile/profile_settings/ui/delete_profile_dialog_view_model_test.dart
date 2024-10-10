@@ -8,12 +8,12 @@ import '../../../../support/test_helpers.dart';
 
 void main() {
   DeleteProfileDialogViewModel getModel() => DeleteProfileDialogViewModel();
-  group('DeleteProfileDialogViewModel - ', () {
-    setUpAll(() async {
-      await registerSharedServices();
-      getAndRegisterUserServiceMock(testCurrentUser);
-    });
 
+  setUpAll(() async {
+    await registerSharedServices();
+    getAndRegisterUserServiceMock(testCurrentUser);
+  });
+  group('DeleteProfileDialogViewModel - ', () {
     test('when model created and currentUser getter method called, then the current user is returned', () {
       // Arrange - Setup
 

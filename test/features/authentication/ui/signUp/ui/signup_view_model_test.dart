@@ -8,123 +8,121 @@ import '../../../../../support/test_helpers.dart';
 
 void main() {
   SignUpViewModel getModel() => SignUpViewModel();
+
+  setUpAll(() async => await registerSharedServices());
   group('SignUpViewModel - ', () {
-    setUpAll(() async {
-      await registerSharedServices();
+    test('when model created and initialized, then mindfulImage and email properties are not null', () {
+      // Arrange - Setup
+
+      getAndRegisterImageServiceMock();
+
+      var model = getModel();
+
+      // Act
+
+      model.initialize();
+
+      // Assert - Result
+
+      var actual = model.mindfulImage != null;
+
+      var expected = true;
+
+      expect(actual, expected);
+
+      actual = model.email != null;
+
+      expected = true;
+
+      expect(actual, expected);
     });
-  });
 
-  test('when model created and initialized, then mindfulImage and email properties are not null', () {
-    // Arrange - Setup
+    test('when model created and passwords are the same, then passwordMatch method returns true', () {
+      // Arrange - Setup
 
-    getAndRegisterImageServiceMock();
+      var model = getModel();
 
-    var model = getModel();
+      // Act
 
-    // Act
+      const password = 'begin';
 
-    model.initialize();
+      model.setPassword(password);
 
-    // Assert - Result
+      model.setConfirmPassword(password);
 
-    var actual = model.mindfulImage != null;
+      // Assert - Result
 
-    var expected = true;
+      var actual = model.passwordMatch;
 
-    expect(actual, expected);
+      var expected = true;
 
-    actual = model.email != null;
+      expect(actual, expected);
+    });
 
-    expected = true;
+    test('when model created and email, password, and confirmPassword are set, then the ready property returns true', () {
+      // Arrange - Setup
 
-    expect(actual, expected);
-  });
+      var model = getModel();
 
-  test('when model created and passwords are the same, then passwordMatch method returns true', () {
-    // Arrange - Setup
+      // Act
 
-    var model = getModel();
+      const password = 'begin';
 
-    // Act
+      model.setEmail('donotbedidvided@standstrong.io');
 
-    const password = 'begin';
+      model.setPassword(password);
 
-    model.setPassword(password);
+      model.setConfirmPassword(password);
 
-    model.setConfirmPassword(password);
+      // Assert - Result
 
-    // Assert - Result
+      var actual = model.ready;
 
-    var actual = model.passwordMatch;
+      var expected = true;
 
-    var expected = true;
+      expect(actual, expected);
+    });
 
-    expect(actual, expected);
-  });
+    test('when model created and password criteria meet, then the passwordCriteriaSatisfied method returns true', () {
+      // Arrange - Setup
 
-  test('when model created and email, password, and confirmPassword are set, then the ready property returns true', () {
-    // Arrange - Setup
+      var model = getModel();
 
-    var model = getModel();
+      // Act
 
-    // Act
+      getAndRegisterService<StringService>(StringService());
 
-    const password = 'begin';
+      const password = 'ThisShouldWork11!!';
 
-    model.setEmail('donotbedidvided@standstrong.io');
+      model.setPassword(password);
 
-    model.setPassword(password);
+      // Assert - Result
 
-    model.setConfirmPassword(password);
+      var actual = model.passwordCriteriaSatisfied;
 
-    // Assert - Result
+      var expected = true;
 
-    var actual = model.ready;
+      expect(actual, expected);
+    });
 
-    var expected = true;
+    test('when model created and signupWithEmail called, then the signupWithEmail method returns true', () async {
+      // Arrange - Setup
 
-    expect(actual, expected);
-  });
+      var model = getModel();
 
-  test('when model created and password criteria meet, then the passwordCriteriaSatisfied method returns true', () {
-    // Arrange - Setup
+      // Act
 
-    var model = getModel();
+      getAndRegisterService<StringService>(StringService());
+      getAndRegisterService<ToastService>(ToastService());
+      getAndRegisterAuthServiceMock(user: testCurrentUser);
 
-    // Act
+      // Assert - Result
 
-    getAndRegisterService<StringService>(StringService());
+      var actual = await model.signupWithEmail(user: testCurrentUser);
 
-    const password = 'ThisShouldWork11!!';
+      var expected = true;
 
-    model.setPassword(password);
-
-    // Assert - Result
-
-    var actual = model.passwordCriteriaSatisfied;
-
-    var expected = true;
-
-    expect(actual, expected);
-  });
-
-  test('when model created and signupWithEmail called, then the signupWithEmail method returns true', () async {
-    // Arrange - Setup
-
-    var model = getModel();
-
-    // Act
-
-    getAndRegisterService<StringService>(StringService());
-    getAndRegisterService<ToastService>(ToastService());
-    getAndRegisterAuthServiceMock(user: testCurrentUser);
-
-    // Assert - Result
-
-    var actual = await model.signupWithEmail(user: testCurrentUser);
-
-    var expected = true;
-
-    expect(actual, expected);
+      expect(actual, expected);
+    });
   });
 }

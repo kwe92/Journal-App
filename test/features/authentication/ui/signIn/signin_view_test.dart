@@ -8,23 +8,18 @@ import '../../../../support/test_helpers.dart';
 
 // TODO: figure out why tests failing
 void main() {
+  setUpAll(() async => await registerSharedServices());
   group('SigninView', () {
-    setUp(() async {
-      await registerSharedServices();
-    });
-
     testWidgets('...', (tester) async {
       TestWidgetsFlutterBinding.ensureInitialized();
 
       getAndRegisterService<ImageService>(ImageService());
 
       await tester.pumpWidget(
-        TestingWrapper(
-          SignInView(),
-        ),
+        TestingWrapper(SignInView()),
       );
 
-      await tester.pumpAndSettle(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
 
       // Finders
       // TODO: figure out why image service causing issues | if you put a print statement after image service call in view model it will not print in test

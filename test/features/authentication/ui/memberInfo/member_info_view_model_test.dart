@@ -6,9 +6,9 @@ import '../../../../support/test_helpers.dart';
 
 void main() {
   MemberInfoViewModel getModel() => MemberInfoViewModel();
-  group('MemberInfoViewModel - ', () {
-    setUpAll(() async => await registerSharedServices()); // register required depenencies);
 
+  setUpAll(() async => await registerSharedServices()); // register required depenencies);
+  group('MemberInfoViewModel - ', () {
     test('when model initialized, temp user is created, mindful image, first name, last mame, phone number, and email are not null',
         () async {
       // Arrange - Setup

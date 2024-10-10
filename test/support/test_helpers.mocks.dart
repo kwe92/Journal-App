@@ -1213,18 +1213,11 @@ class MockClient extends _i1.Mock implements _i2.Client {
 /// See the documentation for Mockito's code generation for more information.
 class MockMoodService extends _i1.Mock implements _i17.MoodService {
   @override
-  List<
-          MapEntry<String,
-              ({_i4.Color color, double defaultSize, String imagePath})>>
-      get moods => (super.noSuchMethod(
-            Invocation.getter(#moods),
-            returnValue: <MapEntry<String,
-                ({_i4.Color color, double defaultSize, String imagePath})>>[],
-            returnValueForMissingStub: <MapEntry<String,
-                ({_i4.Color color, double defaultSize, String imagePath})>>[],
-          ) as List<
-              MapEntry<String,
-                  ({_i4.Color color, double defaultSize, String imagePath})>>);
+  List<_i3.Mood> get moods => (super.noSuchMethod(
+        Invocation.getter(#moods),
+        returnValue: <_i3.Mood>[],
+        returnValueForMissingStub: <_i3.Mood>[],
+      ) as List<_i3.Mood>);
 
   @override
   _i3.Mood createMoodByType(

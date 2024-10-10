@@ -29,121 +29,121 @@ class JournalView extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<JournalViewModel>();
     return BaseScaffold(
-        // means Thoughts in french
-        title: "Pensées",
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              onPressed: () async {
-                await context.read<AppModeService>().switchMode();
-              },
-              icon: Icon(
-                context.watch<AppModeService>().isLightMode ? Icons.wb_sunny_outlined : Icons.mode_night_outlined,
-              ),
+      // means Thoughts in french
+      title: "Pensées",
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: IconButton(
+            onPressed: () async {
+              await context.read<AppModeService>().switchMode();
+            },
+            icon: Icon(
+              context.watch<AppModeService>().isLightMode ? Icons.wb_sunny_outlined : Icons.mode_night_outlined,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: ProfileIcon(
-              userFirstName: model.currentUser?.firstName ?? "P",
-              onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: ProfileIcon(
+            userFirstName: model.currentUser?.firstName ?? "P",
+            onPressed: () async => await appRouter.push(const ProfileSettingsRoute()),
           ),
-        ],
-        body: model.isBusy
-            ? circleLoader
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: NestedScrollView(
-                      floatHeaderSlivers: true,
-                      // MOOD COUNT
-                      headerSliverBuilder: (context, _) => [
-                        const HideableMoodCount<JournalViewModel>(),
-                        HideableSearchBar(
-                          searchNode: model.searchNode,
-                          searchController: model.searchController,
-                        ),
-                        SliverToBoxAdapter(child: gap4),
-                      ],
-                      body: Center(
-                        // JOURNAL ENTRIES
-                        child: model.journalEntries.isEmpty
-                            ? const Padding(
-                                padding: EdgeInsets.only(bottom: 86.0),
-                                child: Entry.opacity(
-                                  duration: Duration(milliseconds: 600),
-                                  child: Text(
-                                    "No entries, what's on your mind...",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AppColors.lightGreen,
-                                      fontSize: 32,
-                                    ),
+        ),
+      ],
+      body: model.isBusy
+          ? circleLoader
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: NestedScrollView(
+                    floatHeaderSlivers: true,
+                    // MOOD COUNT
+                    headerSliverBuilder: (context, _) => [
+                      const HideableMoodCount<JournalViewModel>(),
+                      HideableSearchBar(
+                        searchNode: model.searchNode,
+                        searchController: model.searchController,
+                      ),
+                      SliverToBoxAdapter(child: gap4),
+                    ],
+                    body: Center(
+                      // JOURNAL ENTRIES
+                      child: model.journalEntries.isEmpty
+                          ? const Padding(
+                              padding: EdgeInsets.only(bottom: 86.0),
+                              child: Entry.opacity(
+                                duration: Duration(milliseconds: 600),
+                                child: Text(
+                                  "No entries, what's on your mind...",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: AppColors.lightGreen,
+                                    fontSize: 32,
                                   ),
                                 ),
-                              )
-                            // Hide FAB on Scroll
-                            : ListView.builder(
-                                itemCount: model.journalEntries.length,
-                                itemBuilder: (BuildContext context, int i) {
-                                  final JournalEntry entry = model.journalEntries[i];
-
-                                  return Entry.opacity(
-                                    duration: const Duration(milliseconds: 600),
-                                    child: JournalEntryCard(
-                                      onDateTilePressed: () async => await Navigator.of(context).push(
-                                        CustomPageRouteBuilder.sharedAxisTransition(
-                                          transitionDuration: const Duration(milliseconds: 800),
-                                          transitionType: SharedAxisTransitionType.scaled,
-                                          pageBuilder: (_, __, ___) => CalendarView(focusedDay: entry.updatedAt),
-                                        ),
-                                      ),
-                                      index: i,
-                                      journalEntry: entry,
-                                    ),
-                                  );
-                                },
                               ),
-                        //  NotificationListener<UserScrollNotification>(
-                        // TODO: refactor FAB disapear on scroll as it is causing images to flash
-                        // onNotification: (notification) {
-                        //   if (userIsScrollingForward(notification)) {
-                        //     showFab(model);
-                        //   } else if (userIsScrollingDownward(notification)) {
-                        //     doNotShowFab(model);
-                        //   }
-                        //   return true;
-                        // },
-                        // child:
-                        // ),
-                      ),
+                            )
+                          // Hide FAB on Scroll
+                          : ListView.builder(
+                              itemCount: model.journalEntries.length,
+                              itemBuilder: (BuildContext context, int i) {
+                                final JournalEntry entry = model.journalEntries[i];
+
+                                return Entry.opacity(
+                                  duration: const Duration(milliseconds: 600),
+                                  child: JournalEntryCard(
+                                    onDateTilePressed: () async => await Navigator.of(context).push(
+                                      CustomPageRouteBuilder.sharedAxisTransition(
+                                        transitionDuration: const Duration(milliseconds: 800),
+                                        transitionType: SharedAxisTransitionType.scaled,
+                                        pageBuilder: (_, __, ___) => CalendarView(focusedDay: entry.updatedAt),
+                                      ),
+                                    ),
+                                    index: i,
+                                    journalEntry: entry,
+                                  ),
+                                );
+                              },
+                            ),
+                      //  NotificationListener<UserScrollNotification>(
+                      // TODO: refactor FAB disapear on scroll as it is causing images to flash
+                      // onNotification: (notification) {
+                      //   if (userIsScrollingForward(notification)) {
+                      //     showFab(model);
+                      //   } else if (userIsScrollingDownward(notification)) {
+                      //     doNotShowFab(model);
+                      //   }
+                      //   return true;
+                      // },
+                      // child:
+                      // ),
                     ),
                   ),
-                ],
-              ),
-        // OPEN SIDE MENU
-        drawer: SideMenu(),
-        //ADD NEW ENTRY BUTTON
-        floatingActionButton: FloatingActionButton(
-          //!! TODO: clean up call to sharedAxisTransition and make DRY if possible
-          onPressed: () async => await Navigator.of(context).push(
-            CustomPageRouteBuilder.sharedAxisTransition(
-              transitionDuration: const Duration(milliseconds: 800),
-              pageBuilder: (_, __, ___) => const MoodView(),
+                ),
+              ],
             ),
+      // OPEN SIDE MENU
+      drawer: SideMenu(),
+      //ADD NEW ENTRY BUTTON
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async => await Navigator.of(context).push(
+          CustomPageRouteBuilder.sharedAxisTransition(
+            transitionDuration: const Duration(milliseconds: 800),
+            pageBuilder: (_, __, ___) => const MoodView(),
           ),
-          backgroundColor: AppColors.mainThemeColor,
-          shape: const CircleBorder(),
-          child: const Icon(
-            Icons.add,
-            color: AppColors.offWhite,
-            size: 52,
-          ),
-        ));
+        ),
+        backgroundColor: AppColors.mainThemeColor,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.add,
+          color: AppColors.offWhite,
+          size: 52,
+        ),
+      ),
+    );
   }
 
   bool userIsScrollingForward(UserScrollNotification notification) {
