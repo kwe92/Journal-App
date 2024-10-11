@@ -19,6 +19,7 @@ class LikedQuotesView extends StatelessWidget {
     final theme = Theme.of(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => LikedQuotesViewModel(),
+      onViewModelReady: (viewModel) => viewModel.initialize(),
       builder: (context, viewModel, _) {
         return Scaffold(
           backgroundColor: theme.colorScheme.surface,
