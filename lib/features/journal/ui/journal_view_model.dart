@@ -42,7 +42,7 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
   }
 
   void initialize() {
-    _journalEntries = journalEntryService.journalEntries;
+    _journalEntries = journalEntryService.sortedJournalEntries;
 
     searchNode.addListener(() {
       searchNode.hasFocus ? setFabVisibility(false) : setFabVisibility(true);
@@ -60,7 +60,7 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
     _clearQuery();
 
     if (currentMoodTypeFilter == MoodTypeFilterOptions.all) {
-      _journalEntries = journalEntryService.journalEntries;
+      _journalEntries = journalEntryService.sortedJournalEntries;
       notifyListeners();
       return;
     }
@@ -88,7 +88,7 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
       case MoodTypeFilterOptions.all:
         _setCurrentMoodTypeFilter(MoodTypeFilterOptions.all);
         _journalEntries =
-            journalEntryService.journalEntries.where((entry) => entry.content.toLowerCase().contains(query.toLowerCase())).toList();
+            journalEntryService.sortedJournalEntries.where((entry) => entry.content.toLowerCase().contains(query.toLowerCase())).toList();
         notifyListeners();
         break;
 
@@ -161,7 +161,7 @@ class JournalViewModel extends ReactiveViewModel with MoodMixin {
   }
 
   List<JournalEntry> _fiterJournalEntries(String moodType, String query) {
-    return journalEntryService.journalEntries
+    return journalEntryService.sortedJournalEntries
         .where((entry) => entry.moodType == moodType && entry.content.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
