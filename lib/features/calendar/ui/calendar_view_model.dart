@@ -110,7 +110,7 @@ class CalendarViewModel extends ChangeNotifier with MoodMixin {
 
   List<JournalEntry> getEventsForDay(DateTime day) {
     // Implementation example
-    return journalEntryService.journalEntries.where((entry) => isSameDay(entry.updatedAt, day)).toList();
+    return journalEntryService.sortedJournalEntries.where((entry) => isSameDay(entry.updatedAt, day)).toList();
   }
 
   List<JournalEntry> getEventsForRange(DateTime start, DateTime end) {
