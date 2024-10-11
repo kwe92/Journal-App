@@ -6,18 +6,15 @@ import 'package:journal_app/features/shared/services/services.dart';
 class LikedQuoteProvider {
   const LikedQuoteProvider._();
 
-  static Future<List<LikedQuote>> getAll() async {
-    final List<Map<String, dynamic>> result = await databaseService.db.query(databaseService.table.likedQuotes);
+  static Future<List<Map<String, Object?>>> getAll() async {
+    final result = await databaseService.db.query(databaseService.table.likedQuotes);
 
-    debugPrint("result: $result");
-
-    final List<LikedQuote> quotes = [for (Map<String, dynamic> map in result) LikedQuote.fromJSON(map)];
-
-    return quotes;
+    return result;
   }
 
   static Future<int> insert(LikedQuote quote) async {
-    final int quoteID = await databaseService.db.insert(databaseService.table.likedQuotes, quote.toJSON());
+    final quoteID = await databaseService.db.insert(databaseService.table.likedQuotes, quote.toJSON());
+    debugPrint('likedQuotes table insert: quote with id: $quoteID inserted into database');
 
     return quoteID;
   }
@@ -40,6 +37,6 @@ class LikedQuoteProvider {
       whereArgs: [quote.id],
     );
 
-    debugPrint('entquotery: ${quote.id} deleted successfully from the database.');
+    debugPrint('likedQuotes table delete: quote with id: ${quote.id} deleted successfully from the database');
   }
 }
