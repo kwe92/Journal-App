@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quote_card.dart';
+import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quotes_filter_button.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/widgets/centered_loader.dart';
 import 'package:stacked/stacked.dart';
@@ -70,9 +71,23 @@ class LikedQuotesView extends StatelessWidget {
                   ),
                 )
               : !viewModel.isBusy
-                  ? ListView.builder(
-                      itemCount: viewModel.likedQuotes.length,
-                      itemBuilder: (context, index) => LikedQuoteCard(index: index),
+                  ? Column(
+                      children: [
+                        //!! TODO: find better positioning, maybe add to appbar instead and have it centered vertically with the lotus flower
+                        Padding(
+                          padding: const EdgeInsets.only(right: 24, bottom: 24),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: LikedQuotesFilterButton(likedQuotes: viewModel.likedQuotes),
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: viewModel.likedQuotes.length,
+                            itemBuilder: (context, index) => LikedQuoteCard(index: index),
+                          ),
+                        ),
+                      ],
                     )
                   : const CenteredLoader(),
         );

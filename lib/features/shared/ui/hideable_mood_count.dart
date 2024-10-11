@@ -13,7 +13,7 @@ class HideableMoodCount<T extends MoodMixin> extends ViewModelWidget<T> {
   @override
   Widget build(BuildContext context, T viewModel) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       toolbarHeight: 32,
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: false,

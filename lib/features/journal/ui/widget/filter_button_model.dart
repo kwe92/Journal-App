@@ -2,11 +2,11 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:stacked/stacked.dart';
 
 class FilterButtonModel extends BaseViewModel {
-  String _dropdownValue = dropdownOptions.first;
+  String? _dropdownValue;
 
-  String get dropdownValue => _dropdownValue;
+  String? get dropdownValue => _dropdownValue;
 
-  static final List<String> dropdownOptions = <String>[
+  final dropdownOptions = <String>[
     'all',
     MoodType.awesome.text,
     MoodType.happy.text,
@@ -14,6 +14,10 @@ class FilterButtonModel extends BaseViewModel {
     MoodType.bad.text,
     MoodType.terrible.text,
   ];
+
+  FilterButtonModel() {
+    _dropdownValue = dropdownOptions.first;
+  }
 
   void setDropdownValue(String value) {
     _dropdownValue = value;

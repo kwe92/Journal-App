@@ -25,7 +25,7 @@ class FilterButton<T extends MoodMixin> extends ViewModelWidget<T> {
           viewModel.setFilteredJournalEntries(value, viewModel.query);
         },
         items: <DropdownMenuItem<String>>[
-          ...FilterButtonModel.dropdownOptions.map<DropdownMenuItem<String>>(
+          ...model.dropdownOptions.map<DropdownMenuItem<String>>(
             (String value) => DropdownMenuItem<String>(
               value: value,
               child: FittedBox(

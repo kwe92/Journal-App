@@ -43,7 +43,7 @@ class SignUpView extends StatelessWidget {
 
         return SafeArea(
           child: Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             body: SizedBox(
               width: double.maxFinite,
               height: double.maxFinite,
