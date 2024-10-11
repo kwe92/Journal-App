@@ -9,6 +9,7 @@ import 'package:journal_app/features/shared/models/photo_provider.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
+//!! TODO: Refactor
 
 //!! TODO: Should the notification methods be moved to the notification service?
 

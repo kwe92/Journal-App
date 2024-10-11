@@ -24,6 +24,8 @@ void main() async {
   // when using RiveFile.import then RiveFile.initialize() should be called manually.
   unawaited(RiveFile.initialize());
 
+//!! TODO: Group Futures that do not depend on one another
+
   await loadEnvVariables();
 
   // initalize and register all services.
@@ -43,11 +45,11 @@ void main() async {
 
   await journalEntryService.getAllEntries();
 
+  await likedQuotesService.getAllLikedQuotes();
+
   notificationService.setNotificationListeners();
 
   appRouter.push(const NavigationRoute());
-
-  // appRouter.push(FarewellRoute());
 
   runApp(
     DevicePreview(
@@ -70,9 +72,7 @@ void main() async {
               create: (BuildContext context) => ExpandableFabController(initialOpen: false),
             )
           ],
-          builder: (context, _) {
-            return const MyApp();
-          },
+          builder: (context, _) => const MyApp(),
         ),
       ),
     ),

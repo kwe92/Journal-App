@@ -31,7 +31,6 @@ class RandomQuotesViewModel extends BaseViewModel {
 
       // run all futures concurrently waiting for them all to complete, the process takes as long as the longest running future
       await Future.wait([
-        likedQuotesService.getAllQuotes(),
         getRandomQuotes(),
         loadRiveHeart(),
       ], eagerError: true);
@@ -77,19 +76,13 @@ class RandomQuotesViewModel extends BaseViewModel {
   bool _isRandomQuoteInListOfLikedQuotes(Quote quote) {
     for (var likedQuote in likedQuotesService.likedQuotes) {
       if (quote.quote.toLowerCase() == likedQuote.quote.toLowerCase()) {
-        // debugPrint("_isRandomQuoteInListOfLikedQuotes: found liked quote");
-
         return true;
       }
     }
     return false;
   }
 
-  void toogleLikeQuote() {
-    _likeTrigger?.value = true;
-
-    // debugPrint('quote liked successfully: ${_likeTrigger?.value}\n');
-  }
+  void toogleLikeQuote() => _likeTrigger?.value = true;
 
   Future<void> loadRiveHeart() async {
     await rootBundle.load('assets/rive/animated_heart.riv').then((data) async {
