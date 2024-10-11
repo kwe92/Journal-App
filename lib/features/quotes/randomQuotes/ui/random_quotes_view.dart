@@ -89,6 +89,7 @@ class RandomQuotesView extends StatelessWidget {
                               contentToShare: shareQuote(viewModel.quotes[index]),
                             ),
                             GestureDetector(
+                              //!! TODO: disable button while favorite button animation is running
                               onTap: () async {
                                 await viewModel.setLikedForQuote(viewModel.quotes[index]);
                               },
