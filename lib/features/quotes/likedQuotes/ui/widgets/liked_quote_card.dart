@@ -65,7 +65,7 @@ class LikedQuoteCard extends ViewModelWidget<LikedQuotesViewModel> {
                 ),
               ),
               FavoriteButton(
-                onPressed: () => viewModel.removeLikedQuote(viewModel.likedQuotes[index]),
+                onPressed: () => viewModel.deleteLikedQuote(viewModel.likedQuotes[index]),
                 size: !smallDevice ? 36.0 : 26.0,
                 isLiked: viewModel.likedQuotes[index].isLiked,
               ),
