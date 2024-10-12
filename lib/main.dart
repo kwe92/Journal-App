@@ -21,10 +21,8 @@ void main() async {
   // disable landscape mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  // when using RiveFile.import then RiveFile.initialize() should be called manually.
+  // when using RiveFile.import then RiveFile.initialize() should be called manually
   unawaited(RiveFile.initialize());
-
-//!! TODO: Group Futures that do not depend on one another
 
   await loadEnvVariables();
 
@@ -34,18 +32,19 @@ void main() async {
   // required for late initialization of isLightMode
   await Future.delayed(const Duration(milliseconds: 100));
 
-  // ensure token is removed from user device on app startup
-  await tokenService.removeAccessTokenFromStorage();
+  await Future.wait([
+    // ensure token is removed from user device on app startup
+    tokenService.removeAccessTokenFromStorage(),
+    databaseService.initialize(),
+    notificationService.initializeNotificationChannels()
+  ]);
 
-  await notificationService.initializeNotificationChannels();
+  await Future.wait([
+    journalEntryService.getAllEntries(),
+    likedQuotesService.getAllLikedQuotes(),
+  ]);
 
   await notificationService.checkNotificationPermissions();
-
-  await databaseService.initialize();
-
-  await journalEntryService.getAllEntries();
-
-  await likedQuotesService.getAllLikedQuotes();
 
   notificationService.setNotificationListeners();
 
