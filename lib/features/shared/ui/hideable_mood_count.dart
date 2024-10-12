@@ -3,6 +3,7 @@ import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/shared/abstractions/mood_mixin.dart';
 import 'package:journal_app/features/shared/ui/filter_button.dart';
 import 'package:journal_app/features/shared/ui/mood_type_counter.dart';
+import 'package:journal_app/features/shared/ui/widgets/snappable_widget.dart';
 import 'package:stacked/stacked.dart';
 
 class HideableMoodCount<T extends MoodMixin> extends ViewModelWidget<T> {
@@ -12,15 +13,9 @@ class HideableMoodCount<T extends MoodMixin> extends ViewModelWidget<T> {
 
   @override
   Widget build(BuildContext context, T viewModel) {
-    return SliverAppBar(
+    return SnappableWidget(
       backgroundColor: Theme.of(context).colorScheme.surface,
       toolbarHeight: 32,
-      scrolledUnderElevation: 0,
-      automaticallyImplyLeading: false,
-      // floating: required to make SliverAppBar snappable
-      floating: true,
-      // snap: required to make SliverAppBar snappable
-      snap: true,
       title: Padding(
         padding: const EdgeInsets.only(left: 0, top: 8.0, right: 16),
         child: Row(
