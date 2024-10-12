@@ -13,9 +13,13 @@ class RandomQuotesViewModel extends BaseViewModel {
 
   SMITrigger? _likeTrigger;
 
+  bool _isPlayingAnimation = false;
+
   Artboard? get riveArtBoard => _riveArtBoard;
 
   SMITrigger? get likeTrigger => _likeTrigger;
+
+  bool get isPlayingAnimation => _isPlayingAnimation;
 
   List<Quote> get quotes => _getQuotesThatAreNotLiked();
 
@@ -45,12 +49,16 @@ class RandomQuotesViewModel extends BaseViewModel {
   Future<void> getRandomQuotes() async => zenQuotesApiService.fetchRandomQuotes();
 
   Future<void> setLikedForQuote(Quote quote) async {
+    setAnimationStatus(true);
+
     toogleLikeQuote();
 
     quote.isLiked = !quote.isLiked;
 
     // allows user to see heart animation before quote is removed from the list of quotes
     await Future.delayed(const Duration(milliseconds: 350));
+
+    setAnimationStatus(false);
 
     zenQuotesApiService.quotes.remove(quote);
 
@@ -80,6 +88,11 @@ class RandomQuotesViewModel extends BaseViewModel {
       }
     }
     return false;
+  }
+
+  void setAnimationStatus(bool isPlayingAnimation) {
+    _isPlayingAnimation = isPlayingAnimation;
+    notifyListeners();
   }
 
   void toogleLikeQuote() => _likeTrigger?.value = true;
