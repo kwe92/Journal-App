@@ -8,6 +8,7 @@ import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quote_c
 import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quotes_filter_button.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/widgets/centered_loader.dart';
+import 'package:journal_app/features/shared/ui/widgets/snappable_widget.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -72,23 +73,27 @@ class LikedQuotesView extends StatelessWidget {
                   ),
                 )
               : !viewModel.isBusy
-                  ? Column(
-                      children: [
-                        //!! TODO: find better positioning, maybe add to appbar instead and have it centered vertically with the lotus flower
-                        Padding(
-                          padding: const EdgeInsets.only(right: 24, bottom: 24),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: LikedQuotesFilterButton(likedQuotes: viewModel.likedQuotes),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: viewModel.likedQuotes.length,
-                            itemBuilder: (context, index) => LikedQuoteCard(index: index),
+                  ? NestedScrollView(
+                      floatHeaderSlivers: true,
+                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                        SnappableWidget(
+                          backgroundColor: Theme.of(context).colorScheme.surface,
+                          title: Padding(
+                            padding: const EdgeInsets.only(right: 24, bottom: 24),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: LikedQuotesFilterButton(likedQuotes: viewModel.likedQuotes),
+                            ),
                           ),
                         ),
                       ],
+                      body: ListView.builder(
+                        itemCount: viewModel.likedQuotes.length,
+                        itemBuilder: (context, index) => Entry.opacity(
+                          duration: const Duration(milliseconds: 600),
+                          child: LikedQuoteCard(index: index),
+                        ),
+                      ),
                     )
                   : const CenteredLoader(),
         );
