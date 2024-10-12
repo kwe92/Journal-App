@@ -36,7 +36,7 @@ class CalendarView extends StatelessWidget {
                 floatHeaderSlivers: true,
                 headerSliverBuilder: (context, _) => [
                   SliverAppBar(
-                    backgroundColor: Theme.of(context).colorScheme.background,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     toolbarHeight: MediaQuery.of(context).size.height / (!smallDevice ? 2.5 : 1.925),
                     scrolledUnderElevation: 0,
                     automaticallyImplyLeading: false,

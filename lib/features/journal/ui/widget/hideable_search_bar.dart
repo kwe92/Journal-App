@@ -22,7 +22,7 @@ class HideableSearchBar extends ViewModelWidget<JournalViewModel> {
       floating: true,
       // snap: required to make SliverAppBar snappable
       snap: true,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
 
       title: Padding(
         padding: const EdgeInsets.symmetric(

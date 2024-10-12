@@ -89,9 +89,11 @@ class RandomQuotesView extends StatelessWidget {
                               contentToShare: shareQuote(viewModel.quotes[index]),
                             ),
                             GestureDetector(
-                              onTap: () async {
-                                await viewModel.setLikedForQuote(viewModel.quotes[index]);
-                              },
+                              onTap: !viewModel.isPlayingAnimation
+                                  ? () async {
+                                      await viewModel.setLikedForQuote(viewModel.quotes[index]);
+                                    }
+                                  : () {},
                               child: SizedBox(
                                 width: 52.0,
                                 height: 52.0,

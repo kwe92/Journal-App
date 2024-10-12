@@ -26,7 +26,7 @@ class DeleteProfileDialogView extends StatelessWidget {
 
         const style00 = TextStyle(fontSize: 12);
         return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: Padding(
             padding: const EdgeInsets.only(
               left: 24,
@@ -151,7 +151,7 @@ class DeleteProfileDialogView extends StatelessWidget {
 // ! Old Dialog Widget
 
 // SimpleDialog(
-//           backgroundColor: Theme.of(context).colorScheme.background,
+//           backgroundColor: Theme.of(context).colorScheme.surface,
 //           surfaceTintColor: Colors.white,
 //           titlePadding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
 //           contentPadding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),

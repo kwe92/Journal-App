@@ -20,8 +20,6 @@ import "package:journal_app/features/shared/ui/widgets/profile_icon.dart";
 import "package:provider/provider.dart";
 import "package:stacked/stacked.dart";
 
-//!! TODO: Ensure that the entry is updated properly in entry service
-
 @RoutePage()
 class EntryView extends StatelessWidget {
   final JournalEntry entry;

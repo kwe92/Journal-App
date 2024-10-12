@@ -52,7 +52,7 @@ class ToastService {
             builder: (context) {
               final isLightMode = context.watch<AppModeService>().isLightMode;
               return SimpleDialog(
-                backgroundColor: Theme.of(context).colorScheme.background,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 surfaceTintColor: Colors.white,
                 titlePadding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
                 contentPadding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),

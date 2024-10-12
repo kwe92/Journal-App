@@ -15,7 +15,7 @@ class DeeperMeaningsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: ChangeNotifierProvider(
         create: (context) => DeeperMeaningsViewModel(),
         builder: (context, child) {

@@ -17,7 +17,7 @@ class PromptsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : Theme.of(context).colorScheme.background,
+      backgroundColor: context.watch<AppModeService>().isLightMode ? Colors.white : Theme.of(context).colorScheme.surface,
       body: ChangeNotifierProvider<PromptsViewModel>(
         create: (context) => PromptsViewModel(promptText),
         builder: (context, _) {

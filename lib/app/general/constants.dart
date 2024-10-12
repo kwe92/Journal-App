@@ -57,3 +57,11 @@ enum FontFamily {
 
   const FontFamily(this.name);
 }
+
+enum QuoteAuthorFilterOptions {
+  all('All');
+
+  final String name;
+
+  const QuoteAuthorFilterOptions(this.name);
+}
