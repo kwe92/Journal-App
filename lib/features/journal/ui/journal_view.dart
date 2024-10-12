@@ -53,77 +53,69 @@ class JournalView extends StatelessWidget {
       ],
       body: model.isBusy
           ? circleLoader
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: NestedScrollView(
-                    floatHeaderSlivers: true,
-                    // MOOD COUNT
-                    headerSliverBuilder: (context, _) => [
-                      const HideableMoodCount<JournalViewModel>(),
-                      HideableSearchBar(
-                        searchNode: model.searchNode,
-                        searchController: model.searchController,
-                      ),
-                      SliverToBoxAdapter(child: gap4),
-                    ],
-                    body: Center(
-                      // JOURNAL ENTRIES
-                      child: model.journalEntries.isEmpty
-                          ? const Padding(
-                              padding: EdgeInsets.only(bottom: 86.0),
-                              child: Entry.opacity(
-                                duration: Duration(milliseconds: 600),
-                                child: Text(
-                                  "No entries, what's on your mind...",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.lightGreen,
-                                    fontSize: 32,
-                                  ),
+          : NestedScrollView(
+              floatHeaderSlivers: true,
+              // MOOD COUNT
+              headerSliverBuilder: (context, _) => [
+                const HideableMoodCount<JournalViewModel>(),
+                HideableSearchBar(
+                  searchNode: model.searchNode,
+                  searchController: model.searchController,
+                ),
+                SliverToBoxAdapter(child: gap4),
+              ],
+              body: Center(
+                // JOURNAL ENTRIES
+                child: model.journalEntries.isEmpty
+                    ? const Padding(
+                        padding: EdgeInsets.only(bottom: 86.0),
+                        child: Entry.opacity(
+                          duration: Duration(milliseconds: 600),
+                          child: Text(
+                            "No entries, what's on your mind...",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.lightGreen,
+                              fontSize: 32,
+                            ),
+                          ),
+                        ),
+                      )
+                    // Hide FAB on Scroll
+                    : ListView.builder(
+                        itemCount: model.journalEntries.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          final JournalEntry entry = model.journalEntries[i];
+
+                          return Entry.opacity(
+                            duration: const Duration(milliseconds: 600),
+                            child: JournalEntryCard(
+                              onDateTilePressed: () async => await Navigator.of(context).push(
+                                CustomPageRouteBuilder.sharedAxisTransition(
+                                  transitionDuration: const Duration(milliseconds: 800),
+                                  transitionType: SharedAxisTransitionType.scaled,
+                                  pageBuilder: (_, __, ___) => CalendarView(focusedDay: entry.updatedAt),
                                 ),
                               ),
-                            )
-                          // Hide FAB on Scroll
-                          : ListView.builder(
-                              itemCount: model.journalEntries.length,
-                              itemBuilder: (BuildContext context, int i) {
-                                final JournalEntry entry = model.journalEntries[i];
-
-                                return Entry.opacity(
-                                  duration: const Duration(milliseconds: 600),
-                                  child: JournalEntryCard(
-                                    onDateTilePressed: () async => await Navigator.of(context).push(
-                                      CustomPageRouteBuilder.sharedAxisTransition(
-                                        transitionDuration: const Duration(milliseconds: 800),
-                                        transitionType: SharedAxisTransitionType.scaled,
-                                        pageBuilder: (_, __, ___) => CalendarView(focusedDay: entry.updatedAt),
-                                      ),
-                                    ),
-                                    index: i,
-                                    journalEntry: entry,
-                                  ),
-                                );
-                              },
+                              index: i,
+                              journalEntry: entry,
                             ),
-                      //  NotificationListener<UserScrollNotification>(
-                      // TODO: refactor FAB disapear on scroll as it is causing images to flash
-                      // onNotification: (notification) {
-                      //   if (userIsScrollingForward(notification)) {
-                      //     showFab(model);
-                      //   } else if (userIsScrollingDownward(notification)) {
-                      //     doNotShowFab(model);
-                      //   }
-                      //   return true;
-                      // },
-                      // child:
-                      // ),
-                    ),
-                  ),
-                ),
-              ],
+                          );
+                        },
+                      ),
+                //  NotificationListener<UserScrollNotification>(
+                // TODO: refactor FAB disapear on scroll as it is causing images to flash
+                // onNotification: (notification) {
+                //   if (userIsScrollingForward(notification)) {
+                //     showFab(model);
+                //   } else if (userIsScrollingDownward(notification)) {
+                //     doNotShowFab(model);
+                //   }
+                //   return true;
+                // },
+                // child:
+                // ),
+              ),
             ),
       // OPEN SIDE MENU
       drawer: SideMenu(),

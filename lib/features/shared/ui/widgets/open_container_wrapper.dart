@@ -1,8 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
-// TODO: run app and check if changes broke things
-
 class OpenContainerWrapper extends StatelessWidget {
   final Widget closedChild;
   final Widget openChild;

@@ -6,6 +6,7 @@ class PhotoProvider {
 
   static Future<List<int>> insert(List<Photo> images) async {
     List<int> imageIds = [];
+
     for (int i = 0; i < images.length; i++) {
       imageIds.add(await databaseService.db.insert(databaseService.table.images, images[i].toMap()));
     }
@@ -14,9 +15,9 @@ class PhotoProvider {
   }
 
   static Future<List<Photo>> getAllImages() async {
-    final List<Map<String, dynamic>> result = await databaseService.db.query(databaseService.table.images);
+    final result = await databaseService.db.query(databaseService.table.images);
 
-    final List<Photo> images = [for (Map<String, dynamic> image in result) Photo.fromJSON(image)];
+    final images = [for (Map<String, dynamic> image in result) Photo.fromJSON(image)];
 
     return images;
   }
