@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/quotes/shared/models/liked_quote.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:stacked/stacked.dart';
@@ -14,9 +15,7 @@ class LikedQuotesViewModel extends ReactiveViewModel {
     _likedQuotes = likedQuotesService.sortedLikedQuotes;
   }
 
-  //!! TODO: use enum instead of a string in all the palces where the word all is used to control the liked quotes filter
-
-  var modelQuery = ValueNotifier<String>('all');
+  var modelQuery = ValueNotifier<String>(QuoteAuthorFilterOptions.all.name);
 
   Future<void> deleteLikedQuote(LikedQuote quote) async {
     // set liked to false
@@ -28,7 +27,7 @@ class LikedQuotesViewModel extends ReactiveViewModel {
         likedQuotes.where((likedQuote) => likedQuote.author.trim().toLowerCase() == quote.author.trim().toLowerCase()).length;
 
     if (numberOfQuotes == 1) {
-      const query = 'All';
+      final query = QuoteAuthorFilterOptions.all.name;
 
       modelQuery.value = query;
 
@@ -43,7 +42,7 @@ class LikedQuotesViewModel extends ReactiveViewModel {
   void setFilteredLikedQuotes(String query) {
     modelQuery.value = query;
 
-    if (query.trim().toLowerCase() == 'all') {
+    if (query == QuoteAuthorFilterOptions.all.name) {
       _likedQuotes = likedQuotesService.likedQuotes;
       notifyListeners();
 
