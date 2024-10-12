@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/liked_quotes_view_model.dart';
 import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quotes_filter_button_controller.dart';
@@ -20,9 +21,8 @@ class LikedQuotesFilterButton extends ViewModelWidget<LikedQuotesViewModel> {
 
         viewModel.modelQuery.addListener(() => controller.setDropdownValue(viewModel.modelQuery.value));
 
-        //!! TODO: shorten the height of the list
-
         return DropdownButton<String>(
+          menuMaxHeight: MediaQuery.of(context).size.height / 1.275,
           value: controller.dropdownValue,
           icon: const Icon(Icons.arrow_drop_down),
           elevation: 16,
@@ -31,10 +31,10 @@ class LikedQuotesFilterButton extends ViewModelWidget<LikedQuotesViewModel> {
             height: 2,
             color: AppColors.lotusColor,
           ),
-          onChanged: (String? value) => viewModel.setFilteredLikedQuotes(value!),
+          onChanged: (value) => viewModel.setFilteredLikedQuotes(value ?? QuoteAuthorFilterOptions.all.name),
           items: <DropdownMenuItem<String>>[
             ...controller.dropdownOptions.map<DropdownMenuItem<String>>(
-              (String value) => DropdownMenuItem<String>(
+              (value) => DropdownMenuItem<String>(
                 value: value,
                 child: FittedBox(
                   child: Text(value),

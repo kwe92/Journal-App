@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
+import 'package:journal_app/features/shared/ui/widgets/snappable_widget.dart';
 import 'package:stacked/stacked.dart';
 
 class HideableSearchBar extends ViewModelWidget<JournalViewModel> {
@@ -14,16 +15,8 @@ class HideableSearchBar extends ViewModelWidget<JournalViewModel> {
 
   @override
   Widget build(BuildContext context, JournalViewModel viewModel) {
-    return SliverAppBar(
-      toolbarHeight: 65,
-      scrolledUnderElevation: 0,
-      automaticallyImplyLeading: false,
-      // floating: required to make SliverAppBar snappable
-      floating: true,
-      // snap: required to make SliverAppBar snappable
-      snap: true,
+    return SnappableWidget(
       backgroundColor: Theme.of(context).colorScheme.surface,
-
       title: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,

@@ -12,8 +12,6 @@ import 'package:journal_app/features/shared/utilities/popup_parameters.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
 
-// TODO: Refactor how images are handled
-
 class EntryViewModel extends ReactiveViewModel {
   final TextEditingController entryController = TextEditingController();
 

@@ -9,9 +9,6 @@ import 'package:journal_app/features/shared/models/photo_provider.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
-//!! TODO: Refactor
-
-//!! TODO: Should the notification methods be moved to the notification service?
 
 class AddEntryViewModel extends ReactiveViewModel {
   final TextEditingController newEntryController = TextEditingController();
@@ -41,13 +38,9 @@ class AddEntryViewModel extends ReactiveViewModel {
   List<ImageProvider> get images => _images;
 
   // computed variable based on content state updated with change notifier
-  bool get ready {
-    return _content != null && _content!.isNotEmpty;
-  }
+  bool get ready => _content != null && _content!.isNotEmpty;
 
-  int get continentalTime {
-    return int.parse(timeService.getContinentalTime(now!));
-  }
+  int get continentalTime => int.parse(timeService.getContinentalTime(now!));
 
   String get dayOfWeekByName => timeService.dayOfWeekByName(now);
 
@@ -78,11 +71,13 @@ class AddEntryViewModel extends ReactiveViewModel {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
+
     await entryStreakCounter();
 
     final entryID = await journalEntryService.addEntry(newEntry);
 
     newEntry.entryID = entryID;
+
     // insert images into database
     await _insertImages(entryID);
 
@@ -196,7 +191,7 @@ class AddEntryViewModel extends ReactiveViewModel {
     List<int> photoIds = await PhotoProvider.insert(_photos);
 
     // assign each Photo it's respective unique id
-    _photos.forEachIndexed((int index, Photo photo) => photo.id = photoIds[index]);
+    _photos.forEachIndexed((index, photo) => photo.id = photoIds[index]);
 
     debugPrint("Number of images added: ${_photos.length}");
   }

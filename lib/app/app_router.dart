@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'app_router.gr.dart';
 
-//!! TODO: remove the auto router and all of its annotations
-
 /// refresh generated router 'dart run build_runner build --delete-conflicting-outputs'
 @AutoRouterConfig(replaceInRouteName: "Page|Screen|View,Route")
 
@@ -24,7 +22,6 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: MemberInfoRoute.page),
         CustomRoute(
           page: AddEntryRoute.page,
-          //!! TODO: add custom page builder to app
           transitionsBuilder: TransitionsBuilders.slideBottom,
         ),
         CustomRoute(

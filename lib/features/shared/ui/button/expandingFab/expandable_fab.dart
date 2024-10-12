@@ -5,8 +5,6 @@ import 'package:journal_app/features/shared/ui/button/expandingFab/expanding_act
 import 'package:journal_app/features/shared/ui/button/expandingFab/open_expanding_fab.dart';
 import 'package:provider/provider.dart';
 
-//!! TODO: Add comments on what this widget is for | stacks button together
-
 @immutable
 class ExpandableFab extends StatelessWidget {
   final double distance;

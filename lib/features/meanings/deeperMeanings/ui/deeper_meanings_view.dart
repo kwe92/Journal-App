@@ -7,6 +7,7 @@ import 'package:journal_app/features/meanings/deeperMeanings/ui/deeper_meanings_
 import 'package:journal_app/features/meanings/deeperMeanings/ui/widgets/prompt_card.dart';
 import 'package:journal_app/features/meanings/prompts/ui/prompts_view.dart';
 import 'package:journal_app/features/shared/ui/widgets/custom_page_route_builder.dart';
+import 'package:journal_app/features/shared/ui/widgets/snappable_widget.dart';
 import 'package:provider/provider.dart';
 
 class DeeperMeaningsView extends StatelessWidget {
@@ -26,14 +27,10 @@ class DeeperMeaningsView extends StatelessWidget {
             duration: const Duration(milliseconds: 500),
             child: CustomScrollView(
               slivers: [
-                SliverAppBar(
-                  // causes background color to look faded if not set to 0
-                  scrolledUnderElevation: 0,
+                SnappableWidget(
                   toolbarHeight: 56,
                   forceElevated: true,
                   shadowColor: AppColors.darkGrey1.withOpacity(0.25),
-                  surfaceTintColor: Colors.white,
-                  automaticallyImplyLeading: false,
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   title: Text(
                     "Deeper Meanings",
