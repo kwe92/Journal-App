@@ -110,7 +110,7 @@ void main() {
 
       var actual = model.content;
 
-      String expected = '';
+      var expected = '';
 
       // Assert - Result
 

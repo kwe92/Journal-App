@@ -21,52 +21,44 @@ final testTempUser = AbstractFactory.createUser(
 
 final testEntry = JournalEntry(
   entryID: 1,
-  content: 'calmness in activity',
-  moodType: MoodType.okay.text,
+  content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
+  moodType: MoodType.awesome.text,
   createdAt: DateTime.now(),
   updatedAt: DateTime.now(),
 );
 
-final List<JournalEntry> testEntries = [
+final testEntries = [
   JournalEntry(
     entryID: 1,
-    content: 'calmness in activity',
-    moodType: MoodType.okay.text,
+    content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
+    moodType: MoodType.awesome.text,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ),
   JournalEntry(
     entryID: 2,
-    content: 'in the beginners mind there are many possibilities, in the experts mind there are few.',
-    moodType: MoodType.okay.text,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  ),
-  JournalEntry(
-    entryID: 3,
-    content: 'Moment by moment, we forget ourselves, being a good bondfire we burn all worry, fear, doubt and anxiety',
-    moodType: MoodType.okay.text,
+    content: 'compund intrst is the eighth wonder of the world',
+    moodType: MoodType.awesome.text,
     createdAt: DateTime.now().add(const Duration(days: -3)),
     updatedAt: DateTime.now().add(const Duration(days: -3)),
   ),
   JournalEntry(
-    entryID: 4,
-    content: 'begin, to begin is half the work, let half still remain, again begin this and though wilt have finished',
-    moodType: MoodType.okay.text,
+    entryID: 3,
+    content: "the man who thinks he can and the man who thinks he can't are both right; which one are you?",
+    moodType: MoodType.happy.text,
     createdAt: DateTime.now().add(const Duration(days: -5)),
     updatedAt: DateTime.now().add(const Duration(days: -5)),
   ),
   JournalEntry(
-    entryID: 5,
-    content:
-        'by your thoughts you shall be justified and by your thoughts you shall condemn yourself, build your own prision within your mind',
+    entryID: 4,
+    content: 'calmness is emptiness, emptiness is calmness.',
     moodType: MoodType.okay.text,
     createdAt: DateTime.now().add(const Duration(days: -7)),
     updatedAt: DateTime.now().add(const Duration(days: -7)),
   ),
 ];
 
-final List<LikedQuote> testLikedQuotes = [
+final testLikedQuotes = [
   LikedQuote(
     id: 1101,
     author: 'a',
@@ -90,7 +82,7 @@ final List<LikedQuote> testLikedQuotes = [
   ),
 ];
 
-final List<LikedQuote> testQuotes = [
+final testQuotes = [
   LikedQuote(
     id: 1104,
     author: 'd',
