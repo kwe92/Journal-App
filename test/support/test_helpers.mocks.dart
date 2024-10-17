@@ -529,6 +529,20 @@ class MockUserService extends _i1.Mock implements _i8.UserService {
 class MockJournalEntryService extends _i1.Mock
     implements _i11.JournalEntryService {
   @override
+  List<_i12.JournalEntry> get journalEntries => (super.noSuchMethod(
+        Invocation.getter(#journalEntries),
+        returnValue: <_i12.JournalEntry>[],
+        returnValueForMissingStub: <_i12.JournalEntry>[],
+      ) as List<_i12.JournalEntry>);
+
+  @override
+  List<_i12.JournalEntry> get sortedJournalEntries => (super.noSuchMethod(
+        Invocation.getter(#sortedJournalEntries),
+        returnValue: <_i12.JournalEntry>[],
+        returnValueForMissingStub: <_i12.JournalEntry>[],
+      ) as List<_i12.JournalEntry>);
+
+  @override
   DateTime get maxDate => (super.noSuchMethod(
         Invocation.getter(#maxDate),
         returnValue: _FakeDateTime_1(
@@ -540,13 +554,6 @@ class MockJournalEntryService extends _i1.Mock
           Invocation.getter(#maxDate),
         ),
       ) as DateTime);
-
-  @override
-  List<_i12.JournalEntry> get journalEntries => (super.noSuchMethod(
-        Invocation.getter(#journalEntries),
-        returnValue: <_i12.JournalEntry>[],
-        returnValueForMissingStub: <_i12.JournalEntry>[],
-      ) as List<_i12.JournalEntry>);
 
   @override
   String get bearerPrefix => (super.noSuchMethod(
@@ -2182,6 +2189,13 @@ class MockLikedQuotesService extends _i1.Mock
       ) as List<_i25.LikedQuote>);
 
   @override
+  List<_i25.LikedQuote> get sortedLikedQuotes => (super.noSuchMethod(
+        Invocation.getter(#sortedLikedQuotes),
+        returnValue: <_i25.LikedQuote>[],
+        returnValueForMissingStub: <_i25.LikedQuote>[],
+      ) as List<_i25.LikedQuote>);
+
+  @override
   String get bearerPrefix => (super.noSuchMethod(
         Invocation.getter(#bearerPrefix),
         returnValue: _i9.dummyValue<String>(
@@ -2232,9 +2246,9 @@ class MockLikedQuotesService extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> getAllQuotes() => (super.noSuchMethod(
+  _i6.Future<void> getAllLikedQuotes() => (super.noSuchMethod(
         Invocation.method(
-          #getAllQuotes,
+          #getAllLikedQuotes,
           [],
         ),
         returnValue: _i6.Future<void>.value(),

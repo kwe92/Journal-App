@@ -19,7 +19,9 @@ class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
     super.maintainState,
     super.fullscreenDialog,
     super.allowSnapshotting,
-  }) : super(transitionsBuilder: transitionsBuilder ?? _defaultTransitionsBuilder(isVerticalTranslation));
+  }) : super(
+          transitionsBuilder: transitionsBuilder ?? _defaultTransitionsBuilder(isVerticalTranslation),
+        ); //Dart evaluates the arguments to the superclass constructor before invoking the constructor, an argument can be an expression like a function call in the above example
 
   /// Add a SharedAxisTransition animation between routes to reinforce their spatial or navigational relationship.
   factory CustomPageRouteBuilder.sharedAxisTransition(
@@ -58,7 +60,7 @@ class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
           end: end,
         ).chain(curveBetween); // chain, combines tweens
 
-        final Animation<Offset> offsetAnimation = animation.drive<Offset>(animateBetween);
+        final offsetAnimation = animation.drive<Offset>(animateBetween);
 
         return SlideTransition(
           position: offsetAnimation,
@@ -66,7 +68,6 @@ class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
         );
       };
 }
-
 
 //  PageRouteBuilder
 
@@ -81,13 +82,11 @@ class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
 
 //   - i.e. does the Route (View / Screen) start fast and end slow (Curves.easeIn) or does it bounce into view (Curves.bounceIn)
 
-
 // Offset.zero
 
 //   - equivalent to OffSet(0,0) and represents the origin of 2-d Real Cartesian Coordinate Space (two dimensional grid system)
 
 //   - the y-axis is inverted relative to the mathematical 2-D Cartesian Plane and increases in the downward direction
-
 
 // SlideTransition
 

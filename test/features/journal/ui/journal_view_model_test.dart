@@ -4,18 +4,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/features/journal/ui/journal_view_model.dart';
-import 'package:journal_app/features/shared/models/journal_entry.dart';
 import 'package:journal_app/features/shared/services/api_service.dart';
 import 'package:journal_app/features/shared/services/get_it.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:mockito/mockito.dart';
 
+//!! TODO: move to flutter widgets repo
 // What does Arrange, Act and Assert mean?
 
 // Arrange (setup)
 
 //   - the setup part of a test
+
 //   - create an instance of the class you want to test
+
 //   - instantiate any required dependancies (services) the class you are testing needs
 
 // Act (execute)
@@ -27,54 +29,16 @@ import 'package:mockito/mockito.dart';
 
 //   - after executing the method or property you want to test
 //     verify that the method or property had the correct behavior
+
 //   - this is done by the assert methods of your testing framework
 //     comparing actual results with expected results
+
 //   - if the actual results match the expected results the test passes
+
 //   - if the actual results do not match the expected results the test fails
 
 import '../../../support/test_data.dart';
 import '../../../support/test_helpers.dart';
-
-// single entry
-final JournalEntry entry = JournalEntry(
-  entryID: 1,
-  content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
-  moodType: MoodType.awesome.text,
-  createdAt: DateTime.now(),
-  updatedAt: DateTime.now(),
-);
-
-// array of entries
-final List<JournalEntry> initialEntries = [
-  JournalEntry(
-    entryID: 1,
-    content: 'begin, to begin is half the work let half still remain, again begin this and thou wilt have finished.',
-    moodType: MoodType.awesome.text,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  ),
-  JournalEntry(
-    entryID: 2,
-    content: 'compund intrst is the eighth wonder of the world',
-    moodType: MoodType.awesome.text,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  ),
-  JournalEntry(
-    entryID: 3,
-    content: "the man who thinks he can and the man who thinks he can't are both right; which one are you?",
-    moodType: MoodType.happy.text,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  ),
-  JournalEntry(
-    entryID: 4,
-    content: 'calmness is emptiness, emptiness is calmness.',
-    moodType: MoodType.okay.text,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  ),
-];
 
 void main() {
   /// returns ViewModel for this test
@@ -90,17 +54,17 @@ void main() {
       when(locator.get<Client>().get(
             Uri.parse(testHost + Endpoint.entries.path),
             headers: anyNamed('headers'),
-          )).thenAnswer(
-        (_) async => Response(('[${jsonEncode(entry.toJSON())}]'), 200),
-      );
+          )).thenAnswer((_) async => Response(('[${jsonEncode(testEntry.toJSON())}]'), 200));
     },
   );
 
   group('JournalViewModelTest - Setup', () {
-    test('when model is first created, journal entry list is empty', () async {
+    test('when model is first created, journal entry list is not empty', () async {
       /// Arrange - Setup
 
       var model = getModel();
+
+      getAndRegisterJournalEntryServiceMock(initialEntries: testEntries);
 
       /// Act
 
@@ -112,7 +76,7 @@ void main() {
       var actual = model.journalEntries;
 
       // expected result
-      var expected = [];
+      var expected = testEntries;
 
       // assert and match
       expect(actual, expected);
@@ -122,7 +86,7 @@ void main() {
       /// Arrange - Setup
 
       // register with a single entry
-      getAndRegisterJournalEntryServiceMock(initialEntries: [entry]);
+      getAndRegisterJournalEntryServiceMock(initialEntries: [testEntry]);
 
       var model = getModel();
 
@@ -136,7 +100,7 @@ void main() {
       var actual = model.journalEntries;
 
       // expected result
-      var expected = [entry];
+      var expected = [testEntry];
 
       // assert and match
       expect(actual, expected);
@@ -151,8 +115,7 @@ void main() {
     // registered setup function ran once before all tests
     test('when model created and journal entries loaded, getter methods return correct count by mood', () async {
       /// Arrange - Setup
-
-      getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
+      getAndRegisterJournalEntryServiceMock(initialEntries: testEntries);
 
       var model = getModel();
 
@@ -166,7 +129,7 @@ void main() {
       var actual = model.journalEntries;
 
       // expected result
-      var expected = initialEntries;
+      var expected = testEntries;
 
       // assert and match
       expect(actual, expected);
@@ -252,7 +215,7 @@ void main() {
 
     test('when model created and journal entries loaded, entries are filtered correctly', () async {
       // Arrange - Setup
-      getAndRegisterJournalEntryServiceMock(initialEntries: initialEntries);
+      getAndRegisterJournalEntryServiceMock(initialEntries: testEntries);
 
       var model = getModel();
 
@@ -348,10 +311,5 @@ void main() {
 
       expect(actual, expected);
     });
-
-    // registered tear down function ran once after each tests
-    // TODO: review why tearDown is making tests fail
-
-    // tearDown(() => unregisterServices());
   });
 }

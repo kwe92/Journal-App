@@ -35,9 +35,7 @@ import 'package:provider/provider.dart';
 import 'test_data.dart';
 import 'test_helpers.mocks.dart';
 
-// TODO: SQL Database needs to be mocked properly
-
-// Generating Mock CLasses to be Stubbed
+// Generating Mock Classes to be Stubbed
 
 //   - @GenerateNiceMocks is an annotation used by mockito
 //     to generate a mock library with build_runner
@@ -102,7 +100,7 @@ AppRouter getAndRegisterAppRouterMock() {
 }
 
 JournalEntryService getAndRegisterJournalEntryServiceMock({
-  List<JournalEntry> initialEntries = const [],
+  var initialEntries = const <JournalEntry>[],
   JournalEntry? newEntry,
 }) {
   newEntry ??= JournalEntry(entryID: 1, moodType: '', content: '', createdAt: DateTime.now(), updatedAt: DateTime.now());
@@ -133,14 +131,12 @@ JournalEntryService getAndRegisterJournalEntryServiceMock({
   );
 
   when(service.addEntry(addedEntry)).thenAnswer(
-    (_) async => Future.value(
-      addedEntry.entryID,
-    ),
+    (_) async => Future.value(addedEntry.entryID),
   );
 
-  when(service.deleteEntry(addedEntry)).thenAnswer(
-    (_) async => Future.value(),
-  );
+  when(service.deleteEntry(addedEntry)).thenAnswer((_) async => Future.value());
+
+  when(service.sortedJournalEntries).thenReturn(loadedEntries);
 
   // register mocked service as singleton
   locator.registerSingleton<JournalEntryService>(service);
@@ -373,11 +369,13 @@ LikedQuotesService getAndRegisterLikedQuotesService() {
   // mock class stubs
   when(service.likedQuotes).thenReturn(testLikedQuotes);
 
-  when(service.getAllQuotes()).thenAnswer((_) => Future.value(Response('', 200)));
+  when(service.getAllLikedQuotes()).thenAnswer((_) => Future.value());
 
   when(service.addQuote(testQuotes[0])).thenAnswer((_) => Future.value(Response('', 200)));
 
   when(service.deleteLikedQuote(testLikedQuotes[0])).thenAnswer((_) => Future.value());
+
+  when(service.sortedLikedQuotes).thenReturn(testLikedQuotes);
 
   // register mock to service locator
   locator.registerSingleton<LikedQuotesService>(service);

@@ -17,7 +17,8 @@ void main() {
       final model = getModel();
 
       // Act
-      await model.initialize();
+      model.initialize();
+
       var actual = model.likedQuotes.length;
 
       // Assert - Result
