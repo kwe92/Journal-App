@@ -20,10 +20,10 @@ class DeeperMeaningsView extends StatelessWidget {
       body: ChangeNotifierProvider(
         create: (context) => DeeperMeaningsViewModel(),
         builder: (context, child) {
-          final model = context.watch<DeeperMeaningsViewModel>();
+          final viewModel = context.watch<DeeperMeaningsViewModel>();
 
           return AnimatedOpacity(
-            opacity: model.isVisible ? 1.0 : 0.0,
+            opacity: viewModel.isVisible ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 500),
             child: CustomScrollView(
               slivers: [
@@ -40,40 +40,44 @@ class DeeperMeaningsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  sliver: SliverGrid.builder(
-                    itemCount: model.prompts.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      childAspectRatio: (5 / 8),
-                    ),
-                    itemBuilder: (context, index) => Entry.opacity(
-                      duration: const Duration(milliseconds: 500),
-                      child: PromptCard(
-                        onTap: () async {
-                          model.setVisibility(false);
-                          await Navigator.of(context).push(
-                            CustomPageRouteBuilder.sharedAxisTransition(
-                              transitionType: SharedAxisTransitionType.scaled,
-                              pageBuilder: (_, __, ___) => PromptsView(
-                                promptText: model.prompts[index],
-                              ),
-                            ),
-                          );
-                          model.setVisibility(true);
-                        },
-                        promptText: model.prompts[index],
-                      ),
-                    ),
-                  ),
-                ),
+                SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16), sliver: child!),
               ],
             ),
           );
         },
+        child: Builder(
+          builder: (context) {
+            final viewModel = context.read<DeeperMeaningsViewModel>();
+
+            return SliverGrid.builder(
+              itemCount: viewModel.prompts.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: (5 / 8),
+              ),
+              itemBuilder: (context, index) => Entry.opacity(
+                duration: const Duration(milliseconds: 500),
+                child: PromptCard(
+                  onTap: () async {
+                    viewModel.setVisibility(false);
+                    await Navigator.of(context).push(
+                      CustomPageRouteBuilder.sharedAxisTransition(
+                        transitionType: SharedAxisTransitionType.scaled,
+                        pageBuilder: (_, __, ___) => PromptsView(
+                          promptText: viewModel.prompts[index],
+                        ),
+                      ),
+                    );
+                    viewModel.setVisibility(true);
+                  },
+                  promptText: viewModel.prompts[index],
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
