@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:journal_app/app/general/constants.dart';
 import 'package:journal_app/app/theme/colors.dart';
 import 'package:journal_app/features/shared/services/app_mode_service.dart';
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/utilities/common_box_shadow.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class PromptCard extends StatelessWidget {
@@ -26,18 +26,15 @@ class PromptCard extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
-              color: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey0,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(16),
+              height: 300,
+              decoration: BoxDecoration(
+                color: context.watch<AppModeService>().isLightMode ? Colors.white : AppColors.darkGrey0,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16),
+                ),
+                boxShadow: const [CommonBoxShadow()],
               ),
-              boxShadow: const [CommonBoxShadow()],
-            ),
-            child: SvgPicture.asset(
-              "assets/images/lotus-flower-bloom.svg",
-              color: AppColors.lotusColor,
-            ),
-          ),
+              child: Lottie.asset(imageService.getRandomMeditatingFriend())),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,

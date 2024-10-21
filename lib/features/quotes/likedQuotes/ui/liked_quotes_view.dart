@@ -9,6 +9,7 @@ import 'package:journal_app/features/quotes/likedQuotes/ui/widgets/liked_quotes_
 import 'package:journal_app/features/shared/services/services.dart';
 import 'package:journal_app/features/shared/ui/widgets/centered_loader.dart';
 import 'package:journal_app/features/shared/ui/widgets/snappable_widget.dart';
+import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
 
 @RoutePage()
@@ -32,11 +33,7 @@ class LikedQuotesView extends StatelessWidget {
                     height: 52,
                     width: 52,
                     margin: EdgeInsets.only(bottom: !deviceSizeService.smallDevice ? 24 : 16, top: 16),
-                    child: SvgPicture.asset(
-                      "assets/images/lotus-flower-bloom.svg",
-                      color: AppColors.lotusColor,
-                      fit: BoxFit.cover,
-                    ),
+                    child: Lottie.asset('assets/lottie/peacfully-slothful.json'),
                   ),
                 )
               : null,
