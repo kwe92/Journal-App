@@ -11,9 +11,18 @@ class ImageService with ListenableServiceMixin {
 
   ImageProvider mindful03 = Image.asset("assets/images/mindful03.avif").image;
 
+  String _previouslyChosenFriend = '';
+
+  final _meditatingFriends = [
+    'assets/lottie/calming-monkey.json',
+    'assets/lottie/centered-bull.json',
+    'assets/lottie/mindful-fox.json',
+    'assets/lottie/peacfully-slothful.json',
+  ];
+
   /// Cache [ImageProvider] to avoid flashing when images load for the first time.
   Future<void> cacheImage(BuildContext context) async {
-    final List<ImageProvider> mindfulImages = [
+    final mindfulImages = [
       mindful01,
       mindful02,
       mindful03,
@@ -27,7 +36,7 @@ class ImageService with ListenableServiceMixin {
   }
 
   ImageProvider getRandomMindfulImage() {
-    final List<ImageProvider> mindfulImages = [
+    final mindfulImages = [
       mindful01,
       mindful02,
       mindful03,
@@ -36,5 +45,20 @@ class ImageService with ListenableServiceMixin {
     final index = RandomNumberGenerator.randIntRange(max: mindfulImages.length);
 
     return mindfulImages[index];
+  }
+
+  String getRandomMeditatingFriend() {
+    //!! TODO: rerun app and rework implementation
+    final meditatingFriends = [..._meditatingFriends];
+
+    meditatingFriends.remove(_previouslyChosenFriend);
+
+    final count = meditatingFriends.length;
+
+    final randomFriend = meditatingFriends[RandomNumberGenerator.randIntRange(max: count)];
+
+    _previouslyChosenFriend = randomFriend;
+
+    return randomFriend;
   }
 }
